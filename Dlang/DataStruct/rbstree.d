@@ -84,7 +84,7 @@ struct RBSTree(T) {
         }
 
         this(Node _l, Node _r, int _sz, in T _v) {
-            value = _v; l = _l; _sz = sz; r = _r;
+            value = _v; l = _l; sz = _sz; r = _r;
         }
         
         T get(int k) {

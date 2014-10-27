@@ -1,7 +1,10 @@
-Cir curcumCircle(P a, P b, P c) {
+    return (conj(x)*y).im;
+}
+
+Cir curcumCircle(in P[3] l) {
+    P a = l[0], b = l[1], c = l[2];
     b -= a; c -= a;
     double s = 2*cross(b, c);
-    assert(s.abs() > 1e-9);
     double A = (b-c).norm(), B = c.norm(), C = b.norm();
     double S = A+B+C;
     P r = (B*(S-2*B)*b+C*(S-2*C)*c)/(s*s);
@@ -9,8 +12,9 @@ Cir curcumCircle(P a, P b, P c) {
 }
 
 Cir smallestEnclosingCircle(P[] p) {
-    P[10000] pb;
-    P[3] q;
+    static P[] pb;
+    pb.length = 1;
+    static P[3] q;
     const eps = 1e-9;
     int pbc = 1;
     int cnt = 0;
@@ -18,7 +22,7 @@ Cir smallestEnclosingCircle(P[] p) {
         Cir get() {
             final switch (qc) {
             case 3:
-                return curcumCircle(q[0], q[1], q[2]);
+                return curcumCircle(q);
             case 2:
                 return Cir((q[0]+q[1])/2, abs(q[0]-q[1])/2);
             case 1:
@@ -29,7 +33,7 @@ Cir smallestEnclosingCircle(P[] p) {
         }
         Cir c = get();
         foreach_reverse (i; max(-pc+1, 1)..pbc) {
-            if ( abs(pb[i]-c[0]) <= c[1] + eps) {
+            if (abs(pb[i]-c[0]) <= c[1] + eps) {
                 continue;
             }
             q[qc++] = pb[i];
@@ -43,7 +47,8 @@ Cir smallestEnclosingCircle(P[] p) {
             q[qc++] = p[i];
             c = dfs(i, qc);
             qc--;
-            pb[pbc++] = p[i];
+            pbc++;
+            pb ~= p[i];
             p[i].re = double.infinity;
         }
         return c;
