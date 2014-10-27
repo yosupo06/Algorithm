@@ -9,7 +9,7 @@ Cir curcumCircle(P a, P b, P c) {
 }
 
 Cir smallestEnclosingCircle(P[] p) {
-    P[10000] pbc;
+    P[10000] pb;
     P[3] q;
     const eps = 1e-9;
     int pbc = 1;
