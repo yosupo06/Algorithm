@@ -5,6 +5,16 @@ struct C {
     C (P pp, double rr) { p = pp; r = rr; };
 };
 
+C curcumCircle(P l[3]) {
+    P a = l[0], b = l[1], c = l[2];
+    b -= a; c -= a;
+    double s = 2*cross(b, c);
+    double A = (b-c).norm(), B = c.norm(), C = b.norm();
+    double S = A+B+C;
+    P r = (B*(S-2*B)*b+C*(S-2*C)*c)/(s*s);
+    return C(r + a, r.abs);
+}
+
 //need Intersect/distLP
 int crossP(const C &c, const L &l, L &r) {
     double u = distLP(l, c.p);

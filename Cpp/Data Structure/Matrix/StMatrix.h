@@ -78,7 +78,7 @@ struct SMatrix {
     void excL(int i, int j) {
         swap(d[i], d[j]);
     }
-
+    //line i -> i+(j*x)
     void addL(int i, int j, D x) {
         d[i] += d[j]*x;
     }

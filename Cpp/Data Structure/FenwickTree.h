@@ -1,13 +1,13 @@
-template <int SIZE>
+template <int N>
 struct FenwickTree {
-    ll seg[SIZE];
+    ll seg[N];
     
     void init() {
-        fill_n(seg, SIZE, 0);
+        fill_n(seg, N, 0);
     }
 
     void add(int i, ll x) {
-        while (i < SIZE) {
+        while (i < N) {
             seg[i] += x;
             i += (i+1) & ~i;
         }
@@ -27,7 +27,6 @@ struct FenwickTree {
 
     //[a, b)
     ll sum(int a, int b) {
-        ll d = sum(b) - sum(a);
-        return d;
+        return sum(b) - sum(a);
     }
 };

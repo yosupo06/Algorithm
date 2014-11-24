@@ -24,13 +24,11 @@ struct FenwickRAdd {
 
     //[0, i)
     ll sum(int i) {
-        ll d = b0.sum(i)+b1.sum(i)*ds[i];
-        return d;
+        return b0.sum(i)+b1.sum(i)*ds[i];
     }
 
     //[a, b)
     ll sum(int a, int b) {
-        ll d = sum(b) - sum(a);
-        return d;
+        return sum(b) - sum(a);
     }
 };

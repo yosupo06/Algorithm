@@ -1,16 +1,15 @@
-#include <vector>
-
 //prims.size -> N=100k:near10k
 template <int N>
 struct Primes {
-    bool used[N] = {};
-    std::vector<int> primes;
+    bool used[N];
+    vector<int> primes;
     Primes() {
+        used[0] = used[1] = true;
         for (int i = 2; i < N; i++) {
             if (!used[i]) {
                 primes.push_back(i);
             }
-            for (int j = i; j < N; j += i) {
+            for (int j = 2*i; j < N; j += i) {
                 used[j] = true;
             }
         }

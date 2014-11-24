@@ -1,45 +1,46 @@
-int V;
-vector<int> g[MV], rg[MV];
-bool us[MV];
-vector<int> vs;
-int cmp[MV];
-void sccd(int v) {
-    us[v] = true;
-    for (int d: g[v]) {
-        if (us[d]) continue;
-        sccd(d);
-    }
-    vs.push_back(v);
-}
-
-void sccrd(int v, int k) {
-    us[v] = true;
-    cmp[v] = k;
-    for (int d : rg[v]) {
-        if (us[d]) continue;
-        sccrd(d, k);
-    }
-}
-
-void scc() {
-    fill_n(us, MN*MM, false);
-    for (int i = 0; i < V; i++) {
-        if (us[i]) continue;
-        sccd(i);
-    }
-    fill_n(us, MN*MM, false);
-    int k = 0;
-    for (int i = vs.size()-1; i >= 0; i--) {
-        if (us[vs[i]]) continue;
-        sccrd(vs[i], k++);
-    }
-}
-
+template<int V>
 class SCC {
-    vector<int> g[MV];
-    bool us[MV];
+    vector<int> g[V], rg[V];
+    void add_edge(int i, int j) {
+        g[i].push_back(j);
+        rg[j].push_back(i);
+    }
+
     vector<int> vs;
-    SCC(int v) {
-        
+    bool used[V];
+    void dfs(int v) {
+        used[v] = true;
+        for (int d: g[v]) {
+            if (used[v]) continue;
+            dfs(v);
+        }
+        vs.push_back(v);
+    }
+    int k;
+    int res[V];
+    vector<int> scc[V];
+    void rdfs(int v) {
+        used[v] = true;
+        res[v] = k;
+        scc[k].push_back(v);
+        for (int d: rg[v]) {
+            if (used[v]) continue;
+            rdfs(v);
+        }
+    }
+
+    int exec(int v) {
+        fill_n(used, v, false);
+        for (int i = 0; i < v; i++) {
+            if (used[i]) continue;
+            dfs(i);
+        }
+        fill_n(used, v, false);
+        k = 0;
+        for (int i = vs.size()-1; i >= 0; i--) {
+            if (used[vs[i]]) continue;
+            rdfs(vs[i], k++);
+        }
+        return k;
     }
 };

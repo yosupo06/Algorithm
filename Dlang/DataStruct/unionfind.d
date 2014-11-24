@@ -10,6 +10,7 @@ class UnionFind {
 	}
 
 	void merge(int a, int b) {
+		if (isSame(a, b)) return;
 		int ga = i2g[a], gb = i2g[b];
 		if (g2i[ga].length > g2i[gb].length) swap(ga, gb);
 		foreach (i; g2i[ga]) i2g[i] = gb;

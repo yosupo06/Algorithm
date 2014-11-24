@@ -45,10 +45,9 @@ ll comb_pmod(int n, int k, ll mod) {
 
 template<int N, int K>
 struct Combinations {
-    ll data[N][K];
+    ll data[N][K] = {};
     Combinations() {
         data[0][0] = 1;
-        fill_n(&(data[0][1]), N-1, 0);
         for (int i = 1; i < N; i++) {
             data[i][0] = 1;
             for (int j = 1; j < K; j++) {
@@ -66,10 +65,9 @@ struct Combinations {
 
 template<int N, int K, ll MOD>
 struct CombinationsM {
-    ll data[N][K];
+    ll data[N][K] = {};
     CombinationsM() {
         data[0][0] = 1;
-        fill_n(&(data[0][1]), N-1, 0);
         for (int i = 1; i < N; i++) {
             data[i][0] = 1;
             for (int j = 1; j < K; j++) {

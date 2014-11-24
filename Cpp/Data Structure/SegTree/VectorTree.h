@@ -1,12 +1,8 @@
-#include <vector>
-#include <iostream>
-
 //size:2**N N=17:131072 N=12:4096
 template <class T, int N>
 struct VectorTree {
-    using uint = unsigned int;
     static constexpr int size = 1<<N;
-    std::vector<T> seg[size*2];
+    vector<T> seg[size*2];
     void init(T *x, int n) {
         int l = 0, r = 1, s = size;
         for (int i = 0; i <= N; i++) {
@@ -25,7 +21,7 @@ struct VectorTree {
         }
         for (int i = size-2; i >= 0; i--) {
             int k1 = i*2+1, k2 = i*2+2;
-            std::merge(seg[k1].begin(), seg[k1].end(), seg[k2].begin(), seg[k2].end(), seg[i].begin());
+            merge(seg[k1].begin(), seg[k1].end(), seg[k2].begin(), seg[k2].end(), seg[i].begin());
         }
     }
 
@@ -45,7 +41,7 @@ struct VectorTree {
     inline T get(uint a, uint b, T x, uint k = 0, uint l = 0, uint r = size) {
         if (a <= l && r <= b) {
             auto it1 = lower_bound(seg[k].begin(), seg[k].end(), x);
-            auto it2 = lower_bound(seg[k].rbegin(), seg[k].rend(), x, std::greater<int>());
+            auto it2 = lower_bound(seg[k].rbegin(), seg[k].rend(), x, greater<int>());
             T r1 = (it1 != seg[k].end()) ? *it1 : -1;
             T r2 = (it2 != seg[k].rend()) ? *it2 : -1;
             return comp(r1, r2, x);
