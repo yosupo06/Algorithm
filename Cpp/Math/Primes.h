@@ -2,12 +2,12 @@
 template <int N>
 struct Primes {
     bool used[N];
-    vector<int> primes;
+    vector<int> p;
     Primes() {
         used[0] = used[1] = true;
         for (int i = 2; i < N; i++) {
             if (!used[i]) {
-                primes.push_back(i);
+                p.push_back(i);
             }
             for (int j = 2*i; j < N; j += i) {
                 used[j] = true;

@@ -1,4 +1,6 @@
+template <int N>
 struct SMatrix {
+    int d[MN][MN];
     typedef double D;
     vector<valarray<D>> d;
     int N, M;

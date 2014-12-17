@@ -1,8 +1,8 @@
 struct C {
     P p;
-    double r;
+    R r;
     C () {};
-    C (P pp, double rr) { p = pp; r = rr; };
+    C (P p, R r) : p(p), r(r) {};
 };
 
 C curcumCircle(P l[3]) {

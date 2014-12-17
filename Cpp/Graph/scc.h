@@ -1,5 +1,5 @@
 template<int V>
-class SCC {
+struct SCC {
     vector<int> g[V], rg[V];
     void add_edge(int i, int j) {
         g[i].push_back(j);
@@ -11,8 +11,8 @@ class SCC {
     void dfs(int v) {
         used[v] = true;
         for (int d: g[v]) {
-            if (used[v]) continue;
-            dfs(v);
+            if (used[d]) continue;
+            dfs(d);
         }
         vs.push_back(v);
     }
@@ -24,8 +24,8 @@ class SCC {
         res[v] = k;
         scc[k].push_back(v);
         for (int d: rg[v]) {
-            if (used[v]) continue;
-            rdfs(v);
+            if (used[d]) continue;
+            rdfs(d);
         }
     }
 

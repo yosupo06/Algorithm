@@ -1,17 +1,26 @@
-#include <complex>
-#include <vector>
-#include <cmath>
-using namespace std;
+typedef long double R;
+typedef complex<R> P;
 
-const double EPS = 1e-9;
-const double MPI = acos(-1);
-const double M2PI = 2*MPI;
+const R EPS = 1e-10;
+const R PI = acos(-1);
+int sgn(R a) {
+    if (a < -EPS) return -1;
+    if (a > EPS) return 1;
+    return 0;
+}
 
-typedef complex<double> P;
+
+bool near(P a, P b) {
+    return !sgn(abs(a-b));
+}
+
+R cross(P a, P b) { return imag(conj(a)*b); }
+R dot(P a, P b) { return real(conj(a)*b); }
+
 struct L {
     P x, y;
     L() {};
-    L(P a, P b) {x=a, y=b;};
+    L(P x, P y) :x(x), y(y) {};
 };
 
 namespace std {
@@ -19,10 +28,6 @@ namespace std {
         return real(a) != real(b) ? real(a) < real(b) : imag(a) < imag(b);
     }
 }
-
-double cross(P a, P b) { return imag(conj(a)*b); }
-double dot(P a, P b) { return real(conj(a)*b); }
-
 
 int ccw(P a, P b, P c) {
     b -= a; c -= a;

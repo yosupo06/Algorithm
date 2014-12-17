@@ -62,23 +62,3 @@ struct Combinations {
         return data[n];
     }
 };
-
-template<int N, int K, ll MOD>
-struct CombinationsM {
-    ll data[N][K] = {};
-    CombinationsM() {
-        data[0][0] = 1;
-        for (int i = 1; i < N; i++) {
-            data[i][0] = 1;
-            for (int j = 1; j < K; j++) {
-                data[i][j] = (data[i-1][j]+data[i-1][j-1]) % MOD;
-            }
-        }
-    }
-    ll* operator[](int n) {
-        return data[n];
-    }
-    const ll* operator[](int n) const {
-        return data[n];
-    }
-};

@@ -3,7 +3,7 @@ struct BitMatching {
     vector<int> G[2*V];
     int match[2*V];
     bool used[2*V];
-    void add_edge(int a, int b) {
+    void add(int a, int b) {
         G[a].push_back(b+V);
         G[b+V].push_back(a);
     }
@@ -21,7 +21,7 @@ struct BitMatching {
         return false;
     }
 
-    int bit_matching() {
+    int exec() {
         int res = 0;
         memset(match, -1, sizeof(match));
         for (int v = 0; v < V; v++) {
