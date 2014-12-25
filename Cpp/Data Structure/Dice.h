@@ -1,4 +1,5 @@
 /*
++x=0 +y=1 +z=2
 dir[4] = [+x, +y, -x, -y]
 Dice(a, b): +x=a +y=bとなるサイコロ生成
 get(dir): dir方向の値を取得

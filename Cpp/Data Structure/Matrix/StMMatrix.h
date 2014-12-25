@@ -1,6 +1,6 @@
-template <int N>
+template <int N, ll MD>
 struct SMatrix {
-    using D = int;
+    using D = ll;
     D *d;
     SMatrix() {
         d = new D[N*N]();
@@ -12,6 +12,7 @@ struct SMatrix {
     ~SMatrix() {
         delete[] d;
     }
+
     D* operator[](int p) {
         return d+(N*p);
     }
@@ -29,7 +30,7 @@ struct SMatrix {
         SMatrix res;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                res[i][j] = d[i*N+j]+right[i][j];
+                res[i][j] = (d[i*N+j]+right[i][j]) % MD;
             }
         }
         return res;
@@ -45,7 +46,8 @@ struct SMatrix {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 for (int k = 0; k < N; k++) {
-                    res[i][j] += d[i*N+k]*r[j][k];
+                    res[i][j] += (d[i*N+k]*r[j][k]) % MD;
+                    res[i][j] %= MD;
                 }
             }
         }

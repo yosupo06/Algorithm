@@ -1,7 +1,7 @@
 template<int V>
 struct SCC {
     vector<int> g[V], rg[V];
-    void add_edge(int i, int j) {
+    void add(int i, int j) {
         g[i].push_back(j);
         rg[j].push_back(i);
     }
@@ -39,7 +39,8 @@ struct SCC {
         k = 0;
         for (int i = vs.size()-1; i >= 0; i--) {
             if (used[vs[i]]) continue;
-            rdfs(vs[i], k++);
+            rdfs(vs[i]);
+            k++;
         }
         return k;
     }
