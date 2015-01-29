@@ -8,10 +8,10 @@ struct Tree {
         NP p, l, r;
         int sz;
         D v;
-        Node(D v) :p(NULL), l(last), r(last), sz(1), v(v) {}
+        Node(D v) :p(nullptr), l(last), r(last), sz(1), v(v) {}
         Node(NP p, NP l, NP r, int sz = 0) : p(p), l(l), r(r), sz(sz) {}
         bool is_root() {
-            return p == NULL;
+            return p == nullptr;
         }
         void rotr() {
             NP q = p, qq = q->p;

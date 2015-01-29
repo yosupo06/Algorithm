@@ -1,154 +1,130 @@
-struct LCTree {
+//木の根を変える、LCAを求めるに対応したLCTree 一番Basic
+typedef long long ll;
+struct LCNode {
+    typedef LCNode* NP;
     typedef int D;
     static const int INF = 1LL<<25;
-    struct Node;
-    typedef Node* NP;
-    static Node last_d;
+    static LCNode last_d;
     static NP last;
-    struct Node {
-        NP p, l, r;
-        int sz;
-        int v, sm, lz;
-        int lsm, rsm, ma, mv;
-        bool rev;
-        Node(D v) :p(NULL), l(last), r(last), sz(1),
-            v(v), sm(v), lz(INF), rev(false),
-            lsm(max(v, 0)), rsm(max(v, 0)), ma(max(v, 0)), mv(v) {}
-        Node(NP l, NP r) : l(l), r(r), sz(0), mv(-INF) {}
-        inline int pos() {
-            if (p && p->l == this) return -1;
-            if (p && p->r == this) return 1;
-            return 0;
+    NP p, l, r;
+    int sz;
+    D id;
+    bool rev;
+    LCNode(D v) :p(NULL), l(last), r(last), sz(1), id(v) {}
+    LCNode() : l(NULL), r(NULL), sz(0) {}
+    inline int pos() {
+        if (p) {
+            if (p->l == this) return -1;
+            if (p->r == this) return 1;
         }
-        void rot() {
-            NP q = p, qq = q->p;
-            int qp = q->pos();
-            if (q->l == this) {
-                q->l = r; r->p = q;
-                r = q; q->p = this;
+        return 0;
+    }
+    void rot() {
+        NP qq = p->p;
+        int pps = p->pos();
+        if (p->l == this) {
+            p->l = r; r->p = p;
+            r = p; p->p = this;
+        } else {
+            p->r = l; l->p = p;
+            l = p; p->p = this;
+        }
+        p->update(); update();
+        p = qq;
+        if (!pps) return;
+        if (pps == -1) {
+            qq->l = this;
+        } else {
+            qq->r = this;
+        }
+        qq->update();
+    }
+    void splay() {
+        assert(this != last);
+        supush();
+        int ps;
+        while ((ps = pos())) {
+            int pps = p->pos();
+            if (!pps) {
+                rot();
+            } else if (ps == pps) {
+                p->rot(); rot();
             } else {
-                q->r = l; l->p = q;
-                l = q; q->p = this;
-            }
-            q->update(); update();
-            p = qq;
-            if (!qp) return;
-            if (qp == -1) {
-                qq->l = this;
-            } else {
-                qq->r = this;
-            }
-            qq->update();
-        }
-        void splay() {
-            supush();
-            while (pos()) {
-                int u = pos()*p->pos();
-                if (!u) {
-                    rot();
-                } else if (u == 1) {
-                    p->rot(); rot();
-                } else {
-                    rot(); rot();
-                }
+                rot(); rot();
             }
         }
-        void expose() {
-            NP u = this;
-            while (u) {
-                u->splay();
-                u = u->p;
-            }
-            u = this;
-            while (u->p) {
-                u->p->r = u;
-                u = u->p;
-                u->update();
-            }
-            splay();
-        }
-        void push() {
-            if (rev) {
-                swap(l, r);
-                if (l->sz) {
-                    l->rev ^= true;
-                    swap(l->lsm, l->rsm);
-                }
-                if (r->sz) {
-                    r->rev ^= true;
-                    swap(r->lsm, r->rsm);
-                }
-                rev = false;
-            }
- 
-            if (lz != INF) {
-                if (l->sz) {
-                    l->updata(lz);
-                }
-                if (r->sz) {
-                    r->updata(lz);
-                }
-                lz = INF;
-            }
-        }
-        void supush() {
-            if (pos()) {
-                p->supush();
-            }
-            push();
-        }
-        void updata(D d) {
-            v = d;
-            sm = sz*d;
-            lz = d;
-            lsm = rsm = ma = max(0, sm);
-            mv = d;
-        }
-        NP update() {
-            if (this == last) return this;
-            sz = 1+l->sz+r->sz;
-            sm = v + l->sm + r->sm;
-            lsm = max(l->lsm, l->sm+v+r->lsm);
-            rsm = max(r->rsm, r->sm+v+l->rsm);
-            ma = max(l->ma, r->ma);
-            ma = max(ma, l->rsm+v+r->lsm);
-            mv = max(l->mv, r->mv);
-            mv = max(mv, v);
-            return this;
-        }
-    } *n;
-    LCTree() : n(last) {}
-    LCTree(NP n) : n(n) {}
-    LCTree(D d) : n(new Node(d)) {}
-    int sz() {
-        return n->sz;
     }
-    void event() {
-        n->expose();
-        n->r = last;
-        n->rev = true;
-        swap(n->lsm, n->rsm);
+    void expose() {
+        assert(this != last);
+        NP u = this, ur = last;
+        do {
+            u->splay();
+            u->r = ur;
+            u->update();
+            ur = u;
+        } while ((u = u->p));
+        splay();
     }
-    void link(LCTree r) {
-        n->expose();
-        r.n->expose();
-        assert(n->l == last);
-        n->p = r.n;
+    void supush() {
+        if (pos()) {
+            p->supush();
+        }
+        push();
     }
- 
-    void set(int x) {
-        n->expose();
-        n->r = last;
-        n->update();
-        n->updata(x);
+    void push() {
+        int lsz = l->sz, rsz = r->sz;
+        if (rev) {
+            if (lsz) {
+                l->revdata();
+            }
+            if (rsz) {
+                r->revdata();
+            }
+            rev = false;
+        }
     }
-    int get() {
-        n->expose();
-        n->r = last;
-        n->update();
-        if (n->mv < 0) return n->mv;
-        return n->ma;
+    void revdata() {
+        assert(this != last);
+        swap(l, r);
+        rev ^= true;
+    }
+    NP update() {
+        assert(this != last);
+        sz = 1+l->sz+r->sz;
+        return this;
+    }
+
+    NP root() {
+        expose();
+        NP u = this;
+        while (u->l != last) {
+            u = u->l;
+        }
+        u->splay();
+        return u;
+    }
+
+    void evert() {
+        expose();
+        revdata();
+    }
+
+    D lca(LCNode &r) {
+        r.expose();
+        expose();
+        NP u = &r;
+        while (u->pos()) {
+            u = u->p;
+        }
+        if (u == this) return r.id;
+        NP x = last;
+        while (u) {
+            if (!u->pos()) x = u->p;
+            u = u->p;
+        }
+        if (u == this) return x->id;
+        return -1;
     }
 };
-LCTree::Node LCTree::last_d = LCTree::Node((NP)NULL, NULL);
-LCTree::NP LCTree::last = &last_d;
+LCNode LCNode::last_d = LCNode();
+LCNode::NP LCNode::last = &last_d;

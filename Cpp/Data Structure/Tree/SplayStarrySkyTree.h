@@ -1,5 +1,6 @@
 struct STree {
     using D = ll;
+    const static D INF = 1LL<<55;
     struct Node;
     using NP = Node*;
     static Node last_d;
@@ -8,56 +9,89 @@ struct STree {
         NP p, l, r;
         int sz;
         D v, mi, lz;
-        Node(D v) :p(NULL), l(last), r(last), sz(1), v(v), mi(v), lz(0) {}
-        Node(NP p, NP l, NP r, int sz = 0) : p(p), l(l), r(r), sz(sz) {}
-        int pos() {
-            if (p && p->l == this) return -1;
-            if (p && p->r == this) return 1;
+        Node(D v) :p(nullptr), l(last), r(last), sz(1), v(v), mi(v), lz(0) {}
+        Node() : l(nullptr), r(nullptr), sz(0) {}
+        inline int pos() {
+            if (p) {
+                if (p->l == this) return -1;
+                if (p->r == this) return 1;
+            }
             return 0;
         }
         void rot() {
-            NP q = p, qq = q->p;
-            if (q->l == this) {
-                q->l = r; r->p = q;
-                r = q; q->p = this;
+            NP qq = p->p;
+            int pps = p->pos();
+            if (p->l == this) {
+                p->l = r; r->p = p;
+                r = p; p->p = this;
             } else {
-                q->r = l; l->p = q;
-                l = q; q->p = this;
+                p->r = l; l->p = p;
+                l = p; p->p = this;
             }
-            q->update(); update();
-            if ((p = qq)) {
-                if (qq->l == q) qq->l = this;
-                if (qq->r == q) qq->r = this;
-                qq->update();
+            p->update(); update();
+            p = qq;
+            if (!pps) return;
+            if (pps == -1) {
+                qq->l = this;
+            } else {
+                qq->r = this;
             }
+            qq->update();
         }
         void splay() {
-            while (pos()) {
-                if (!p->pos()) {
+            assert(this != last);
+            supush();
+            int ps;
+            while ((ps = pos())) {
+                int pps = p->pos();
+                if (!pps) {
                     rot();
-                } else if (p->pos() == pos()) {
+                } else if (ps == pps) {
                     p->rot(); rot();
                 } else {
                     rot(); rot();
                 }
             }
         }
+        NP splay(int k) {
+            assert(this != last);
+            assert(0 <= k && k < sz);
+            if (k < l->sz) {
+                return l->splay(k);
+            } else if (k == l->sz) {
+                splay();
+                return this;
+            } else {
+                return r->splay(k-(l->sz+1));
+            }
+        }
+        void supush() {
+            if (pos()) {
+                p->supush();
+            }
+            push();
+        }
         void push() { //pushをすると、pushをした頂点とその子の"すべて"の値の正当性が保証される
-            if (l->sz) {
-                l->v += lz;
-                l->mi += lz;
-                l->lz += lz;
+            assert(this != last);
+            if (lz) {
+                if (l->sz) {
+                    l->lzdata(lz);
+                }
+                if (r->sz) {
+                    r->lzdata(lz);
+                }
+                lz = 0;
             }
-            if (r->sz) {
-                r->v += lz;
-                r->mi += lz;
-                r->lz += lz;
-            }
-            lz = 0;
+        }
+        void lzdata(D d) {
+            v += d;
+            mi += d;
+            lz += d;
         }
         NP update() {
-            if (this == last) return this;
+            assert(this != last);
             sz = 1+l->sz+r->sz;
+            assert(!lz);
             mi = v;
             if (l->sz) {
                 mi = min(mi, l->mi);
@@ -72,12 +106,8 @@ struct STree {
         if (r == last) {
             return l;
         }
-        r->push();
-        while (r->l != last) {
-            r = r->l;
-            r->push();
-        }
-        r->splay();
+        r = r->splay(0);
+        assert(r->l == last);
         r->l = l;
         l->p = r;
         return r->update();
@@ -87,19 +117,9 @@ struct STree {
         if (k == x->sz) {
             return {x, last};
         }
-        x->push();
-        while (k != x->l->sz) {
-            if (k < x->l->sz) {
-                x = x->l;
-            } else {
-                k -= x->l->sz+1;
-                x = x->r;
-            }
-            x->push();
-        }
-        x->splay();
+        x = x->splay(k);
         NP l = x->l;
-        l->p = NULL;
+        l->p = nullptr;
         x->l = last;
         return {l, x->update()};
     }
@@ -115,7 +135,8 @@ struct STree {
     }
     STree() : n(last) {}
     STree(NP n) : n(n) {}
-    STree(int sz, ll d[]) {
+    STree(D d) : n(new Node(d)) {}
+    STree(int sz, D d[]) {
         n = built(sz, d);
     }
     int sz() {
@@ -127,28 +148,21 @@ struct STree {
     }
     void erase(int k) {
         auto u = split(n, k);
-        n = merge(u.first, u.second->r);
+        n = merge(u.first, split(u.second, 1).second);
     }
     void add(int l, int r, D x) {
         auto b = split(n, r);
         auto a = split(b.first, l);
-        auto t = a.second;
-        t->v += x;
-        t->mi += x;
-        t->lz += x;
-        n = merge(merge(a.first, t), b.second);
+        a.second->lzdata(x);
+        n = merge(merge(a.first, a.second), b.second);
     }
     D get(int l, int r) {
         auto b = split(n, r);
         auto a = split(b.first, l);
-        auto t = a.second;
-        D res = t->mi;
-        n = merge(merge(a.first, t), b.second);
+        D res = a.second->mi;
+        n = merge(merge(a.first, a.second), b.second);
         return res;
     }
-    D getv(int k) {
-        return get(k, k+1);
-    }
 };
-STree::Node STree::last_d = STree::Node(NULL, NULL, NULL, 0);
+STree::Node STree::last_d = STree::Node();
 STree::NP STree::last = &last_d;

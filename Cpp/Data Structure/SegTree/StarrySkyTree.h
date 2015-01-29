@@ -1,43 +1,69 @@
-template <int N>
+template <int S>
 struct StarrySkyTree {
-    using P = pair<ll, ll>;
-    static const int S = 1<<N;
-    static const ll INF = 1LL<<55; //Warning: overflow!!(range negative add)
-    P seg[2*S];
-
-    void init() {
-        fill_n(seg, 2*S, P(-INF, 0));
-    }
-
-    void set(int i, ll x) {
-        i += S;
-        seg[i].first = x;
-        while (i) {
-            i /= 2;
-            seg[i].first = seg[i].second +
-            max(seg[i*2].first, seg[i*2+1].first);
-        } 
-    }
-
-    void add(int a, int b, ll x, int k = 1, int l = 0, int r = S) {
-        if (r <= a || b <= l) return;
-        if (a <= l && r <= b) {
-            seg[k].first += x;
-            seg[k].second += x;
+    typedef ll D;
+    static const int N = 1<<S;
+    static const int INF = 1<<55;   
+    D seg[2*N], lz[2*N];
+    int sz[2*N];
+    StarrySkyTree() {
+        for (int i = 2*N-1; i >= N; i--) {
+            sz[i] = 1;
         }
-        int md = (l+r)/2;
-        add(a, b, x, k*2, l, md);
-        add(a, b, x, k*2+1, md, r);
-        seg[k].first = seg[k].second +
-        max(seg[k*2].first, seg[k*2+1].second);
+        for (int i = N-1; i >= 0; i--) {
+            sz[i] = sz[i*2]+sz[i*2+1];
+        }
+    }
+    void init() {
+        for (int i = 1; i < 2*N; i++) {
+            seg[i] = 0;
+            lz[i] = 0;
+        }
     }
 
-    ll get(int a, int b, int k = 1, int l = 0, int r = S) {
-        if (r <= a || b <= l) return -INF;
-        if (a <= l && r <= b) return seg[k].first;
-        int md = (l+r)/2;
-        ll dl = get(a, b, k*2, l, md);
-        ll dr = get(a, b, k*2+1, md, r);
-        return seg[k].second + max(dl, dr);
+    void lzdata(int k, D x) {
+        seg[k] += x;
+        lz[k] += x;
+    }
+    void push(int k) {
+        assert(1 <= k && k < N);
+        if (lz[k]) {
+            lzdata(k*2, lz[k]);
+            lzdata(k*2+1, lz[k]);
+            lz[k] = 0;
+        }
+    }
+    void update(int k) {
+        assert(1 <= k && k < N);
+        seg[k] = max(seg[k*2], seg[k*2+1]);
+    }
+    void add(int k, D x) {
+        k += N;
+        for (int i = S; i > 0; i--) {
+            push(k>>i);
+        }
+        lzdata(k, x);
+        for (int i = 1; i <= S; i++) {
+            update(k>>i);
+        }
+    }
+    void add(int a, int b, D x, int k = 1) {
+        if (sz[k] <= a || b <= 0) return;
+        if (a <= 0 && sz[k] <= b) {
+            lzdata(k, x);
+            return;
+        }
+        push(k);
+        add(a, b, x, k*2);
+        add(a-sz[k]/2, b-sz[k]/2, x, k*2+1);
+        update(k);
+    }
+
+    D get(int a, int b, int k = 1) {
+        if (sz[k] <= a || b <= 0) return -INF;
+        if (a <= 0 && sz[k] <= b) return seg[k];
+        push(k);
+        D dl = get(a, b, k*2);
+        D dr = get(a-sz[k]/2, b-sz[k]/2, k*2+1);
+        return max(dl, dr);
     }
 };

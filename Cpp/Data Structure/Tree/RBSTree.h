@@ -1,4 +1,5 @@
 struct Tree {
+    using D = ll;
     struct Node;
     using NP = Node*;
     static Node last_d;
@@ -6,32 +7,37 @@ struct Tree {
     struct Node {
         NP l, r;
         int sz;
-        int value;
-        Node(int v) :l(last), r(last), sz(1), value(v) {}
-        Node(NP l, NP r, int sz = 0) :l(l), r(r), sz(sz) {}
+        D v;
+        Node(D v) :l(last), r(last), sz(1), v(v) {}
+        Node() :l(nullptr), r(nullptr), sz(0) {} //last用
         void push() {
-
+            assert(this != last);
         }
         NP update() {
+            assert(this != last);
             sz = 1+l->sz+r->sz;
             return this;
         }
-        int getc(int a) {
-            if (a == l->sz) return value;
+        D get(int a) {
+            assert(0 <= a && a < sz);
+            push();
             if (a < l->sz) {
-                return l->getc(a);
+                return l->get(a);
+            } else if (a == l->sz) {
+                return v;
             } else {
-                return r->getc(a- l->sz - 1);
+                return r->get(a- (l->sz+1));
             }
         }
     } *n;
 
-    static NP built(int l, int r, ll d[]) {
-        if (l == r) return last;
-        int md = (l+r)/2;
+
+    static NP built(int sz, D d[]) {
+        if (!sz) return last;
+        int md = sz/2;
         NP x = new Node(d[md]);
-        x->l = built(l, md, d);
-        x->r = built(md+1, r, d);
+        x->l = built(md, d);
+        x->r = built(sz-(md+1), d+(md+1));
         return x->update();
     }
 
@@ -67,10 +73,11 @@ struct Tree {
             return y;
         }
     }
-
+    Tree() : n(last) {}
     Tree(NP n) : n(n) {}
-    Tree(int sz, ll d[]) {
-        n = built(0, sz, d);
+    Tree(D d) : n(new Node(d)) {}
+    Tree(int sz, D d[]) {
+        n = built(sz, d);
     }
     int sz() {
         return n->sz;
@@ -83,17 +90,17 @@ struct Tree {
         n = u.first;
         return Tree(u.second);
     }
-    void insert(int k, int value) {
+    void insert(int k, D x) {
         auto u = split(n, k);
-        n = merge(merge(u.first, new Node(value)), u.second);
+        n = merge(merge(u.first, new Node(x)), u.second);
     }
     void erase(int k) {
         auto u = split(n, k);
         n = merge(u.first, split(u.second, 1).second);
     }
-    int getc(int l) {
-        return n->getc(l);
+    D get(int l) {
+        return n->get(l);
     }
 };
-Tree::Node Tree::last_d = Tree::Node(NULL, NULL, 0);
+Tree::Node Tree::last_d = Tree::Node();
 Tree::NP Tree::last = &last_d;

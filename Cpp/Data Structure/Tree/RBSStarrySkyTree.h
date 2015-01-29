@@ -10,24 +10,28 @@ struct STree {
         int sz;
         D v, mi, lz;
         Node(D v) :l(last), r(last), sz(1), v(v), mi(v), lz(0) {}
-        Node(NP l, NP r, int sz = 0) :l(l), r(r), sz(sz) {} 
+        Node() :l(NULL), r(NULL), sz(0) {} //last用
         void push() {
-            if (l->sz) {
-                l->v += lz;
-                l->mi += lz;
-                l->lz += lz;
+            assert(this != last);
+            if (lz) {
+                if (l->sz) {
+                    l->lzdata(lz);
+                }
+                if (r->sz) {
+                    r->lzdata(lz);
+                }
+                lz = 0;
             }
-            if (r->sz) {
-                r->v += lz;
-                r->mi += lz;
-                r->lz += lz;
-            }
-            lz = 0;
-            update();
+        }
+        void lzdata(D d) {
+            v += d;
+            mi += d;
+            lz += d;
         }
         NP update() {
+            assert(this != last);
             sz = 1+l->sz+r->sz;
-            if (lz) push();
+            assert(!lz);
             mi = v;
             if (l->sz) {
                 mi = min(mi, l->mi);
@@ -47,21 +51,10 @@ struct STree {
             res = min(res, r->get(a- l->sz - 1, b- l->sz - 1));
             return res;
         }
-        D getv(int a) {
-            if (a == l->sz) return v;
-            push();
-            if (a < l->sz) {
-                return l->getv(a);
-            } else {
-                return r->getv(a - l->sz - 1);
-            }
-        }
         void add(int a, int b, D x) {
             if (!sz || b <= 0 || sz <= a) return;
             if (a <= 0 && sz <= b) {
-                v += x;
-                mi += x;
-                lz += x;
+                lzdata(x);
                 return;
             }
             push();
@@ -72,23 +65,15 @@ struct STree {
             r->add(a- l->sz - 1, b- l->sz - 1, x);
             update();
         }
-        void print() {
-            if (!sz) return;
-            printf("(");
-            l->print();
-            printf("-(%lld %lld %lld)-", v, mi, lz);
-            r->print();
-            printf(")");
-        }
     } *n;
 
 
-    static NP built(int l, int r, D d[]) {
-        if (l == r) return last;
-        int md = (l+r)/2;
+    static NP built(int sz, D d[]) {
+        if (!sz) return last;
+        int md = sz/2;
         NP x = new Node(d[md]);
-        x->l = built(l, md, d);
-        x->r = built(md+1, r, d);
+        x->l = built(md, d);
+        x->r = built(sz-(md+1), d+(md+1));
         return x->update();
     }
 
@@ -124,10 +109,11 @@ struct STree {
             return y;
         }
     }
-
+    STree() : n(last) {}
     STree(NP n) : n(n) {}
+    STree(D d) : n(new Node(d)) {}
     STree(int sz, D d[]) {
-        n = built(0, sz, d);
+        n = built(sz, d);
     }
     int sz() {
         return n->sz;
@@ -148,20 +134,12 @@ struct STree {
         auto u = split(n, k);
         n = merge(u.first, split(u.second, 1).second);
     }
-
-    ll get(int l, int r) {
-        return n->get(l, r);
-    }
-    ll getv(int l) {
-        return n->getv(l);
-    }
     void add(int l, int r, D x) {
         return n->add(l, r, x);
     }
-    void print() {
-        n->print();
-        printf("\n");
+    D get(int l, int r) {
+        return n->get(l, r);
     }
 };
-STree::Node STree::last_d = STree::Node(NULL, NULL, 0);
+STree::Node STree::last_d = STree::Node();
 STree::NP STree::last = &last_d;

@@ -1,4 +1,7 @@
-typedef long long ll;
+int nlz(unsigned int x) {
+    double dx = x;
+    return 1054 - (*(unsigned long *)(&(dx)) >> 52);
+}
 
 ll gcd(ll a, ll b) {
     if (b==0) return a;
@@ -43,6 +46,21 @@ ll comb_pmod(int n, int k, ll mod) {
 	return r;
 }
 
+ll comb_st(int n, int k) {
+    if (n < k || k < 0) return 0;
+    return fact[n]*invfact[k]%MD*invfact[n-k]%MD;
+}
+
+ll grid_num(P s, P g) {
+    if (g.first < s.first || g.second < g.first) return 0;
+    return comb_st(g.fist+g.second-(s.first+s.second), g.first-s.first);
+}
+ll katran_num(P s, P g) {
+    ll res = grid_num(s, g);
+    g = P(g.second, g.first);
+    res += MD-grid_num(s, g);
+    return res % MD;
+}
 template<int N, int K>
 struct Combinations {
     ll data[N][K] = {};

@@ -9,7 +9,7 @@ struct Tree {
         int sz;
         D v;
         Node(D v) :l(last), r(last), sz(1), v(v) {}
-        Node(NP l, NP r, int sz = 0) :l(l), r(r), sz(sz) {}
+        Node() :l(nullptr), r(nullptr), sz(0) {}
         void push() {
 
         }
@@ -26,6 +26,14 @@ struct Tree {
             if (!sz) return 0;
             if (v <= a) return l->sz + 1 + r->ub(a);
             return l->ub(a);
+        }
+        D get(int k) {
+            if (k == l->sz) return v;
+            if (k < l->sz) {
+                return l->get(k);
+            } else {
+                return r->get(k- (l->sz+1));
+            }
         }
     } *n;
 
@@ -93,6 +101,9 @@ struct Tree {
     int ub(D v) {
         return n->ub(v);
     }
+    D get(int k) {
+        return n->get(k);
+    }
 };
-Tree::Node Tree::last_d = Tree::Node(NULL, NULL, 0);
+Tree::Node Tree::last_d = Tree::Node();
 Tree::NP Tree::last = &last_d;

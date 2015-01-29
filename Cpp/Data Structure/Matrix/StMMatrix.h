@@ -30,7 +30,8 @@ struct SMatrix {
         SMatrix res;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                res[i][j] = (d[i*N+j]+right[i][j]) % MD;
+                res[i][j] = d[i*N+j]+right[i][j];
+                if (res[i][j] >= MD) res[i][j] -= MD;
             }
         }
         return res;
@@ -46,9 +47,10 @@ struct SMatrix {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 for (int k = 0; k < N; k++) {
-                    res[i][j] += (d[i*N+k]*r[j][k]) % MD;
-                    res[i][j] %= MD;
+                    res[i][j] += d[i*N+k]*r[j][k];
+                    if (res[i][j] >= MD*MD) res[i][j] -= MD*MD;
                 }
+                res[i][j] %= MD;
             }
         }
         return res;
