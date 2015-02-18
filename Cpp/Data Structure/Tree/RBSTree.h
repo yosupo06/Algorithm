@@ -1,4 +1,4 @@
-struct Tree {
+struct NTree {
     using D = ll;
     struct Node;
     using NP = Node*;
@@ -50,7 +50,7 @@ struct Tree {
         if (!l->sz) return r;
         if (!r->sz) return l; 
         l->push(); r->push();
-        if (xor128() % (l->sz + r->sz) < l->sz) {
+        if ((int)(xor128() % (l->sz + r->sz)) < l->sz) {
             l->r = merge(l->r, r);
             return l->update();
         } else {
@@ -73,22 +73,22 @@ struct Tree {
             return y;
         }
     }
-    Tree() : n(last) {}
-    Tree(NP n) : n(n) {}
-    Tree(D d) : n(new Node(d)) {}
-    Tree(int sz, D d[]) {
+    NTree() : n(last) {}
+    NTree(NP n) : n(n) {}
+    NTree(D d) : n(new Node(d)) {}
+    NTree(int sz, D d[]) {
         n = built(sz, d);
     }
     int sz() {
         return n->sz;
     }
-    void merge(Tree r) {
+    void merge(NTree r) {
         n = merge(n, r.n);
     }
-    Tree split(int k) {
+    NTree split(int k) {
         auto u = split(n, k);
         n = u.first;
-        return Tree(u.second);
+        return NTree(u.second);
     }
     void insert(int k, D x) {
         auto u = split(n, k);
@@ -102,5 +102,5 @@ struct Tree {
         return n->get(l);
     }
 };
-Tree::Node Tree::last_d = Tree::Node();
-Tree::NP Tree::last = &last_d;
+NTree::Node NTree::last_d = NTree::Node();
+NTree::NP NTree::last = &last_d;

@@ -46,7 +46,7 @@ struct Tree {
         if (!l->sz) return r;
         if (!r->sz) return l; 
         l->push(); r->push();
-        if (xor128() % (l->sz + r->sz) < l->sz) {
+        if ((int)(xor128() % (l->sz + r->sz)) < l->sz) {
             l->r = merge(l->r, r);
             return l->update();
         } else {
@@ -88,7 +88,7 @@ struct Tree {
         n = merge(merge(u.first, new Node(v)), u.second);
     }
     void erase(D v) {
-        if (!count(v)) return;
+        assert(count(v));
         auto u = split(n, lb(v));
         n = merge(u.first, split(u.second, 1).second);
     }

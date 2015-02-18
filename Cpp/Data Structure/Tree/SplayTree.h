@@ -1,4 +1,4 @@
-struct Tree {
+struct NTree {
     using D = ll;
     struct Node;
     using NP = Node*;
@@ -118,9 +118,9 @@ struct Tree {
         x->r->p = x;
         return x->update();
     }
-    Tree() : n(last) {}
-    Tree(NP n) : n(n) {}
-    Tree(int sz, D d[]) {
+    NTree() : n(last) {}
+    NTree(NP n) : n(n) {}
+    NTree(int sz, D d[]) {
         n = built(sz, d);
     }
     int sz() {
@@ -134,13 +134,13 @@ struct Tree {
         auto u = split(n, k);
         n = merge(u.first, split(u.second, 1).second);
     }
-    void merge(Tree t) {
+    void merge(NTree t) {
         n = merge(n, t.n);
     }
-    Tree split(int l) {
+    NTree split(int l) {
         auto a = split(n, l);
         n = a.first;
-        return Tree(a.second);
+        return NTree(a.second);
     }
     D get(int l) {
         auto a = split(n, l);
@@ -157,5 +157,5 @@ struct Tree {
         return res;
     }
 };
-Tree::Node Tree::last_d = Tree::Node();
-Tree::NP Tree::last = &last_d;
+NTree::Node NTree::last_d = NTree::Node();
+NTree::NP NTree::last = &last_d;

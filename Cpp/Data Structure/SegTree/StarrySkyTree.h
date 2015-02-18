@@ -2,14 +2,14 @@ template <int S>
 struct StarrySkyTree {
     typedef ll D;
     static const int N = 1<<S;
-    static const int INF = 1<<55;   
+    static const D INF = 1LL<<55;   
     D seg[2*N], lz[2*N];
     int sz[2*N];
     StarrySkyTree() {
         for (int i = 2*N-1; i >= N; i--) {
             sz[i] = 1;
         }
-        for (int i = N-1; i >= 0; i--) {
+        for (int i = N-1; i >= 1; i--) {
             sz[i] = sz[i*2]+sz[i*2+1];
         }
     }

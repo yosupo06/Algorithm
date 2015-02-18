@@ -1,17 +1,11 @@
-//木の根を変える、LCAを求めるに対応したLCTree 一番Basic
 typedef long long ll;
 struct LCNode {
     typedef LCNode* NP;
-    typedef int D;
-    static const int INF = 1LL<<25;
     static LCNode last_d;
     static NP last;
     NP p, l, r;
     int sz;
-    D id;
     bool rev;
-    LCNode(D v) :p(NULL), l(last), r(last), sz(1), id(v) {}
-    LCNode() : l(NULL), r(NULL), sz(0) {}
     inline int pos() {
         if (p) {
             if (p->l == this) return -1;
@@ -83,17 +77,21 @@ struct LCNode {
             rev = false;
         }
     }
-    void revdata() {
-        assert(this != last);
-        swap(l, r);
-        rev ^= true;
-    }
-    NP update() {
-        assert(this != last);
-        sz = 1+l->sz+r->sz;
-        return this;
+
+    void link(NP r) {
+        assert(this != r);
+        expose();
+        r->expose();
+        assert(l == last);
+        p = r;
     }
 
+    void cut() {
+        expose();
+        l->p = NULL;
+        l = last;
+        update();
+    }
     NP root() {
         expose();
         NP u = this;
@@ -109,21 +107,47 @@ struct LCNode {
         revdata();
     }
 
-    D lca(LCNode &r) {
-        r.expose();
+    typedef int D;
+    D up, down;
+    D sup, sdown;
+    LCNode(bool f) :p(nullptr), l(last), r(last), sz(1) {
+        if (f) {
+            up = down = sup = sdown = 0;
+        } else {
+            up = down = sup = sdown = 1;
+        }
+    }
+    LCNode() : l(nullptr), r(nullptr), sz(0) {}
+    void revdata() {
+        assert(this != last);
+        swap(l, r);
+        swap(up, down);
+        swap(sup, sdown);
+        rev ^= true;
+    }
+    NP update() {
+        assert(this != last);
+        sz = 1+l->sz+r->sz;
+        sup = up; sdown = down;
+        if (l->sz) {
+            sup += l->sup;
+            sdown += l->sdown;
+        }
+        if (r->sz) {
+            sup += r->sup;
+            sdown += r->sdown;
+        }
+        return this;
+    }
+
+    D get() {
         expose();
-        NP u = &r;
-        while (u->pos()) {
-            u = u->p;
-        }
-        if (u == this) return r.id;
-        NP x = last;
-        while (u) {
-            if (!u->pos()) x = u->p;
-            u = u->p;
-        }
-        if (u == this) return x->id;
-        return -1;
+        return sup;
+    }
+    void set(D upd, D downd) {
+        expose();
+        up = upd; down = downd;
+        update();
     }
 };
 LCNode LCNode::last_d = LCNode();

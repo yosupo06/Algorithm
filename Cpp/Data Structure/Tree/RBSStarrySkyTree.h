@@ -10,7 +10,7 @@ struct STree {
         int sz;
         D v, mi, lz;
         Node(D v) :l(last), r(last), sz(1), v(v), mi(v), lz(0) {}
-        Node() :l(NULL), r(NULL), sz(0) {} //last用
+        Node() :l(nullptr), r(nullptr), sz(0) {} //last用
         void push() {
             assert(this != last);
             if (lz) {
@@ -86,7 +86,7 @@ struct STree {
         if (!l->sz) return r;
         if (!r->sz) return l; 
         l->push(); r->push();
-        if (xor128() % (l->sz + r->sz) < l->sz) {
+        if ((int)(xor128() % (l->sz + r->sz)) < l->sz) {
             l->r = merge(l->r, r);
             return l->update();
         } else {
