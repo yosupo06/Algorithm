@@ -1,3 +1,8 @@
+/*
+AA Treeにより書かれたStarry Sky Tree
+merge/splitはそんなに速くないためあんまり利用価値はないかも
+*/
+
 template<class D, class C = less<D>>
 struct AASSTree {
     struct Node;

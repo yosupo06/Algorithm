@@ -1,3 +1,3 @@
 プログラミングコンテスト用のライブラリです。
 
-DataStruct/Treeに平衡二分木やらLC木やら入ってます
+Cpp/Data Structure/Treeに平衡二分木やらLC木やら入ってます

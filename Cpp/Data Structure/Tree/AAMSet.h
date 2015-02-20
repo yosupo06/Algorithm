@@ -1,3 +1,12 @@
+/*
+AA Treeにより書かれたmultiset
+std::multisetよりは遅いが、insert/eraseはRBSTよりは高速のはず
+at(k)でk番目の要素にアクセスが可能
+lb(x)/ub(x)でlower/upper boundが可能、答えはindexで返ってくる
+念のためmerge/splitも用意してあるが、利用価値は低い
+使用用途は範囲削除が高速でできるとか？
+*/
+
 template<class D, class C = less<D>>
 struct AAMSet {
     struct Node;

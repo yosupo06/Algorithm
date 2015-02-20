@@ -1,3 +1,7 @@
+/*
+RBSTで書かれたStarry Sky Tree
+*/
+
 struct STree {
     using D = ll;
     const static D INF = 1LL<<55;
