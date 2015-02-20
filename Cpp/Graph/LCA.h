@@ -1,3 +1,10 @@
+/*
+使い方
+addで辺を追加する
+execで事前処理
+その後queryでLCAが求められる
+計算量は事前処理O(NlogN) クエリO(logN)
+*/
 template<int V>
 struct LowestCommonAncestor {
     const static int LG = 25;

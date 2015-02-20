@@ -1,3 +1,7 @@
+/*
+データ構造をマージする一般的なテクによるQuickFind
+*/
+
 template <int N>
 struct UnionFind {
     int ig[N];

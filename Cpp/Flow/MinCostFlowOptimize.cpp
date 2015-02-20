@@ -1,3 +1,9 @@
+/*
+二つあるが基本的にMinCostFlowをそのまま置き換えられる
+どちらも定数倍改善がされたPrimal-dual法 負辺は未対応
+改善率はたかだか2,3倍なので当てにしないこと
+*/
+
 template<int V>
 struct MinCostFlowOptimize {
     using T = int;

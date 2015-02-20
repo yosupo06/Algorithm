@@ -1,3 +1,8 @@
+/*
+BitMatching
+Dinicを使用していないため産業廃棄物
+速度が欲しいならMaxFlow.cppを使う事   
+*/
 template<int V>
 struct BitMatching {
     vector<int> G[2*V];

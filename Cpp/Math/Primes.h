@@ -1,4 +1,4 @@
-//prims.size -> N=100k:near10k
+//primes.size -> N=100k:near10k
 template <int N>
 struct Primes {
     bool used[N];

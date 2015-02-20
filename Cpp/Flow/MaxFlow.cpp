@@ -1,3 +1,7 @@
+/*
+Dinicで書かれたMaxFlow
+*/
+
 template<int V>
 struct MaxFlow {
     using T = int;

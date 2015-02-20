@@ -1,13 +1,6 @@
-int nlz(unsigned int x) {
-    double dx = x;
-    return 1054 - (*(unsigned long *)(&(dx)) >> 52);
-}
+//いろいろ乱雑
 
-ll gcd(ll a, ll b) {
-    if (b==0) return a;
-    return gcd(b, a%b);
-}
-
+//nCk
 ll comb(int n, int k) {
     if (n < k) return 0;
     ll result = 1;
@@ -18,49 +11,41 @@ ll comb(int n, int k) {
     return result;
 }
 
-ll pow_mod(ll x, ll n, ll mod) {
-	ll r = 1;
-	while (n) {
-		if (n & 1) r = (r * x) % mod;
-		x = (x * x) % mod;
-		n >>= 1;
-	}
-	return r;
-}
-
-ll invp(ll r, ll mod) {
-	return pow_mod(r, mod-2, mod);
-}
-
-ll comb_pmod(int n, int k, ll mod) {
+//nCk % md
+ll comb_pmod(int n, int k, ll md) {
 	if (n < k || k < 0) return 0;
 	ll r = 1;
 	for (int i = 1; i <= k; i++) {
 		r *= i;
-		r %= mod;
+		r %= md;
 	}
-	r = invp(r, mod);
+	r = invp(r, md);
 	for (int i = n-k+1; i <= n; i++) {
-		r = (r * i) % mod;
+		r = (r * i) % md;
 	}
 	return r;
 }
 
+//fact[i]:i! invfact[i]:i!の逆元 という配列が用意されている前提でのnCkの計算
 ll comb_st(int n, int k) {
     if (n < k || k < 0) return 0;
     return fact[n]*invfact[k]%MD*invfact[n-k]%MD;
 }
 
+//P=pair<ll, ll> sからgへ移動する経路数を求める
 ll grid_num(P s, P g) {
     if (g.first < s.first || g.second < g.first) return 0;
     return comb_st(g.fist+g.second-(s.first+s.second), g.first-s.first);
 }
+
+//P=pair<ll, ll> sからgへと対角線をまたがずに行ける経路数
 ll katran_num(P s, P g) {
     ll res = grid_num(s, g);
     g = P(g.second, g.first);
     res += MD-grid_num(s, g);
     return res % MD;
 }
+
 template<int N, int K>
 struct Combinations {
     ll data[N][K] = {};

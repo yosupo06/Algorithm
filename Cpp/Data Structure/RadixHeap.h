@@ -1,3 +1,9 @@
+/*
+RadixHeap
+整数距離dijkstraで使うことを想定
+priority_queueに比べ高速
+*/
+
 struct RadixHeap {
     typedef pair<int, int> P;
     vector<P> v[32];

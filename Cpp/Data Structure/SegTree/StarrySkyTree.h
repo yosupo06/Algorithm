@@ -1,3 +1,7 @@
+/*
+遅延評価で書かれている
+*/
+
 template <int S>
 struct StarrySkyTree {
     typedef ll D;

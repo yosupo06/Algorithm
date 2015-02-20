@@ -1,3 +1,6 @@
+/*
+execでresに最短距離が入る
+*/
 template<int V>
 struct Dijkstra {
     using T = int;

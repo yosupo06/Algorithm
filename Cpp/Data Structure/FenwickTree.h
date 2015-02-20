@@ -1,3 +1,7 @@
+/*
+0-indexed
+*/
+
 template <int N>
 struct FenwickTree {
     ll seg[N];
