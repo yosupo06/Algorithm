@@ -1,3 +1,10 @@
+/*
+範囲addが可能なFenwicktree
+すこし拡張されている
+initでまず配列を与える
+すると、add(l, r, x)で[l, r)それぞれにd[i]*xを足す
+つまりdとして1で埋められたものを渡せば範囲addになる
+*/
 template <int SIZE>
 struct FenwickRAdd {
     FenwickTree<SIZE> b0, b1;

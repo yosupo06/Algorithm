@@ -1,3 +1,4 @@
+//sのkmpテーブルを構築する resは長さs.size()以上の配列へのポインタ
 void kmp(string s, int res[]) {
     res[0] = -1;
     int j = -1;

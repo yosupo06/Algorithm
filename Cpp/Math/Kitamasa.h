@@ -1,3 +1,11 @@
+/*
+通称きたまさ法(k項間漸化式のn項目をO(k^2logN)で計算するやつ)のライブラリ
+コンストラクタでkを与える
+その後、execでnを与える
+すると、
+a_n = res[0]*a_0 + res[1]*a_1 ... res[k-1]*a_(k-1)
+となるようにresの中に適切な数字が入る
+*/
 template<ll MD>
 struct Kitamasa {
     int k;

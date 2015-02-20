@@ -1,3 +1,7 @@
+/*
+Link-Cut Tree
+evertが付いている
+*/
 typedef long long ll;
 struct LCNode {
     typedef LCNode* NP;

@@ -1,7 +1,10 @@
 /*
-BitMatching
+二部マッチング
 Dinicを使用していないため産業廃棄物
-速度が欲しいならMaxFlow.cppを使う事   
+速度が欲しいならMaxFlow.cppを使う事
+
+add(a, b)で左側のa番目と右側のb番目の間に辺が貼られる
+execで実行
 */
 template<int V>
 struct BitMatching {
