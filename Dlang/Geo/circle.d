@@ -1,7 +1,7 @@
     return (conj(x)*y).im;
 }
 
-Cir curcumCircle(in P[3] l) {
+Cir circumCircle(in P[3] l) {
     P a = l[0], b = l[1], c = l[2];
     b -= a; c -= a;
     double s = 2*cross(b, c);
@@ -22,7 +22,7 @@ Cir smallestEnclosingCircle(P[] p) {
         Cir get() {
             final switch (qc) {
             case 3:
-                return curcumCircle(q);
+                return circumCircle(q);
             case 2:
                 return Cir((q[0]+q[1])/2, abs(q[0]-q[1])/2);
             case 1:
