@@ -5,7 +5,7 @@ struct C {
     C (P p, R r) : p(p), r(r) {};
 };
 
-C curcumCircle(P l[3]) {
+C circumCircle(P l[3]) {
     P a = l[0], b = l[1], c = l[2];
     b -= a; c -= a;
     double s = 2*cross(b, c);
