@@ -66,11 +66,6 @@ double[] powTable(int num, double base) {
 }
 
 
-/*
- ここからはまずい
- */
-
-
 /// Calculate binomial coefficients C[n, r] for 0 <= r < length.
 real[] combTable(long n, size_t length) {
     import std.range : recurrence, take;
@@ -94,6 +89,7 @@ long combMod(long n, long k, int md) {
     return r;
 }
 
+//nCk % mdを計算する mdが小さい時に有効
 long lucas(long n, long k, int md) {
     if (n < k) return 0;
     long res = 1;
@@ -106,21 +102,16 @@ long lucas(long n, long k, int md) {
     return res;
 }
 
-class CombinationGen(MD) {
-    long[][] d;
-    this(int n, int k) {
-        d = new long[][](n+1, k+1);
-        foreach (j; 0..k+1) {
-            d[0][j] = 0;
-        }
-        foreach (i; 0..n+1) {
-            d[i][0] = 1;
-        }
-        foreach (i; 1..n+1) {
-            foreach (j; 1..k+1) {
-                d[i][j] = (d[i-1][j] + d[i-1][j-1]) % MD;
-            }
+//res[n][k] = nCk % mdとなるテーブルを構築
+long[][] comb2DTable(long n, long k, int md) {
+    long[][] d = new long[][](n, k);
+    d[0][0] = 1;
+    foreach (i; 1..n) {
+        d[i][0] = 1;
+        foreach (j; 1..k) {
+            d[i][j] = (d[i-1][j] + d[i-1][j-1]) % MD;
         }
     }
 }
+
 
