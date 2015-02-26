@@ -3,7 +3,9 @@ T gcd(T)(T a, T b) {
     return gcd(b, a%b);
 }
 
-long powMod(long x, long n, long md) {
+//(md-1)*(md-1)がlongに収まらないとオーバーフローを起こすためmdをintにしている
+//mdは必ず素数
+long powMod(long x, long n, int md) {
     x %= md; n %= md-1;
     long r = 1;
     while (n) {
@@ -14,22 +16,60 @@ long powMod(long x, long n, long md) {
     return r;
 }
 
-long invMod(long r, long md) {
+//rのmdでの逆元
+//mdは必ず素数
+long invMod(long r, int md) {
     return powMod(r, md-2, md);
 }
 
-void powModTable(long[] d, long b, long md) {
-    d[0] = 1;
-    foreach (i; 1..d.length) {
-        d[i] = (d[i-1]*b)%md;
+//O(sqrt(x)) xの素因数を列挙する
+T[] factor(T)(T x) {
+    T[] res;
+    T y = x;
+    for (T i = 2; i*i <= x; i++) {
+        while (y % i == 0) {
+            res ~= i;
+            y /= i;
+        }
     }
+    if (y > 1) res ~= y;
+    return res;
 }
-void powTable(double[] d, double b) {
-    d[0] = 1;
-    foreach (i; 1..d.length) {
-        d[i] = (d[i-1]*b);
+
+//res[i]にnをbase進数で表したi桁目が入る
+T[] convDigit(T)(T n, T base) {
+    T[] res;
+    while (n) {
+        res ~= n % base;
+        n /= base;
     }
+    return res;
 }
+
+//i=0,1,...,num-1についてbase^i % mdのテーブルを構築する
+long[] powModTable(int num, long base, int md) {
+    auto res = new long[](num);
+    res[0] = 1;
+    foreach (i; 1..num) {
+        res[i] = (res[i-1]*num) % md;
+    }
+    return res;
+}
+
+double[] powTable(int num, double base) {
+    auto res = new double[](num);
+    res[0] = 1.0;
+    foreach (i; 1..num) {
+        res[0] = res[i-1]*num;
+    }
+    return res;
+}
+
+
+/*
+ ここからはまずい
+ */
+
 
 void combTable(double[] d, long n) {
     d[0] = 1;
