@@ -10,16 +10,15 @@ struct Permutation {
 		d = iota(N).array;
 	}
 
-	Permutation opBinary(string op) (Permutation r) {
-		static if (op == "*") {
-			assert(N == r.N);
-			auto tmp = Permutation(N);
-			foreach (i; 0..N) {
-				tmp[i] = r[d[i]];
-			}
-			return tmp;
+	Permutation opBinary(string op) (Permutation r)
+		if (op == "*")
+	{
+		assert(N == r.N);
+		auto tmp = Permutation(N);
+		foreach (i; 0..N) {
+			tmp[i] = r[d[i]];
 		}
-		assert(false);
+		return tmp;
 	}
 }
 
