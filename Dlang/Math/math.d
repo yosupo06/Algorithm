@@ -66,7 +66,7 @@ double[] powTable(double base, size_t length) {
 }
 
 //i=0,1,...,num-1についてi! % mdのテーブルを構築する
-long[] factTable(size_t length, int md) {
+long[] factModTable(size_t length, int md) {
     auto res = new long[](length);
     res[0] = 1;
     foreach (i; 1..length) {
@@ -76,8 +76,8 @@ long[] factTable(size_t length, int md) {
 }
 
 //i=0,1,...,num-1についてi!の逆元のテーブルを構築する
-long[] invFactTable(size_t length, int md) {
-    auto fact = factTable(length, md);
+long[] invFactModTable(size_t length, int md) {
+    auto fact = factModTable(length, md);
     return fact.map!(a => invMod(a, md)).array;
 }
 
