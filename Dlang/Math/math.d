@@ -71,11 +71,11 @@ double[] powTable(int num, double base) {
  */
 
 
-void combTable(double[] d, long n) {
-    d[0] = 1;
-    foreach (i; 1..d.length) {
-        d[i] = d[i-1]*(n-i+1)/i;
-    }
+/// Calculate binomial coefficients C[n, r] for 0 <= r < length.
+real[] combTable(long n, size_t length) {
+    import std.range : recurrence, take;
+    import std.array : array;
+    return 1.0L.recurrence!((a, i) => a[i-1] * (n-i+1) / i).take(length).array;
 }
 long combMod(long n, long k, long md) {
     assert(k < md);
