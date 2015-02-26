@@ -47,24 +47,39 @@ T[] convDigit(T)(T n, T base) {
 }
 
 //i=0,1,...,num-1についてbase^i % mdのテーブルを構築する
-long[] powModTable(int num, long base, int md) {
-    auto res = new long[](num);
+long[] powModTable(long base, size_t length, int md) {
+    auto res = new long[](length);
     res[0] = 1;
-    foreach (i; 1..num) {
-        res[i] = (res[i-1]*num) % md;
+    foreach (i; 1..length) {
+        res[i] = (res[i-1]*base) % md;
     }
     return res;
 }
 
-double[] powTable(int num, double base) {
-    auto res = new double[](num);
+double[] powTable(double base, size_t length) {
+    auto res = new double[](length);
     res[0] = 1.0;
-    foreach (i; 1..num) {
-        res[0] = res[i-1]*num;
+    foreach (i; 1..length) {
+        res[0] = res[i-1]*base;
     }
     return res;
 }
 
+//i=0,1,...,num-1についてi! % mdのテーブルを構築する
+long[] factTable(size_t length, int md) {
+    auto res = new long[](length);
+    res[0] = 1;
+    foreach (i; 1..length) {
+        res[i] = (res[i-1]*i) % md;
+    }
+    return res;
+}
+
+//i=0,1,...,num-1についてi!の逆元のテーブルを構築する
+long[] invFactTable(size_t length, int md) {
+    auto fact = factTable(length, md);
+    return fact.map!(a => invMod(a, md)).array;
+}
 
 /// Calculate binomial coefficients C[n, r] for 0 <= r < length.
 real[] combTable(long n, size_t length) {
@@ -109,9 +124,10 @@ long[][] comb2DTable(long n, long k, int md) {
     foreach (i; 1..n) {
         d[i][0] = 1;
         foreach (j; 1..k) {
-            d[i][j] = (d[i-1][j] + d[i-1][j-1]) % MD;
+            d[i][j] = (d[i-1][j] + d[i-1][j-1]) % md;
         }
     }
+    return d;
 }
 
 
