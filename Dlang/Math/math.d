@@ -77,7 +77,7 @@ void combTable(double[] d, long n) {
         d[i] = d[i-1]*(n-i+1)/i;
     }
 }
-long combMod(long n, long k, long md) {
+long combMod(long n, long k, int md) {
     assert(k < md);
     n %= md;
     if (n < k || k < 0) return 0;
@@ -94,7 +94,7 @@ long combMod(long n, long k, long md) {
     return r;
 }
 
-long lucas(long n, long k, long md) {
+long lucas(long n, long k, int md) {
     if (n < k) return 0;
     long res = 1;
     while (n) {
