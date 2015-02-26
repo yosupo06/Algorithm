@@ -23,10 +23,11 @@ class UnionFind {
 		if (isSame(a, b)) return;
 		gn--;
 		int ga = i2g[a], gb = i2g[b];
-		if (g2i[ga].length > g2i[gb].length) swap(ga, gb);
-		foreach (i; g2i[ga]) i2g[i] = gb;
-		g2i[gb] ~= g2i[ga];
-		g2i[ga].length = 0;
+		//gaにgbを統合する
+		if (g2i[ga].length < g2i[gb].length) swap(ga, gb);
+		foreach (i; g2i[gb]) i2g[i] = ga;
+		g2i[ga] ~= g2i[gb];
+		g2i[gb].length = 0;
 	}
 
 	bool isSame(int a, int b) {
