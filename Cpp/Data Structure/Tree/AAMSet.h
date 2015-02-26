@@ -65,8 +65,50 @@ struct AAMSet {
     int ub(D v) {
         return ub(n, v);
     }
+    static NP insert(NP n, D x) {
+        if (n == last) {
+            return Node::make(x);
+        }
+        n->push();
+        if (!C()(n->v, x)) {
+            n->l = insert(n->l, x);
+            n->update();
+        } else {
+            n->r = insert(n->r, x);
+            n->update();
+        }
+        n = skew(n);
+        n = pull(n);
+        return n;
+    }
     void insert(D x) {
         n = insert(n, lb(x), x);
+    }
+    static NP erase(NP n, D k) {
+        assert(n != last);
+        n->push();
+        if (!C()(n->v, x) && !C()(x, n->v)) {
+            if (n->level == 1) {
+                return n->r;
+            }
+            auto x = at0_with_remove(n->r);
+            NP nn = x.first;
+            nn->push();
+            nn->l = n->l;
+            nn->r = x.second;
+            nn->level = n->level;
+            nn->update();
+            return rightdown(nn);
+        }
+        if (C()(x, n->v)) {
+            n->l = erase(n->l, x);
+            n->update();
+            return leftdown(n);
+        } else {
+            n->r = erase(n->r, x);
+            n->update();
+            return rightdown(n);
+        }
     }
     void erase(D x) {
         n = remove(n, lb(x));
@@ -113,10 +155,10 @@ struct AAMSet {
 
 
     //基本動作
-    const int sz() {
+    int sz() {
         return n->sz;
     }
-    const int size() {
+    int size() {
         return sz();
     }
     static AAMSet merge(AAMSet l, AAMSet r) {
