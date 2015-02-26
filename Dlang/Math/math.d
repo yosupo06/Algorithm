@@ -74,11 +74,21 @@ long[] factModTable(size_t length, int md) {
     }
     return res;
 }
-
 //i=0,1,...,num-1についてi!の逆元のテーブルを構築する
 long[] invFactModTable(size_t length, int md) {
+    import std.algorithm : map;
+    import std.array : array;
     auto fact = factModTable(length, md);
     return fact.map!(a => invMod(a, md)).array;
+}
+
+unittest {
+    import std.algorithm : map, equal;
+    import std.range : zip, repeat, take;
+    //1009 is prime
+    auto x = factModTable(10, 1009);
+    auto y = invFactModTable(10, 1009);    
+    assert(equal(zip(x, y).map!(a => a[0]*a[1] % 1009), repeat(1).take(10)));
 }
 
 /// Calculate binomial coefficients C[n, r] for 0 <= r < length.

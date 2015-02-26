@@ -20,6 +20,7 @@ class UnionFind {
 	}
 
 	void merge(int a, int b) {
+		import std.algorithm : swap;
 		if (isSame(a, b)) return;
 		gn--;
 		int ga = i2g[a], gb = i2g[b];
@@ -37,4 +38,16 @@ class UnionFind {
 	int numGroup() {
 		return gn;
 	}
+}
+
+unittest {
+	auto uf = new UnionFind(5);
+	uf.merge(3, 3);
+	uf.merge(2, 4);
+	uf.merge(1, 3);
+	uf.merge(0, 2);
+	//[0-2-4, 1-3]
+	assert(uf.isSame(0, 3) == false);
+	assert(uf.isSame(4, 0) == true);
+	assert(uf.numGroup == 2);
 }

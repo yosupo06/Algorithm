@@ -1,3 +1,6 @@
+/**
+ * Randomized Binary Search Tree
+ */
 struct RBSTree(T) {
     alias Node = RBSNode*;
     __gshared RBSNode last_d = RBSNode(null, null, 0, 0);

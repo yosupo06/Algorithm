@@ -6,18 +6,18 @@ template <int N>
 struct UnionFind {
     int ig[N];
     vector<int> gi[N];
-    int dc;
+    int gn;
     void init(int n = N) {
         for (int i = 0; i < n; ++i) {
             ig[i] = i;
             gi[i] = {i};
         }
-        dc = 0;
+        gn = n;
     }
  
     void merge(int a, int b) {
         if (same(a, b)) return;
-        dc++;
+        gn--;
         int x = ig[a], y = ig[b];
         if (gi[x].size() < gi[y].size()) swap(x, y);
         for (int j: gi[y]) {
@@ -29,5 +29,9 @@ struct UnionFind {
  
     bool same(int a, int b) {
         return ig[a] == ig[b];
+    }
+
+    int group_num() {
+        return gn;
     }
 };
