@@ -48,38 +48,29 @@ T[] convDigit(T)(T n, T base) {
 
 //i=0,1,...,num-1についてbase^i % mdのテーブルを構築する
 long[] powModTable(long base, size_t length, int md) {
-    auto res = new long[](length);
-    res[0] = 1;
-    foreach (i; 1..length) {
-        res[i] = (res[i-1]*base) % md;
-    }
-    return res;
+    import std.range : recurrence, take;
+    import std.array : array;
+    return 1L.recurrence!((a, i) => (a[i-1]*base) % md).take(length).array;
 }
 
-double[] powTable(double base, size_t length) {
-    auto res = new double[](length);
-    res[0] = 1.0;
-    foreach (i; 1..length) {
-        res[0] = res[i-1]*base;
-    }
-    return res;
+real[] powTable(real base, size_t length) {
+    import std.range : recurrence, take;
+    import std.array : array;
+    return 1.0L.recurrence!((a, i) => a[i-1]*base).take(length).array;
 }
 
 //i=0,1,...,num-1についてi! % mdのテーブルを構築する
 long[] factModTable(size_t length, int md) {
-    auto res = new long[](length);
-    res[0] = 1;
-    foreach (i; 1..length) {
-        res[i] = (res[i-1]*i) % md;
-    }
-    return res;
+    import std.range : recurrence, take;
+    import std.array : array;
+    return 1L.recurrence!((a, i) => (a[i-1]*i) % md).take(length).array;
 }
+
 //i=0,1,...,num-1についてi!の逆元のテーブルを構築する
 long[] invFactModTable(size_t length, int md) {
     import std.algorithm : map;
     import std.array : array;
-    auto fact = factModTable(length, md);
-    return fact.map!(a => invMod(a, md)).array;
+    return factModTable(length, md).map!(a => invMod(a, md)).array;
 }
 
 unittest {
@@ -87,7 +78,7 @@ unittest {
     import std.range : zip, repeat, take;
     //1009 is prime
     auto x = factModTable(10, 1009);
-    auto y = invFactModTable(10, 1009);    
+    auto y = invFactModTable(10, 1009);
     assert(equal(zip(x, y).map!(a => a[0]*a[1] % 1009), repeat(1).take(10)));
 }
 
