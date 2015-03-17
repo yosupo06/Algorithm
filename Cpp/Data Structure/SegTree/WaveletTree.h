@@ -1,8 +1,12 @@
-template<int S>
+template<class D, int S>
 struct WaveletTree {
     static const int N = 1<<S;
+    typedef pair<D, int> P;
+    int n;
+    P x[N];
     int d[S+1][N];
     int lc[S][N];
+
     void built(int l, int r, int dps) {
         if (dps == S) return;
         int pl = l, md = (l+r)/2, pr = md;
@@ -17,18 +21,20 @@ struct WaveletTree {
         built(l, md, dps+1);
         built(md, r, dps+1);
     }
-    //idxは0~N-1の順列じゃないともうガバガバですよ
-    void init(int idx[]) {
-        copy_n(idx, N, d[0]);
-        sort(idx, idx+N);
+
+    void init(int nn = N) {
+        n = nn;
         for (int i = 0; i < N; i++) {
-            assert(idx[i] == i);
+            x[i].second = i;
+        }
+        sort(x, x+n);
+        for (int i = 0; i < N; i++) {
+            d[0][x[i].second] = i;
         }
         built(0, N, 0);
     }
-
     //[l, r)でk番目の数を調べる
-    int get(int l, int r, int k, int dps = 0, int idx = 0) {
+    int get(int l, int r, int k, int dps, int idx) {
         assert(1 <= k && k <= r-l);
         if (dps == S) {
             return d[dps][l];
@@ -43,8 +49,11 @@ struct WaveletTree {
         }
         return -1;
     }
+    D get(int l, int r, int k) {
+        return x[get(l, r, k, 0, 0)].first;
+    }
     //[l, r)でxが何番目に大きいかを調べる。ただしlower_bound
-    int find(int l, int r, int x, int dps = 0, int idx = 0) {
+    int find(int l, int r, int x, int dps, int idx) {
         if (r <= l) return 1;
         if (dps == S) {
             return (x <= l) ? 1 : 2;
@@ -58,5 +67,8 @@ struct WaveletTree {
         } else {
             return c+find(l+sz-ls, r+sz-(ls+c), x, dps+1, idx+sz);
         }
+    }
+    int find(int l, int r, D u) {
+        return find(l, r, lower_bound(x, x+n, P(u, -1)) - x, 0, 0);
     }
 };
