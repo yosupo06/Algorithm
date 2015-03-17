@@ -4,33 +4,70 @@
 
 template <int N>
 struct FenwickTree {
-    ll seg[N];
+    using D = ll;
+    D seg[N+1];
     
     void init() {
-        fill_n(seg, N, 0);
+        for (int i = 0; i <= N; i++) {
+            seg[i] = 0;
+        }
     }
 
-    void add(int i, ll x) {
-        while (i < N) {
+    void add(int i, D x) {
+        i++;
+        while (i <= N) {
             seg[i] += x;
-            i += (i+1) & ~i;
+            i += i & -i;
         }
     }
 
     //[0, i)
-    ll sum(int i) {
-        ll s = 0;
-        int d = 1;
-        while (i >= d) {
-            i -= d;
+    D sum(int i) {
+        D s = 0;
+        while (i > 0) {
             s += seg[i];
-            d = (i+1) & ~i;
+            i -= i & -i;
         }
         return s;
     }
 
     //[a, b)
-    ll sum(int a, int b) {
+    D sum(int a, int b) {
         return sum(b) - sum(a);
+    }
+};
+
+template <int N>
+struct FenwickTree2D {
+    using D = ll;
+    FenwickTree<N> seg[N+1];
+    
+    void init() {
+        for (int i = 0; i <= N; i++) {
+            seg[i].init();
+        }
+    }
+
+    void add(int x, int y, D d) {
+        x++;
+        while (x <= N) {
+            seg[x].add(y, d);
+            x += x & -x;
+        }
+    }
+
+    //[0, i)
+    D sum(int x, int y) {
+        D s = 0;
+        while (x > 0) {
+            s += seg[x].sum(y);
+            x -= x & -x;
+        }
+        return s;
+    }
+
+    D sum(int lx, int ly, int hx, int hy) {
+        return (sum(hx, hy) + sum(lx, ly))
+             - (sum(lx, hy) + sum(hx, ly));
     }
 };
