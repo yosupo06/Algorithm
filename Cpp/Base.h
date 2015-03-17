@@ -30,7 +30,6 @@ ll pow_mod(ll x, ll n, ll md) {
 	return r;
 }
 
-
 //xの逆元
 ll invp(ll x, ll md) {
 	return pow_mod(x, md-2, md);
