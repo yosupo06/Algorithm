@@ -3,9 +3,9 @@ execでresに最短距離が入る
 */
 template<int V>
 struct Dijkstra {
-    using T = int;
-    using P = pair<T, int>;
-    const T INF = 1<<28;
+    typedef R T;
+    typedef pair<T, int> P;
+    const R INF = 1e9;
     vector<P> g[V];
     void add(int from, int to, T dist) {
         g[from].push_back(P(dist, to));
@@ -15,10 +15,10 @@ struct Dijkstra {
         fill_n(res, V, INF);
         priority_queue<P, vector<P>, greater<P>> q;
         q.push(P(0, s));
+        res[s] = 0;
         while (!q.empty()) {
             P p = q.top(); q.pop();
-            if (res[p.second] <= p.first) continue;
-            res[p.second] = p.first;
+            if (res[p.second] < p.first) continue;
             for (P e: g[p.second]) {
                 if (p.first+e.first < res[e.second]) {
                     res[e.second] = p.first+e.first;
@@ -29,3 +29,5 @@ struct Dijkstra {
         return;
     }
 };
+
+
