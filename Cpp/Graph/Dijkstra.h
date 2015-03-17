@@ -17,7 +17,7 @@ struct Dijkstra {
         q.push(P(0, s));
         while (!q.empty()) {
             P p = q.top(); q.pop();
-            if (res[p.second] < p.first) continue;
+            if (res[p.second] <= p.first) continue;
             res[p.second] = p.first;
             for (P e: g[p.second]) {
                 if (p.first+e.first < res[e.second]) {
