@@ -1,47 +1,54 @@
-struct STree {
-    struct Node;
-    static const int PLS = 13000000;
-    static int pc;
-    static Node pool[PLS];
+//ARC グラフではない
 
-    using NP = Node*;
+/**
+ * 範囲add, 範囲sum, 区間コピーが可能なRBST
+ */
+struct STree {
+    using D = ll;
+    struct Node;
+ 
+    using NP = const Node*;
     static Node last_d;
     static NP last;
     struct Node {
         NP l, r;
         int sz;
-        ll v, sm, lz;
-        static NP make(NP x) {
+        D v, sm, lz;
+        Node() : l(nullptr), r(nullptr), sz(0) {}
+        Node(D vv) :l(last), r(last), sz(1) {
+            v = vv;
+            sm = 0;
+            lz = 0;
+        }
+        static Node* make(NP x) {
             pool[pc] = *x;
             pc++;
             return &pool[pc-1];
         }
-        static NP make(ll v) {
+        static Node* make(D v) {
             pool[pc] = Node(v);
             pc++;
             return &pool[pc-1];
         }
-        Node() {}
-        Node(ll v) :l(last), r(last), sz(1), v(v), sm(0), lz(0) {}
-        Node(NP l, NP r, int sz = 0) :l(l), r(r), sz(sz) {} 
         void push() {
-            if (l->sz) {
-                l = make(l);
-                l->v += lz;
-                l->sm += lz*l->sz;
-                l->lz += lz;
+            auto nl = make(l);
+            auto nr = make(r);
+            if (nl->sz) {
+                nl->lzdata(lz);
             }
-            if (r->sz) {
-                r = make(r);
-                r->v += lz;
-                r->sm += lz*r->sz;
-                r->lz += lz;
+            if (nr->sz) {
+                nr->lzdata(lz);
             }
             lz = 0;
+            l = nl;
+            r = nr;
         }
-        NP update() {
+        //pushのみconstを外してもよい
+        void push() const {
+            const_cast<Node*>(this)->push();
+        }
+        void update() {
             sz = 1+l->sz+r->sz;
-            if (lz) push();
             sm = v;
             if (l->sz) {
                 sm += l->sm;
@@ -49,63 +56,63 @@ struct STree {
             if (r->sz) {
                 sm += r->sm;
             }
-            return this;
         }
-        void add(int a, int b, ll x) {
-            if (!sz || b <= 0 || sz <= a) return;
-            if (a <= 0 && sz <= b) {
-                v += x;
-                sm += sz*x;
-                lz += x;
-                return;
-            }
-            push();
-            l = make(l);
-            r = make(r);
-            l->add(a, b, x);
-            if (a <= l->sz && l->sz < b) {
-                v += x;
-            }
-            r->add(a- l->sz - 1, b- l->sz - 1, x);
-            update();
+        void lzdata(D x) {
+            v += x;
+            sm += sz*x;
+            lz += x;
         }
-        ll sum(int a, int b) {
-            if (!sz || b <= 0 || sz <= a) return 0;
-            if (a <= 0 && sz <= b) return sm;
-            push();
-            ll res = 0;
-            res += l->sum(a, b);
-            if (a <= l->sz && l->sz < b) res += v;
-            res += r->sum(a - l->sz - 1, b - l->sz - 1);
-            return res;
-        }
-        void get(ll d[]) {
-            if (!sz) return;
-            push();
-            l->get(d);
-            d[l->sz] = v;
-            r->get(d+l->sz+1);
-        }
-        void print() {
-            if (!sz) return;
-            printf("(");
-            l->print();
-            printf("-(%lld %lld %lld)-", v, sm, lz);
-            r->print();
-            printf(")");
-        }
-    } *n;
+    };
+    NP n;
 
+    static const int PLS = 200000000 / sizeof(Node);
+    static int pc;
+    static Node pool[PLS];
 
-    static NP built(int l, int r, ll d[]) {
-        if (l == r) return last;
-        int md = (l+r)/2;
-        NP x = Node::make(d[md]);
-        x->l = built(l, md, d);
-        x->r = built(md+1, r, d);
-        return x->update();
+    static void get(NP n, D d[]) {
+        if (!n->sz) return;
+        n->push();
+        get(n->l, d);
+        d[n->l->sz] = n->v;
+        get(n->r, d + (n->l->sz+1));
+    }
+    void get(D d[]) {
+        get(n, d);
     }
 
+    void add(int l, int r, D x) {
+        auto a = split(n, l);
+        auto b = split(a.second, r-l);
+        auto u = Node::make(b.first);
+        u->lzdata(x);
+        n = merge(merge(a.first, u), b.second);
+    }
+    D sum(int l, int r) {
+        auto a = split(n, l);
+        auto b = split(a.second, r-l);
+        auto u = b.first;
+        return u->sm;
+    }
+
+    static NP built(int l, int r, D d[]) {
+        if (l == r) return last;
+        int md = (l+r)/2;
+        auto x = Node::make(d[md]);
+        x->l = built(l, md, d);
+        x->r = built(md+1, r, d);
+        x->update();
+        return x;
+    }
+ 
+    STree() : n(last) {}
+    STree(NP n) : n(n) {}
+    STree(int sz, D d[]) {
+        n = built(0, sz, d);
+    }
+
+    int sz() {
+        return n->sz;
+    }     
     static uint xor128(){
         static uint x=123456789,y=362436069,z=521288629,w=88675123;
         uint t;
@@ -115,74 +122,46 @@ struct STree {
         if (!l->sz) return r;
         if (!r->sz) return l;
         l->push(); r->push();
-        if (xor128() % (l->sz + r->sz) < l->sz) {
-            l = Node::make(l);
-            l->r = merge(l->r, r);
-            return l->update();
+        auto nl = Node::make(l);
+        auto nr = Node::make(r);
+        if ((int)(xor128() % (nl->sz + nr->sz)) < nl->sz) {
+            nl->r = merge(nl->r, nr);
+            nl->update();
+            return nl;
         } else {
-            r = Node::make(r);
-            r->l = merge(l, r->l);
-            return r->update();
+            nr->l = merge(nl, nr->l);
+            nr->update();
+            return nr;
         }
+    }
+    STree merge(STree r) {
+        return STree(merge(n, r.n));
     }
     static pair<NP, NP> split(NP x, int k) {
         if (!x->sz) return {last, last};
         x->push();
-        x = Node::make(x);
-        if (k <= x->l->sz) {
-            auto y = split(x->l, k);
-            x->l = y.second;
-            y.second = x->update();
+        auto nx = Node::make(x);
+        if (k <= nx->l->sz) {
+            auto y = split(nx->l, k);
+            nx->l = y.second;
+            nx->update();
+            y.second = nx;
             return y;
         } else {
             auto y = split(x->r, k- x->l->sz -1);
-            x->r = y.first;
-            y.first = x->update();
+            nx->r = y.first;
+            nx->update();
+            y.first = nx;
             return y;
         }
-    }
-
-    STree() : n(last) {}
-    STree(NP n) : n(n) {}
-    STree(int sz, ll d[]) {
-        n = built(0, sz, d);
-    }
-    int sz() {
-        return n->sz;
-    }
-
-    STree merge(STree r) {
-        return STree(merge(n, r.n));
     }
     pair<STree, STree> split(int k) {
         auto u = split(n, k);
         return pair<STree, STree>(STree(u.first), STree(u.second));
     }
-    STree insert(int k, ll x) {
-        auto u = split(n, k);
-        return merge(merge(u.first, Node::make(x)), u.second);
-    }
-    STree erase(int k) {
-        auto u = split(n, k);
-        return merge(u.first, split(u.second, 1).second);
-    }
-
-    void get(ll d[]) {
-        n->get(d);
-    }
-    void add(int l, int r, ll x) {
-        n = Node::make(n);
-        return n->add(l, r, x);
-    }
-    ll sum(int l, int r) {
-        return n->sum(l, r);
-    }
-    void print() {
-        n->print();
-        printf("\n");
-    }
 };
-STree::Node STree::last_d = STree::Node(NULL, NULL, 0);
+STree::Node STree::last_d = STree::Node();
 STree::NP STree::last = &last_d;
 STree::Node STree::pool[STree::PLS];
 int STree::pc = 0;
+ 
