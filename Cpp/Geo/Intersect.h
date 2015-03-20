@@ -1,18 +1,9 @@
-bool insLL(const L &l, const L &m) {
-    if (abs(cross(l.y-l.x, m.y-m.x)) > EPS) return true;
-    if (abs(cross(l.y-l.x, m.y-l.x)) < EPS) return true;
-    return false;
-}
-
 bool insLS(const L &l, const L &s) {
-    double a = cross(l.y-l.x, s.x-l.x);
-    double b = cross(l.y-l.x, s.y-l.x);
-    if ((a<EPS&&-EPS<b)||(b<EPS&&-EPS<a)) return true;
-    return false;
-}
-
-bool insSP(const L &s, P p) {
-    return abs(s.x-p)+abs(s.y-p)+abs(s.y-s.x) < EPS;
+    int a = ccw(l.x, l.y, s.x);
+    int b = ccw(l.x, l.y, s.y);
+    if (a == 1 && b == 1) return false;
+    if (a == -1 && b == -1) return false;
+    return true;
 }
 
 bool insSS(const L &s, const L &t) {
@@ -22,34 +13,90 @@ bool insSS(const L &s, const L &t) {
     return false;
 }
 
-bool insPP(P p, P q) {
-    return (abs(p-q) < EPS);
+int crossLL(const L &l, const L &m, P &r) {
+    L mm = L(m.x - l.x, m.y - l.x);
+    mm.x *= polar<R>(1.0, -arg(vec(l)));
+    mm.y *= polar<R>(1.0, -arg(vec(l)));
+    if (sgn(vec(mm).imag()) == 0) {
+        if (sgn(mm.x.imag()) == 0) return -1;
+        return 0;
+    }
+    r = mm.x - vec(mm) * (mm.x.imag() / vec(mm).imag());
+    r *= polar<R>(1.0, arg(vec(l)));
+    r += l.x;
+    return 1;
 }
 
-double distLP(const L &l, const P &p) {
-    return cross(l.y-l.x, p-l.x)/abs(l.y-l.x);
+int crossSS(const L &l, const L &m, P &r) {
+    int u = crossLL(l, m, r);
+    if (u == 0) return 0;
+    if (u == -1) {
+        int x = ccw(l.x, l.y, m.x);
+        int y = ccw(l.x, l.y, m.y);
+        if (x == 0) {
+            r = m.x;
+            return -1;
+        }
+        if (y == 0) {
+            r = m.y;
+            return -1;
+        }
+        if (x == y) return 0;
+        r = l.x;
+        return -1;
+    }
+    if (ccw(l.x, l.y, r) == 0 && ccw(m.x, m.y, r) == 0) return 1;
+    return 0;
 }
 
-P crossP(const L &l, const L &m) {
-    double A = cross(l.y-l.x, m.y-m.x);
-    double B = cross(l.y-l.x, l.y-m.x);
-    if (abs(A) < EPS && abs(B) < EPS) return m.x;
-    return m.x+B/A*(m.y-m.x);
+R distLP(const L &l, const P &p) {
+    return abs(cross(vec(l), p-l.x)/abs(vec(l)));
 }
 
-L shortenA(const L &l, double ab) {
-    L ll = l;
-    P p = l.y-l.x;
-    p /= abs(p);
-    ll.x = l.x+p*ab;
-    ll.y = l.y-p*ab;
-    return ll;
+
+//線分と点の最小距離
+R distSP(const L &s, const P &p) {
+    P s2 = vec(s)*P(0, 1);
+    if (ccw(s.x, s.x+s2, p) == 1) return abs(s.x-p);
+    if (ccw(s.y, s.y+s2, p) == -1) return abs(s.y-p);
+    return min(min(abs(s.x-p), abs(s.y-p)), distLP(s, p));
 }
 
-L shortenR(const L &l, double rel) {
-    L ll = l;
-    P p = l.y-l.x;
-    ll.x = l.x+p*rel;
-    ll.y = l.y-p*rel;
-    return ll;
+//線分と線分の最小距離
+R distSS(const L &s, const L &t) {
+    if (insSS(s, t)) return 0;
+    return min(min(distSP(s, t.x), distSP(s, t.y)),
+               min(distSP(t, s.x), distSP(t, s.y)));
+}
+
+//線分アレンジメント
+//l->線分 n->線分の数 p->点集合結果 g->アレ
+//pのサイズはlC2+2*l確保
+int arrange(L l[], int n, P p[], vector<int> g[]) {
+    int pc = 0;
+    for (int i = 0; i < n; i++) {
+        p[pc] = l[i].x; pc++;
+        p[pc] = l[i].y; pc++;
+        for (int j = i+1; j < n; j++) {
+            int u = crossSS(l[i], l[j], p[pc]);
+            if (u == 0) continue;
+            pc++;
+        }
+    }
+    sort(p, p+pc, lessP);
+    pc = unique(p, p+pc, near) - p;
+    for (int i = 0; i < n; i++) {
+        vector<int> v;
+        for (int j = 0; j < pc; j++) {
+            if (ccw(l[i].x, l[i].y, v[j]) != 0) continue;
+            v.push_back(j);
+        }
+        sort(v.begin(), v.end(), [&](const int &x, const int &y) 
+            {return abs(p[x] - l[i].x) < abs(p[y] - l[i].x);});
+        for (int j = 0; j < (int)v.size() - 1; j++) {
+            g[v[j]].push_back(v[j+1]);
+            g[v[j+1]].push_back(v[j]);
+        }
+    }
+    return pc;
 }
