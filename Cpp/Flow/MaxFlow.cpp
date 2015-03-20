@@ -43,7 +43,7 @@ struct MaxFlow {
 
     T dfs(int v, int t, T f) {
         if (v == t) return f;
-        for (int &i = iter[v]; i < g[v].size(); i++) {
+        for (int &i = iter[v]; i < (int)g[v].size(); i++) {
             Edge &e = g[v][i];
             if (e.cap <= 0) continue;
             if (level[v] < level[e.to]) {

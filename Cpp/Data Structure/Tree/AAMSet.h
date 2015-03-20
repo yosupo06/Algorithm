@@ -4,7 +4,7 @@ std::multisetよりは遅いが、insert/eraseはRBSTよりは高速のはず
 at(k)でk番目の要素にアクセスが可能
 lb(x)/ub(x)でlower/upper boundが可能、答えはindexで返ってくる
 念のためmerge/splitも用意してあるが、利用価値は低い
-使用用途は範囲削除が高速でできるとか？
+使用用途は高速な範囲削除など
 */
 
 template<class D, class C = less<D>>
@@ -84,7 +84,7 @@ struct AAMSet {
     void insert(D x) {
         n = insert(n, lb(x), x);
     }
-    static NP erase(NP n, D k) {
+    static NP erase(NP n, D x) {
         assert(n != last);
         n->push();
         if (!C()(n->v, x) && !C()(x, n->v)) {
@@ -161,15 +161,8 @@ struct AAMSet {
     int size() {
         return sz();
     }
-    static AAMSet merge(AAMSet l, AAMSet r) {
-        return AAMSet(merge(l.n, r.n));
-    }
     void merge(AAMSet r) {
         n = merge(n, r.n);
-    }
-    static tuple<AAMSet, AAMSet> split_n(AAMSet t, int k) {
-        auto y = split(t.n, k);
-        return tuple<AAMSet(y.first), AAMSet(y.second)>
     }
     AAMSet split(int k) {
         auto y = split(n, k);

@@ -8,7 +8,7 @@ bool isPrime(int x) {
 }
 
 
-class Primes {
+struct Primes {
     import std.algorithm : map;
     import std.array : array;
     immutable bool[] isPrime;

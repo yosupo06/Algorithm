@@ -1,6 +1,3 @@
-    return (conj(x)*y).im;
-}
-
 Cir circumCircle(in P[3] l) {
     P a = l[0], b = l[1], c = l[2];
     b -= a; c -= a;

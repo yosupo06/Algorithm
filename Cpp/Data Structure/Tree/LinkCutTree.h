@@ -63,6 +63,19 @@ struct LCNode {
         } while ((u = u->p));
         splay();
     }
+/*    void supush() {
+        stack<NP> s;
+        NP n = this;
+        while (n->pos()) {
+            s.push(n);
+            n = n->p;
+        }
+        n->push();
+        while (!s.empty()) {
+            NP nn = s.top(); s.pop();
+            nn->push();
+        }
+    }*/
     void supush() {
         if (pos()) {
             p->supush();

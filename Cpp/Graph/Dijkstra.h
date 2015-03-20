@@ -7,6 +7,11 @@ struct Dijkstra {
     typedef pair<T, int> P;
     const R INF = 1e9;
     vector<P> g[V];
+    void init() {
+        for (int i = 0; i < V; i++) {
+            g[i].clear();
+        }
+    }
     void add(int from, int to, T dist) {
         g[from].push_back(P(dist, to));
     }
