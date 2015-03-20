@@ -1,6 +1,7 @@
 *
 !*/
 !.gitignore
+!.gitmodules
 !?*.h
 !?*.d
 !?*.md
