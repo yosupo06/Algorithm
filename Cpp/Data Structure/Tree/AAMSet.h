@@ -1,12 +1,13 @@
-/*
-AA Treeにより書かれたmultiset
-std::multisetよりは遅いが、insert/eraseはRBSTよりは高速のはず
-at(k)でk番目の要素にアクセスが可能
-lb(x)/ub(x)でlower/upper boundが可能、答えはindexで返ってくる
-念のためmerge/splitも用意してあるが、利用価値は低い
-使用用途は高速な範囲削除など
-*/
-
+/**
+ * AA Treeにより書かれたMultiset
+ *
+ * 10k近い長さを持つため、ICPCでの投入は不可能に近い(8key/sでおよそ20分)
+ * ICPCならばRBSTを推奨する
+ * insert/eraseはこのライブラリの平衡二分木の中では最速
+ * ただしstd::setよりは遅い、1.5倍程度？
+ * 
+ * template引数のclass Dは要素の型、class Cは比較関数
+ */
 template<class D, class C = less<D>>
 struct AAMSet {
     struct Node;
@@ -21,7 +22,7 @@ struct AAMSet {
         Node(D vv): l(last), r(last), level(1), sz(1) {
             v = vv;
         }
-        //メモリプールをしたい時のためにnewにはラッパを用意しておく
+        /// メモリプールをしたい時のためにnewはラッパする
         static NP make() {
             return new Node();
         }
@@ -46,6 +47,7 @@ struct AAMSet {
             return at(n->r, k - (n->l->sz+1));
         }
     }
+    /// k番目の要素を取得
     D at(int k) {
         return at(n, k);
     }
@@ -54,6 +56,7 @@ struct AAMSet {
         if (C()(n->v, x)) return n->l->sz + 1 + lb(n->r, x);
         return lb(n->l, x);
     }
+    /// lower_bound、ただし返り値はインデックス
     int lb(D v) {
         return lb(n, v);
     }
@@ -62,6 +65,7 @@ struct AAMSet {
         if (C()(x, n->v)) return ub(n->l, x);
         return n->l->sz + 1 + ub(n->r, x);
     }
+    /// upper_bound、ただし返り値はインデックス
     int ub(D v) {
         return ub(n, v);
     }
@@ -81,6 +85,7 @@ struct AAMSet {
         n = pull(n);
         return n;
     }
+    /// xをinsertする
     void insert(D x) {
         n = insert(n, lb(x), x);
     }
@@ -110,6 +115,7 @@ struct AAMSet {
             return rightdown(n);
         }
     }
+    /// xを削除する
     void erase(D x) {
         n = remove(n, lb(x));
     }

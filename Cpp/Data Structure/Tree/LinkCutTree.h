@@ -1,10 +1,52 @@
-/*
-Link-Cut Tree
-evertが付いている
-*/
-typedef long long ll;
+/**
+ * 木のパスへの捜査なら最強と名高いLink-Cut Tree
+ *
+ * 機能としては、link、cut、evert、rootを実装済み
+ * 辺に値を持たせたい場合は頂点倍加を推奨する
+ * コード長はおよそ3kで、ICPCでの使用も十分可能
+ */
 struct LCNode {
     typedef LCNode* NP;
+
+    typedef int D;
+    struct Node {
+        D d, sm;
+    } n;
+    LCNode() : l(nullptr), r(nullptr), sz(0) {}
+    LCNode(D v) : p(nullptr), l(last), r(last), sz(1) {
+        n.d = v;
+        n.sm = v;
+    }
+
+    void revdata() {
+        assert(this != last);
+        swap(l, r);
+        rev ^= true;
+    }
+    NP update() {
+        assert(this != last);
+        sz = 1+l->sz+r->sz;
+        n.sm = n.d;
+        if (l->sz) {
+            n.sm += l->n.sm;
+        }
+        if (r->sz) {
+            n.sm += r->n.sm;
+        }
+        return this;
+    }
+
+    D get() {
+        expose();
+        return n.sm;
+    }
+    void set(D d) {
+        expose();
+        n.d = d;
+        update();
+    }
+    
+    //ここからテンプレ
     static LCNode last_d;
     static NP last;
     NP p, l, r;
@@ -63,19 +105,10 @@ struct LCNode {
         } while ((u = u->p));
         splay();
     }
-/*    void supush() {
-        stack<NP> s;
-        NP n = this;
-        while (n->pos()) {
-            s.push(n);
-            n = n->p;
-        }
-        n->push();
-        while (!s.empty()) {
-            NP nn = s.top(); s.pop();
-            nn->push();
-        }
-    }*/
+    /**
+     * splayする前に一括でその頂点のパス木の根までをpushする
+     * 唯一stack overflowしうる関数なので注意すること
+     */
     void supush() {
         if (pos()) {
             p->supush();
@@ -122,49 +155,6 @@ struct LCNode {
     void evert() {
         expose();
         revdata();
-    }
-
-    typedef int D;
-    D up, down;
-    D sup, sdown;
-    LCNode(bool f) :p(nullptr), l(last), r(last), sz(1) {
-        if (f) {
-            up = down = sup = sdown = 0;
-        } else {
-            up = down = sup = sdown = 1;
-        }
-    }
-    LCNode() : l(nullptr), r(nullptr), sz(0) {}
-    void revdata() {
-        assert(this != last);
-        swap(l, r);
-        swap(up, down);
-        swap(sup, sdown);
-        rev ^= true;
-    }
-    NP update() {
-        assert(this != last);
-        sz = 1+l->sz+r->sz;
-        sup = up; sdown = down;
-        if (l->sz) {
-            sup += l->sup;
-            sdown += l->sdown;
-        }
-        if (r->sz) {
-            sup += r->sup;
-            sdown += r->sdown;
-        }
-        return this;
-    }
-
-    D get() {
-        expose();
-        return sup;
-    }
-    void set(D upd, D downd) {
-        expose();
-        up = upd; down = downd;
-        update();
     }
 };
 LCNode LCNode::last_d = LCNode();

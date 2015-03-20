@@ -1,16 +1,21 @@
-/*
-二部マッチング
-Dinicを使用していないため産業廃棄物
-速度が欲しいならMaxFlow.cppを使う事
-
-add(a, b)で左側のa番目と右側のb番目の間に辺が貼られる
-execで実行
-*/
+/**
+ * 二部最大マッチング
+ *
+ * Dinicを使用していないためO(EV)、十分注意すること
+ * MaxFlow.hよりかなりコードが短いため、ICPC^速度のいらない時用
+ */
 template<int V>
 struct BitMatching {
     vector<int> G[2*V];
     int match[2*V];
     bool used[2*V];
+    /// 初期化
+    void init() {
+        for (int i = 0; i < 2*V; i++) {
+            G[i].clear();
+        }
+    }
+    /// 左側のa番目と右側のb番目に辺を張る
     void add(int a, int b) {
         G[a].push_back(b+V);
         G[b+V].push_back(a);
@@ -28,7 +33,7 @@ struct BitMatching {
         }
         return false;
     }
-
+    /// 最大マッチングの本数が返される
     int exec() {
         int res = 0;
         memset(match, -1, sizeof(match));

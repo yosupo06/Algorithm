@@ -1,8 +1,12 @@
+/**
+ * Primal-Dual法による最小費用流
+ * 辺の容量は整数でないと解けないことに注意
+ */
 template<int V>
 struct MinCostFlow {
-    using T = int;
-    using P = pair<T, int>;
+    using T = int; /// 辺のコストの型
     const T INF = 1<<28;
+    using P = pair<T, int>;
     struct Edge {
         int to, rev;
         int cap;
@@ -11,11 +15,22 @@ struct MinCostFlow {
     vector<Edge> g[V];
     T h[V], dist[V];
     int pv[V], pe[V];
+    /// 辺の追加
     void add(int from, int to, int cap, T cost) {
         g[from].push_back(Edge{to, (int)g[to].size(), cap, cost});
         g[to].push_back(Edge{from, (int)g[from].size()-1, 0, -cost});
     }
-
+    /**
+     * 最小費用流を計算する
+     *
+     * bellに関わらず、負閉路が存在する場合はこのプログラムでは解けないことに注意
+     *
+     * Params:
+     *   s = 始点
+     *   t = 終点
+     *   f = 流す量
+     *   bell = 負のコストの辺が存在するかどうか
+     */
     T exec(int s, int t, int f, bool bell = false) {
         T res = 0;
         fill_n(h, V, 0);

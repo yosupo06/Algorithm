@@ -1,10 +1,12 @@
-/*
-Dinicで書かれたMaxFlow
-*/
-
+/**
+ * Dinic法による最大流
+ *
+ * ほとんど蟻本そのまま
+ * template引数のint Vは頂点数
+ */
 template<int V>
 struct MaxFlow {
-    using T = int;
+    using T = int; /// 辺の重みの型
     const T INF = 1<<28;
     struct Edge {
         int to, rev;
@@ -13,12 +15,18 @@ struct MaxFlow {
     vector<Edge> g[V];
     int level[V];
     int iter[V];
-
+    /// 初期化
+    void init() {
+        for (int i = 0; i < V; i++) {
+            g[i].clear();
+        }
+    }
+    /// 有向辺の追加
     void add(int from, int to, T cap) {
         g[from].push_back(Edge{to, (int)g[to].size(), cap});
         g[to].push_back(Edge{from, (int)g[from].size()-1, 0});
     }
-
+    /// 無向辺の追加
     void add_multi(int from, int to, T cap) {
         g[from].push_back(Edge{to, (int)g[to].size(), cap});
         g[to].push_back(Edge{from, (int)g[from].size()-1, cap});
@@ -57,6 +65,7 @@ struct MaxFlow {
         return 0;
     }
 
+    // sからtへの最大流を返す
     T exec(int s, int t) {
         T flow = 0;
         while (true) {

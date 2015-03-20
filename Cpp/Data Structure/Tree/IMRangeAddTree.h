@@ -1,7 +1,9 @@
-//ARC グラフではない
-
 /**
- * 範囲add, 範囲sum, 区間コピーが可能なRBST
+ * 永続化されている、範囲add、範囲sum、区間コピーが可能なRBST
+ * 
+ * GCは実装されていない
+ *
+ * Verify: ARC グラフではない
  */
 struct STree {
     using D = ll;
@@ -43,7 +45,7 @@ struct STree {
             l = nl;
             r = nr;
         }
-        //pushのみconstを外してもよい
+        /// pushはconstに関わらず呼んで良い
         void push() const {
             const_cast<Node*>(this)->push();
         }
@@ -65,6 +67,7 @@ struct STree {
     };
     NP n;
 
+    //200,000,000とは200MBの意
     static const int PLS = 200000000 / sizeof(Node);
     static int pc;
     static Node pool[PLS];
