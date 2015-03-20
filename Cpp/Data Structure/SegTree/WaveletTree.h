@@ -1,3 +1,16 @@
+/**
+ * 本当にWaveletTreeなのかは知らない
+ *
+ * 区間について
+ * [l, r)でk番目の値の取得
+ * [l, r)でxが何番目に大きいかの取得
+ * をどちらもO(logn)で行える強力なデータ構造
+ *
+ * ただし一度構成したら変更不可能
+ *
+ * template引数のclass Dは要素の型
+ * int Sは要素数が2^Sであることを示す
+ */
 template<class D, int S>
 struct WaveletTree {
     static const int N = 1<<S;
@@ -33,7 +46,6 @@ struct WaveletTree {
         }
         built(0, N, 0);
     }
-    //[l, r)でk番目の数を調べる
     int get(int l, int r, int k, int dps, int idx) {
         assert(1 <= k && k <= r-l);
         if (dps == S) {
@@ -49,10 +61,10 @@ struct WaveletTree {
         }
         return -1;
     }
+    /// [l, r)でk番目の値を調べる
     D get(int l, int r, int k) {
         return x[get(l, r, k, 0, 0)].first;
     }
-    //[l, r)でxが何番目に大きいかを調べる。ただしlower_bound
     int find(int l, int r, int x, int dps, int idx) {
         if (r <= l) return 1;
         if (dps == S) {
@@ -68,6 +80,7 @@ struct WaveletTree {
             return c+find(l+sz-ls, r+sz-(ls+c), x, dps+1, idx+sz);
         }
     }
+    /// [l, r)でuが何番目に大きいかを調べる。ただしlower_bound
     int find(int l, int r, D u) {
         return find(l, r, lower_bound(x, x+n, P(u, -1)) - x, 0, 0);
     }

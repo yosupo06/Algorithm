@@ -1,16 +1,17 @@
-/*
-使い方
-addで辺を追加する
-execで事前処理
-その後queryでLCAが求められる
-計算量は事前処理O(NlogN) クエリO(logN)
-*/
+/**
+ * LCA(lowest common ancestor)を求めるライブラリ
+ *
+ * 計算量は事前処理がO(nlogn), クエリがO(nlogn)
+ *
+ * template引数のint Vは頂点の数
+ */
 template<int V>
 struct LowestCommonAncestor {
     const static int LG = 25;
     int ro[LG][V];
     int dps[V];
     vector<int> g[V];
+    /// i-jに有向辺を張る
     void add(int i, int j) {
         g[i].push_back(j);
         g[j].push_back(i);
@@ -24,6 +25,7 @@ struct LowestCommonAncestor {
             dfs(d, p);
         }
     }
+    /// 事前処理を行う rはroot頂点のid
     void exec(int r) {
         memset(ro, -1, sizeof(ro));
         dfs(r, -1);
@@ -33,6 +35,7 @@ struct LowestCommonAncestor {
             }
         }
     }
+    /// lとrの頂点のLCAを求める
     int query(int l, int r) {
         if (dps[l] < dps[r]) swap(l, r);
         int dd = dps[l]-dps[r];

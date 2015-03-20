@@ -1,7 +1,6 @@
-/*
-遅延評価で書かれている
-*/
-
+/**
+ * 遅延評価で書かれているStarry Sky Tree
+ */
 template <int S>
 struct StarrySkyTree {
     typedef ll D;
@@ -40,6 +39,8 @@ struct StarrySkyTree {
         assert(1 <= k && k < N);
         seg[k] = max(seg[k*2], seg[k*2+1]);
     }
+
+    /// k番目の要素にxを足す
     void add(int k, D x) {
         k += N;
         for (int i = S; i > 0; i--) {
@@ -50,6 +51,8 @@ struct StarrySkyTree {
             update(k>>i);
         }
     }
+
+    /// [a, b)にそれぞれxを足す
     void add(int a, int b, D x, int k = 1) {
         if (sz[k] <= a || b <= 0) return;
         if (a <= 0 && sz[k] <= b) {
@@ -61,7 +64,7 @@ struct StarrySkyTree {
         add(a-sz[k]/2, b-sz[k]/2, x, k*2+1);
         update(k);
     }
-
+    /// [a, b)の最大を求める
     D get(int a, int b, int k = 1) {
         if (sz[k] <= a || b <= 0) return -INF;
         if (a <= 0 && sz[k] <= b) return seg[k];

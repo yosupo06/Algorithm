@@ -1,3 +1,6 @@
+/**
+ * 永続SegmentTree 未整備だからちょっと今はまだ使うとマズそう
+ */
 struct Tree {
 
     struct Node {

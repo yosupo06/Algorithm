@@ -1,3 +1,6 @@
+/**
+ * 素数の一覧を求める
+ */
 //primes.size -> N=100k:near10k
 template <int N>
 struct Primes {

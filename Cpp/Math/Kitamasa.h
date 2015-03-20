@@ -1,11 +1,14 @@
-/*
-通称きたまさ法(k項間漸化式のn項目をO(k^2logN)で計算するやつ)のライブラリ
-コンストラクタでkを与える
-その後、execでnを与える
-すると、
-a_n = res[0]*a_0 + res[1]*a_1 ... res[k-1]*a_(k-1)
-となるようにresの中に適切な数字が入る
-*/
+/**
+ * 通称きたまさ法と呼ばれているらしいもののライブラリ
+ *
+ * a_k = sum(i = 0..k-1) d_i * a_i という漸化式が与えられているとする
+ * 
+ * ここで、nが与えられた時に
+ *
+ * a_n = res[0]*a_0 + res[1]*a_1 ... res[k-1]*a_(k-1)
+ *
+ * となるres[0] ~ res[k-1]をO(k^2logn)で求める
+ */
 template<ll MD>
 struct Kitamasa {
     int k;
@@ -46,6 +49,7 @@ struct Kitamasa {
         }
         copy(buf, buf+k, res);
     }
+    /// これを呼ぶ前に、必ずd[0] ~ d[k-1]に適切な値を入れておく
     void exec(ll n) {
         fill_n(res, k, 0);
         res[0] = 1;
