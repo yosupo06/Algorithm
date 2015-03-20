@@ -1,21 +1,25 @@
-/*
-execでresに最短距離が入る
-*/
+/**
+ * Dijkstra法により最短距離を求める
+ *
+ * template引数のint Vは頂点数
+ */
 template<int V>
 struct Dijkstra {
-    typedef R T;
+    typedef int T; /// 辺の距離の型
+    const int INF = 1e9;
     typedef pair<T, int> P;
-    const R INF = 1e9;
     vector<P> g[V];
+    /// 辺のクリア
     void init() {
         for (int i = 0; i < V; i++) {
             g[i].clear();
         }
     }
+    /// 辺の追加
     void add(int from, int to, T dist) {
         g[from].push_back(P(dist, to));
     }
-    T res[V];
+    T res[V]; /// execを行うと、これに最短距離が入る 
     void exec(int s) {
         fill_n(res, V, INF);
         priority_queue<P, vector<P>, greater<P>> q;

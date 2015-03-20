@@ -18,6 +18,7 @@ int crossLL(const L &l, const L &m, P &r) {
     mm.x *= polar<R>(1.0, -arg(vec(l)));
     mm.y *= polar<R>(1.0, -arg(vec(l)));
     if (sgn(vec(mm).imag()) == 0) {
+        r = l.x;
         if (sgn(mm.x.imag()) == 0) return -1;
         return 0;
     }

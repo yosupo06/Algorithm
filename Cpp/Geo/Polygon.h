@@ -27,6 +27,38 @@ int contains(const Pol &pol, P p) {
     return in+1;
 }
 
+R area(const Pol &p) {
+    R u = 0;
+    for (int i = 0; i < (int)pol.size(); i++) {
+        u += cross(cu(pol,i), cu(pol,i+1));
+    }
+    return abs(u)/2;
+}
+
+/*
+スパゲッティソースをパクった、直線の左側の多角形を返却する   
+*/
+Pol convex_cut(const Pol &p, const L &l) {
+    Pol q;
+    for (int i = 0; i < (int)p.size(); i++) {
+        P a = cu(p, i), b = cu(p, i+1);
+        if (ccw(l.x, l.y, a) != -1) q.push_back(a);
+        if (insLS(l, L(a, b))) {
+            //TODO
+        }
+    }
+}
+
+//true:Polygon is counter_cycle false:cycle
+bool iscclock(const Pol &pol) {
+    double th = 0;
+    for (int i = 0; i < pol.size(); i++) {
+        P a = cu(pol,i), b=cu(pol, i+1), c=cu(pol, i+2);
+        th += deg2NorN(arg(c-b)-arg(b-a));
+    }
+    return (th > 0);
+}
+
 
 Pol convex(Pol p) {
     sort(p.begin(), p.end());
@@ -52,14 +84,5 @@ Pol convex(Pol p) {
     return down;
 }
 
-//true:Polygon is counter_cycle false:cycle
-bool iscclock(const Pol &pol) {
-    double th = 0;
-    for (int i = 0; i < pol.size(); i++) {
-        P a = cu(pol,i), b=cu(pol, i+1), c=cu(pol, i+2);
-        th += deg2NorN(arg(c-b)-arg(b-a));
-    }
-    return (th > 0);
-}
 
 
