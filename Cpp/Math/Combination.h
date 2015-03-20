@@ -26,10 +26,10 @@ ll comb_pmod(int n, int k, ll md) {
 	return r;
 }
 
-//fact[i]:i! invfact[i]:i!の逆元 という配列が用意されている前提でのnCkの計算
+//fact[i]:i! invFact[i]:i!の逆元 という配列が用意されている前提でのnCkの計算
 ll comb_st(int n, int k) {
     if (n < k || k < 0) return 0;
-    return fact[n]*invfact[k]%MD*invfact[n-k]%MD;
+    return fact[n]*invFact[k]%MD*invFact[n-k]%MD;
 }
 
 //P=pair<ll, ll> sからgへ移動する経路数を求める
