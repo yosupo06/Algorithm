@@ -1,9 +1,11 @@
 /**
- * 木のパスへの捜査なら最強と名高いLink-Cut Tree
+ * 木のパスへの操作なら最強と名高いLink-Cut Tree
  *
  * 機能としては、link、cut、evert、rootを実装済み
  * 辺に値を持たせたい場合は頂点倍加を推奨する
- * コード長はおよそ3kで、ICPCでの使用も十分可能
+ * 
+ * 絶対に必要な部分さえ実装すれば後はオプションとして個別につけるか選択可能
+ * コード長はフル装備でも約2k(空白抜き)で、ICPCでの使用も十分可能
  */
 struct LCNode {
     typedef LCNode* NP;
@@ -18,11 +20,6 @@ struct LCNode {
         n.sm = v;
     }
 
-    void revdata() {
-        assert(this != last);
-        swap(l, r);
-        rev ^= true;
-    }
     NP update() {
         assert(this != last);
         sz = 1+l->sz+r->sz;
@@ -35,7 +32,23 @@ struct LCNode {
         }
         return this;
     }
-
+    void push() {
+        int lsz = l->sz, rsz = r->sz;
+        if (rev) {
+            if (lsz) {
+                l->revdata();
+            }
+            if (rsz) {
+                r->revdata();
+            }
+            rev = false;
+        }
+    }
+    void revdata() {
+        assert(this != last);
+        swap(l, r);
+        rev ^= true;
+    }
     D get() {
         expose();
         return n.sm;
@@ -43,10 +56,9 @@ struct LCNode {
     void set(D d) {
         expose();
         n.d = d;
-        update();
     }
-    
-    //ここからテンプレ
+
+    //ここから
     static LCNode last_d;
     static NP last;
     NP p, l, r;
@@ -115,18 +127,7 @@ struct LCNode {
         }
         push();
     }
-    void push() {
-        int lsz = l->sz, rsz = r->sz;
-        if (rev) {
-            if (lsz) {
-                l->revdata();
-            }
-            if (rsz) {
-                r->revdata();
-            }
-            rev = false;
-        }
-    }
+    //ここまでは絶対必要
 
     void link(NP r) {
         assert(this != r);
@@ -142,19 +143,29 @@ struct LCNode {
         l = last;
         update();
     }
+
     NP root() {
         expose();
         NP u = this;
-        while (u->l != last) {
-            u = u->l;
-        }
-        u->splay();
+        while (u->l != last) u = u->l;
+        u->splay(); //これを忘れると計算量がオワコンする
         return u;
     }
 
     void evert() {
         expose();
         revdata();
+    }
+
+    NP lca(NP n) {
+        n->expose();
+        expose();
+        NP t = n;
+        while (n->p != nullptr) {
+            if (!n->pos()) t = n->p;
+            n = n->p;
+        }
+        return (this == n) ? t : nullptr;
     }
 };
 LCNode LCNode::last_d = LCNode();
