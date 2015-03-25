@@ -3,7 +3,6 @@
  *
  * 現時点ではevert無しのみ
  */
-int cnt = 0;
 struct ETDTree {
     struct Node;
     typedef Node* NP;
@@ -18,12 +17,6 @@ struct ETDTree {
         Node(NP n) : p(nullptr), l(last), r(last), sz(1), id(n->id),
                       dps(n->dps), dps_lz(0), lca(P(dps, id)) {}
         Node() : l(nullptr), r(nullptr), sz(0), id(-1) {}
-        void make(NP n) {
-            id = n->id;
-            dps = n->dps;
-            assert(dps_lz == 0);
-            update();
-        }
 
         //pushをすると、pushをした頂点とその子の"すべて"の値の正当性が保証される
         void push() { 
@@ -115,7 +108,7 @@ struct ETDTree {
     };
     int N;
     typedef pair<int, int> P;
-    unordered_map<P, NP> e;
+    map<P, NP> e;
     vector<int> parent;
     vector<Node> pool;
     ETDTree(int N) : N(N) {
@@ -180,10 +173,10 @@ struct ETDTree {
         NP nn = e[P(x, N)]; e.erase(P(x, N));
         nn->splay();
         assert(nn != nullptr);
-        tie(u, nn) = split(nn, nn->sz-1);
+        nn = split(nn, nn->sz-1).second;
         *nn = Node(n);
         tie(m, n) = split(n, n->l->sz+1);
-        u = at(u, 0);
+        u = e[P(N, x)]; e.erase(P(N, x));
         u->splay();
         u->dpslzdata(nn->dps+1);
         parent[x] = y;
