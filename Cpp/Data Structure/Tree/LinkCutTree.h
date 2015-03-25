@@ -148,7 +148,7 @@ struct LCNode {
         expose();
         NP u = this;
         while (u->l != last) u = u->l;
-        u->splay(); //これを忘れると計算量がオワコンする
+        u->expose(); //これを忘れると計算量がオワコンする
         return u;
     }
 
