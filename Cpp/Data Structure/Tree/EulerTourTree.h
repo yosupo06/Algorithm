@@ -108,7 +108,6 @@ struct ETDTree {
     };
     int N;
     typedef pair<int, int> P;
-    map<P, NP> e;
     vector<int> parent;
     vector<Node> pool;
     ETDTree(int N) : N(N) {
@@ -120,8 +119,6 @@ struct ETDTree {
             NP x = &pool[i*2];
             NP y = &pool[i*2+1];
             merge(x, y);
-            e[P(N, i)] = x;
-            e[P(i, N)] = y;
         }
     }
     void debug(int d) {
@@ -132,7 +129,7 @@ struct ETDTree {
 
     NP tree(int d) {
         assert(0 <= d && d < N);
-        return e[P(parent[d], d)]->splay();
+        return (&pool[d*2])->splay();
     }
     NP merge(NP l, NP r) {
         if (l == last) return r;
@@ -170,37 +167,28 @@ struct ETDTree {
         assert(parent[x] == N);
         NP n, m, u;
         n = tree(y);
-        NP nn = e[P(x, N)]; e.erase(P(x, N));
+        NP nn = &pool[x*2+1];
         nn->splay();
         assert(nn != nullptr);
         nn = split(nn, nn->sz-1).second;
         *nn = Node(n);
         tie(m, n) = split(n, n->l->sz+1);
-        u = e[P(N, x)]; e.erase(P(N, x));
+        u = &pool[x*2];
         u->splay();
         u->dpslzdata(nn->dps+1);
         parent[x] = y;
-        e[P(y, x)] = u;
-        e[P(x, y)] = nn;
         merge(merge(merge(m, u), nn), n);
     }
     //root(x) == y
     void cut(int x) {
-        int y = parent[x];
-        assert(y != N);
-        assert(e.count(P(y, x)));
-        assert(e.count(P(x, y)));
+        assert(parent[x] != N);
         parent[x] = N;
         NP r, s1;
-        r = e[P(y, x)]; r->splay();
+        r = (&pool[x*2])->splay();
         tie(s1, r) = split(r, r->l->sz);
-        NP s2 = e[P(x, y)]; s2->splay();
-        e[P(x, N)] = s2;
+        NP s2 = (&pool[x*2+1])->splay();
         s2 = split(s2, s2->l->sz+1).second;
         merge(s1, s2);
-        e.erase(P(y, x));
-        e.erase(P(x, y));
-        e[P(N, x)] = r;
         r->splay();
         r->dpslzdata(-r->dps);
     }
