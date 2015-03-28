@@ -147,7 +147,10 @@ struct LCNode {
     NP root() {
         expose();
         NP u = this;
-        while (u->l != last) u = u->l;
+        while (u->l != last) {
+            u = u->l;
+            u->push();
+        }
         u->expose(); //これを忘れると計算量がオワコンする
         return u;
     }
