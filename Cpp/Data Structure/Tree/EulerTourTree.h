@@ -1,54 +1,25 @@
-/**
- * 森に対するクエリを処理する動的木 部分木クエリに対して強い
- *
- * 現時点ではevert無しのみ
- */
-struct ETDTree {
+template<int N>
+struct ETTree {
     struct Node;
     typedef Node* NP;
     static Node last_d;
     static NP last;
     struct Node {
         NP p, l, r;
-        int sz, id, dps, dps_lz;
-        pair<int, int> lca;
-        Node(int id) :p(nullptr), l(last), r(last), sz(1), id(id),
-                      dps(0), dps_lz(0), lca(P(0, id)) {}
-        Node(NP n) : p(nullptr), l(last), r(last), sz(1), id(n->id),
-                      dps(n->dps), dps_lz(0), lca(P(dps, id)) {}
-        Node() : l(nullptr), r(nullptr), sz(0), id(-1) {}
+        int sz, idl, idr, idx;
+        Node(int idl, int idr, int idx) :p(nullptr), l(last), r(last), sz(1), idl(idl), idr(idr), idx(idx) {
+        }
+        Node() : l(nullptr), r(nullptr), sz(0) {}
 
         //pushをすると、pushをした頂点とその子の"すべて"の値の正当性が保証される
         void push() { 
-            if (dps_lz) {
-                if (l != last) {
-                    l->dpslzdata(dps_lz);
-                }
-                if (r != last) {
-                    r->dpslzdata(dps_lz);
-                }
-                dps_lz = 0;
-            }
             assert(sz);
         }
         NP update() {
             assert(this != last);
             sz = 1+l->sz+r->sz;
-            lca = P(dps, id);
-            if (l != last) {
-                lca = min(lca, l->lca);
-            }
-            if (r != last) {
-                lca = min(lca, r->lca);
-            }
             return this;
         }
-        void dpslzdata(int x) {
-            dps += x;
-            dps_lz += x;
-            lca.first += x;
-        }
-
         inline int pos() {
             if (p) {
                 if (p->l == this) return -1;
@@ -98,38 +69,23 @@ struct ETDTree {
             }
             push();
         }
-        void debug() {
-            if (this == last) return;
-            push();
-            l->debug();
-            printf("(%d-%d %llx) ", id, dps, (unsigned long long)this & 0xffff);
-            r->debug();
-        }
     };
-    int N;
-    typedef pair<int, int> P;
-    vector<int> parent;
-    vector<Node> pool;
-    ETDTree(int N) : N(N) {
-        parent = vector<int>(N, N);
-        pool = vector<Node>(2*N);
+
+    int up[N];
+    int tr[N];
+    unordered_map<ull, int> mp;
+    Node pool[2*N];
+    ETTree() {
         for (int i = 0; i < N; i++) {
-            pool[i*2] = Node(i);
-            pool[i*2+1] = Node(N);
-            NP x = &pool[i*2];
-            NP y = &pool[i*2+1];
-            merge(x, y);
+            up[i] = i;
+            tr[i] = -1;
         }
-    }
-    void debug(int d) {
-        tree(d)->debug();
-        assert(tree(d)->id == d);
-        printf("\n");
     }
 
     NP tree(int d) {
         assert(0 <= d && d < N);
-        return (&pool[d*2])->splay();
+        if (tr[d] == -1) return last;
+        return pool[tr[d]].splay();
     }
     NP merge(NP l, NP r) {
         if (l == last) return r;
@@ -140,9 +96,18 @@ struct ETDTree {
         return r->update();
     }
     pair<NP, NP> split(NP n, int k) {
+        assert(0 <= k && k <= n->sz);
         if (!k) return {last, n};
         if (n->sz == k) return {n, last};
         n = at(n, k);
+        NP m = n->l;
+        m->p = nullptr;
+        n->l = last;
+        n->update();
+        return {m, n};
+    }
+    pair<NP, NP> splitl(NP n) {
+        if (n == last) return {last, last};
         NP m = n->l;
         m->p = nullptr;
         n->l = last;
@@ -161,62 +126,90 @@ struct ETDTree {
             return at(n->r, k-(n->l->sz+1));
         }
     }
-
-    //yの子としてxを追加
-    void link(int x, int y) {
-        assert(parent[x] == N);
-        NP n, m, u;
-        n = tree(y);
-        NP nn = &pool[x*2+1];
-        nn->splay();
-        assert(nn != nullptr);
-        nn = split(nn, nn->sz-1).second;
-        *nn = Node(n);
-        tie(m, n) = split(n, n->l->sz+1);
-        u = &pool[x*2];
-        u->splay();
-        u->dpslzdata(nn->dps+1);
-        parent[x] = y;
-        merge(merge(merge(m, u), nn), n);
-    }
-    //root(x) == y
-    void cut(int x) {
-        assert(parent[x] != N);
-        parent[x] = N;
-        NP r, s1;
-        r = (&pool[x*2])->splay();
-        tie(s1, r) = split(r, r->l->sz);
-        NP s2 = (&pool[x*2+1])->splay();
-        s2 = split(s2, s2->l->sz+1).second;
-        merge(s1, s2);
-        r->splay();
-        r->dpslzdata(-r->dps);
-    }
-
-
-    int lca(int x, int y) {
-        NP a = tree(x);
-        int ac = a->l->sz;
-        NP b = tree(y);
-        int bc = b->l->sz;
-        if (a->p == nullptr) return -1;
-        if (ac > bc) {
-            swap(ac, bc);
-            swap(a, b);
+    pair<int, int> getmp(int x, int y) {
+        int lp, rp;
+        if (x < y) {
+            assert(mp.count(((ull)(x)<<32) | y));
+            rp = mp[((ull)(x)<<32) | y];
+            lp = rp ^ 1;
+        } else {
+            assert(mp.count(((ull)(y)<<32) | x));
+            lp = mp[((ull)(y)<<32) | x];
+            rp = lp ^ 1;
         }
-        b->splay();
-        auto s = split(b, bc+1);
-        auto t = split(s.first, ac);
-        int res = t.second->lca.second;
-        merge(merge(t.first, t.second), s.second);
-        return res;
+        return {lp, rp};
+    }
+    void evert(int x) {
+        if (up[x] != -1) return;
+        int rt = root(x);
+        NP xt = tree(x);
+        NP L, R;
+        tie(L, R) = splitl(xt);
+        swap(up[rt], up[x]);
+        merge(R, L);
+    }
+
+    void link(int x, int y, int idx) {
+        assert(root(x) != root(y));
+        assert(up[x] != -1);
+        NP xt = tree(x);
+        NP yt = tree(y);
+        int lp = up[x]*2, rp = up[x]*2+1;
+        up[x] = -1;
+        tr[y] = lp; tr[x] = rp;
+        if (x < y) {
+            mp[((ull)x<<32) | y] = rp;
+        } else {
+            mp[((ull)y<<32) | x] = lp;
+        }
+        pool[lp] = Node(y, x, idx);
+        pool[rp] = Node(x, y, idx);
+        auto sp = splitl(yt);
+        NP lx = pool+lp, rx = pool+rp;
+        merge(merge(merge(merge(sp.first, lx), xt), rx), sp.second);
+    }
+    void cut(int x, int y) {
+        assert(root(x) == root(y));
+        assert(up[x] == -1);
+        int lp, rp;
+        tie(lp, rp) = getmp(x, y);
+        if (x < y) {
+            mp.erase(((ull)(x)<<32) | y);
+        } else {
+            mp.erase(((ull)(y)<<32) | x);
+        }
+        up[x] = lp/2;
+        NP lx = pool+lp, rx = pool+rp;
+        // L M R
+        NP L, M, R;
+        rx->splay();
+        tie(M, R) = split(rx, rx->l->sz+1);
+        split(M, M->sz-1);
+        lx->splay();
+        tie(L, M) = splitl(lx);
+        M = split(M, 1).second;
+        L = merge(L, R);
+        if (tr[y] == lp) {
+            if (!L->sz) tr[y] = -1;
+            else {
+                tr[y] = at(L, 0) - pool;
+            }
+        }
+        if (tr[x] == rp) {
+            if (!M->sz) tr[x] = -1;
+            else {
+                tr[x] = at(M, 0) - pool;
+            }
+        }
     }
     int root(int x) {
-        return at(tree(x), 0)->id;
-    }
-    bool same(int x, int y) {
-        return root(x) == root(y);
+        if (up[x] != -1) return x;
+        NP xt = tree(x);
+        int res = at(xt, 0)->idl;
+        return res;
     }
 };
-ETDTree::Node ETDTree::last_d = ETDTree::Node();
-ETDTree::NP ETDTree::last = &last_d;
+template<int N>
+typename ETTree<N>::Node ETTree<N>::last_d = ETTree::Node();
+template<int N>
+typename ETTree<N>::NP ETTree<N>::last = &last_d;
