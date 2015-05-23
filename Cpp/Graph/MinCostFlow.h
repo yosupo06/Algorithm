@@ -15,6 +15,11 @@ struct MinCostFlow {
     vector<Edge> g[V];
     T h[V], dist[V];
     int pv[V], pe[V];
+    void init() {
+        for (int i = 0; i < V; i++) {
+            g[i].clear();
+        }
+    }
     /// 辺の追加
     void add(int from, int to, int cap, T cost) {
         g[from].push_back(Edge{to, (int)g[to].size(), cap, cost});
@@ -44,7 +49,7 @@ struct MinCostFlow {
                     update = false;
                     for (int v = 0; v < V; v++) {
                         if (dist[v] == INF) continue;
-                        for (int i = 0; i < g[v].size(); i++) {
+                        for (int i = 0; i < (int)g[v].size(); i++) {
                             Edge &e = g[v][i];
                             if (e.cap > 0 && dist[e.to] > dist[v] + e.cost) {
                                 dist[e.to] = dist[v] + e.cost;
@@ -62,7 +67,7 @@ struct MinCostFlow {
                     P p = que.top(); que.pop();
                     int v = p.second;
                     if (dist[v] < p.first) continue;
-                    for (int i = 0; i < g[v].size(); i++) {
+                    for (int i = 0; i < (int)g[v].size(); i++) {
                         Edge &e = g[v][i];
                         if (e.cap > 0 && dist[e.to] > dist[v] + e.cost + h[v] - h[e.to]) {
                             dist[e.to] = dist[v] + e.cost + h[v] - h[e.to];
