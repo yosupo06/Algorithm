@@ -15,6 +15,11 @@ struct MinCostFlowOptimize {
         T cost;
     };
     vector<Edge> g[V];
+    void init() {
+        for (int i = 0; i < V; i++) {
+            g[i].clear();
+        }
+    }
     void add(int from, int to, int cap, T cost) {
         g[from].push_back(Edge{to, (int)g[to].size(), cap, cost});
         g[to].push_back(Edge{from, (int)g[from].size()-1, 0, (T)(-cost)});
@@ -76,14 +81,18 @@ struct MinCostFlowOptimize {
     using T = int;
     using P = pair<T, int>;
     const T INF = 1<<27;
-    int c = 0;
     struct Edge {
         int to, rev;
-        short cap, size;
+        int cap, size;
         T cost;
     };
     vector<Edge> g[V];
-    void add(int from, int to, short cap, T cost) {
+    void init() {
+        for (int i = 0; i < V; i++) {
+            g[i].clear();
+        }
+    }
+    void add(int from, int to, int cap, T cost) {
         g[from].push_back(Edge{to, (int)g[to].size(), cap, cap, cost});
         g[to].push_back(Edge{from, (int)g[from].size()-1, 0, cap, (T)(-cost)});
     }
@@ -91,13 +100,13 @@ struct MinCostFlowOptimize {
     T h[V], dist[V], rdist[V];
     bool used[V], rused[V];
     Edge *prev[V], *rprev[V];
-    T exec(int s, int t, short f) {
+    T exec(int s, int t, int f) {
         T res = 0;
         fill_n(h, V, 0);
         RadixHeap q, rq;
         int C = 2;
         while (true) {
-            int tp;
+            int tp = -1;
             fill_n(dist, V, INF);
             dist[s] = 0;
             fill_n(used, V, false);
