@@ -1,14 +1,12 @@
 template<ll MD>
 struct SMatrix {
     typedef ll D;
-    const D EPS = 0;
     vector<valarray<D>> d;
     int N, M;
-    SMatrix(int n, int m) {
-        N = n; M = m;
-        d.resize(n);
+    SMatrix(int N, int M) : N(N), M(M) {
+        d.resize(N);
         for (int i = 0; i < N; i++) {
-            d[i] = valarray<D>(D(0), m);
+            d[i] = valarray<D>(D(0), M);
         }
     }
 
@@ -93,7 +91,7 @@ struct SMatrix {
             if (d[i][i] == 0) {
                 int j;
                 for (j = i+1; j < N; j++) {
-                    if (abs(d[i][j]) > EPS) { //TODO: EPS
+                    if (d[i][j]) {
                         r.excL(i, j);
                         excL(i, j);
                         break;
