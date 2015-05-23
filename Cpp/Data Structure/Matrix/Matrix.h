@@ -1,9 +1,11 @@
-template<ll MD>
-struct SMatrix {
-    typedef ll D;
+/**
+ * 行列ライブラリ
+ */
+struct Matrix {
+    typedef double D;
     vector<valarray<D>> d;
     int N, M;
-    SMatrix(int N, int M) : N(N), M(M) {
+    Matrix(int N, int M) : N(N), M(M) {
         d.resize(N);
         for (int i = 0; i < N; i++) {
             d[i] = valarray<D>(D(0), M);
@@ -18,24 +20,24 @@ struct SMatrix {
         return d[p];
     }
     
-    SMatrix& operator=(const SMatrix &other) {
+    Matrix& operator=(const Matrix &other) {
         assert(other.N == N && other.M == M);
         copy_n(other.d.begin(), N, d.begin());
         return *this;
     }
 
-    SMatrix operator+(const SMatrix &right) {
+    Matrix operator+(const Matrix &right) {
         assert(right.N == N && right.M == M);
-        SMatrix res(N, M);
+        Matrix res(N, M);
         for (int i = 0; i < N; i++) {
-            res[i] = (d[i]+right[i])%MD;
+            res[i] = (d[i]+right[i]);
         }
         return res;
     }
     
-    SMatrix operator*(const SMatrix &right) {
+    Matrix operator*(const Matrix &right) {
         assert(M == right.N);
-        SMatrix res(N, right.M), r(right.M, right.N);
+        Matrix res(N, right.M), r(right.M, right.N);
         for (int i = 0; i < right.M; i++) {
             for (int j = 0; j < right.N; j++) {
                 r[i][j] = right[j][i]; 
@@ -43,23 +45,23 @@ struct SMatrix {
         }
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < right.M; j++) {
-                res[i][j] = (d[i]*r[j]%MD).sum()%MD;
+                res[i][j] = (d[i]*r[j]).sum();
             }
         }
         return res;
     }
 
-    SMatrix operator*(const D x) {
-        SMatrix res(N, M);
+    Matrix operator*(const D x) {
+        Matrix res(N, M);
         for (int i = 0; i < N; i++) {
-            res[i] = (d[i]*x)%MD;
+            res[i] = d[i]*x;
         }
         return res;
     }
 
-    SMatrix pow(ll p) {
+    Matrix pow(ll p) {
         assert(N == M);
-        SMatrix res(N, M), buf = *this;
+        Matrix res(N, M), buf = *this;
         for (int i = 0; i < N; i++) res[i][i] = D(1);
         while(p != 0) {
             if (p % 2) {
@@ -85,13 +87,13 @@ struct SMatrix {
     
     int inverse() {
         assert(N == M);
-        SMatrix r(N, N);
+        Matrix r(N, N);
         for (int i = 0; i < N; i++) r[i][i] = D(1);
         for (int i = 0; i < N; i++) {
-            if (d[i][i] == 0) {
+            if (sgn(d[i][i]) == 0) {
                 int j;
                 for (j = i+1; j < N; j++) {
-                    if (d[i][j]) {
+                    if (sgn(d[i][j])) {
                         r.excL(i, j);
                         excL(i, j);
                         break;
