@@ -29,8 +29,8 @@ int contains(const Pol &pol, P p) {
 
 R area(const Pol &p) {
     R u = 0;
-    for (int i = 0; i < (int)pol.size(); i++) {
-        u += cross(cu(pol,i), cu(pol,i+1));
+    for (int i = 0; i < (int)p.size(); i++) {
+        u += cross(cu(p,i), cu(p,i+1));
     }
     return abs(u)/2;
 }
@@ -65,21 +65,15 @@ Pol convex(Pol p) {
     if (p.size() <= 2) return p;
     Pol up;
     for (P d: p) {
-        //if (up.size() > 1) printf("ccw%d\n",  ccw(up[up.size()-2], up[up.size()-1], d) );
-        while (up.size() > 1 && ccw(up[up.size()-2], up[up.size()-1], d) > 0) {
-        //    printf("pop\n");
-            up.pop_back();
-        }
-        //printf("push\n");
+        while (up.size() > 1 && ccw(up[up.size()-2], up[up.size()-1], d) == 1) up.pop_back();
         up.push_back(d);
     }
     reverse(up.begin(), up.end());
     Pol down;
     for (P d: p) {
-        while (down.size() > 1 && ccw(down[down.size()-2], down[down.size()-1], d) < 0) down.pop_back();
+        while (down.size() > 1 && ccw(down[down.size()-2], down[down.size()-1], d) == -1) down.pop_back();
         down.push_back(d);
     }
-    //printf("%ld %ld\n", up.size(), down.size());
     down.insert(down.begin(), up.begin()+1, up.end()-1);
     return down;
 }
