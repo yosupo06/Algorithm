@@ -14,8 +14,8 @@ struct LCNode {
     struct Node {
         D d, sm;
     } n;
-    LCNode() : l(nullptr), r(nullptr), sz(0) {}
-    LCNode(D v) : p(nullptr), l(last), r(last), sz(1) {
+    LCNode() : l(nullptr), r(nullptr), sz(0), rev(false) {}
+    LCNode(D v) : p(nullptr), l(last), r(last), sz(1), rev(false) {
         n.d = v;
         n.sm = v;
     }
