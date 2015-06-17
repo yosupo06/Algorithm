@@ -3,6 +3,10 @@ T gcd(T)(T a, T b) {
     return gcd(b, a%b);
 }
 
+T lcm(T)(T a, T b) {
+    return a/lcm(a,b)*b;
+}
+
 //(md-1)*(md-1)がlongに収まらないとオーバーフローを起こすためmdをintにしている
 //mdは必ず素数
 long powMod(long x, long n, int md) {
