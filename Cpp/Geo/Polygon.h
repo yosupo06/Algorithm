@@ -8,6 +8,10 @@ struct T {
 
 typedef vector<P> Pol;
 
+P cu(const T &t, int i) {
+    return t.d[(i%3+3)%3];
+}
+
 P cu(const Pol &p, int i) { 
     int s = p.size();
     return p[(i%s+s)%s];
