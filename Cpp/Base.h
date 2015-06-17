@@ -63,16 +63,29 @@ int ceil_log2(uint n) {
 
 
 /*stack sizeを拡張する*/
+ll eord, enew;
 int main() {
     const int SZ = 128*1024*1024;
-    static ll eord, enew;
     void *p = malloc(SZ);
     enew = (long long)p + SZ - 1;
 
-    __asm__("mov %rsp, eorg");
+    __asm__("mov %rsp, eord");
     __asm__("mov enew, %rsp");
 
     main2();
 
-    __asm__("mov eorg, %rsp");
+    __asm__("mov eord, %rsp");
+}
+
+int main() {
+    static ll eord, enew;
+    const int sz = 32*1024*1024;
+    static void *p = malloc(sz);
+    enew = (long long)p + sz - 1;
+    __asm__ volatile("mov %%rsp, %0" : "=r"(eord));
+    __asm__ volatile("mov %0, %%rsp" : : "r"(enew));
+    main2();
+    __asm__ volatile("mov %0, %%rsp" : : "r"(eord));
+
+    return 0;
 }
