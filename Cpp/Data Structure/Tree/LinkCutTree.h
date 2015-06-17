@@ -155,6 +155,19 @@ struct LCNode {
         return u;
     }
 
+    NP parent() {
+        expose();
+        NP u = this->l;
+        if (u == last) return nullptr;
+        u->push();
+        while (u->r != last) {
+            u = u->r;
+            u->push();
+        }
+        u->expose();
+        return u;
+    }
+
     void evert() {
         expose();
         revdata();
