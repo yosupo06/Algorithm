@@ -37,7 +37,7 @@ struct Matrix {
         }
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < right.M; j++) {
-                res[i][j] = (d[i]+r[j]).min();
+                res[i][j] = min(INF, (d[i]+r[j]).min());
             }
         }
         return res;
