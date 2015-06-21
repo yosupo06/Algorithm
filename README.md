@@ -11,17 +11,22 @@ C++11/Dlangどちらも用意していますが, C++の方が充実していま�
 ### データ構造
 
 - Union Find
-- Fenwick Tree
-- Segment Tree
-- Starry Sky Tree
-- 永続Segment Tree
-- Randomized Binary Tree
-- Splay Tree
-- AA Tree
+- セグメント木
+	- Fenwick Tree
+	- Segment Tree
+	- Starry Sky Tree
+	- Wavelet Tree
+	- 永続Segment Tree
+- 平衡二分木
+	- Randomized Binary Tree
+	- Splay Tree
+	- AA Tree
+	- 永続Randmized Binary Tree
 - Link Cut Tree
 - 行列(inverse, rank, pow)
 - Radix Heap
 - さいころ
+- Sparce Table
 
 ### グラフ
 
@@ -29,7 +34,10 @@ C++11/Dlangどちらも用意していますが, C++の方が充実していま�
 - LCA(Last common ancestor)
 - 強連結成分分解
 - 最大流(Dinic)
+	- Dinic
+	- F-F(流し戻し用)
 - 最小費用流
+- 後退解析
 
 ### 数学
 
@@ -37,3 +45,4 @@ C++11/Dlangどちらも用意していますが, C++の方が充実していま�
 - メビウス関数列挙
 - カタラン数
 - きたまさ法
+- Karatsuba法
