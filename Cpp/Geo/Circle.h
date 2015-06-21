@@ -51,6 +51,36 @@ int crossCC(const C &c, const C &d, R &l, R &r) {
     return 2;
 }
 
+//共通内接線
+int commonInternalTangent(const C &c, const C &d, L &l, L &r) {
+    R di = abs(c.p - d.p);
+    if (sgn(di, c.r + d.r) == 1) return 0;
+    R th = sacos((c.r+d.r) / di);
+    l.x = c.p + polar(c.r, arg(d.p-c.p)-th);
+    l.y = l.x + polar<R>(1, arg(d.p-c.p)-th + PI/2);
+    r.x = c.p + polar(c.r, arg(d.p-c.p)+th);
+    r.y = r.x + polar<R>(1, arg(d.p-c.p)+th - PI/2);
+    if (sgn(di, c.r+d.r) == 0) return 1;
+    return 2;
+}
+
+//共通外接線
+int commonExternalTangent(const C &c, const C &d, L &l, L &r) {
+    R di = abs(c.p - d.p);
+    if (sgn(di, abs(c.r - d.r)) == 1) return 0;
+    if (sgn(di) == 0) {
+        l = L(c.p + P(c.r, 0), c.p + P(c.r, 1));
+        r = L(c.p + P(c.r, 0), c.p + P(c.r, -1));
+        return -1;
+    }
+    R th = sacos((c.r-d.r) / di);
+    l.x = c.p + polar(c.r, arg(d.p-c.p)-th);
+    l.y = l.x + polar<R>(1, arg(d.p-c.p)-th + PI/2);
+    r.x = c.p + polar(c.r, arg(d.p-c.p)+th);
+    r.y = r.x + polar<R>(1, arg(d.p-c.p)+th - PI/2);
+    if (sgn(di, abs(c.r - d.r)) == 0) return 1;
+    return 2;
+}
 
 //扇型ライブラリ　いるのかなぁこれ
 struct Sec {
