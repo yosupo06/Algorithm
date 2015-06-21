@@ -71,7 +71,7 @@ R distSS(const L &s, const L &t) {
 }
 
 //線分アレンジメント
-//l->線分 n->線分の数 p->点集合結果 g->アレ
+//l->線分 n->線分の数 p->点集合結果 g->エッジの情報
 //pのサイズはlC2+2*l確保
 int arrange(L l[], int n, P p[], vector<int> g[]) {
     int pc = 0;

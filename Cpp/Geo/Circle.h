@@ -34,9 +34,10 @@ int crossLC(const L &l, const C &c, L &r) {
 }
 
 //return number of cross point
-int crossCC(const C &c, const C &d, L &l) {
+//l, rはcから見た交点の角度、[l, r]がdに覆われている
+int crossCC(const C &c, const C &d, R &l, R &r) {
     if (near(c.p, d.p) && !sgn(c.r, d.r)) {
-        l.x = l.y = c.p+P(c.r, 0);
+        l = 0; r = 2*PI;
         return -1;
     }
     R di = abs(c.p - d.p);
@@ -44,8 +45,8 @@ int crossCC(const C &c, const C &d, L &l) {
     if (sgn(di, abs(c.r-d.r)) == 1) return 0;
     R bth = arg(d.p - c.p);
     R th = sacos((c.r*c.r + di*di - d.r*d.r) / (2*c.r*di));
-    l.x = c.p+polar<R>(c.r, bth+th);
-    l.y = c.p+polar<R>(c.r, bth-th);
+    l = bth-th;
+    r = bth+th;
     if (sgn(th) == 0) return 1;
     return 2;
 }

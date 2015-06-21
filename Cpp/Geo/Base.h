@@ -15,6 +15,11 @@ int sgn(R a) {
     return 0;
 }
 
+/*
+ -1 -> a > b
+ 0 -> a near b
+ 1 -> a < b
+ */
 int sgn(R a, R b) {
     return sgn(b-a);
 }
@@ -59,10 +64,26 @@ R sacos(R d) {
     return acos(d);
 }
 
+struct L {
+    P x, y;
+    L() {};
+    L(P x, P y) :x(x), y(y) {};
+};
+
+P vec(const L &l) {
+    return l.y - l.x;
+}
+
+R abs(const L &l) {
+    return abs(vec(l));
+}
+
+//度をラジアンに
 R deg2rad(R x) {
     return x/180*PI;
 }
 
+//ラジアンを度に
 R rad2deg(R x) {
     return x/PI*180;
 }
@@ -99,19 +120,4 @@ bool inR(R l, R r, R x) {
     return 0;
 }
 
-
-
-struct L {
-    P x, y;
-    L() {};
-    L(P x, P y) :x(x), y(y) {};
-};
-
-P vec(const L &l) {
-    return l.y - l.x;
-}
-
-R abs(const L &l) {
-    return abs(vec(l));
-}
 
