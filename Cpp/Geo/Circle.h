@@ -94,5 +94,6 @@ struct Sec {
 bool crossSecP(const Sec &s, const P &p) {
     P pp = p - s.c.p;
     if (sgn(s.c.r, abs(pp)) == 1) return false;
+    if (sgn(abs(pp)) == 0) return true;
     return inR(s.l, s.r, arg(pp)) > 0;
 }

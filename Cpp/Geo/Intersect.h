@@ -15,15 +15,15 @@ bool insSS(const L &s, const L &t) {
 
 int crossLL(const L &l, const L &m, P &r) {
     L mm = L(m.x - l.x, m.y - l.x);
-    mm.x *= polar<R>(1.0, -arg(vec(l)));
-    mm.y *= polar<R>(1.0, -arg(vec(l)));
+    mm.x *= polar<R>(1.0, -arg(l));
+    mm.y *= polar<R>(1.0, -arg(l));
     if (sgn(vec(mm).imag()) == 0) {
         r = l.x;
         if (sgn(mm.x.imag()) == 0) return -1;
         return 0;
     }
     r = mm.x - vec(mm) * (mm.x.imag() / vec(mm).imag());
-    r *= polar<R>(1.0, arg(vec(l)));
+    r *= polar<R>(1.0, arg(l));
     r += l.x;
     return 1;
 }
@@ -73,6 +73,7 @@ R distSS(const L &s, const L &t) {
 //線分アレンジメント
 //l->線分 n->線分の数 p->点集合結果 g->エッジの情報
 //pのサイズはlC2+2*l確保
+//返り値として点集合の個数を返す
 int arrange(L l[], int n, P p[], vector<int> g[]) {
     int pc = 0;
     for (int i = 0; i < n; i++) {
@@ -89,7 +90,7 @@ int arrange(L l[], int n, P p[], vector<int> g[]) {
     for (int i = 0; i < n; i++) {
         vector<int> v;
         for (int j = 0; j < pc; j++) {
-            if (ccw(l[i].x, l[i].y, v[j]) != 0) continue;
+            if (ccw(l[i].x, l[i].y, p[j]) != 0) continue;
             v.push_back(j);
         }
         sort(v.begin(), v.end(), [&](const int &x, const int &y) 
@@ -98,6 +99,11 @@ int arrange(L l[], int n, P p[], vector<int> g[]) {
             g[v[j]].push_back(v[j+1]);
             g[v[j+1]].push_back(v[j]);
         }
+    }
+
+    for (int i = 0; i < pc; i++) {
+        sort(g[i].begin(), g[i].end());
+        g[i].erase(unique(g[i].begin(), g[i].end()), g[i].end());
     }
     return pc;
 }

@@ -1,13 +1,3 @@
-/**
- * 分類するまでもない基本的な関数たち
- */
-
-int nlz(int x) {
-    if (x == 0) return 32;
-    return __builtin_clz(x);
-}
-
-/// aとbのgcd
 ll gcd(ll a, ll b) {
     if (b==0) return a;
     return gcd(b, a%b);
@@ -28,7 +18,7 @@ ll pow(ll x, ll n) {
     return r;
 }
 
-// x^n % md
+/// x^n % md
 ll pow_mod(ll x, ll n, ll md) {
 	ll r = 1;
 	while (n) {
@@ -39,7 +29,7 @@ ll pow_mod(ll x, ll n, ll md) {
 	return r;
 }
 
-/// xの逆元, 必ず, mdは素数かつxはmdの倍数ではない必要がある
+/// xの逆元, mdは素数かつxはmdの倍数ではない必要がある
 ll invp(ll x, ll md) {
 	return pow_mod(x, md-2, md);
 }
@@ -62,7 +52,7 @@ int ceil_log2(uint n) {
 }
 
 
-/*stack sizeを拡張する*/
+/*AOJ用 stack sizeを拡張する*/
 int main() {
     static ll eord, enew;
     const int sz = 32*1024*1024;

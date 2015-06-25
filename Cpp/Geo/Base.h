@@ -17,17 +17,20 @@ int sgn(R a) {
 
 /*
  -1 -> a > b
- 0 -> a near b
- 1 -> a < b
+  0 -> a near b
+  1 -> a < b
  */
 int sgn(R a, R b) {
     return sgn(b-a);
 }
 
-bool near(P a, P b) {
+bool near(const P &a, const P &b) {
     return !sgn(abs(a-b));
 }
 
+/*
+ ちょっとロバストな比較関数
+ */
 bool lessP(const P &l, const P &r) {
     if (sgn(l.real(), r.real())) return l.real() < r.real();
     if (sgn(l.imag(), r.imag())) return l.imag() < r.imag();
@@ -66,8 +69,8 @@ R sacos(R d) {
 
 struct L {
     P x, y;
-    L() {};
-    L(P x, P y) :x(x), y(y) {};
+    L() {}
+    L(P x, P y) :x(x), y(y) {}
 };
 
 P vec(const L &l) {
@@ -76,6 +79,10 @@ P vec(const L &l) {
 
 R abs(const L &l) {
     return abs(vec(l));
+}
+
+R arg(const L &l) {
+    return arg(vec(l));
 }
 
 //度をラジアンに

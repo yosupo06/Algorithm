@@ -108,10 +108,12 @@ struct MaxFlow {
 
     void erase(int from, int to) {
         for (int i = 0; i < (int)g[from].size(); i++) {
-            if (g[from][i].to == to) {
-                g[to][g[from][i].rev].erase(g[to].begin()+g[from][i].rev);
-                g[from].erase(g[from].begin()+i);
-                return;
+            auto e = g[from][i];
+            if (e.to == to && e.cap + g[to][e.rev].cap) {
+                int c = e.cap - g[to][e.rev].cap;
+                g[to][e.rev].cap = 0;
+                g[from][i].cap = 0;
+                return c;
             }
         }
         assert(false);
@@ -133,9 +135,12 @@ struct MaxFlow {
         return false;
     }
     int exec(int s, int t, int F) {
-        fill_n(used, V, false);
         int f = 0;
-        while (f < F && dfs(s, t)) f++;
+        while (f < F) {
+            fill_n(used, V, false)
+            if (!dfs(s, t)) break;
+            f++;
+        }
         return f;
     }
 };
