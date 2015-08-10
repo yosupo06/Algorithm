@@ -20,7 +20,7 @@ struct RangeMinQuery {
     void init(int n, D x[]) {
         init();
         for (int i = 0; i < n; i++) {
-            seg[i+S] = x[i];
+            seg[i+N] = x[i];
         }
         for (int i = N-1; i >= 1; i--) {
             seg[i] = min(seg[i*2], seg[i*2+1]);
