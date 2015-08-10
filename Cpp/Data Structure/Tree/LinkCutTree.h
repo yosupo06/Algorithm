@@ -1,34 +1,47 @@
 /**
- * 木のパスへの操作なら最強と名高いLink-Cut Tree
+ * Link-Cut Tree
  *
- * 機能としては、link、cut、evert、rootを実装済み
- * 辺に値を持たせたい場合は頂点倍加を推奨する
- * 
- * 絶対に必要な部分さえ実装すれば後はオプションとして個別につけるか選択可能
- * コード長はフル装備でも約2k(空白抜き)で、ICPCでの使用も十分可能
+ * 機能としては、link、cut、evert、parent, rootを実装済み
+ * 辺に値を持たせたい場合は頂点倍加
  */
 struct LCNode {
     typedef LCNode* NP;
 
     typedef int D;
     struct Node {
-        D d, sm;
+        bool type;
+        bool esz;
+        bool up, down;
+        bool ups, downs;
+        bool ulz, dlz;
     } n;
-    LCNode() : l(nullptr), r(nullptr), sz(0), rev(false) {}
-    LCNode(D v) : p(nullptr), l(last), r(last), sz(1), rev(false) {
-        n.d = v;
-        n.sm = v;
+    LCNode() : l(nullptr), r(nullptr), sz(0), rev(false) {
+        n.type = false;
+        n.esz = n.up = n.down = n.ups = n.downs = n.ulz = n.dlz = false;
+
+    }
+    LCNode(bool t) : p(nullptr), l(last), r(last), sz(1), rev(false) {
+        n.type = n.esz = t;
+        n.up = n.down = n.ups = n.downs = false;
+        n.ulz = n.dlz = false;
     }
 
     NP update() {
         assert(this != last);
         sz = 1+l->sz+r->sz;
-        n.sm = n.d;
+        n.esz = l->n.esz | r->n.esz;
+        if (n.type) {
+            n.esz = true;
+        }
+        n.ups = n.up;
+        n.downs = n.down;
         if (l->sz) {
-            n.sm += l->n.sm;
+            n.ups |= l->n.ups;
+            n.downs |= l->n.downs;
         }
         if (r->sz) {
-            n.sm += r->n.sm;
+            n.ups |= r->n.ups;
+            n.downs |= r->n.downs;
         }
         return this;
     }
@@ -43,19 +56,48 @@ struct LCNode {
             }
             rev = false;
         }
+        if (n.ulz) {
+            if (lsz) {
+                l->ulzdata();
+            }
+            if (rsz) {
+                r->ulzdata();
+            }
+            n.ulz = false;
+        }
+        if (n.dlz) {
+            if (lsz) {
+                l->dlzdata();
+            }
+            if (rsz) {
+                r->dlzdata();
+            }
+            n.dlz = false;
+        }
     }
     void revdata() {
         assert(this != last);
         swap(l, r);
+        swap(n.up, n.down);
+        swap(n.ups, n.downs);
+        swap(n.ulz, n.dlz);
         rev ^= true;
     }
-    D get() {
-        expose();
-        return n.sm;
+    void ulzdata() {
+        if (!n.esz) return;
+        if (n.type) {
+            n.up = true;
+        }
+        n.ups = true;
+        n.ulz = true;
     }
-    void set(D d) {
-        expose();
-        n.d = d;
+    void dlzdata() {
+        if (!n.esz) return;
+        if (n.type) {
+            n.down = true;
+        }
+        n.downs = true;
+        n.dlz = true;
     }
 
     //ここから
