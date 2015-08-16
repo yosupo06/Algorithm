@@ -128,7 +128,7 @@ struct MaxFlow {
             if (!e.cap) continue;
             if (dfs(e.to, t)) {
                 e.cap -= 1;
-                g[s][e.rev].cap += 1;
+                g[e.to][e.rev].cap += 1;
                 return true;
             }
         }
@@ -137,7 +137,7 @@ struct MaxFlow {
     int exec(int s, int t, int F) {
         int f = 0;
         while (f < F) {
-            fill_n(used, V, false)
+            fill_n(used, V, false);
             if (!dfs(s, t)) break;
             f++;
         }
