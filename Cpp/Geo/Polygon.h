@@ -96,7 +96,7 @@ Pol convex_cut(const Pol &p, const L &l) {
 
 
 Pol convex(Pol p) {
-    sort(p.begin(), p.end());
+    sort(p.begin(), p.end(), lessP);
     if (p.size() <= 2) return p;
     Pol up;
     for (P d: p) {
