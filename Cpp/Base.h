@@ -51,6 +51,20 @@ int ceil_log2(uint n) {
     return n == 0 ? -1 : 1+bsr(n-1);
 }
 
+//時間計測は闇が多いことに注意
+//codeforcesで動作確認
+namespace StopWatch {
+    clock_t st;
+    bool f = false;
+    void start() {
+        f = true;
+        st = clock();
+    }
+    int msecs() {
+        assert(f);
+        return (clock()-st)*1000 / CLOCKS_PER_SEC;
+    }
+}
 
 /*AOJ用 stack sizeを拡張する*/
 int main() {
