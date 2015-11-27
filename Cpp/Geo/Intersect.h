@@ -1,3 +1,6 @@
+/**
+ * 幾何(衝突判定)
+ */
 bool insLS(const L &l, const L &s) {
     int a = ccw(l.x, l.y, s.x);
     int b = ccw(l.x, l.y, s.y);
@@ -5,7 +8,6 @@ bool insLS(const L &l, const L &s) {
     if (a == -1 && b == -1) return false;
     return true;
 }
-
 bool insSS(const L &s, const L &t) {
     int a = ccw(s.x,s.y,t.x), b = ccw(s.x,s.y,t.y);
     int c = ccw(t.x,t.y,s.x), d = ccw(t.x,t.y,s.y);
@@ -27,7 +29,6 @@ int crossLL(const L &l, const L &m, P &r) {
     r += l.x;
     return 1;
 }
-
 int crossSS(const L &l, const L &m, P &r) {
     int u = crossLL(l, m, r);
     if (u == 0) return 0;
@@ -53,57 +54,14 @@ int crossSS(const L &l, const L &m, P &r) {
 R distLP(const L &l, const P &p) {
     return abs(cross(vec(l), p-l.x)/abs(vec(l)));
 }
-
-
-//線分と点の最小距離
 R distSP(const L &s, const P &p) {
     P s2 = vec(s)*P(0, 1);
     if (ccw(s.x, s.x+s2, p) == 1) return abs(s.x-p);
     if (ccw(s.y, s.y+s2, p) == -1) return abs(s.y-p);
     return min(min(abs(s.x-p), abs(s.y-p)), distLP(s, p));
 }
-
-//線分と線分の最小距離
 R distSS(const L &s, const L &t) {
     if (insSS(s, t)) return 0;
     return min(min(distSP(s, t.x), distSP(s, t.y)),
                min(distSP(t, s.x), distSP(t, s.y)));
-}
-
-//線分アレンジメント
-//l->線分 n->線分の数 p->点集合結果 g->エッジの情報
-//pのサイズはlC2+2*l確保
-//返り値として点集合の個数を返す
-int arrange(L l[], int n, P p[], vector<int> g[]) {
-    int pc = 0;
-    for (int i = 0; i < n; i++) {
-        p[pc] = l[i].x; pc++;
-        p[pc] = l[i].y; pc++;
-        for (int j = i+1; j < n; j++) {
-            int u = crossSS(l[i], l[j], p[pc]);
-            if (u == 0) continue;
-            pc++;
-        }
-    }
-    sort(p, p+pc, lessP);
-    pc = unique(p, p+pc, near) - p;
-    for (int i = 0; i < n; i++) {
-        vector<int> v;
-        for (int j = 0; j < pc; j++) {
-            if (ccw(l[i].x, l[i].y, p[j]) != 0) continue;
-            v.push_back(j);
-        }
-        sort(v.begin(), v.end(), [&](const int &x, const int &y) 
-            {return abs(p[x] - l[i].x) < abs(p[y] - l[i].x);});
-        for (int j = 0; j < (int)v.size() - 1; j++) {
-            g[v[j]].push_back(v[j+1]);
-            g[v[j+1]].push_back(v[j]);
-        }
-    }
-
-    for (int i = 0; i < pc; i++) {
-        sort(g[i].begin(), g[i].end());
-        g[i].erase(unique(g[i].begin(), g[i].end()), g[i].end());
-    }
-    return pc;
 }

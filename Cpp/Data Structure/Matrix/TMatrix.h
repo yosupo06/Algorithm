@@ -1,5 +1,6 @@
 /**
  * 行列ライブラリ with トロピカル
+ * 辺のないところは必ず長さINFにすること
  */
 struct Matrix {
     typedef ll D;

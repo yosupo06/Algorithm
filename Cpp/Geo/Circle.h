@@ -82,7 +82,7 @@ int commonExternalTangent(const C &c, const C &d, L &l, L &r) {
     return 2;
 }
 
-//扇型ライブラリ　いるのかなぁこれ
+//扇型ライブラリ
 struct Sec {
     C c;
     R l, r;

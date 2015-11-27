@@ -1,4 +1,6 @@
-//いろいろ乱雑
+/*
+ C(n, k) = C(n-1, k-1) + C(n-1, k)
+ */
 
 //nCk
 ll comb(int n, int k) {
@@ -45,23 +47,3 @@ ll katran_num(P s, P g) {
     res += MD-grid_num(s, g);
     return res % MD;
 }
-
-template<int N, int K>
-struct Combinations {
-    ll data[N][K] = {};
-    Combinations() {
-        data[0][0] = 1;
-        for (int i = 1; i < N; i++) {
-            data[i][0] = 1;
-            for (int j = 1; j < K; j++) {
-                data[i][j] = data[i-1][j]+data[i-1][j-1];
-            }
-        }
-    }
-    ll* operator[](int n) {
-        return data[n];
-    }
-    const ll* operator[](int n) const {
-        return data[n];
-    }
-};

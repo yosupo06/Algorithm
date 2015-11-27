@@ -1,16 +1,17 @@
 /**
- * 橋の検出
+ * 関節点の検出
  */
 
 template <int V>
-struct Bridge {
+struct JointPoint {
     vector<int> g[V];
     void add(int a, int b) {
         g[a].push_back(b);
         g[b].push_back(a);
     }
 
-    int imos[V]; //0ならば(i, root[i])は橋
+    int br_imos[V]; //0ならば(i, root[i])は橋
+    int jp_imos[V];
     bool used[V];
     int root[V], dps[V];
     void dfs(int i, int b, int dp) {
@@ -33,7 +34,10 @@ struct Bridge {
         used[i] = true;
         for (int d: g[i]) {
             if (used[d]) continue;
-            imos[i] += dfs2(d);
+            dfs2(d);
+            br_imos[i] += br_imos[d];
+            jp_imos[i] += jp_imps[d];
+            br_imos[i] += dfs2(d);
         }
         return imos[i];
     }

@@ -193,7 +193,7 @@ struct LCNode {
             u = u->l;
             u->push();
         }
-        u->expose(); //これを忘れると計算量がオワコンする
+        u->expose();
         return u;
     }
 

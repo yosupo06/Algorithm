@@ -4,6 +4,17 @@ typedef complex<R> P;
 const R EPS = 1e-10;
 const R PI = acos((R)(-1));
 
+R ssqrt(R d) {
+    d = max<R>(0, d);
+    return sqrt(d);
+}
+
+R sacos(R d) {
+    d = max<R>(-1, d);
+    d = min<R>(1, d);
+    return acos(d);
+}
+
 /*
  -1 -> neg
   0 -> near 0
@@ -54,17 +65,6 @@ int ccw(P a, P b, P c) {
     if (dot(b-a, c-a) < 0) return 2;
     if (dot(a-b, c-b) < 0) return -2;
     return 0;
-}
-
-R ssqrt(R d) {
-    d = max<R>(0, d);
-    return sqrt(d);
-}
-
-R sacos(R d) {
-    d = max<R>(-1, d);
-    d = min<R>(1, d);
-    return acos(d);
 }
 
 struct L {

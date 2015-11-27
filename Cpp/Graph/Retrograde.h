@@ -32,6 +32,8 @@ struct Retrograde {
                     count[x]--;
                 }
             }
+        }
+        for (int i = 0; i < V; i++) {
             if (d[i] == -1) {
                 for (int x: rg[i]) {
                     if (d[x]) continue;

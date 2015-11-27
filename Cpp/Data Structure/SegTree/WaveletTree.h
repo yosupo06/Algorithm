@@ -53,7 +53,7 @@ struct WaveletTree {
         }
         int ls = (l > idx ? lc[dps][l-1] : 0);
         int c = lc[dps][r-1] - ls;
-        if (k <= c) {
+        if (k < c) {
             return get(idx+ls, idx+ls+c, k, dps+1, idx);
         } else {
             int sz = 1<<(S-dps-1);
@@ -66,9 +66,9 @@ struct WaveletTree {
         return x[get(l, r, k, 0, 0)].first;
     }
     int find(int l, int r, int x, int dps, int idx) {
-        if (r <= l) return 1;
+        if (r <= l) return 0;
         if (dps == S) {
-            return (x <= l) ? 1 : 2;
+            return (x <= l) ? 0 : 1;
         }
         int ls = (l > idx ? lc[dps][l-1] : 0);
         int c = lc[dps][r-1] - ls;

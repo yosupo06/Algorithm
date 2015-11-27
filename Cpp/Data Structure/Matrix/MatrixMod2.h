@@ -1,3 +1,4 @@
+
 /**
  * 行列ライブラリ with Mod2
  */
@@ -61,5 +62,34 @@ struct MatrixMod2 {
             buf = buf*buf;
         }
         return res;
+    }
+
+
+    int inverse() {
+        assert(N == M);
+        MatrixMod2 r;
+        for (int i = 0; i < N; i++) r[i][i] = true;
+        for (int i = 0; i < N; i++) {
+            if (!d[i][i]) {
+                int j;
+                for (j = i+1; j < N; j++) {
+                    if (d[i][j]) {
+                        swap(d[i], d[j]);
+                        swap(r[i], r[j]);
+                        break;
+                    }
+                }
+                if (j == N) return i;
+            }
+            for (int j = 0; j < N; j++) {
+                if (i == j) continue;
+                if (d[j][i]) {
+                    d[j] ^= d[i];
+                    r[j] ^= r[i];
+                }
+            }
+        }
+        *this = r;
+        return N;
     }
 };
