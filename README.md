@@ -13,20 +13,22 @@ C++11/Dlangどちらも用意していますが, C++の方が充実していま�
 - Union Find
 - セグメント木
 	- Fenwick Tree
-	- Segment Tree
 	- Starry Sky Tree
 	- Wavelet Tree
+	- 動的Segment Tree
 	- 永続Segment Tree
 - 平衡二分木
 	- Randomized Binary Tree
 	- Splay Tree
 	- AA Tree
-	- 永続Randmized Binary Tree
+	- 永続Randomized Binary Tree
 - Link Cut Tree
 - 行列(inverse, rank, pow)
 - Radix Heap
 - さいころ
 - Sparce Table
+- KMP
+- Suffix Tree(SA-IS)
 
 ### グラフ
 

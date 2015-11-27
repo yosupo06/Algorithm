@@ -26,6 +26,31 @@ long invMod(long r, int md) {
     return powMod(r, md-2, md);
 }
 
+//(md-1)*(md-1)がlongに収まらないとオーバーフローを起こすためmdをintにしている
+//mdは必ず素数
+T powMod(T)(T x, T n, T md) {
+    x %= md; n %= md-1;
+    T r = 1;
+    while (n) {
+        if (n & 1) r *= x; r %= md;
+        x *= x; x %= md;
+        n >>= 1;
+    }
+    return r;
+}
+
+T[2] extgcd(T)(T a, T b) {
+    T d = a;
+    if (b) {
+        auto x = extgcd(b, a%b);
+        swap(x[0], x[1]);
+        x[1] -= (a / b) * x[0];
+        return x;
+    } else {
+        return [T(1), T(0)];
+    }
+}
+
 //O(sqrt(x)) xの素因数を列挙する
 T[] factor(T)(T x) {
     T[] res;

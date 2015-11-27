@@ -20,7 +20,7 @@ struct Primes {
         for (int i = 2; i < n; i++) {
             if (used[i]) continue;
             p ~= i;
-            for (int j = i*i; j < n; j+= i) {
+            for (int j = 2*i; j < n; j+= i) {
                 used[j] = true;
             }
         }
