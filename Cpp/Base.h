@@ -65,18 +65,13 @@ namespace StopWatch {
 
 /*AOJ用 stack sizeを拡張する*/
 int main() {
-#ifndef __APPLE__
     static ll eord, enew;
-    const int sz = 32*1024*1024;
+    const int sz = 256*1024*1024;
     static void *p = malloc(sz);
-    enew = (long long)p + sz - 1;
+    enew = (long long)p + sz - 16;
     __asm__ volatile("mov %%rsp, %0" : "=r"(eord));
     __asm__ volatile("mov %0, %%rsp" : : "r"(enew));
-#endif
     main2();
-#ifndef __APPLE__
     __asm__ volatile("mov %0, %%rsp" : : "r"(eord));
-#endif
     return 0;
 }
-
