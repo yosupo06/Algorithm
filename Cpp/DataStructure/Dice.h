@@ -6,7 +6,6 @@
  * Dice(a, b): +x=a +y=bとなるサイコロ生成
  * get(dir): dir方向の値を取得
  * rot(dir): dir方向に転がす
- * get,rot共にz軸に対しては未実装
  */
 
 struct Dice {
