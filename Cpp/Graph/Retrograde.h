@@ -13,7 +13,6 @@ struct Retrograde {
         }
     }
 
-    /// 辺の追加 多重辺, 自己ループ入れるとぶっ壊れます
     void add(int from, int to) {
         g[from].push_back(to);
         rg[to].push_back(from);

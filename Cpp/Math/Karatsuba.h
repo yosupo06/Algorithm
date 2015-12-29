@@ -1,12 +1,12 @@
 /**
  * 多項式の乗算を高速で行う
- * N=2^nかつ64以上じゃないと死亡する
+ * N=2^nかつ64以上が必要
  * N=3000ぐらいがよいと思われ
  **/
- 
+
 namespace Karatsuba {
     template<class T>
-    vector<T> naive_mul_64(vector<T> &a, vector<T> &b) {
+    vector<T> naive_mul_64(const vector<T> &a, const vector<T> &b) {
         constexpr int n = 64;
         vector<T> res(2*n-1, 0);
         for (int i = 0; i < n; i++) {
@@ -19,7 +19,7 @@ namespace Karatsuba {
     }
 
     template<class T>
-    vector<T> mul(vector<T> &a, vector<T> &b) {
+    vector<T> mul(const vector<T> &a, const vector<T> &b) {
         assert(a.size() == b.size());
         int n = (int)a.size();
         if (n <= (1<<6)) {

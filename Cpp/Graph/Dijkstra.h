@@ -5,8 +5,8 @@
  */
 template<int V>
 struct Dijkstra {
-    typedef int T; /// 辺の距離の型
-    const int INF = 1e9;
+    using T = int; /// 辺の距離の型
+    const int INF = 1<<28;
     typedef pair<T, int> P;
     vector<P> g[V];
     /// 辺のクリア

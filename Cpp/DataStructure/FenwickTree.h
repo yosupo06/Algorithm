@@ -1,11 +1,11 @@
 /**
- * Fenwick Tree
+ * Fenwick Tree 
  *
- * 0-indexedとなるようにオフセットがかかっている
+ * 0-indexed
  */
 template <int N>
 struct FenwickTree {
-    using D = ll; ///要素の型
+    using D = ll; /// 要素の型
     D seg[N+1];
     
     /// 要素を初期化する
@@ -24,7 +24,7 @@ struct FenwickTree {
         }
     }
 
-    /// [0, i)のsumを求める
+    /// [0, i)のsum
     D sum(int i) {
         D s = 0;
         while (i > 0) {
@@ -34,7 +34,7 @@ struct FenwickTree {
         return s;
     }
 
-    /// [a, b)のsumを求める
+    /// [a, b)のsum
     D sum(int a, int b) {
         return sum(b) - sum(a);
     }

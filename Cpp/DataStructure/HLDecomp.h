@@ -96,7 +96,7 @@ struct Tree {
 };
 
 template <int N>
-struct HLComp_Y {
+struct HLComp {
     vector<int> g[N];
 
     P n2l[N]; //node to line (line id - line pos)

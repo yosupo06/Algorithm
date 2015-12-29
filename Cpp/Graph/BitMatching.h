@@ -1,8 +1,7 @@
 /**
  * 二部最大マッチング
  *
- * Dinicを使用していないためO(EV)、十分注意すること
- * MaxFlow.hよりかなりコードが短いため、ICPC^速度のいらない時用
+ * O(EV)
  */
 template<int V>
 struct BitMatching {
