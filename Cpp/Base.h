@@ -41,6 +41,11 @@ ll invp(ll x, ll md) {
 }
 
 
+//binary search reverse
+int bsr(int x) {
+    return 31 - __builtin_clz(x);
+}
+
 namespace StopWatch {
     clock_t st;
     bool f = false;
