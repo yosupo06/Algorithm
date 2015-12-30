@@ -4,11 +4,6 @@
  * [l, r)でk番目の値の取得
  * [l, r)でxが何番目に大きいかの取得
  * どちらもO(logn)
- *
- * 一度構成したら変更不可能
- *
- * template引数のclass Dは要素の型
- * int Sは要素数が2^Sであることを示す
  */
 template<class D, int S>
 struct WaveletTree {
@@ -33,7 +28,6 @@ struct WaveletTree {
         built(l, md, dps+1);
         built(md, r, dps+1);
     }
-
     void init(int nn = N) {
         n = nn;
         for (int i = 0; i < N; i++) {
@@ -45,6 +39,7 @@ struct WaveletTree {
         }
         built(0, N, 0);
     }
+    
     int get(int l, int r, int k, int dps, int idx) {
         assert(1 <= k && k <= r-l);
         if (dps == S) {
