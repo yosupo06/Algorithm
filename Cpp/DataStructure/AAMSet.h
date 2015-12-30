@@ -1,16 +1,12 @@
 /**
- * AA Treeにより書かれたMultiset
+ * Multiset(AA Tree)
  *
- * とにかくクソ長い, ICPCで使うのは自殺行為
- * insert/eraseはこのライブラリの平衡二分木の中では最速
- * ただしstd::setよりは遅い、1.5倍程度？
- * 
  * template引数のclass Dは要素の型、class Cは比較関数
  */
 template<class D, class C = less<D>>
 struct AAMSet {
     struct Node;
-    typedef Node* NP;
+    using NP = Node*;
     static Node last_d;
     static NP last;
     struct Node {
