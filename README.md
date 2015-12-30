@@ -2,49 +2,51 @@
 
 プログラミングコンテスト(Codeforces, ICPC等)で使用する為のコード断片集です
 
-C++11/Dlangどちらも用意していますが, C++の方が充実しています
-
-使い方は基本的にソースコードに書いていきたい、現時点ではあんまり
+C++11実装で、たまにD言語実装もあります
 
 ## 内容(Cpp)
 
 ### データ構造
 
 - Union Find
-- セグメント木
-	- Fenwick Tree
-	- Starry Sky Tree
-	- Wavelet Tree
-	- 動的Segment Tree
-	- 永続Segment Tree
-- 平衡二分木
-	- Randomized Binary Tree
-	- Splay Tree
-	- AA Tree
-	- 永続Randomized Binary Tree
+- Fenwick Tree, Fenwick Tree 2D
+- Starry Sky Tree
+- Wavelet Tree?
+- Dynamic Segtree(AA Tree)
+- Multiset(AA Tree)
+- HL Decomposition
 - Link Cut Tree
-- 行列(inverse, rank, pow)
+- Sparse Table
 - Radix Heap
 - さいころ
-- Sparce Table
-- KMP
-- Suffix Tree(SA-IS)
+- 行列
 
 ### グラフ
 
-- 最短経路問題(ダイクストラ)
-- LCA(Last common ancestor)
-- 強連結成分分解
-- 最大流(Dinic)
+- Dijkstra
+- LCA
+- SCC
+- Maxflow
 	- Dinic
 	- F-F(流し戻し用)
-- 最小費用流
+- Mincostflow
+- 橋, 関節点列挙
 - 後退解析
 
 ### 数学
 
-- 素数列挙
-- メビウス関数列挙
-- カタラン数
 - きたまさ法
 - Karatsuba法
+
+### 文字列
+
+- KMP法
+- SA-IS
+
+### 幾何
+
+- 各種衝突判定
+- 線分アレンジメント
+- 双対グラフ
+- 凸法
+- 最小包含円
