@@ -8,7 +8,7 @@
 template<int V>
 struct SCC {
     vector<int> g[V], rg[V];
-    /// i-jに無向辺を追加する
+    /// i-jに辺を追加する
     void add(int i, int j) {
         g[i].push_back(j);
         rg[j].push_back(i);
