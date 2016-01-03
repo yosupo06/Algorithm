@@ -4,9 +4,9 @@ struct Node {
     int ma, lz;
 
     /*
-     init_leaf, update, push
+     init_node, update, push
     */
-    void init_leaf() {
+    void init_node() {
         ma = lz = 0;
     }
     void update() {
@@ -38,7 +38,7 @@ struct Node {
     int get(int a, int b) {
         if (b <= 0 or sz <= a) return -1;
         if (a <= 0 and sz <= b) {
-            return mi;
+            return ma;
         }
         push();
         return max(l->get(a, b), r->get(a-sz/2, b-sz/2));
@@ -47,7 +47,7 @@ struct Node {
     NP l, r;
     int sz;
     Node(int sz) : sz(sz) {
-        init_leaf();
+        init_node();
         if (sz == 1) return;
         l = new Node(sz/2);
         r = new Node(sz - sz/2);
