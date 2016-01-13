@@ -1,19 +1,9 @@
-typedef long double R;
-typedef complex<R> P;
+using R = long double;
+using P = complex<R>;
 
 const R EPS = 1e-10;
 const R PI = acos((R)(-1));
 
-R ssqrt(R d) {
-    d = max<R>(0, d);
-    return sqrt(d);
-}
-
-R sacos(R d) {
-    d = max<R>(-1, d);
-    d = min<R>(1, d);
-    return acos(d);
-}
 
 /*
  -1 -> neg
@@ -127,4 +117,14 @@ bool inR(R l, R r, R x) {
     return 0;
 }
 
+R ssqrt(R d) {
+    d = max<R>(0, d);
+    return sqrt(d);
+}
+
+R sacos(R d) {
+    d = max<R>(-1, d);
+    d = min<R>(1, d);
+    return acos(d);
+}
 

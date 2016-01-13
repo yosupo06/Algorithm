@@ -15,7 +15,7 @@ struct T {
     }
 };
 
-typedef vector<P> Pol;
+using Pol = vector<P>;
 
 template<class C>
 P cu(const C &p, int i) {
