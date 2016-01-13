@@ -11,46 +11,49 @@ struct Bridge {
     }
 
     int imos[V]; //0ならば(i, root[i])は橋
-    bool used[V];
     int root[V], dps[V];
-    void dfs(int i, int b, int dp) {
+    int gc, ig[V];
+
+    stack<int> visit;
+    int dfs(int i, int b, int dp) {
         root[i] = b;
         dps[i] = dp;
-        used[i] = true;
+        visit.push(i);
+        bool fp = false;
         for (int d: g[i]) {
-            if (used[d]) {
-                if (dps[i] < dps[d]) {
-                    imos[i]--;
-                    imos[d]++;
+            if (dps[d] != -1) {
+                if (!fp && d == b) {
+                    fp = true;
+                    continue;
+                }
+                if (dps[i] > dps[d]) {
+                    imos[i]++;
+                    imos[d]--;
                 }
             } else {
-                dfs(d, i, dp+1);
+                imos[i] += dfs(d, i, dp+1);
             }
         }
-    }
-
-    int dfs2(int i) {
-        used[i] = true;
-        for (int d: g[i]) {
-            if (used[d]) continue;
-            imos[i] += dfs2(d);
+        if (imos[i] == 0) {
+            int j;
+            do {
+                j = visit.top(); visit.pop();
+                ig[j] = gc;
+            } while (j != i);
+            gc++;
         }
         return imos[i];
     }
-
+    
     void exec(int v = V) {
         fill_n(imos, v, 0);
         fill_n(root, v, -1);
-        fill_n(dps, v, 0);
-        fill_n(used, v, false);
+        fill_n(dps, v, -1);
+        fill_n(ig, v, -1);
+        gc = 0;
         for (int i = 0; i < v; i++) {
-            if (used[i]) continue;
+            if (dps[i] != -1) continue;
             dfs(i, -1, 0);
-        }
-        fill_n(used, v, false);
-        for (int i = 0; i < v; i++) {
-            if (root[i] != -1) continue;
-            dfs2(i);
         }
     }
 };

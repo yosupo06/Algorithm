@@ -31,7 +31,7 @@ struct Dijkstra {
             for (P e: g[p.second]) {
                 if (p.first+e.first < res[e.second]) {
                     res[e.second] = p.first+e.first;
-                    q.push(P(e.first+p.first, e.second));
+                    q.push(P(p.first+e.first, e.second));
                 }
             }
         }
