@@ -3,14 +3,15 @@ int bsr(uint x) {
     return 31-__builtin_clz(x);
 }
 
+template<class C>
 struct RadixHeap {
-    typedef pair<uint, int> P;
+    typedef pair<uint, C> P;
     vector<P> v[33];
     uint last, sz;
     RadixHeap() {
         last = sz = 0;
     }
-    void push(uint x, int p) {
+    void push(uint x, C p) {
         assert(last <= x);
         sz++;
         v[bsr(x^last)+1].push_back(P(x, p));
