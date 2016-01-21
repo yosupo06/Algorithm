@@ -2,37 +2,59 @@ struct AA {
     using NP = AA*;
 
     int ma, lz;
-
-    NP l, r;
-    int sz; int lv;
-    bool isL; // is last
-    AA(int sz, int lz) : l(nullptr), r(nullptr), sz(sz), lv(0), isL(true) {
-        this->ma = this->lz = lz;
-    }
-    AA(NP l, NP r, int lv) : l(l), r(r), lv(lv), isL(false) {
-        lz = 0;
-        update();
+    void init_node() {
+        ma = lz = 0;
     }
     void update() {
         assert(!lz);
         sz = l->sz + r->sz;
-
         ma = max(l->ma, r->ma);
     }
     void push() {
+        assert(l && r);
+        assert(l->sz && r->sz);
         if (lz) {
-            if (l->sz) {
-                l->lzdata(lz);
-            }
-            if (r->sz) {
-                r->lzdata(lz);
-            }
+            l->lzdata(lz);
+            r->lzdata(lz);
             lz = 0;
         }
     }
     void lzdata(int x) {
         ma += x;
         lz += x;
+    }
+    void add(int a, int b, int x) {
+        if (b <= 0 || sz <= a) return;
+        if (a <= 0 && sz <= b) {
+            lzdata(x);
+            return;
+        }
+        push();
+        l->add(a, b, x);
+        r->add(a - l->sz, b - l->sz, x);
+        update();
+    }
+    int get(int a, int b) {
+        if (b <= 0 || sz <= a) return -1;
+        if (a <= 0 && sz <= b) {
+            return ma;
+        }
+        push();
+        return max(l->get(a, b), r->get(a - l->sz, b - l->sz));
+    }
+
+    NP l, r;
+    int sz; int lv;
+    bool isL; // is last
+    AA(int sz) : l(nullptr), r(nullptr), sz(sz), lv(0), isL(true) {
+        init_node();
+    }    
+    static NP make_child(NP n, int k) {
+        n->l = new AA(k); n->r = new AA(n->sz - k);
+        n->lv = 1;
+        n->isL = false;
+        n->push();
+        return n;
     }
     static NP skew(NP n) {
         if (n->l == nullptr || n->lv != n->l->lv) return n;
@@ -57,9 +79,7 @@ struct AA {
     static NP inscut(NP n, int k) {
         if (k == 0 || k == n->sz) return n;
         if (n->isL) {
-            NP nn = new AA(new AA(k, n->lz), new AA(n->sz - k, n->lz), 1);
-            delete n;
-            return nn;
+            return make_child(n, k);
         }
         n->push();
         if (k <= n->l->sz) {
@@ -70,30 +90,6 @@ struct AA {
             n->r = inscut(n->r, k - n->l->sz);
             n->update();
             return pull(skew(n));
-        }
-    }
-    static void add(NP n, int a, int b, int x) {
-        if (b <= 0 || n->sz <= a) return;
-        if (a <= 0 && n->sz <= b) {
-            n->lzdata(x);
-            return;
-        }
-        n->push();
-        add(n->l, a, b, x);
-        add(n->r, a - n->l->sz, b - n->l->sz, x);
-        n->update();
-    }
-
-    static int sea(NP n, int k) {
-        if (n->ma < k) return -1;
-        if (n->isL) {
-            return n->sz - 1;
-        }
-        n->push();
-        if (k <= n->r->ma) {
-            return n->l->sz + sea(n->r, k);
-        } else {
-            return sea(n->l, k);
         }
     }
 };
