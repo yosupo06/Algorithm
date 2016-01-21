@@ -10,6 +10,7 @@ struct Node {
         ma = lz = 0;
     }
     void update() {
+        assert(!lz);
         ma = max(l->ma, r->ma);
     }
     void push() {

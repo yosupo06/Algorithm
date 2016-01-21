@@ -4,7 +4,7 @@ using Pc = complex<R>;
 
 void fft(int s, bool type, Pc c[]) {
     const int N = 1<<s;
-    Pc *a = new Pc[N]
+    Pc *a = new Pc[N];
     Pc *b = new Pc[N];
     copy_n(c, N, a);
     for (int i = 1; i <= s; i++) {

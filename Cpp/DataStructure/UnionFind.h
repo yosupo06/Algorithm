@@ -1,85 +1,27 @@
 /**
- * QuickFind
- *
- * See_Also: http://topcoder.g.hatena.ne.jp/iwiwi/20131226/1388062106
+ * UnionFind
  */
 template <int N>
 struct UnionFind {
-    int ig[N];
-    vector<int> gi[N];
+    int p[N], r[N];
     int gn;
-
     void init(int n = N) {
-        for (int i = 0; i < n; ++i) {
-            ig[i] = i;
-            gi[i] = {i};
-        }
+        fill_n(p, n, -1); fill_n(r, n, 1);
         gn = n;
     }
-
     void merge(int a, int b) {
-        if (same(a, b)) return;
+        int x = group(a), y = group(b);
+        if (x == y) return; //same
         gn--;
-        int x = ig[a], y = ig[b];
-        if (gi[x].size() < gi[y].size()) swap(x, y);
-        for (int j: gi[y]) {
-            ig[j] = x;
-        }
-        gi[x].insert(gi[x].end(), gi[y].begin(), gi[y].end());
-        gi[y].clear();
+        if (r[x] > r[y]) p[x] = y;
+        else if (r[x] > r[y]) p[y] = x;
+        else p[x] = y; r[x]++;
     }
-
+    int group(int a) {
+        if (p[a] == -1) return a;
+        return p[a] = group(p[a]);
+    }
     bool same(int a, int b) {
-        return ig[a] == ig[b];
-    }
-
-    int group_num() {
-        return gn;
-    }
-};
-
-/**
- * hash化が可能なUnionFind 要素数を16より多くするとオワコンする
- */
-template<int N>
-struct SUnionFind {
-    int i2g[N];
-    SUnionFind() {
-        for (int i = 0; i < N; i++) {
-            i2g[i] = i;
-        }
-    }
-    SUnionFind(ull hs) {
-        for (int i = 0; i < N; i++) {
-            i2g[i] = hs & 0xf;
-            hs >>= 4;
-        }
-    }
-
-    void merge(int x, int y) {
-        int xg = i2g[x], yg = i2g[y];
-        for (int i = 0; i < N; i++) {
-            if (i2g[i] == yg) i2g[i] = xg;
-        }
-    }
-
-    bool same(int x, int y) {
-        return i2g[x] == i2g[y];
-    }
-
-    ull uf2hash() {
-        int b[N];
-        memset(b, -1, sizeof(b));
-        int c = 0;
-        ull hs = 0;
-        for (int i = N-1; i >= 0; i--) {
-            hs <<= 4;
-            if (b[i2g[i]] == -1) {
-                b[i2g[i]] = c;
-                c++;
-            }
-            hs += b[i2g[i]];
-        }
-        return hs;
+        return group(a) == group(b);
     }
 };

@@ -29,7 +29,6 @@ struct LCNode {
         lsm = rsm = 0;
     }
     void update() {
-        int lsz = (l != last) ? l->sz : 0, rsz = (r != last) ? r->sz : 0;
         sz = 1 + l->sz + r->sz;
         tszsm = tsz + l->tszsm + r->tszsm;
         dsm = d + l->dsm + r->dsm;
@@ -51,6 +50,7 @@ struct LCNode {
         tsm -= b->lsm + (d) * b->tszsm;
     }
     void push() {
+        assert(this != last);
         if (rev) {
             if (l != last) {
                 l->revdata();
@@ -165,7 +165,7 @@ struct LCNode {
         NP u = this->l;
         if (u == last) return last;
         u->push();
-        while (u->r) {
+        while (u->r != last) {
             u = u->r;
             u->push();
         }
