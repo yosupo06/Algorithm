@@ -15,10 +15,10 @@ struct Perm {
     int& operator[](int p) {
         return d[p];
     }
-
     const int& operator[](int p) const {
         return d[p];
     }
+
     Perm& operator=(const Perm &r) {
         memcpy(d, r.d, n*sizeof(int));
         return *this;

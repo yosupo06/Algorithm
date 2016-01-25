@@ -10,9 +10,7 @@ struct FenwickTree {
     
     /// 要素を初期化する
     void init() {
-        for (int i = 0; i <= N; i++) {
-            seg[i] = 0;
-        }
+        fill_n(seg, N+1, 0);
     }
 
     /// i番目の要素にxを追加する
