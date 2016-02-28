@@ -114,3 +114,65 @@ struct Matrix {
         return N;
     }
 };
+
+
+/**
+ * 行列ライブラリ with Mod
+ */
+template<ll MD>
+struct Matrix {
+    using D = ModInt<MD>;
+    vector<vector<D>> d;
+    int N, M;
+    Matrix(int N, int M) : N(N), M(M) {
+        d.resize(N);
+        for (int i = 0; i < N; i++) {
+            d[i] = vector<D>(M, D(0));
+        }
+    }
+
+    vector<D>& operator[](int p) {
+        return d[p];
+    }
+    
+    const vector<D>& operator[](int p) const {
+        return d[p];
+    }
+    
+    void mulL(int i, D x) {
+        for (int j = 0; j < M; j++) {
+            d[i][j] *= x;
+        }
+    }
+    
+    void excL(int i, int j) {
+        swap(d[i], d[j]);
+    }
+    //line i -> i+(j*x)
+    void addL(int i, int j, D x) {
+        for (int k = 0; k < M; k++) {
+            d[i][k] += d[j][k]*x;
+        }
+    }
+    
+    int rnk() {
+        for (int i = 0; i < N; i++) {
+            if (d[i][i].v == 0) {
+                int j;
+                for (j = i+1; j < N; j++) {
+                    if (d[j][i].v) {
+                        excL(i, j);
+                        break;
+                    }
+                }
+                if (j == N) return i;
+            }
+            mulL(i, D::inv(d[i][i]));
+            for (int j = 0; j < N; j++) {
+                if (i == j) continue;
+                addL(j, i, d[j][i] * D(-1));
+            }
+        }
+        return N;
+    }
+};
