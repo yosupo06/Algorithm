@@ -2,23 +2,18 @@
  * 行列ライブラリ
  */
 struct Matrix {
-    typedef double D;
-    vector<valarray<D>> d;
+    using D = long double;
+    vector<vector<D>> d;
     int N, M;
     Matrix(int N, int M) : N(N), M(M) {
         d.resize(N);
         for (int i = 0; i < N; i++) {
-            d[i] = valarray<D>(D(0), M);
+            d[i] = vector<D>(M, D(0));
         }
     }
 
-    valarray<D>& operator[](int p) {
-        return d[p];
-    }
-    
-    const valarray<D>& operator[](int p) const {
-        return d[p];
-    }
+    vector<D>& operator[](int p) { return d[p]; }
+    const vector<D>& operator[](int p) const { return d[p]; }
     
     Matrix& operator=(const Matrix &other) {
         assert(other.N == N && other.M == M);
@@ -30,7 +25,9 @@ struct Matrix {
         assert(right.N == N && right.M == M);
         Matrix res(N, M);
         for (int i = 0; i < N; i++) {
-            res[i] = (d[i]+right[i]);
+            for (int j = 0; j < M; j++) {
+                res[i][j] = d[i][j]+right[i][j];
+            }
         }
         return res;
     }
@@ -45,7 +42,9 @@ struct Matrix {
         }
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < right.M; j++) {
-                res[i][j] = (d[i]*r[j]).sum();
+                for (int k = 0; k < M; k++) {
+                    res[i][j] += d[i][k]*r[j][k];
+                }
             }
         }
         return res;
@@ -54,7 +53,9 @@ struct Matrix {
     Matrix operator*(const D x) {
         Matrix res(N, M);
         for (int i = 0; i < N; i++) {
-            res[i] = d[i]*x;
+            for (int j = 0; j < M; j++) {
+                res[i][j] = d[i][j]*x;
+            }
         }
         return res;
     }
@@ -72,17 +73,69 @@ struct Matrix {
         }
         return res;
     }
-    
+
+    using QR = pair<Matrix, Matrix>; // Q*, R
+    QR qr() {
+        assert(N <= M);
+        Matrix A = *this;
+        Matrix B(N, N);
+        for (int i = 0; i < N; i++) {
+            B[i][i] = 1;
+        }
+        for (int i = 0; i < N; i++) {
+            for (int j = i+1; j < N; j++) {
+                double r = hypot(A[i][i], A[j][i]);
+                if (abs(r) <= 1e-11) continue;
+                double c = A[i][i]/r;
+                double s = A[j][i]/r;
+                for (int k = i; k < M; k++) {
+                    tie(A[i][k], A[j][k]) =
+                        make_pair(c*A[i][k]+s*A[j][k], -s*A[i][k]+c*A[j][k]);
+                }
+                for (int k = 0; k < N; k++) {
+                    tie(B[i][k], B[j][k]) =
+                        make_pair(c*B[i][k]+s*B[j][k], -s*B[i][k]+c*B[j][k]);
+                }
+                if (A[i][i] == 0) {
+                    // not full rank
+                    assert(false);
+                }
+            }
+        }
+        return make_pair(B, A);
+    }
+    static Matrix solve(QR q, Matrix ar) {
+        int N = q.first.N, M = q.second.M;
+        assert(ar.N == M && ar.M == 1);
+        auto b = q.first*ar;
+        Matrix ans(M, 1);
+        for (int i = M-1; i >= 0; i--) {
+            ans[i][0] = b[i][0];
+            for (int j = i+1; j < b.N; j++) {
+                ans[i][0] -= q.second[i][j] * ans[j][0];
+            }
+            ans[i][0] /= q.second[i][i];
+        }
+        return ans;
+    }
+
+
     void mulL(int i, D x) {
-        d[i] *= x;
+        for (int j = 0; j < M; j++) {
+            d[i][j] *= x;
+        }
     }
     
     void excL(int i, int j) {
-        swap(d[i], d[j]);
+        for (int k = 0; k < M; k++) {
+            swap(d[i][k], d[j][k]);
+        }
     }
     //line i -> i+(j*x)
     void addL(int i, int j, D x) {
-        d[i] += d[j]*x;
+        for (int k = 0; k < M; k++) {
+            d[i][k] += d[j][k]*x;
+        }
     }
     
     int inverse() {
@@ -90,16 +143,18 @@ struct Matrix {
         Matrix r(N, N);
         for (int i = 0; i < N; i++) r[i][i] = D(1);
         for (int i = 0; i < N; i++) {
-            if (sgn(d[i][i]) == 0) {
-                int j;
-                for (j = i+1; j < N; j++) {
-                    if (sgn(d[i][j])) {
-                        r.excL(i, j);
-                        excL(i, j);
-                        break;
+            if (abs(d[i][i]) <= 1e-11) {
+                D md = -1;
+                int mj = -1;
+                for (int j = i+1; j < N; j++) {
+                    if (md < abs(d[i][j])) {
+                        md = abs(d[i][j]);
+                        mj = j;
                     }
                 }
-                if (j == N) return i;
+                assert(mj != -1);
+                r.excL(i, mj);
+                excL(i, mj);
             }
             r.mulL(i, 1/d[i][i]);
             mulL(i, 1/d[i][i]);
