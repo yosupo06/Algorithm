@@ -14,13 +14,13 @@ struct LCNode {
     ll dsm;
     ll lsm, rsm;
     NP init_last() {
-        sz = 0;
+        sz = 0; // Important
         tsz = tszsm = tsm = d = dsm = lsm = rsm = 0;
         return this;
     }
     void init_node(int d) {
-        sz = 1;
-        rev = false;
+        sz = 1; // Important
+        rev = false; // Important
         tsz = 0;
         tszsm = 0;
         tsm = 0;
