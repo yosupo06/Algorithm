@@ -12,13 +12,9 @@ struct MatrixMod2 {
         }
     }
 
-    bitset<M>& operator[](int p) {
-        return d[p];
-    }
+    bitset<M>& operator[](int p) {return d[p];}
     
-    const bitset<M>& operator[](int p) const {
-        return d[p];
-    }
+    const bitset<M>& operator[](int p) const {return d[p];}
     
     MatrixMod2& operator=(const MatrixMod2 &other) {
         d = other.d;
