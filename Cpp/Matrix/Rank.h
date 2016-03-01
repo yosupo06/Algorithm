@@ -34,3 +34,33 @@ Matrix<D> inverse(Matrix<D> x, D eps) {
     }
     return r;
 }
+
+template<class D>
+int rnk(Matrix<D> x, D eps) {
+    int N = x.N, M = x.M;
+    for (int i = 0; i < N; i++) {
+        if (abs(x[i][i]) <= eps) {
+            D md = -1;
+            int mj = -1;
+            for (int j = i+1; j < N; j++) {
+                if (md < abs(x[i][j])) {
+                    md = abs(x[i][j]);
+                    mj = j;
+                }
+            }
+            if (mj == -1) return i;
+            swap(x[i], x[mj]);
+        }
+        D m = x[i][i];
+        for (int j = 0; j < M; j++) {
+            x[i][j] /= m;
+        }
+        for (int j = i+1; j < N; j++) {
+            D m = x[j][i];
+            for (int k = 0; k < M; k++) {
+                x[j][k] -= x[i][k]*m;
+            }
+        }
+    }
+    return N;
+}
