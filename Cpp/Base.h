@@ -4,13 +4,20 @@
  * setxkbmap -option ctrl:nocaps
  **/
 
-ll gcd(ll a, ll b) {
-    if (b==0) return a;
-    return gcd(b, a%b);
-}
+ll gcd(ll a, ll b) {return (b==0) ? a : gcd(b, a%b);}
 
 ll lcm(ll a, ll b) {
     return a/gcd(a, b)*b;
+}
+
+struct EG { ll g, x, y; };
+EG ext_gcd(ll a, ll b) {
+    if (b==0) {
+        return EG{a, 1, 0};
+    } else {
+        auto e = ext_gcd(b, a%b);
+        return EG{e, y, x-a/b*y};
+    }
 }
 
 /// x^n
@@ -24,6 +31,7 @@ T pow(T x, ll n) {
     }
     return r;
 }
+
 
 /// x^n % md
 ll pow_mod(ll x, ll n, ll md) {
@@ -52,15 +60,16 @@ struct ModInt {
     uint v;
     ModInt() : v(0) {}
     ModInt(ll v) : v((v%MD+MD)%MD) {}
-    ModInt normS(uint x) {return (x<MD)?x:x-MD;};
-    ModInt operator+(ModInt r) {return ModInt(normS(v+r.v));};
-    ModInt operator-(ModInt r) {return *this+ModInt(MD-r.v);};
-    ModInt operator*(ModInt r) {return ModInt((ll)v*r.v%MD);};
-    ModInt operator+=(ModInt r) {return *this=*this+r;}
-    ModInt operator-=(ModInt r) {return *this=*this-r;}
-    ModInt operator*=(ModInt r) {return *this=*this*r;}
-    static ModInt inv(ModInt x) {
+    uint value() {return v;}
+    static uint normS(const uint &x) {return (x<MD)?x:x-MD;};
+    static ModInt make(const uint &x) {ModInt m; m.v = x; return m;}
+    const ModInt operator+(const ModInt &r) const {return make(normS(v+r.v));}
+    const ModInt operator-(const ModInt &r) const {return make(normS(v+normS(MD-r.v)));}
+    const ModInt operator*(const ModInt &r) const {return make((ull)v*r.v%MD);}
+    ModInt& operator+=(const ModInt &r) {return *this=*this+r;}
+    ModInt& operator-=(const ModInt &r) {return *this=*this-r;}
+    ModInt& operator*=(const ModInt &r) {return *this=*this*r;}
+    static ModInt inv(const ModInt &x) {
         return pow(ModInt(x), MD-2);
     }
 };
-
