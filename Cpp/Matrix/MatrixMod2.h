@@ -13,7 +13,6 @@ struct MatrixMod2 {
     }
 
     bitset<M>& operator[](int p) {return d[p];}
-    
     const bitset<M>& operator[](int p) const {return d[p];}
     
     MatrixMod2& operator=(const MatrixMod2 &other) {
@@ -21,7 +20,7 @@ struct MatrixMod2 {
         return *this;
     }
 
-    MatrixMod2 operator+(const MatrixMod2 &right) {
+    MatrixMod2 operator+(const MatrixMod2 &right) const {
         MatrixMod2 res(N, M);
         for (int i = 0; i < N; i++) {
             res[i] = d[i]^right[i];
@@ -30,7 +29,7 @@ struct MatrixMod2 {
     }
     
     template<int K>
-    MatrixMod2<N, K> operator*(const MatrixMod2<M, K> &right) {
+    MatrixMod2<N, K> operator*(const MatrixMod2<M, K> &right) const {
         MatrixMod2<N, K> res;
         MatrixMod2<K, M> r;
         for (int i = 0; i < K; i++) {
