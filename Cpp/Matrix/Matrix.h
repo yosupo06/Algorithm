@@ -11,12 +11,6 @@ struct Matrix {
     vector<D>& operator[](int p) {return d[p];}
     const vector<D>& operator[](int p) const {return d[p];}
 
-    Matrix& operator=(const Matrix &other) {
-        assert(other.N == N && other.M == M);
-        copy_n(other.d.begin(), N, d.begin());
-        return *this;
-    }
-
     const Matrix operator+(const Matrix &right) const {
         assert(right.N == N && right.M == M);
         Matrix res(N, M);
@@ -61,8 +55,8 @@ template<class T>
 Matrix<T> pow(Matrix<T> x, ll p) {
     assert(x.N == x.M);
     int N = x.N;
-    Matrix res(N, N), buf = *this;
-    for (int i = 0; i < N; i++) res[i][i] = D(1);
+    Matrix<T> res(N, N), buf = x;
+    for (int i = 0; i < N; i++) res[i][i] = T(1);
     while(p != 0) {
         if (p % 2) {
             res = res*buf;
