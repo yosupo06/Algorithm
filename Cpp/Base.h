@@ -1,6 +1,7 @@
 ll gcd(ll a, ll b) {return (b==0) ? a : gcd(b, a%b);}
 ll lcm(ll a, ll b) {return a/gcd(a, b)*b;}
 
+/// g(gcd) ax+by=g
 struct EG { ll g, x, y; };
 EG ext_gcd(ll a, ll b) {
     if (b==0) {
@@ -41,7 +42,7 @@ ll invp(ll x, ll md) {
 }
 
 
-//binary search reverse
+/// binary search reverse
 int bsr(int x) {
     return 31 - __builtin_clz(x);
 }
