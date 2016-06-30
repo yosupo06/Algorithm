@@ -1,7 +1,7 @@
 ll gcd(ll a, ll b) {return (b==0) ? a : gcd(b, a%b);}
 ll lcm(ll a, ll b) {return a/gcd(a, b)*b;}
 
-/// g(gcd) ax+by=g
+/// g:gcd(a, b), ax+by=g
 struct EG { ll g, x, y; };
 EG ext_gcd(ll a, ll b) {
     if (b==0) {
@@ -12,7 +12,6 @@ EG ext_gcd(ll a, ll b) {
     }
 }
 
-/// x^n
 template<class T>
 T pow(T x, ll n) {
     T r = 1;
@@ -24,8 +23,6 @@ T pow(T x, ll n) {
     return r;
 }
 
-
-/// x^n % md
 ll pow_mod(ll x, ll n, ll md) {
     ll r = 1;
     while (n) {
@@ -36,7 +33,6 @@ ll pow_mod(ll x, ll n, ll md) {
     return r;
 }
 
-/// xの逆元, xとmdは互いに素
 ll invp(ll x, ll md) {
     return pow_mod(x, md-2, md);
 }
