@@ -24,3 +24,38 @@ void fft(int s, bool type, Pc c[]) {
     delete[] a;
     delete[] b;
 }
+
+void multiply(int s, int x[], int y[], ll z[]) { // x*y -> z, abs(x) and abs(y) no more than 1e9 
+    const int N = 1<<s;
+    Pc *a[3]; Pc *b[3];
+    for (int fe = 0; fe < 3; fe++) {
+        a[fe] = new Pc[N]; b[fe] = new Pc[N];
+        for (int i = 0; i < N; i++) {
+            a[fe][i] = Pc((x[i] >> (fe*10)) & ((1<<10)-1), 0);
+            b[fe][i] = Pc((y[i] >> (fe*10)) & ((1<<10)-1), 0);
+        }
+        fft(s, false, a[fe]);
+        fft(s, false, b[fe]);
+    }
+    Pc *c = new Pc[N];
+    fill_n(z, N, 0);
+    for (int fe = 0; fe < 5; fe++) {
+        fill_n(c, N, Pc(0, 0));
+        for (int xf = max(fe-2, 0); xf <= min(2, fe); xf++) {
+            int yf = fe-xf;
+            for (int i = 0; i < N; i++) {
+                c[i] += a[xf][i]*b[yf][i];
+            }
+        }
+        fft(s, true, c);
+        for (int i = 0; i < N; i++) {
+            c[i] *= 1.0/N;
+            z[i] += ll(round(c[i].real())) << (fe*10);
+        }
+    }
+    for (int i = 0; i < 3; i++) {
+        delete[] a[i];
+        delete[] b[i];
+    }
+    delete[] c;
+}
