@@ -2,41 +2,34 @@
  * Dijkstra法により最短距離を求める
  *
  * template引数のint Vは頂点数
+ * ---
+ * struct Edge {
+ *     int to;
+ *     T dist;
+ * };
+ * ---
  */
-template<int V>
+template<class D, D INF>
 struct Dijkstra {
-    using T = int; /// 辺の距離の型
-    const int INF = 1<<28;
-    typedef pair<T, int> P;
-    vector<P> g[V];
-    /// 辺のクリア
-    void init() {
-        for (int i = 0; i < V; i++) {
-            g[i].clear();
-        }
-    }
-    /// 辺の追加
-    void add(int from, int to, T dist) {
-        g[from].push_back(P(dist, to));
-    }
-    T res[V]; /// execを行うと、これに最短距離が入る 
-    void exec(int s) {
-        fill_n(res, V, INF);
+    vector<D> res; //res[i] = sからiまでの最短距離
+    
+    template<class E>
+    void exec(const Graph<E> &g, int s) {
+        int V = (int)g.size();
+        res.resize(V); fill_n(res.begin(), V, INF);
+        using P = pair<D, int>;
         priority_queue<P, vector<P>, greater<P>> q;
         q.push(P(0, s));
         res[s] = 0;
         while (!q.empty()) {
             P p = q.top(); q.pop();
             if (res[p.second] < p.first) continue;
-            for (P e: g[p.second]) {
-                if (p.first+e.first < res[e.second]) {
-                    res[e.second] = p.first+e.first;
-                    q.push(P(p.first+e.first, e.second));
+            for (E e: g[p.second]) {
+                if (p.first+e.dist < res[e.to]) {
+                    res[e.to] = p.first+e.dist;
+                    q.push(P(res[e.to], e.to));
                 }
             }
         }
-        return;
     }
 };
-
-

@@ -1,104 +1,127 @@
 /**
  * Primal-Dual法による最小費用流
- * 辺の容量は整数でないと解けないことに注意
+ * ---
+ * auto addEdge = [&](int from, int to, int cap, int dist) {
+ *     g[from].push_back(Edge{to, cap, dist, (int)g[to].size()});
+ *     g[to].push_back(Edge{from, 0, -dist, (int)g[from].size()-1});
+ * };
+ * ---
  */
-template<int V>
+template<class C, class D, C EPS, D INF> // cap, dist
 struct MinCostFlow {
-    using C = double;
-    const C EPS = 1e-10;
-    using T = double; /// 辺のコストの型
-    const T INF = 1e10;
-    using P = pair<T, int>;
-    struct Edge {
-        int to, rev;
-        C cap;
-        T cost;
-    };
-    vector<Edge> g[V];
-    T h[V], dist[V];
-    int pv[V], pe[V];
-    void init() {
-        for (int i = 0; i < V; i++) {
-            g[i].clear();
+    int V;
+    C nc; D nd;
+
+    template<class E>
+    MinCostFlow(const Graph<E> &g) {
+        V = (int)g.size();
+        h.resize(V); dist.resize(V);
+        pv.resize(V); pe.resize(V);
+        fill_n(h.begin(), V, 0);
+        nc = nd = 0;
+    } 
+
+    int s, t;
+    template<class E>
+    void setEnds(const Graph<E> &g, int s, int t, bool neg = false) {
+        this->s = s; this->t = t;
+        potRef(g, neg);
+    }
+
+    template<class R, class E>
+    R singleFlow(Graph<E> &g, C c) {
+        c = min(c, nc);
+        for (int v = t; v != s; v = pv[v]) {
+            E &e = g[pv[v]][pe[v]];
+            e.cap -= c;
+            g[v][e.rev].cap += c;
         }
+        R res = (R)c*nd;
+        nc -= c;
+        if (nc <= EPS) potRef(g, false);
+        return res;
     }
-    /// 辺の追加
-    void add(int from, int to, C cap, T cost) {
-        g[from].push_back(Edge{to, (int)g[to].size(), cap, cost});
-        g[to].push_back(Edge{from, (int)g[from].size()-1, 0, -cost});
+
+    template<class R, class E> // R = C*T
+    R maxFlow(Graph<E> &g, int s, int t, C c, bool neg = false) {
+        R res = 0;
+        setEnds(g, s, t, neg);
+        while (c > EPS) {
+            if (nc <= EPS) {
+                break;
+            }
+            C f = min(c, nc);
+            res += singleFlow<R>(g, f);
+            c -= f;
+        }
+        return res;
     }
-    /**
-     * 最小費用流を計算する
-     *
-     * bellに関わらず、負閉路が存在する場合はこのプログラムでは解けないことに注意
-     *
-     * Params:
-     *   s = 始点
-     *   t = 終点
-     *   f = 流す量
-     *   bell = 負のコストの辺が存在するかどうか
-     */
-    T exec(int s, int t, C f, bool bell = false) {
-        T res = 0;
-        fill_n(h, V, 0);
-        while (f > EPS) {
-            fill_n(dist, V, INF);
-            dist[s] = 0;
-            if (bell) {
-                bell = false;
-                bool update;
-                do {
-                    update = false;
-                    for (int v = 0; v < V; v++) {
-                        if (dist[v] == INF) continue;
-                        for (int i = 0; i < (int)g[v].size(); i++) {
-                            Edge &e = g[v][i];
-                            if (e.cap > EPS && dist[e.to] > dist[v] + e.cost) {
-                                dist[e.to] = dist[v] + e.cost;
-                                pv[e.to] = v;
-                                pe[e.to] = i;
-                                update = true;
-                            }
-                        }
-                    }
-                } while (update);
-            } else {
-                priority_queue<P, vector<P>, greater<P>> que;
-                que.push(P(0, s));
-                while (!que.empty()) {
-                    P p = que.top(); que.pop();
-                    int v = p.second;
-                    if (dist[v] < p.first) continue;
-                    for (int i = 0; i < (int)g[v].size(); i++) {
-                        Edge &e = g[v][i];
-                        if (e.cap > EPS && dist[e.to] > dist[v] + e.cost + h[v] - h[e.to]) {
-                            dist[e.to] = dist[v] + e.cost + h[v] - h[e.to];
-                            pv[e.to] = v;
-                            pe[e.to] = i;
-                            que.push(P(dist[e.to], e.to));
-                        }
+
+    vector<D> h, dist;
+    vector<int> pv, pe;
+
+    template<class E>
+    void potBell(const Graph<E> &g) {
+        fill_n(dist.begin(), V, INF);
+        bool update;
+        dist[s] = 0;
+        do {
+            update = false;
+            for (int v = 0; v < V; v++) {
+                if (dist[v] == INF) continue;
+                for (int i = 0; i < (int)g[v].size(); i++) {
+                    E e = g[v][i];
+                    if (e.cap > EPS && dist[e.to] > dist[v] + e.dist + h[v] - h[e.to]) {
+                        dist[e.to] = dist[v] + e.dist + h[v] - h[e.to];
+                        pv[e.to] = v; pe[e.to] = i;
+                        update = true;
                     }
                 }
             }
-            if (dist[t] == INF) {
-                return INF;
-            }
-            for (int v = 0; v < V; v++) {
-                h[v] += dist[v];
-            }
+        } while (update);
+    }
 
-            T d = f;
-            for (int v = t; v != s; v = pv[v]) {
-                d = min(d, g[pv[v]][pe[v]].cap);
-            }
-            f -= d;
-            res += d * h[t];
-            for (int v = t; v != s; v = pv[v]) {
-                Edge &e = g[pv[v]][pe[v]];
-                e.cap -= d;
-                g[v][e.rev].cap += d;
+    template<class E>
+    void potDijk(const Graph<E> &g) {
+        fill_n(dist.begin(), V, INF);
+        using P = pair<D, int>;
+        priority_queue<P, vector<P>, greater<P>> que;
+        que.push(P(0, s));
+        dist[s] = 0;
+        while (!que.empty()) {
+            P p = que.top(); que.pop();
+            int v = p.second;
+            if (dist[v] < p.first) continue;
+            for (int i = 0; i < (int)g[v].size(); i++) {
+                E e = g[v][i];
+                if (e.cap > EPS && dist[e.to] > dist[v] + e.dist + h[v] - h[e.to]) {
+                    dist[e.to] = dist[v] + e.dist + h[v] - h[e.to];
+                    pv[e.to] = v; pe[e.to] = i;
+                    que.push(P(dist[e.to], e.to));
+                }
             }
         }
-        return res;
+    }
+
+    template<class E>
+    void potRef(const Graph<E> &g, bool neg) {
+        if (neg) {
+            potBell(g);
+        } else {
+            potDijk(g);
+        }
+        if (dist[t] == INF) {
+            nd = INF;
+            nc = 0;
+            return;
+        }
+        for (int v = 0; v < V; v++) {
+            h[v] += dist[v];
+        }
+        nd = h[t];
+        nc = INF;
+        for (int v = t; v != s; v = pv[v]) {
+            nc = min(nc, g[pv[v]][pe[v]].cap);
+        }
     }
 };

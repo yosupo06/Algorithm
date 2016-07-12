@@ -1,68 +1,53 @@
 /**
- * 後退解析。
+ * 後退解析
+ * d[i] = 
+ *   -1:このマスからスタートすると先手が負ける
+ *    0:?
+ *    1:このマスからスタートすると先手が勝つ
  */
-
-template<int V>
-struct Retrograde {
-    vector<int> g[V], rg[V];
-    /// 辺のクリア
-    void init() {
-        for (int i = 0; i < V; i++) {
-            g[i].clear();
-            rg[i].clear();
-        }
+template<class E>
+void retrograde(const Graph<E> &g, const Graph<E> &rg, vector<int> &d) {
+    int V = (int)g.size();
+    vector<int> count(V);
+    for (int i = 0; i < V; i++) {
+        count[i] = (int)g[i].size();
     }
 
-    void add(int from, int to) {
-        g[from].push_back(to);
-        rg[to].push_back(from);
-    }
-
-    int d[V]; /// -1:このマスからスタートすると先手が負ける 0:None 1:このマスからスタートすると先手が勝つ
-    int count[V];
-    void exec() {
-        for (int i = 0; i < V; i++) {
-            count[i] = (int)g[i].size();
+    for (int i = 0; i < V; i++) {
+        if (d[i] == 1) {
+            for (E e: rg[i]) {
+                count[e.to]--;
+            }
         }
-
-        for (int i = 0; i < V; i++) {
-            if (d[i] == 1) {
-                for (int x: rg[i]) {
-                    count[x]--;
+        if (d[i] == -1) {
+            for (E e: rg[i]) {
+                if (d[e.to]) continue;
+                d[e.to] = 1;
+                for (E f: rg[e.to]) {
+                    count[f.to]--;
                 }
             }
         }
-        for (int i = 0; i < V; i++) {
-            if (d[i] == -1) {
-                for (int x: rg[i]) {
-                    if (d[x]) continue;
-                    d[x] = 1;
-                    for (int y: rg[x]) {
-                        count[y]--;
-                    }
-                }
-            }
-        }
-        queue<int> q;
-        for (int i = 0; i < V; i++) {
-            if (count[i]) continue;
-            q.push(i);
-        }
-        while (q.size()) {
-            int p = q.front(); q.pop();
-            if (d[p]) continue;
-            d[p] = -1;
-            for (int x: rg[p]) {
-                if (d[x]) continue;
-                d[x] = 1;
-                for (int y: rg[x]) {
-                    count[y]--;
-                    if (!count[y]) {
-                        q.push(y);
-                    }
-                }
-            }
-        }
-        return;
     }
-};
+    queue<int> q;
+    for (int i = 0; i < V; i++) {
+        if (count[i]) continue;
+        q.push(i);
+    }
+    while (q.size()) {
+        int p = q.front(); q.pop();
+        if (d[p]) continue;
+        d[p] = -1;
+        for (E e: rg[p]) {
+            if (d[e.to]) continue;
+            d[e.to] = 1;
+            for (E f: rg[e.to]) {
+                count[f.to]--;
+                if (!count[f.to]) {
+                    q.push(f.to);
+                }
+            }
+        }
+    }
+}
+

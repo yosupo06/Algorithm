@@ -25,7 +25,7 @@ void fft(int s, bool type, Pc c[]) {
     delete[] b;
 }
 
-void multiply(int s, int x[], int y[], ll z[]) { // x*y -> z, abs(x) and abs(y) no more than 1e9 
+void multiply(int s, int x[], int y[], ll z[]) { // x*y -> z. x_i, y_i must positive and lower than 2^30
     const int N = 1<<s;
     Pc *a[3]; Pc *b[3];
     for (int fe = 0; fe < 3; fe++) {

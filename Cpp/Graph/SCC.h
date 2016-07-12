@@ -1,44 +1,48 @@
 /**
  * SCC
  */
-template<int V>
 struct SCC {
-    vector<int> g[V], rg[V];
-    /// i-jに辺を追加する
-    void add(int i, int j) {
-        g[i].push_back(j);
-        rg[j].push_back(i);
+    int gc; /// group count
+    vector<int> res; /// res[i] = 頂点iの属する強連結成分のID
+    vector<vector<int>> scc; /// scc[i] = i個目の強連結成分に属する頂点
+
+    vector<bool> used;
+    template<class E>
+    void exec(const Graph<E> &g, const Graph<E> &rg) {
+        int V = (int)g.size();
+        used.resize(V); res.resize(V);
+        scc.clear(); gc = 0;
+
+        fill_n(used.begin(), V, false);
+        for (int i = 0; i < V; i++) {
+            if (!used[i]) dfs(g, i);
+        }
+        fill_n(used.begin(), V, false);
+        for (int i = vs.size()-1; i >= 0; i--) {
+            if (!used[vs[i]]) {
+                scc.push_back(vector<int>());
+                rdfs(rg, vs[i], gc++, scc.back());
+            }
+        }
     }
 
     vector<int> vs;
-    bool used[V];
-    void dfs(int v) {
+
+    template<class E>
+    void dfs(const Graph<E> &g, int v) {
         used[v] = true;
-        for (int d: g[v]) {
-            if (!used[d]) dfs(d);
+        for (Edge e: g[v]) {
+            if (!used[e.to]) dfs(g, e.to);
         }
         vs.push_back(v);
     }
-    int res[V]; /// res[i] = 頂点iの属する強連結成分のID
-    vector<int> scc[V]; /// scc[i] = i個目の強連結成分に属する頂点
-    void rdfs(int v, int k) {
-        used[v] = true;
-        res[v] = k; scc[k].push_back(v);
-        for (int d: rg[v]) {
-            if (!used[d]) rdfs(d, k);
-        }
-    }
 
-    int exec(int v) {
-        fill_n(used, v, false);
-        for (int i = 0; i < v; i++) {
-            if (!used[i]) dfs(i);
+    template<class E>
+    void rdfs(const Graph<E> &rg, int v, int k, vector<int> &vv) {
+        used[v] = true;
+        res[v] = k; vv.push_back(v);
+        for (Edge e: rg[v]) {
+            if (!used[e.to]) rdfs(rg, e.to, k, vv);
         }
-        fill_n(used, v, false);
-        int k = 0;
-        for (int i = vs.size()-1; i >= 0; i--) {
-            if (!used[vs[i]]) rdfs(vs[i], k++);
-        }
-        return k;
     }
 };
