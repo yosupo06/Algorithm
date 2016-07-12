@@ -4,10 +4,9 @@
 bool insLS(const L &l, const L &s) {
     int a = ccw(l.x, l.y, s.x);
     int b = ccw(l.x, l.y, s.y);
-    if (a == 1 && b == 1) return false;
-    if (a == -1 && b == -1) return false;
-    return true;
+    return (a%2 == 0 || b%2 == 0 || a != b);
 }
+
 bool insSS(const L &s, const L &t) {
     int a = ccw(s.x,s.y,t.x), b = ccw(s.x,s.y,t.y);
     int c = ccw(t.x,t.y,s.x), d = ccw(t.x,t.y,s.y);

@@ -4,35 +4,20 @@ using P = complex<R>;
 const R EPS = 1e-10;
 const R PI = acos((R)(-1));
 
-
-/*
- -1 -> neg
-  0 -> near 0
-  1 -> pos
-  */
 int sgn(R a) {
-    if (a < -EPS) return -1;
-    if (a > EPS) return 1;
-    return 0;
+    if (abs(a) <= EPS) return 0;
+    return (a < 0) ? -1 : 1;
 }
 
-/*
- -1 -> a > b
-  0 -> a near b
-  1 -> a < b
- */
 int sgn(R a, R b) {
     return sgn(b-a);
 }
 
-bool near(const P &a, const P &b) {
+bool near(P a, P b) {
     return !sgn(abs(a-b));
 }
 
-/*
- ちょっとロバストな比較関数
- */
-bool lessP(const P &l, const P &r) {
+bool lessP(P l, P r) {
     if (sgn(l.real(), r.real())) return l.real() < r.real();
     if (sgn(l.imag(), r.imag())) return l.imag() < r.imag();
     return false;
@@ -41,12 +26,13 @@ bool lessP(const P &l, const P &r) {
 R cross(P a, P b) { return a.real()*b.imag() - a.imag()*b.real(); }
 R dot(P a, P b) { return a.real()*b.real() + a.imag()*b.imag(); }
 
-/* 1->cclock
-  -1->clock
-   0->on
-   2->back
-  -2->front
-  */
+/*
+  1->cclock
+ -1->clock
+  0->on
+  2->back
+ -2->front
+ */
 int ccw(P a, P b, P c) {
     assert(!near(a, b));
     if (near(a, c) || near(b, c)) return 0;
@@ -61,19 +47,10 @@ struct L {
     P x, y;
     L() {}
     L(P x, P y) :x(x), y(y) {}
+    P vec() { return y-x; }
+    R abs() { return abs(vec()); }
+    R arg() { return arg(vec()); }
 };
-
-P vec(const L &l) {
-    return l.y - l.x;
-}
-
-R abs(const L &l) {
-    return abs(vec(l));
-}
-
-R arg(const L &l) {
-    return arg(vec(l));
-}
 
 //度をラジアンに
 R deg2rad(R x) {

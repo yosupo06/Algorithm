@@ -1,6 +1,5 @@
 struct C {
-    P p;
-    R r;
+    P p; R r;
     C() {}
     C(P p, R r) : p(p), r(r) {}
 };
