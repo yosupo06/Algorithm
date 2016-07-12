@@ -59,7 +59,6 @@ struct MatrixMod2 {
         return res;
     }
 
-
     int inverse() {
         assert(N == M);
         MatrixMod2 r;
@@ -68,7 +67,7 @@ struct MatrixMod2 {
             if (!d[i][i]) {
                 int j;
                 for (j = i+1; j < N; j++) {
-                    if (d[i][j]) {
+                    if (d[j][i]) {
                         swap(d[i], d[j]);
                         swap(r[i], r[j]);
                         break;

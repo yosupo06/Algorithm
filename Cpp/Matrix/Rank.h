@@ -9,8 +9,8 @@ Matrix<D> inverse(Matrix<D> x, D eps) {
             D md = -1;
             int mj = -1;
             for (int j = i+1; j < N; j++) {
-                if (md < abs(x[i][j])) {
-                    md = abs(x[i][j]);
+                if (md < abs(x[j][i])) {
+                    md = abs(x[j][i]);
                     mj = j;
                 }
             }
@@ -43,12 +43,12 @@ int rnk(Matrix<D> x, D eps) {
             D md = -1;
             int mj = -1;
             for (int j = i+1; j < N; j++) {
-                if (md < abs(x[i][j])) {
-                    md = abs(x[i][j]);
+                if (md < abs(x[j][i])) {
+                    md = abs(x[j][i]);
                     mj = j;
                 }
             }
-            if (mj == -1) return i;
+            if (abs(md) <= eps) return -1;
             swap(x[i], x[mj]);
         }
         D m = x[i][i];
