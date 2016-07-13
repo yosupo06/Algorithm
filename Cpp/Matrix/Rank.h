@@ -6,7 +6,7 @@ Matrix<D> inverse(Matrix<D> x, D eps) {
     for (int i = 0; i < N; i++) r[i][i] = D(1);
     for (int i = 0; i < N; i++) {
         if (abs(x[i][i]) <= eps) {
-            D md = -1;
+            D md = eps;
             int mj = -1;
             for (int j = i+1; j < N; j++) {
                 if (md < abs(x[j][i])) {
