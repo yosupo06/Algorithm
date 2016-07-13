@@ -1,5 +1,6 @@
-/// sのkmpテーブルを構築する Rは長さs.size()以上の配列へのポインタ
-void kmp(string s, int R[]) {
+//!!!not verify!!!
+vector<int> kmp(string s, int R[]) {
+    vector<int> R(s.size()+1);
     R[0] = -1;
     int j = -1;
     for (int i = 0; i < s.size() ; i++) {
@@ -7,4 +8,5 @@ void kmp(string s, int R[]) {
         j++;
         R[i+1] = j;
     }
+    return R;
 }
