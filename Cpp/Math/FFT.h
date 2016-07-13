@@ -4,9 +4,8 @@ using Pc = complex<R>;
 
 void fft(int s, bool type, Pc c[]) {
     const int N = 1<<s;
-    Pc *a = new Pc[N];
-    Pc *b = new Pc[N];
-    copy_n(c, N, a);
+    vector<Pc> a(N), b(N);
+    copy_n(c, N, a.begin());
     for (int i = 1; i <= s; i++) {
         int W = 1<<(s-i); //変更後の幅W
         for (int y = 0; y < N/2; y += W) {
@@ -20,12 +19,12 @@ void fft(int s, bool type, Pc c[]) {
         }
         swap(a, b);            
     }
-    copy_n(a, N, c);
-    delete[] a;
-    delete[] b;
+    copy_n(a.begin(), N, c);
 }
 
-void multiply(int s, int x[], int y[], ll z[]) { // x*y -> z. x_i, y_i must positive and lower than 2^30
+void multiply(int s, int x[], int y[], ll z[]) {
+    // x*y -> z. x_i, y_i must positive and lower than 2^30
+    //!!!this code may be overflow!!!
     const int N = 1<<s;
     Pc *a[3]; Pc *b[3];
     for (int fe = 0; fe < 3; fe++) {
