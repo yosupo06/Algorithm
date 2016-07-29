@@ -46,9 +46,8 @@ int bsr(int x) {
 template<uint MD>
 struct ModInt {
     uint v;
-    ModInt() : v(0) {}
-    ModInt(ll v) : v(normS(v%MD+MD)) {}
-    uint value() const {return v;}
+    ModInt() : v{0} {}
+    ModInt(ll v) : v{normS(v%MD+MD)} {}
     static uint normS(const uint &x) {return (x<MD)?x:x-MD;};
     static ModInt make(const uint &x) {ModInt m; m.v = x; return m;}
     const ModInt operator+(const ModInt &r) const {return make(normS(v+r.v));}
