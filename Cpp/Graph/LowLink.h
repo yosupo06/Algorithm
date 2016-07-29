@@ -3,30 +3,27 @@
  * dfs木についてのいろいろな情報を求める
  */
 struct LowLink {
-    vector<int> low, ord, par;
-    vector<int> vlis;
+    vector<int> low, ord, par; //low, ord, parent
+    vector<int> vlis; //preorder list
+    vector<bool> used;
     
-    LowLink() {}
     template<class E>
-    LowLink(const Graph<E> &g, int r) { exec(g, r); }
-
-    template<class E>
-    void exec(const Graph<E> &g, int r) {
+    LowLink(const Graph<E> &g, int r) {
         int V = (int)g.size();
-        low.resize(V); ord.resize(V); par.resize(V);
-        co = 0; used.resize(V);
-        fill_n(used.begin(), V, false);
+        low.resize(V); ord.resize(V); par.resize(V); used.resize(V);
+        co = 0;
+        fill(begin(used), end(used), false);
         if (r != -1) {
             dfs(g, r, -1);
         } else {
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < V; i++) {
                 if (used[i]) continue;
                 dfs(g, i, -1);
             }
         }
     }
+    
     int co;
-    vector<bool> used;
     template<class E>
     void dfs(const Graph<E> &g, int p, int b) {
         used[p] = true;

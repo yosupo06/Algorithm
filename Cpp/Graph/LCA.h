@@ -7,20 +7,19 @@ struct LCA {
 
     /// 事前処理を行う rはroot頂点のid
     template<class E>
-    void exec(const Graph<E> &g, int r) {
+    LCA(const Graph<E> &g, int r) {
         int V = (int)g.size();
-        for (int i = 0; i < LG; i++) {
-            ro[i].resize(V);
-            fill_n(ro[i].begin(), V, -1);
-        }
+        ro[0].resize(V); fill_n(begin(ro[0]), V, -1);
         dps.resize(V);
         dfs(g, r, -1, 0);
         for (int i = 1; i < LG; i++) {
+            ro[i].resize(V);
             for (int j = 0; j < V; j++) {
                 ro[i][j] = (ro[i-1][j] == -1) ? -1 : ro[i-1][ro[i-1][j]];
             }
         }
     }
+
     /// lとrの頂点のLCAを求める
     int query(int l, int r) {
         if (dps[l] < dps[r]) swap(l, r);

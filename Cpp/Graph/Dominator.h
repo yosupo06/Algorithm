@@ -4,19 +4,9 @@
 struct Dominator {
     vector<int> idom, sdom;
 
-    LowLink lc;
-
-    Dominator() {}
     template<class E>
-    Dominator(const Graph<E> &g, const Graph<E> &rg, int s) {
-        exec(g, rg, s);
-    }
-
-    template<class E>
-    void exec(const Graph<E> &g, const Graph<E> &rg, int s) {
+    Dominator(const Graph<E> &g, const Graph<E> &rg, int s, const LowLink &lc) {
         int V = (int)g.size();
-
-        lc = LowLink(g, 0);
         
         // uf init
         p.resize(V); mv.resize(V);

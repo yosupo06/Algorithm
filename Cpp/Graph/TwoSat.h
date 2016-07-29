@@ -6,7 +6,7 @@ struct TwoSat {
     int V;
     vector<bool> res;
     bool exec() {
-        scc.exec(2*V);
+        SCC scc(g, rg);
         for (int i = 0; i < V; i++) {
             if (scc.res[i] == scc.res[i+V]) return false;
             res[i] = scc.res[i] > scc.res[i+V];

@@ -14,9 +14,10 @@ struct Dijkstra {
     vector<D> res; //res[i] = sからiまでの最短距離
     
     template<class E>
-    void exec(const Graph<E> &g, int s) {
+    Dijkstra(const Graph<E> &g, int s) {
         int V = (int)g.size();
-        res.resize(V); fill_n(res.begin(), V, INF);
+        res = vector<D>(V, INF);
+        
         using P = pair<D, int>;
         priority_queue<P, vector<P>, greater<P>> q;
         q.push(P(0, s));

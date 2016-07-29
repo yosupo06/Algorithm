@@ -11,26 +11,24 @@
  * }
  * ---
  */
-template<class T> // Tは容量の型
+template<class C, C INF> // Cap
 struct MaxFlow {
-    const T INF = TEN(9);
-
     int V;
     vector<int> level, iter;
-
+`
     //gを破壊するので注意
     template<class E>
-    T exec(Graph<E> &g, int s, int t) {
+    C exec(Graph<E> &g, int s, int t) {
         V = (int)g.size();
         level.resize(V);
         iter.resize(V);
-        T flow = 0;
+        C flow = 0;
         while (true) {
             bfs(g, s);
             if (level[t] < 0) return flow;
             fill_n(iter.begin(), V, 0);
             while (true) {
-                T f = dfs(g, s, t, INF);
+                C f = dfs(g, s, t, INF);
                 if (!f) break;
                 flow += f;
             }
@@ -56,13 +54,13 @@ struct MaxFlow {
     }
 
     template<class E>
-    T dfs(Graph<E> &g, int v, int t, T f) {
+    C dfs(Graph<E> &g, int v, int t, T f) {
         if (v == t) return f;
         for (int &i = iter[v]; i < (int)g[v].size(); i++) {
             E &e = g[v][i];
             if (e.cap <= 0) continue;
             if (level[v] < level[e.to]) {
-                T d = dfs(g, e.to, t, min(f, e.cap));
+                C d = dfs(g, e.to, t, min(f, e.cap));
                 if (d <= 0) continue;
                 e.cap -= d;
                 g[e.to][e.rev].cap += d;

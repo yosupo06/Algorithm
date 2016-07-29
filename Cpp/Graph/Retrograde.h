@@ -12,13 +12,14 @@ void retrograde(const Graph<E> &g, const Graph<E> &rg, vector<int> &d) {
     for (int i = 0; i < V; i++) {
         count[i] = (int)g[i].size();
     }
-
     for (int i = 0; i < V; i++) {
         if (d[i] == 1) {
             for (E e: rg[i]) {
                 count[e.to]--;
             }
         }
+    }
+    for (int i = 0; i < V; i++) {
         if (d[i] == -1) {
             for (E e: rg[i]) {
                 if (d[e.to]) continue;
