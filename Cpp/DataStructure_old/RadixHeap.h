@@ -57,15 +57,15 @@ struct RadixHeap {
 struct RadixHeapInt {
     vector<uint> v[33];
     uint last, sz;
-    RadixHeap() {
+    RadixHeapInt() {
         last = sz = 0;
     }
     void push(uint x) {
         assert(last <= x);
         sz++;
-        v[bsr(x^last)+1].push_back(P(x, p));
+        v[bsr(x^last)+1].push_back(x);
     }
-    P pop() {
+    uint pop() {
         assert(sz);
         if (!v[0].size()) {
             int i = 1;

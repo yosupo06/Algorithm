@@ -25,23 +25,22 @@ C++11実装で、たまにD言語実装もあります
 
 - Dijkstra
 - LCA
-- SCC
-- Maxflow
-	- Dinic
-	- F-F(流し戻し用)
+- SCC, 2SAT
+- Maxflow(Dinic)
 - Mincostflow
-- 橋, 関節点列挙
+- Lowlink, Bridge
 - 後退解析
+- Dominator Tree
 
 ### 数学
 
-- きたまさ法
-- Karatsuba法
+- FFT
 
 ### 文字列
 
-- KMP法
-- SA-IS
+- KMP, Manachar, Z
+- RollingHash
+- SuffixArray(O(Nlog^2N), O(N)), LCP
 
 ### 幾何
 

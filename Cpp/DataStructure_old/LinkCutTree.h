@@ -19,8 +19,7 @@ struct LCNode {
         return this;
     }
     void init_node(int d) {
-        sz = 1; // Important
-        rev = false; // Important
+        sz = 1; rev = false; // Important
         tsz = 0;
         tszsm = 0;
         tsm = 0;
@@ -29,7 +28,7 @@ struct LCNode {
         lsm = rsm = 0;
     }
     void update() {
-        sz = 1 + l->sz + r->sz;
+        sz = 1 + l->sz + r->sz; // Important
         tszsm = tsz + l->tszsm + r->tszsm;
         dsm = d + l->dsm + r->dsm;
         lsm = l->lsm + l->dsm * tsz + tsm + (l->dsm + d) * r->tszsm + r->lsm;
@@ -51,7 +50,7 @@ struct LCNode {
     }
     void push() {
         assert(this != last);
-        if (rev) {
+        if (rev) { // Important
             if (l != last) {
                 l->revdata();
             }
@@ -62,9 +61,8 @@ struct LCNode {
         }
     }
     void revdata() {
-        swap(l, r);
+        rev ^= true; swap(l, r); // Important
         swap(lsm, rsm);
-        rev ^= true;
     }
 
     NP get(int x) {
@@ -177,6 +175,7 @@ struct LCNode {
         NP u = parent();
         assert(u != last);
         assert(u->r == last);
+        this->splay();
         u->delch(this);
         this->p = nullptr;
     }

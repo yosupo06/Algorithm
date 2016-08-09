@@ -39,9 +39,7 @@ ll invp(ll x, ll md) {
 
 
 /// binary search reverse
-int bsr(int x) {
-    return 31 - __builtin_clz(x);
-}
+int bsr(int x) { return 31 - __builtin_clz(x); }
 
 template<uint MD>
 struct ModInt {
@@ -60,3 +58,10 @@ struct ModInt {
         return pow(ModInt(x), MD-2);
     }
 };
+
+int rand_int(int l, int r) { //[l, r)
+    using D = uniform_int_distribution<int>;
+    static random_device rd;
+    static mt19937 gen(rd());
+    return D(l, r)(gen);
+}

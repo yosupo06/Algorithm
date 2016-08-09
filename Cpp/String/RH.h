@@ -50,7 +50,7 @@ struct HashStr {
         int N = (int)s.size();
         H::expand(N);
         v.resize(N+1);
-        v[0] = H{0};
+        v[0] = H::make(0);
         for (int i = 1; i <= N; i++) {
             v[i] = v[i-1] + (H::make(s[i-1])<<(i-1));
         }

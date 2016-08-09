@@ -2,12 +2,12 @@
  * さいころ
  *
  * +x=0 +y=1 +z=2
- * d = [+x, +y, +z]
  * dir[4] = [+x, +y, -x, -y]
  * Dice(a, b): +x=a +y=bとなるサイコロ生成
  * get(dir): dir方向の値を取得
  * rot(dir): dir方向に転がす
  */
+
 struct Dice {
     int d[3];
     Dice(int a, int b) {

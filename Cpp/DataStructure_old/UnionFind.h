@@ -1,20 +1,19 @@
 /**
  * UnionFind
  */
+template <int N>
 struct UnionFind {
-    vector<int> p, r;
+    int p[N], r[N];
     int gn;
-    UnionFind(int N) {
-        p.resize(N); r.resize(N);
-        fill(p.begin(), p.end(), -1);
-        fill(r.begin(), r.end(), 1);
-        gn = N;
+    void init(int n = N) {
+        fill_n(p, n, -1); fill_n(r, n, 1);
+        gn = n;
     }
     void merge(int a, int b) {
         int x = group(a), y = group(b);
         if (x == y) return; //same
         gn--;
-        if (r[x] < r[y]) p[x] = y;
+        if (r[x] > r[y]) p[x] = y;
         else if (r[x] > r[y]) p[y] = x;
         else p[x] = y; r[x]++;
     }
@@ -24,5 +23,5 @@ struct UnionFind {
     }
     bool same(int a, int b) {
         return group(a) == group(b);
-    }    
+    }
 };
