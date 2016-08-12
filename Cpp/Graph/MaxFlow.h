@@ -54,7 +54,7 @@ struct MaxFlow {
     }
 
     template<class E>
-    C dfs(Graph<E> &g, int v, int t, T f) {
+    C dfs(Graph<E> &g, int v, int t, C f) {
         if (v == t) return f;
         for (int &i = iter[v]; i < (int)g[v].size(); i++) {
             E &e = g[v][i];

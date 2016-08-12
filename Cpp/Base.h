@@ -63,5 +63,5 @@ int rand_int(int l, int r) { //[l, r)
     using D = uniform_int_distribution<int>;
     static random_device rd;
     static mt19937 gen(rd());
-    return D(l, r)(gen);
+    return D(l, r-1)(gen);
 }
