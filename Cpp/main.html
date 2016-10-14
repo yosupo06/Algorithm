@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>yosupoのわくわくライブラリ</title>
+	<link rel="stylesheet" href="./main.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/xcode.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<script type="text/javascript">
+		function load(tar, fileName){
+			var httpObj = new XMLHttpRequest();
+			httpObj.open('GET',fileName);
+			httpObj.send(null);
+			httpObj.onreadystatechange = function(){
+				document.getElementById(tar).innerHTML=hljs.highlightAuto(httpObj.responseText).value;
+			}
+		}
+	</script>
+</head>
+<body>
+	<h1>わくわくライブラリ</h1>
+
+	<h3>Base</h3>
+	<pre><code id="base", class="cpp"></code></pre>
+	<script>load("base", "./Base.h")</script>
+
+	<h2>Math</h2>
+	<h3>FFT</h3>
+	<pre><code id="kara", class="cpp"></code></pre>
+	<script>load("kara", "./Math/FFT.h")</script>
+
+	<h2>Matrix</h2>
+	<h3>Matrix</h3>
+	<pre><code id="mat", class="cpp"></code></pre>
+	<script>load("mat", "./Matrix/Matrix.h")</script>
+
+	<h2>Graph</h2>
+	<h3>SCC</h3>
+	<pre><code id="scc", class="cpp"></code></pre>
+	<script>load("scc", "./Graph/SCC.h")</script>
+	<h3>LCA</h3>
+	<pre><code id="lca", class="cpp"></code></pre>
+	<script>load("lca", "./Graph/LCA.h")</script>
+	<h3>MaxFlow</h3>
+	<pre><code id="maxf", class="cpp"></code></pre>
+	<script>load("maxf", "./Graph/MaxFlow.h")</script>
+	<h3>MinCostFlow</h3>
+	<pre><code id="minc", class="cpp"></code></pre>
+	<script>load("minc", "./Graph/MinCostFlow.h")</script>
+
+	<h2>Data Structure</h2>
+	<h3>さいころ</h3>
+	<pre><code id="dice", class="cpp"></code></pre>
+	<script>load("dice", "./DataStructure/Dice.h")</script>
+	<h3>QuickFind</h3>
+	<pre><code id="uf", class="cpp"></code></pre>
+	<script>load("uf", "./DataStructure/QuickFind.h")</script>
+
+	<h2>幾何</h2>
+	<h3>Base</h3>
+	<pre><code id="baseg", class="cpp"></code></pre>
+	<script>load("baseg", "./Geo/Base.h")</script>
+	<h3>Intersect</h3>
+	<pre><code id="ins", class="cpp"></code></pre>
+	<script>load("ins", "./Geo/Intersect.h")</script>
+	<h3>Polygon</h3>
+	<pre><code id="poly", class="cpp"></code></pre>
+	<script>load("poly", "./Geo/Polygon.h")</script>
+	<h3>Circle</h3>
+	<pre><code id="cir", class="cpp"></code></pre>
+	<script>load("cir", "./Geo/Circle.h")</script>
+
+</body>
+</html>
