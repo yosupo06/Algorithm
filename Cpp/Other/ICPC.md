@@ -1,10 +1,3 @@
-# 環境
-
-Ubuntu 16.04 64bitと仮定
-
-使用エディタはgedit
-
-
 # gedit
 
 Edit -> Preferenceから各種設定
@@ -14,12 +7,7 @@ Edit -> Preferenceから各種設定
 - Tabwidth:4
 - Auto Indent
 
-# Unity
-
-各種キーバーインドがemacs"風"になる。チームメイトと要相談、だけど無いとポンコツになる
-
-~/.profileへ
+~/.bashrcへ
 
 gsettings set org.gnome.desktop.interface gtk-key-theme Emacs
-setxkbmap -option ctrl:nocaps
-setxkbmap -option ctrl:nosuper
+setxkbmap -option ctrl:swapcaps (or nocaps)

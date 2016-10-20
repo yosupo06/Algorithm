@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>yosupoのわくわくライブラリ</title>
+	<link rel="stylesheet" href="./main.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/xcode.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<script type="text/javascript">
+		function load(tar, fileName){
+			var httpObj = new XMLHttpRequest();
+			httpObj.open('GET',fileName);
+			httpObj.send(null);
+			httpObj.onreadystatechange = function(){
+				document.getElementById(tar).innerHTML=hljs.highlightAuto(httpObj.responseText).value;
+			}
+		}
+	</script>
+</head>
+<body>
+	<h1>わくわくライブラリ(Graph)</h1>
+
+	<h3>Base</h3>
+	<pre><code id="gbase", class="cpp"></code></pre>
+	<script>load("gbase", "./Graph/Base.h")</script>
+	<h3>Dijkstra</h3>
+	<pre><code id="dijkstra", class="cpp"></code></pre>
+	<script>load("dijkstra", "./Graph/Dijkstra.h")</script>
+	<h3>全方位木DP</h3>
+	<pre><code id="alltree", class="cpp"></code></pre>
+	<script>load("alltree", "./Graph/AllTree.h")</script>
+	<h3>無向MinCut</h3>
+	<pre><code id="bicut", class="cpp"></code></pre>
+	<script>load("bicut", "./Graph/BidirectedCut.h")</script>
+	<h3>有向MST</h3>
+	<pre><code id="dimst", class="cpp"></code></pre>
+	<script>load("dimst", "./Graph/DirectedMST.h")</script>
+	<h3>Dominator</h3>
+	<pre><code id="dom", class="cpp"></code></pre>
+	<script>load("dom", "./Graph/Dominator.h")</script>
+	<h3>Retrograde</h3>
+	<pre><code id="retro", class="cpp"></code></pre>
+	<script>load("retro", "./Graph/Retrograde.h")</script>
+	<h3>2SAT</h3>
+	<pre><code id="sat", class="cpp"></code></pre>
+	<script>load("sat", "./Graph/TwoSat.h")</script>
+	<h3>LowLink</h3>
+	<pre><code id="lowlink", class="cpp"></code></pre>
+	<script>load("lowlink", "./Graph/LowLink.h")</script>
+	<h3>Bridge</h3>
+	<pre><code id="bridge", class="cpp"></code></pre>
+	<script>load("bridge", "./Graph/Bridge.h")</script>
+	<h3>Centroid</h3>
+	<pre><code id="centroid", class="cpp"></code></pre>
+	<script>load("centroid", "./Graph/Centroid.h")</script>
+	<h3>SCC</h3>
+	<pre><code id="scc", class="cpp"></code></pre>
+	<script>load("scc", "./Graph/SCC.h")</script>
+	<h3>LCA</h3>
+	<pre><code id="lca", class="cpp"></code></pre>
+	<script>load("lca", "./Graph/LCA.h")</script>
+	<h3>MaxFlow</h3>
+	<pre><code id="maxf", class="cpp"></code></pre>
+	<script>load("maxf", "./Graph/MaxFlow.h")</script>
+	<h3>MinCostFlow</h3>
+	<pre><code id="minc", class="cpp"></code></pre>
+	<script>load("minc", "./Graph/MinCostFlow.h")</script>
+
+</body>
+</html>
