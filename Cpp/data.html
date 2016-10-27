@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>yosupoのわくわくライブラリ</title>
+	<link rel="stylesheet" href="./main.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/xcode.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<script type="text/javascript">
+		function load(tar, fileName){
+			var httpObj = new XMLHttpRequest();
+			httpObj.open('GET',fileName);
+			httpObj.send(null);
+			httpObj.onreadystatechange = function(){
+				document.getElementById(tar).innerHTML=hljs.highlightAuto(httpObj.responseText).value;
+			}
+		}
+	</script>
+</head>
+<body>
+	<h1>わくわくライブラリ(Data Structure)</h1>
+
+	<h3>さいころ</h3>
+	<pre><code id="dice", class="cpp"></code></pre>
+	<script>load("dice", "./DataStructure/Dice.h")</script>
+	<h3>QuickFind</h3>
+	<pre><code id="uf", class="cpp"></code></pre>
+	<script>load("uf", "./DataStructure/QuickFind.h")</script>
+	<h3>SmallFind</h3>
+	<pre><code id="smalluf", class="cpp"></code></pre>
+	<script>load("smalluf", "./DataStructure/SmallFind.h")</script>
+	<h3>Fenwick</h3>
+	<pre><code id="fenwick", class="cpp"></code></pre>
+	<script>load("fenwick", "./DataStructure/FenwickTree.h")</script>
+	<h3>FastSegTree</h3>
+	<pre><code id="sst", class="cpp"></code></pre>
+	<script>load("sst", "./DataStructure/StarrySkyTree.h")</script>
+	<h3>Dynamic AA Tree</h3>
+	<pre><code id="dynamicAA", class="cpp"></code></pre>
+	<script>load("dynamicAA", "./DataStructure/Develop/AADynamic.h")</script>
+	<h3>HL Decomp</h3>
+	<pre><code id="hldec", class="cpp"></code></pre>
+	<script>load("hldec", "./DataStructure/buf/HLDecomp.h")</script>
+	<h3>LinkCutTree</h3>
+	<pre><code id="lct", class="cpp"></code></pre>
+	<script>load("lct", "./DataStructure/buf/LinkCutTree.h")</script>
+	<h3>Wavelet</h3>
+	<pre><code id="wvtree", class="cpp"></code></pre>
+	<script>load("wvtree", "./DataStructure/buf/WaveletTree.h")</script>
+
+</body>
+</html>

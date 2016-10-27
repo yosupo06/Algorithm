@@ -1,0 +1,7 @@
+pre {
+	font-size: 12.5px;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    border:dashed 2px #bbb;
+}
