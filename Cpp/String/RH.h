@@ -10,11 +10,11 @@ namespace Hull {
         }
         ull d;
         static H make(int x) {return H{ull(x)};}
-        const H operator+(const H &r) const {return H{d+r.d};}
-        const H operator-(const H &r) const {return H{d-r.d};}
-        const H operator<<(int s) const {return H{d*powB[s]};}
-        const H operator>>(int s) const {return H{d*powiB[s]};}
-        const bool operator==(const H &r) const {return d==r.d;}
+        H operator+(const H &r) const {return H{d+r.d};}
+        H operator-(const H &r) const {return H{d-r.d};}
+        H operator<<(int s) const {return H{d*powB[s]};}
+        H operator>>(int s) const {return H{d*powiB[s]};}
+        bool operator==(const H &r) const {return d==r.d;}
     };
 }
 namespace H2mod {
@@ -35,11 +35,11 @@ namespace H2mod {
         }
         M0 d0; M1 d1;
         static H make(int x) {return H{x, x};}
-        const H operator+(const H &r) const {return H{d0+r.d0, d1+r.d1};}
-        const H operator-(const H &r) const {return H{d0-r.d0, d1-r.d1};}
-        const H operator<<(int s) const {return H{d0*powB0[s], d1*powB1[s]};}
-        const H operator>>(int s) const {return H{d0*powiB0[s], d1*powiB1[s]};}
-        const bool operator==(const H &r) const {return (d0.v==r.d0.v && d1.v==r.d1.v);}
+        H operator+(const H &r) const {return H{d0+r.d0, d1+r.d1};}
+        H operator-(const H &r) const {return H{d0-r.d0, d1-r.d1};}
+        H operator<<(int s) const {return H{d0*powB0[s], d1*powB1[s]};}
+        H operator>>(int s) const {return H{d0*powiB0[s], d1*powiB1[s]};}
+        bool operator==(const H &r) const {return (d0.v==r.d0.v && d1.v==r.d1.v);}
     };
 }
 template<class H>
