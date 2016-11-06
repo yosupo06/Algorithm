@@ -51,4 +51,3 @@ void retrograde(const Graph<E> &g, const Graph<E> &rg, vector<int> &d) {
         }
     }
 }
-

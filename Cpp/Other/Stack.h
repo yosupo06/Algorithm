@@ -1,6 +1,4 @@
-/**
- * stack sizeを拡張する 64bit用
- */
+// stack sizeを拡張する 64bit用
 int main() {
     static ll eord, enew;
     const int sz = 256*1024*1024;

@@ -1,5 +1,4 @@
 /**
- * not verify
  * SCC
  */
 struct SCC {

@@ -8,7 +8,7 @@ struct Bridge {
     vector<bool> isRoot; // is root of group
 
     template<class E>
-    Bridge(const Graph<E> &g, int r, const LowLink &lc) {
+    Bridge(const Graph<E> &g, const LowLink &lc) {
         int V = (int)g.size();
         ig.resize(V); isRoot.resize(V);
         gc = 0;
@@ -16,7 +16,7 @@ struct Bridge {
             isRoot[p] = (lc.low[p] == lc.ord[p]);
             if (isRoot[p]) {
                 ig[p] = gc++;
-                gpar.push_back((p == r) ? -1 : ig[lc.par[p]]);
+                gpar.push_back((lc.par[p] == -1) ? -1 : ig[lc.par[p]]);
             } else {
                 ig[p] = ig[lc.par[p]];
             }

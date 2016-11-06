@@ -29,4 +29,3 @@ struct TwoSat {
         addEdge(b+(bpos?V:0), a+(apos?0:V));
     }
 }
-

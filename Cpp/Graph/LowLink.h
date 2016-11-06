@@ -3,14 +3,17 @@
  * dfs木についてのいろいろな情報を求める
  */
 struct LowLink {
+    int r;
     vector<int> low, ord, par; //low, ord, parent
     vector<int> vlis; //preorder list
+    vector<vector<int>> tr; //dfs tree
     vector<bool> used;
     
     template<class E>
-    LowLink(const Graph<E> &g, int r) {
+    LowLink(const Graph<E> &g, int r) : r(r) {
         int V = (int)g.size();
-        low.resize(V); ord.resize(V); par.resize(V); used.resize(V);
+        low.resize(V); ord.resize(V); par.resize(V);
+        tr.resize(V); used.resize(V);
         co = 0;
         fill(begin(used), end(used), false);
         if (r != -1) {
@@ -37,7 +40,7 @@ struct LowLink {
                 continue;
             }
             if (!used[e.to]) {
-                dfs(g, e.to, p);
+                tr[p].push_back(e.to); dfs(g, e.to, p);
                 low[p] = min(low[p], low[e.to]);
             } else {
                 low[p] = min(low[p], ord[e.to]);
