@@ -6,8 +6,8 @@ struct UnionFind {
     int gn;
     UnionFind(int N) {
         p.resize(N); r.resize(N);
-        fill(p.begin(), p.end(), -1);
-        fill(r.begin(), r.end(), 1);
+        fill(begin(p), end(p), -1);
+        fill(begin(r), end(r), 1);
         gn = N;
     }
     void merge(int a, int b) {
@@ -16,7 +16,7 @@ struct UnionFind {
         gn--;
         if (r[x] < r[y]) p[x] = y;
         else if (r[x] > r[y]) p[y] = x;
-        else p[x] = y; r[x]++;
+        else {p[x] = y; r[x]++;}
     }
     int group(int a) {
         if (p[a] == -1) return a;

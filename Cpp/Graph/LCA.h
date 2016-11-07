@@ -8,8 +8,8 @@ struct LCA {
     /// 事前処理を行う rはroot頂点のid
     template<class E>
     LCA(const Graph<E> &g, int r) {
-        int V = (int)g.size();
-        ro[0].resize(V); fill_n(begin(ro[0]), V, -1);
+        int V = int(g.size());
+        ro[0] = vector<int>(V, -1);
         dps.resize(V);
         dfs(g, r, -1, 0);
         for (int i = 1; i < LG; i++) {
