@@ -1,6 +1,3 @@
-/**
- * UnionFind
- */
 struct UnionFind {
     vector<int> p, r;
     int gn;

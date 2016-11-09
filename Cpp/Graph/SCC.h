@@ -1,6 +1,3 @@
-/**
- * SCC
- */
 struct SCC {
     int gc; /// group count
     vector<int> res; /// res[i] = 頂点iの属する強連結成分のID

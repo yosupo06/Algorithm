@@ -1,9 +1,5 @@
 /**
- * Dinic法による最大流
- *
- * ほとんど蟻本そのまま
- * template引数のint Vは頂点数
- * Edgeにはrevが必要
+ * Edge Sample
  * ---
  * void add_edge(Graph<Edge> &g, int from, int to, int cap) {
  *     g[from].push_back(Edge{to, cap, (int)g[to].size()});

@@ -1,6 +1,3 @@
-/**
- * hash化が可能なUnionFind 要素数を16より多くするとオワコンする
- */
 template<int N>
 struct SmallFind {
     int ig[N];

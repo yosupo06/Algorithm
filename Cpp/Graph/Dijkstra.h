@@ -1,6 +1,3 @@
-/**
- * Dijkstra
- */
 template<class D, D INF>
 struct Dijkstra {
     vector<D> res; //res[i] = sからiまでの最短距離

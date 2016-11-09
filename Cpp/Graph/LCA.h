@@ -1,6 +1,3 @@
-/**
- * LCA(lowest common ancestor)
- */
 template<int LG = 20>
 struct LCA {
     vector<int> ro[LG], dps;

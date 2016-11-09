@@ -1,6 +1,3 @@
-/**
- * 行列ライブラリ
- */
 template<class D>
 struct Matrix {
     vector<vector<D>> d;

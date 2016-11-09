@@ -1,7 +1,3 @@
-/**
- * LowLink
- * dfs木についてのいろいろな情報を求める
- */
 struct LowLink {
     int r;
     vector<int> low, ord, par; //low, ord, parent

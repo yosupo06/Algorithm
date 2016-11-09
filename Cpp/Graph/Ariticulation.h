@@ -1,6 +1,3 @@
-/**
- * 関節点の検出
- */
 struct Ariticulation {
     vector<bool> isArit; // is Ariticulation point
     vector<bool> isDiv; // is Div when parent remove

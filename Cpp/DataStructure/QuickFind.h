@@ -1,6 +1,3 @@
-/**
- * QuickFind
- */
 struct UnionFind {
     vector<int> ig;
     vector<vector<int>> gi;

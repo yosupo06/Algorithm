@@ -1,6 +1,3 @@
-/**
- * Dominator Tree
- */
 struct Dominator {
     vector<int> idom, sdom;
 

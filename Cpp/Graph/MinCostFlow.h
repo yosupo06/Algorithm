@@ -1,5 +1,5 @@
 /**
- * Primal-Dual法による最小費用流
+ * Edge Sample
  * ---
  * auto addEdge = [&](int from, int to, int cap, int dist) {
  *     g[from].push_back(Edge{to, cap, dist, (int)g[to].size()});

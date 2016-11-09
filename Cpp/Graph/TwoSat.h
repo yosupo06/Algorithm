@@ -1,7 +1,3 @@
-/**
- * TwoSat
- * !!!not verify!!!
- */
 struct TwoSat {
     int V;
     vector<bool> res;

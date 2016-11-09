@@ -1,6 +1,3 @@
-/**
- * Link-Cut Tree(starry sky tree)
- */
 struct LCNode {
     using NP = LCNode*;
     static NP last;

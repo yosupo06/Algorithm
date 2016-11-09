@@ -1,6 +1,3 @@
-/**
- * 橋の検出
- */
 struct Bridge {
     int gc;
     vector<int> ig; // i to group

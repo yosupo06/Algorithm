@@ -1,18 +1,13 @@
 int bsr(int x) { return 31 - __builtin_clz(x); }
 
-template<class T = ll> T gcd(T a, T b) {return (b==0) ? a : gcd(b, a%b);}
-template<class T = ll> T lcm(T a, T b) {return a/gcd(a, b)*b;}
-
 /// g:gcd(a, b), ax+by=g
-template<class T = ll> struct EG { T g, x, y; };
-
-template<class T>
-EG<T> ext_gcd(T a, T b) {
+struct EG { ll g, x, y; };
+EG ext_gcd(ll a, ll b) {
     if (b==0) {
-        return EG<T>{a, 1, 0};
+        return EG{a, 1, 0};
     } else {
         auto e = ext_gcd(b, a%b);
-        return EG<T>{e.g, e.y, e.x-a/b*e.y};
+        return EG{e.g, e.y, e.x-a/b*e.y};
     }
 }
 
@@ -26,22 +21,6 @@ T pow(T x, ll n) {
     }
     return r;
 }
-
-template<class T>
-T pow(T x, ll n, T md) {
-    T r = 1;
-    while (n) {
-        if (n & 1) r = (r*x)%md;
-        x = (x*x)%md;
-        n >>= 1;
-    }
-    return r;
-}
-
-ll invp(ll x, ll md) {
-    return pow_mod(x, md-2, md);
-}
-
 
 template<uint MD>
 struct ModInt {

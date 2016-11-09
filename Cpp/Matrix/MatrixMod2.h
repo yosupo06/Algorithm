@@ -1,6 +1,3 @@
-/**
- * 行列ライブラリ with Mod2
- */
 template<int N, int M>
 struct MatrixMod2 {
     array<bitset<M>, N> d;
