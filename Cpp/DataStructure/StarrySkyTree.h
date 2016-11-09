@@ -16,7 +16,7 @@ struct SegTree {
     }
     template<class Q>
     Q single(int idx, Q q) {
-        if (idx < 0 or sz <= idx) return q;
+        if (idx < 0 || sz <= idx) return q;
         idx += sz;
         for (int i = lg; i >= 1; i--) {
             int k = idx>>i;
@@ -33,7 +33,7 @@ struct SegTree {
     }
     template<class Q>
     void query(int a, int b, Q &q, int k, int sz) {
-        if (a <= 0 and sz <= b) {
+        if (a <= 0 && sz <= b) {
             q += n[k];
             return;
         }
@@ -44,7 +44,7 @@ struct SegTree {
     }
     template<class Q>
     Q query(int a, int b, Q q) {
-        if (a < sz and 0 < b) query(a, b, q, 1, sz);
+        if (a < sz && 0 < b) query(a, b, q, 1, sz);
         return q;
     }
 };
@@ -54,7 +54,7 @@ struct Node {
     void init() {
         ma = lz = 0;
     }
-    Node() { init(); }
+    Node() { init(); } // leaf
     Node(Node &l, Node &r) { init(); update(l, r); }
     void update(const Node &l, const Node &r) {
         ma = max(l.ma, r.ma);

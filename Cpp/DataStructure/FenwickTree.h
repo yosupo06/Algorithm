@@ -1,7 +1,5 @@
 /**
- * Fenwick Tree 
- *
- * 0-indexed
+ * Fenwick Tree (0-indexed)
  */
 template<class T>
 struct Fenwick {

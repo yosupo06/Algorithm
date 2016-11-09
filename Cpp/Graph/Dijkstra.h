@@ -1,13 +1,5 @@
 /**
- * Dijkstra法により最短距離を求める
- *
- * template引数のint Vは頂点数
- * ---
- * struct Edge {
- *     int to;
- *     T dist;
- * };
- * ---
+ * Dijkstra
  */
 template<class D, D INF>
 struct Dijkstra {

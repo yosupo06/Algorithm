@@ -7,15 +7,17 @@ struct LowLink {
     vector<int> low, ord, par; //low, ord, parent
     vector<int> vlis; //preorder list
     vector<vector<int>> tr; //dfs tree
+
+    int co;
     vector<bool> used;
     
     template<class E>
     LowLink(const Graph<E> &g, int r) : r(r) {
-        int V = (int)g.size();
+        int V = int(g.size());
         low.resize(V); ord.resize(V); par.resize(V);
         tr.resize(V); used.resize(V);
         co = 0;
-        fill(begin(used), end(used), false);
+        used = vector<bool>(V, false);
         if (r != -1) {
             dfs(g, r, -1);
         } else {
@@ -26,24 +28,23 @@ struct LowLink {
         }
     }
     
-    int co;
     template<class E>
     void dfs(const Graph<E> &g, int p, int b) {
         used[p] = true;
         bool rt = true;
-        low[p] = ord[p] = co++;
+        low[p] = ord[p] = co++; par[p] = b;
         vlis.push_back(p);
-        par[p] = b;
-        for (E e: g[p]) {
-            if (rt and e.to == b) {
+        for (auto e: g[p]) {
+            int d = e.to;
+            if (rt && d == b) {
                 rt = false;
                 continue;
             }
-            if (!used[e.to]) {
-                tr[p].push_back(e.to); dfs(g, e.to, p);
-                low[p] = min(low[p], low[e.to]);
+            if (!used[d]) {
+                tr[p].push_back(d); dfs(g, d, p);
+                low[p] = min(low[p], low[d]);
             } else {
-                low[p] = min(low[p], ord[e.to]);
+                low[p] = min(low[p], ord[d]);
             }
         }
     }
