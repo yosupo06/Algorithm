@@ -1,8 +1,9 @@
-pre {
-	font-size: 14.0px;
-	font-family: "Ricty Diminished";
+.hljs {
+	font-size: 18.0px;
+	font-family: 'Ricty Diminished';
     overflow: auto;
     white-space: pre-wrap;
     word-wrap: break-word;
     border:dashed 2px #bbb;
 }
+

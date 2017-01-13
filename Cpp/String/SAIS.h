@@ -9,7 +9,7 @@ struct SA {
         sa.resize(n+1); rsa.resize(n+1); lcp.clear();
         ls.resize(n+1); //L:false S:true
 
-        vector<int> l_ba(B, 0), s_ba(B, 0), l_basm(B+1), s_basm(B+1);
+        vector<int> l_ba(B+1, 0), s_ba(B, 0), l_basm(B+1), s_basm(B+1);
         ls[n] = true;
         for (int i = n-1; i >= 0; i--) {
             ls[i] = ls[i+1];
@@ -39,7 +39,8 @@ struct SA {
                 v.push_back(i);
             }
         }
-
+        lms[n] = int(v.size());
+        
         if (v.size()) {
             vector<int> v2 = v, buf = s_basm;
             fill(begin(sa), end(sa), -1);
