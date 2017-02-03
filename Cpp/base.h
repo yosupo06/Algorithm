@@ -1,8 +1,6 @@
 using uint = unsigned int;
 using ll = long long;
 using ull = unsigned long long;
-template<class T> using V = vector<T>;
-template<class T> using VV = V<V<T>>;
 constexpr ll TEN(int n) { return (n==0) ? 1 : 10*TEN(n-1); }
 int bsr(int x) { return 31 - __builtin_clz(x); }
 int bsr(ll x) { return 63 - __builtin_clzll(x); }
