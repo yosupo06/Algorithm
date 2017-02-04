@@ -1,16 +1,11 @@
 template<class D>
 struct Matrix {
-    vector<vector<D>> d;
+    VV<D> d;
     int N, M;
-    Matrix(int N, int M) : N(N), M(M) {
-        d.resize(N);
-        for (int i = 0; i < N; i++) {
-            d[i] = vector<D>(M);
-        }
-    }
+    Matrix(int N, int M) : d(VV<D>(N, V<D>(M))), N(N), M(M) {}
 
-    vector<D>& operator[](int p) {return d[p];}
-    const vector<D>& operator[](int p) const {return d[p];}
+    V<D>& operator[](int p) {return d[p];}
+    const V<D>& operator[](int p) const {return d[p];}
 
     const Matrix operator+(const Matrix &right) const {
         assert(right.N == N && right.M == M);

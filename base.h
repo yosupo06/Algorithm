@@ -50,18 +50,20 @@ struct ModInt {
     uint v;
     ModInt() : v{0} {}
     ModInt(ll v) : v{normS(v%MD+MD)} {}
+    explicit operator bool() const {return v != 0;}
     static uint normS(const uint &x) {return (x<MD)?x:x-MD;};
     static ModInt make(const uint &x) {ModInt m; m.v = x; return m;}
+    static ModInt inv(const ModInt &x) {return pow(ModInt(x), MD-2);} 
     ModInt operator+(const ModInt &r) const {return make(normS(v+r.v));}
     ModInt operator-(const ModInt &r) const {return make(normS(v+MD-r.v));}
     ModInt operator*(const ModInt &r) const {return make((ull)v*r.v%MD);}
+    ModInt operator/(const ModInt &r) const {return *this*inv(r);}
     ModInt& operator+=(const ModInt &r) {return *this=*this+r;}
     ModInt& operator-=(const ModInt &r) {return *this=*this-r;}
     ModInt& operator*=(const ModInt &r) {return *this=*this*r;}
-    static ModInt inv(const ModInt &x) {
-        return pow(ModInt(x), MD-2);
-    }
+    ModInt& operator/=(const ModInt &r) {return *this=*this/r;}
 };
+template<uint MD> string to_string(ModInt<MD> m) {return to_string(m.v);}
 using Mint = ModInt<TEN(9)+7>;
 
 ll rand_int(ll l, ll r) { //[l, r]
