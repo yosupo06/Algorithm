@@ -115,7 +115,7 @@ Poly<D> nth_mod(ll n, const Poly<D> &mod) {
     Poly<D> p = V<D>{Mint(1)};
     int m = (!n) ? -1 : bsr(n);
     for (int i = m; i >= 0; i--) {
-        if (n & (1<<i)) {
+        if (n & (1LL<<i)) {
             // += 1
             p = (p<<1).rem_inv(mod, mod_inv, B);
         }

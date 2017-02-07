@@ -72,3 +72,18 @@ ll rand_int(ll l, ll r) { //[l, r]
     static mt19937 gen(rd());
     return D(l, r)(gen);
 }
+
+struct Pc {
+    R x, y;
+    Pc() : x(0), y(0) {}
+    Pc(R x, R y) : x(x), y(y) {}
+    Pc operator+(const Pc &r) const {return Pc(x+r.x, y+r.y);}
+    Pc operator-(const Pc &r) const {return Pc(x-r.x, y-r.y);}
+    Pc operator*(const Pc &r) const {return Pc(x*r.x-y*r.y, x*r.y+y*r.x);}
+    Pc operator*(const R &r) const {return Pc(x*r, y*r);}
+    Pc& operator+=(const Pc &r) {return *this=*this+r;}
+    Pc& operator-=(const Pc &r) {return *this=*this-r;}
+    Pc& operator*=(const Pc &r) {return *this=*this*r;}   
+    Pc& operator*=(const R &r) {return *this=*this*r;}
+    static Pc polar(R r, R th) {return Pc(cos(th)*r, sin(th)*r);}
+};

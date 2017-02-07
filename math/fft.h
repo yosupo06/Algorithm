@@ -1,6 +1,5 @@
 using R = double;
 const R PI = 4*atan(R(1));
-using Pc = complex<R>;
 
 void fft(bool type, vector<Pc> &c) {
     static vector<Pc> buf[30];
@@ -10,15 +9,14 @@ void fft(bool type, vector<Pc> &c) {
     if (!buf[s].size()) {
         buf[s] = vector<Pc>(N);
         for (int i = 0; i < N; i++) {
-            buf[s][i] = polar<R>(1, i*2*PI/N);
+            buf[s][i] = Pc::polar(1, i*2*PI/N);
         }
     }
-    vector<Pc> a(N), b(N);
-    copy(begin(c), end(c), begin(a));
+    vector<Pc> a = c, b(N);
     for (int i = 1; i <= s; i++) {
         int W = 1<<(s-i); //変更後の幅W
         for (int y = 0; y < N/2; y += W) {
-            Pc now = buf[s][y]; if (type) now = conj(now);
+            Pc now = buf[s][y]; if (type) now.y *= -1;
             for (int x = 0; x < W; x++) {
                 auto l =       a[y<<1 | x];
                 auto r = now * a[y<<1 | x | W];
@@ -28,7 +26,7 @@ void fft(bool type, vector<Pc> &c) {
         }
         swap(a, b);            
     }
-    copy(begin(a), end(a), begin(c));
+    c = a;
 }
 
 template<int B, uint MD>
@@ -60,39 +58,62 @@ void nft(bool type, vector<ModInt<MD>> &c) {
 
 template<class Mint>
 vector<Mint> multiply(vector<Mint> x, vector<Mint> y) {
+    constexpr int B = 3, SHIFT = 10;
     int S = x.size()+y.size()-1;
     int N = 2<<bsr(S-1);
-    vector<Pc> a[3], b[3];
-    for (int fe = 0; fe < 3; fe++) {
+    vector<Pc> a[B], b[B];
+    for (int fe = 0; fe < B; fe++) {
         a[fe] = vector<Pc>(N);
         b[fe] = vector<Pc>(N);
+        vector<Pc> c(N);
         for (int i = 0; i < int(x.size()); i++) {
-            a[fe][i] = Pc((x[i].v >> (fe*10)) & ((1<<10)-1), 0);
+            c[i].x = (x[i].v >> (fe*SHIFT)) & ((1<<SHIFT)-1);
         }
         for (int i = 0; i < int(y.size()); i++) {
-            b[fe][i] = Pc((y[i].v >> (fe*10)) & ((1<<10)-1), 0);
+            c[i].y = (y[i].v >> (fe*SHIFT)) & ((1<<SHIFT)-1);
         }
-        fft(false, a[fe]);
-        fft(false, b[fe]);
+        fft(false, c);
+        for (int i = 0; i < N; i++) {
+            c[i] *= 0.5;
+        }
+        for (int i = 0; i < N; i++) {
+            int j = (N-i)%N;
+            a[fe][i] = Pc(c[i].x+c[j].x, c[i].y-c[j].y);
+            b[fe][i] = Pc(c[i].y+c[j].y, -c[i].x+c[j].x);
+        }
     }
- 
     vector<Mint> z(S);
-    vector<Pc> c(N);
-    Mint base = 1;
-    for (int fe = 0; fe < 5; fe++) {
-        fill_n(begin(c), N, Pc(0, 0));
-        for (int xf = max(fe-2, 0); xf <= min(2, fe); xf++) {
-            int yf = fe-xf;
+    vector<Pc> c[B];
+    for (int fe = 0; fe < B; fe++) {
+        c[fe] = vector<Pc>(N);
+    }
+    for (int af = 0; af < B; af++) {
+        for (int bf = 0; bf < B; bf++) {
+            int cf = (af+bf)%B;
             for (int i = 0; i < N; i++) {
-                c[i] += a[xf][i]*b[yf][i];
+                if (af+bf<B) {
+                    c[cf][i] += a[af][i]*b[bf][i];
+                } else {
+                    c[cf][i] += a[af][i]*b[bf][i]*Pc(0, 1);
+                }
             }
         }
-        fft(true, c);
+    }
+    for (int fe = 0; fe < B; fe++) {
+        fft(true, c[fe]);
+    }
+    Mint base = 1;
+    for (int fe = 0; fe < 2*B-1; fe++) {
         for (int i = 0; i < S; i++) {
-            c[i] *= 1.0/N;
-            z[i] += Mint(ll(round(c[i].real()))) * base;
+            if (fe < B) {
+                c[fe][i].x *= 1.0/N;
+                z[i] += Mint(ll(round(c[fe][i].x)))*base;
+            } else {       
+                c[fe-B][i].y *= 1.0/N;
+                z[i] += Mint(ll(round(c[fe-B][i].y)))*base;
+            }
         }
-        base *= 1<<10;
+        base *= 1<<SHIFT;
     }
     return z;
 }
