@@ -126,3 +126,81 @@ Poly<D> nth_mod(ll n, const Poly<D> &mod) {
     }
     return p;
 }
+template<class D>
+Poly<D> berlekamp_massey(const V<D> &s) {
+    int N = int(s.size());
+    V<D> b = {D(-1)}, c = {D(-1)};
+    D y = D(1);
+    for (int ed = 1; ed <= N; ed++) {
+        int L = int(c.size()), M = int(b.size());
+        D x = 0;
+        for (int i = 0; i < L; i++) {
+            x += c[i]*s[ed-L+i];
+        }
+        b.push_back(0); M++;
+        if (!x) {
+            continue;
+        }
+        D freq = x/y;
+        if (L < M) {
+            //use b
+            auto tmp = c;
+            c.insert(begin(c), M-L, D(0));
+            for (int i = 0; i < M; i++) {
+                c[M-1-i] -= freq*b[M-1-i];
+            }
+            b = tmp;
+            y = x;
+        } else {
+            //use c
+            for (int i = 0; i < M; i++) {
+                c[L-1-i] -= freq*b[M-1-i];
+            }
+        }
+    }
+    return Poly<D>(c);
+}
+
+template<class Mint>
+V<Mint> randV(int N) {
+    V<Mint> res(N);
+    for (int i = 0; i < N; i++) {
+        res[i] = Mint(rand_int(1, Mint(-1).v));
+    }
+    return res;
+}
+
+template<class Mint>
+Mint det(const V<Mint> &diag, const V<P> &edges) {
+    int N = int(diag.size());
+    if (N == 0) return 1;
+    V<Mint> c = randV<Mint>(N), l = randV<Mint>(N), r = randV<Mint>(N);
+    // l * mat * r
+    V<Mint> buf(2*N), tmp(N);
+    for (int fe = 0; fe < 2*N; fe++) {
+        for (int i = 0; i < N; i++) {
+            buf[fe] += l[i]*r[i];
+        }
+        for (int i = 0; i < N; i++) {
+            r[i] *= c[i];
+        }
+        for (int i = 0; i < N; i++) {
+            tmp[i] = diag[i] * r[i];
+        }
+        for (auto e: edges) {
+            tmp[e.first] -= r[e.second];
+            tmp[e.second] -= r[e.first];
+        }
+        r = tmp;
+    }
+    auto u = berlekamp_massey(buf);
+    auto acdet = u.freq(0) * Mint(-1);
+    if (!acdet) return 0;
+    if (u.size() != N+1) return det(diag, edges);
+    Mint cdet = 1;
+    for (int i = 0; i < N; i++) {
+        cdet *= c[i];
+    }
+    if (N % 2) acdet *= Mint(-1);
+    return acdet / cdet;
+}
