@@ -29,33 +29,6 @@ void fft(bool type, vector<Pc> &c) {
     c = a;
 }
 
-template<int B, uint MD>
-void nft(bool type, vector<ModInt<MD>> &c) {
-    using Mint = ModInt<MD>;
-    int N = int(c.size());
-    int s = bsr(N);
-    assert(1<<s == N);
-    vector<Mint> a(N), b(N);
-    copy(begin(c), end(c), begin(a));
-    for (int i = 1; i <= s; i++) {
-        int W = 1<<(s-i); //変更後の幅W
-        Mint base = pow(Mint(B), (MD-1)/(1<<i));
-        if (type) base = Mint::inv(base);
-        Mint now = 1;
-        for (int y = 0; y < N/2; y += W) {
-            for (int x = 0; x < W; x++) {
-                auto l =       a[y<<1 | x];
-                auto r = now * a[y<<1 | x | W];
-                b[y | x]        = l+r;
-                b[y | x | N>>1] = l-r;
-            }
-            now *= base;
-        }
-        swap(a, b);
-    }
-    copy(begin(a), end(a), begin(c));
-}
-
 template<class Mint>
 vector<Mint> multiply(vector<Mint> x, vector<Mint> y) {
     constexpr int B = 3, SHIFT = 10;
@@ -116,4 +89,31 @@ vector<Mint> multiply(vector<Mint> x, vector<Mint> y) {
         base *= 1<<SHIFT;
     }
     return z;
+}
+
+template<int B, uint MD>
+void nft(bool type, vector<ModInt<MD>> &c) {
+    using Mint = ModInt<MD>;
+    int N = int(c.size());
+    int s = bsr(N);
+    assert(1<<s == N);
+    vector<Mint> a(N), b(N);
+    copy(begin(c), end(c), begin(a));
+    for (int i = 1; i <= s; i++) {
+        int W = 1<<(s-i); //変更後の幅W
+        Mint base = pow(Mint(B), (MD-1)/(1<<i));
+        if (type) base = Mint::inv(base);
+        Mint now = 1;
+        for (int y = 0; y < N/2; y += W) {
+            for (int x = 0; x < W; x++) {
+                auto l =       a[y<<1 | x];
+                auto r = now * a[y<<1 | x | W];
+                b[y | x]        = l+r;
+                b[y | x | N>>1] = l-r;
+            }
+            now *= base;
+        }
+        swap(a, b);
+    }
+    copy(begin(a), end(a), begin(c));
 }
