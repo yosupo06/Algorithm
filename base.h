@@ -4,10 +4,11 @@ using ull = unsigned long long;
 template<class T> using V = vector<T>;
 template<class T> using VV = V<V<T>>;
 constexpr ll TEN(int n) { return (n==0) ? 1 : 10*TEN(n-1); }
-int bsr(int x) { return 31 - __builtin_clz(x); }
-int bsr(ll x) { return 63 - __builtin_clzll(x); }
-int bsf(int x) { return __builtin_ctz(x); }
-int bsf(ll x) { return __builtin_ctzll(x); }
+
+int bsr(uint x) { return 31 - __builtin_clz(x); }
+int bsr(ull x) { return 63 - __builtin_clzll(x); }
+int bsf(uint x) { return __builtin_ctz(x); }
+int bsf(ull x) { return __builtin_ctzll(x); }
 
 ll gcd(ll a, ll b) {
     a = abs(a); b = abs(b);
