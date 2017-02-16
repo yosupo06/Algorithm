@@ -1,10 +1,11 @@
 template<class T>
 struct Fenwick {
-    int N;
-    vector<T> seg;
+    int N, lg;
+    V<T> seg;
     Fenwick(int N) : N(N) {
         seg.resize(N+1);
-        fill_n(begin(seg), N+1, 0);
+        lg = bsr(uint(N));
+        fill(begin(seg), end(seg), T(0));
     }
     /// i番目の要素にxを追加する
     void add(int i, T x) {
@@ -26,5 +27,17 @@ struct Fenwick {
     /// [a, b)のsum
     T sum(int a, int b) {
         return sum(b) - sum(a);
+    }
+    /// sum[0, idx) >= xなる最小のidx
+    int sum_lower_bound(T x) {
+        if (x <= 0) return 0;
+        int res = 0;
+        for (int len = 1<<lg; len >= 1; len /= 2) {
+            if (res + len <= N && seg[res + len] < x) {
+                x -= seg[res+len];
+                res += len;
+            }
+        }
+        return res + 1;
     }
 };

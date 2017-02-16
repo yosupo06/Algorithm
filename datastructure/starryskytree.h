@@ -3,7 +3,8 @@ struct SegTree {
     int lg, sz;
     vector<N> n;
     SegTree(int sz) {
-        lg = bsr(2*sz-1);
+        assert(sz >= 1);
+        lg = bsr(uint(2*sz-1));
         sz = 1<<lg;
         this->sz = sz;
         n = vector<N>(2*sz);

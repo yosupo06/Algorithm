@@ -1,9 +1,7 @@
 template<int N>
 struct SmallFind {
-    int ig[N];
-    SmallFind() {
-        iota(ig, ig+N, 0);
-    }
+    Array<int, N> ig;
+    SmallFind() {ig = Array<int, N>();}
     SmallFind(ull hs) {
         for (int i = 0; i < N; i++) {
             ig[i] = hs & 0xf;
@@ -22,6 +20,18 @@ struct SmallFind {
         return ig[x] == ig[y];
     }
 
+    void shrink() {
+        Array<int, N> used;
+        fill(begin(used), end(used), -1);
+        int c = 0;
+        for (int i = 0; i < N; i++) {
+            if (used[ig[i]] == -1) {
+                used[ig[i]] = c++;
+            }
+            ig[i] = used[ig[i]];
+        }
+    }
+    
     ull uf2hash() {
         int b[N];
         memset(b, -1, sizeof(b));
