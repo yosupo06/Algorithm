@@ -1,10 +1,12 @@
-template<class C, class D, D INF, D EPS> // cap, dist (C must be integer)
+template<class C, class D> // cap, dist (C must be integer)
 struct MinCostFlow {
     int N;
     C nc; D nd;
+    D INF, EPS;
+    V<D> h, dist;
 
     template<class E>
-    MinCostFlow(const Graph<E> &g) {
+    MinCostFlow(const Graph<E> &g, D INF, D EPS) : INF(INF), EPS(EPS) {
         N = int(g.size());
         h = V<D>(N);
         dist = V<D>(N);
@@ -16,13 +18,12 @@ struct MinCostFlow {
 
     int s, t;
     template<class E>
-    void setEnds(const Graph<E> &g, int s, int t, bool neg = false) {
+    void set_ends(const Graph<E> &g, int s, int t, bool neg = false) {
         this->s = s; this->t = t;
-        potRef(g, neg);
+        pot_ref(g, neg);
     }
-
     template<class E>
-    C singleFlow(Graph<E> &g, C c) {
+    C single_flow(Graph<E> &g, C c) {
         c = min(c, nc);
         for (int v = t; v != s; v = pv[v]) {
             E &e = g[pv[v]][pe[v]];
@@ -30,7 +31,7 @@ struct MinCostFlow {
             g[v][e.rev].cap += c;
         }
         nc -= c;
-        if (!nc) potRef(g, false);
+        if (!nc) pot_ref(g, false);
         return c;
     }
 
@@ -40,9 +41,9 @@ struct MinCostFlow {
         visited[v] = vid;
         C sm = 0;
         for (E &e: g[v]) {
-            if (!e.cap || visited[e.to] == vid) continue;
             D ed = e.dist + h[v] - h[e.to];
-            if (EPS < ed) continue; //eps?
+            if (!e.cap || visited[e.to] == vid) continue;
+            if (EPS < ed) continue;
             C u;
             if (e.to == t) {
                 u = min(c, e.cap);
@@ -57,7 +58,7 @@ struct MinCostFlow {
         return sm;
     }
     template<class E>
-    C multiFlow(Graph<E> &g, C c) {
+    C multi_flow(Graph<E> &g, C c) {
         C sm = 0;
         while (true) {
             vid++;
@@ -66,16 +67,16 @@ struct MinCostFlow {
             sm += res;
             c -= res;
         }
-        potRef(g, false);
+        pot_ref(g, false);
         return sm;
     }
     template<class R, class E> // R = C*T
-    R maxFlow(Graph<E> &g, int s, int t, C c, bool neg = false) {
+    R max_flow(Graph<E> &g, int s, int t, C c, bool neg = false) {
         R res = 0;
-        setEnds(g, s, t, neg);
+        set_ends(g, s, t, neg);
         while (c) {
             D d = nd;
-            C f = multiFlow(g, c);
+            C f = multi_flow(g, c);
 //            C f = singleFlow(g, c);
             if (!f) break;
             res += R(f) * d;
@@ -84,78 +85,61 @@ struct MinCostFlow {
         return res;
     }
 
-    V<D> h, dist;
     V<int> pv, pe;
-
     template<class E>
-    void potBell(const Graph<E> &g) {
-        bool update;
-        dist[s] = 0;
-        do {
-            update = false;
-            for (int v = 0; v < N; v++) {
-                if (dist[v] == INF) continue;
-                for (int i = 0; i < (int)g[v].size(); i++) {
-                    E e = g[v][i];
-                    D ed = e.dist + h[v] - h[e.to];
-                    if (e.cap && dist[e.to] > dist[v] + ed) {
-                        dist[e.to] = dist[v] + ed;
-                        pv[e.to] = v; pe[e.to] = i;
-                        update = true;
-                    }
-                }
-            }
-        } while (update);
-        for (int v = 0; v < N; v++) {
-            if (dist[v] >= dist[t]) continue;
-            h[v] += dist[v]-dist[t];
-        }
-    }
-
-    template<class E>
-    void potDijk(const Graph<E> &g) {
+    void pot_ref(const Graph<E> &g, bool neg) {
+        fill(begin(dist), end(dist), INF);
         using P = pair<D, int>;
         queue<int> ref_v;
-        priority_queue<P, vector<P>, greater<P>> que;
-        que.push(P(0, s));
+        priority_queue<P, vector<P>, greater<P>> que1;
+        queue<P> que2;
+        auto empty = [&] {
+            return (!neg) ? que1.empty() : que2.empty();
+        };
+        auto push = [&](P p) {
+            (!neg) ? que1.push(p) : que2.push(p);
+        };
+        auto pop = [&]() {
+            P p = (!neg) ? que1.top() : que2.front();
+            (!neg) ? que1.pop() : que2.pop();
+            return p;
+        };
+        push(P(0, s));
         dist[s] = 0;
-        while (!que.empty()) {
-            P p = que.top(); que.pop();
+        while (!empty()) {
+            P p = pop();
             int v = p.second;
-            if (v == t) break;
             if (dist[v] < p.first) continue;
-            ref_v.push(v);
+            if (!neg) {
+                if (v == t) break;
+                ref_v.push(v);
+            }
             for (int i = 0; i < (int)g[v].size(); i++) {
                 E e = g[v][i];
                 D ed = e.dist + h[v] - h[e.to];
                 if (e.cap && dist[e.to] > dist[v] + ed) {
                     dist[e.to] = dist[v] + ed;
                     pv[e.to] = v; pe[e.to] = i;
-                    que.push(P(dist[e.to], e.to));
+                    push(P(dist[e.to], e.to));
                 }
             }
         }
-        while (ref_v.size()) {
-            int v = ref_v.front(); ref_v.pop();
-            if (dist[v] >= dist[t]) continue;
-            h[v] += dist[v]-dist[t];
-        }        
-    }
-
-    template<class E>
-    void potRef(const Graph<E> &g, bool neg) {
-        fill(begin(dist), end(dist), INF);
-        if (neg) {
-            potBell(g);
+        if (!neg) {
+            while (ref_v.size()) {
+                int v = ref_v.front(); ref_v.pop();
+                if (dist[v] >= dist[t]) continue;
+                h[v] += dist[v]-dist[t];
+            }
         } else {
-            potDijk(g);
+            for (int v = 0; v < N; v++) {
+                h[v] += dist[v];
+            }
         }
         if (dist[t] == INF) {
             nd = INF;
             nc = 0;
             return;
         }
-
         nd = h[t]-h[s];
         nc = INF;
         for (int v = t; v != s; v = pv[v]) {
