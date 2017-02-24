@@ -5,6 +5,7 @@
 !Makefile
 !?*.h
 !?*.cpp
+!?*.cc
 !?*.d
 !?*.md
 !?*.css
