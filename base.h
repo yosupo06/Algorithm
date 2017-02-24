@@ -1,3 +1,4 @@
+#include "includes.h" // for test
 using uint = unsigned int;
 using ll = long long;
 using ull = unsigned long long;
@@ -10,8 +11,8 @@ int bsr(ull x) { return 63 - __builtin_clzll(x); }
 int bsf(uint x) { return __builtin_ctz(x); }
 int bsf(ull x) { return __builtin_ctzll(x); }
 
-ll gcd(ll a, ll b) {
-    a = abs(a); b = abs(b);
+ll gcd(ll _a, ll _b) {
+    ull a = abs(_a), b = abs(_b);
     if (a == 0) return b;
     if (b == 0) return a;
     int shift = bsf(a|b);
@@ -74,6 +75,7 @@ ll rand_int(ll l, ll r) { //[l, r]
     return D(l, r)(gen);
 }
 
+template<class R>
 struct Pc {
     R x, y;
     Pc() : x(0), y(0) {}

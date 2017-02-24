@@ -3,6 +3,7 @@
 !.gitignore
 !.gitmodules
 !?*.h
+!?*.cpp
 !?*.d
 !?*.md
 !?*.css
