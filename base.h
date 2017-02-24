@@ -1,3 +1,4 @@
+#pragma once
 #include "includes.h" // for test
 using uint = unsigned int;
 using ll = long long;
@@ -67,13 +68,6 @@ struct ModInt {
 };
 template<uint MD> string to_string(ModInt<MD> m) {return to_string(m.v);}
 using Mint = ModInt<TEN(9)+7>;
-
-ll rand_int(ll l, ll r) { //[l, r]
-    using D = uniform_int_distribution<ll>;
-    static random_device rd;
-    static mt19937 gen(rd());
-    return D(l, r)(gen);
-}
 
 template<class R>
 struct Pc {

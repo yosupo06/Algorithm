@@ -1,9 +1,11 @@
-CXXFLAGS=-std=c++11 -Wall -lpthread
+CXXFLAGS=-std=c++11 -O2 -Wall -lpthread
 INCLUDE = -I./ -I./tests/
-SOURCES := $(wildcard tests/*.cpp)
+SOURCE = tests/main_test.cpp
+HEADERS := $(wildcard tests/*.h)
 GTEST_ALL = tests/gtest/gtest-all.cc
-$(info $(SOURCES))
-test: $(SOURCES)
-	$(CXX) $(CXXFLAGS) $(INCLUDE) $(SOURCES) $(GTEST_ALL) -o test
+
+test: $(SOURCE) $(HEADERS)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) $(SOURCE) $(GTEST_ALL) -o test
+	
 clean:
 	$(RM) test

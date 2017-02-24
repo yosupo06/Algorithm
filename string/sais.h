@@ -1,117 +1,121 @@
 template<class Str>
 struct SA {
     Str s;
-    vector<int> sa, rsa, lcp;
-
-    vector<bool> ls;
-    SA(Str s, int B = 128) : s(s) {
-        int n = (int)s.size();
-        sa.resize(n+1); rsa.resize(n+1); lcp.clear();
-        ls.resize(n+1); //L:false S:true
-
-        vector<int> l_ba(B+1, 0), s_ba(B, 0), l_basm(B+1), s_basm(B+1);
-        ls[n] = true;
-        for (int i = n-1; i >= 0; i--) {
-            ls[i] = ls[i+1];
-            if (i == n-1 || s[i] > s[i+1]) {
-                ls[i] = false;
-            } else if (s[i] < s[i+1]) {
-                ls[i] = true;
-            }
-            if (!ls[i]) {
-                l_ba[s[i]]++;
-            } else {
-                s_ba[s[i]]++;
-            }
-        }
-
-        // l[0], s[0], l[1], s[1], ...
-        l_basm[0] = 1; s_basm[0] = 1+l_ba[0];
-        for (int i = 1; i <= B; i++) {
-            l_basm[i] = s_basm[i-1]+s_ba[i-1];
-            s_basm[i] = l_basm[i]+l_ba[i];
-        }
-
-        vector<int> v, lms(n+1, -1); // lms list
-        for (int i = 1; i < n; i++) {
-            if (!ls[i-1] && ls[i]) {
-                lms[i] = int(v.size());
-                v.push_back(i);
-            }
-        }
-        lms[n] = int(v.size());
-        
-        if (v.size()) {
-            vector<int> v2 = v, buf = s_basm;
-            fill(begin(sa), end(sa), -1);
-            sa[0] = n;
-            for (int i = 0; i < int(v.size()); i++) {
-                int c = s[v[i]];
-                sa[buf[c]++] = v[i];
-            }
-            induce(l_basm);
-            for (int i = 1, c = 0; i <= n; i++) {
-                if (lms[sa[i]] == -1) continue;
-                v[c++] = sa[i];
-            }
-
-            vector<int> s2(v.size());
-            int c = 0;
-            s2[lms[v[0]]] = 0;
-            for (int i = 1; i < int(v.size()); i++) {
-                int l = v[i-1], r = v[i];
-                while (true) {
-                    if (s[l] != s[r]) {
-                        c++;
-                        break;
-                    }
-                    l++; r++;
-                    if (lms[l] != -1 || lms[r] != -1) {
-                        if (lms[l] == -1 || lms[r] == -1) {
-                            c++;
-                        }
-                        break;
-                    }
-                }
-                s2[lms[v[i]]] = c;
-            }
-            vector<int> ch_sa = SA<vector<int>>(s2, c+1).sa;
-            for (int i = 0; i < int(v.size()); i++) {
-                v[i] = v2[ch_sa[i+1]];
-            }
-        }
-
-        vector<int> buf = s_basm;
-        fill_n(sa.begin(), n+1, -1);
-        sa[0] = n;
-        for (int i = 0; i < int(v.size()); i++) {
-            int c = s[v[i]];
-            sa[buf[c]++] = v[i];
-        }
-
-        induce(l_basm);
-
+    V<int> sa, rsa, lcp;
+    SA(Str s, V<int> sa) : s(s), sa(sa) {
+        int n = int(s.size());
+        // make rsa
+        rsa = V<int>(n+1);
         for (int i = 0; i <= n; i++) {
             rsa[sa[i]] = i;
         }
-    }
-
-    void induce(vector<int> &lba_sm) {
-        int n = (int)s.size();
-        vector<int> buf;
-        buf = lba_sm;
-        for (int i = 0; i <= n; i++) {
-            if (sa[i] >= 1 && !ls[sa[i]-1]) {
-                int first = s[sa[i]-1]; // first char
-                sa[buf[first]++] = sa[i]-1;
+        // make lcp
+        lcp = V<int>(n);
+        int h = 0;
+        for (int i = 0; i < n; i++) {
+            int j = sa[rsa[i]-1];
+            if (h > 0) h--;
+            for (; j+h < n && i+h < n; h++) {
+                if (s[j+h] != s[i+h]) break;
             }
-        }
-        buf = lba_sm;
-        for (int i = n; i > 0; i--) {
-            if (sa[i] >= 1 && ls[sa[i]-1]) {
-                int first = s[sa[i]-1]; // first char
-                sa[--buf[first+1]] = sa[i]-1;
-            }
+            lcp[rsa[i]-1] = h;
         }
     }
 };
+
+template<class Str>
+V<int> sa_is(Str s, int B = 200) {
+    int n = int(s.size());
+    V<int> sa(n+1);
+    if (n == 0) return sa;
+
+    for (int i = 0; i < n; i++) s[i]++;
+    s.push_back(0); B++;
+
+    V<bool> ls(n+1);
+    ls[n] = true;
+    for (int i = n-1; i >= 0; i--) {
+        ls[i] = (s[i] == s[i+1]) ? ls[i+1] : (s[i] < s[i+1]);
+    }
+    V<int> sum_l(B+1), sum_s(B+1);
+    for (int i = 0; i <= n; i++) {
+        if (!ls[i]) sum_s[s[i]]++;
+        else sum_l[s[i]+1]++;
+    }
+    for (int i = 0; i < B; i++) {
+        sum_l[i+1] += sum_s[i];
+        sum_s[i+1] += sum_l[i+1];
+    }
+    
+    auto induce = [&](V<int> &lms){
+        fill(begin(sa), end(sa), -1);
+        auto buf0 = sum_s;
+        for (auto d: lms) {
+            sa[buf0[s[d]]++] = d;
+        }
+        auto buf1 = sum_l;
+        for (int i = 0; i <= n; i++) {
+            int v = sa[i];
+            if (v >= 1 && !ls[v-1]) {
+                sa[buf1[s[v-1]]++] = v-1;
+            }
+        }
+        auto buf2 = sum_l;
+        for (int i = n; i >= 0; i--) {
+            int v = sa[i];
+            if (v >= 1 && ls[v-1]) {
+                sa[--buf2[s[v-1]+1]] = v-1;
+            }
+        }
+    };
+
+    V<int> lms, lms_map(n+1, -1);
+    for (int i = 1; i <= n; i++) {
+        if (!ls[i-1] && ls[i]) {
+            lms_map[i] = int(lms.size());
+            lms.push_back(i);
+        }
+    }
+
+    induce(lms);
+
+    if (lms.size() >= 2) {
+        int m = int(lms.size())-1;
+        V<int> lms2;
+        for (int v: sa) {
+            if (lms_map[v] != -1) lms2.push_back(v);
+        }
+        int rec_n = 1;
+        V<int> rec_s(m);
+        rec_s[lms_map[lms2[1]]] = 1;
+        for (int i = 2; i <= m; i++) {
+            int l = lms2[i-1], r = lms2[i];
+            int nl = lms[lms_map[l]+1], nr = lms[lms_map[r]+1];
+            if (nl-l != nr-r) rec_n++;
+            else {
+                while (l <= nl) {
+                    if (s[l] != s[r]) {
+                        rec_n++;
+                        break;
+                    }
+                    l++; r++;
+                }                
+            }
+            rec_s[lms_map[lms2[i]]] = rec_n;
+        }
+        
+        V<int> nx_lms;
+        auto ch_sa = sa_is(rec_s, rec_n);
+        for (int d: ch_sa) {
+            nx_lms.push_back(lms[d]);
+        }
+        induce(nx_lms);
+    }
+
+    return sa;
+}
+
+template<class Str>
+SA<Str> suffixArray(Str s, int B = 200) {
+    return SA<Str>(s, sa_is(s, B));
+}
