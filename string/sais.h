@@ -2,6 +2,7 @@ template<class Str>
 struct SA {
     Str s;
     V<int> sa, rsa, lcp;
+    SA() {}
     SA(Str s, V<int> sa) : s(s), sa(sa) {
         int n = int(s.size());
         // make rsa
