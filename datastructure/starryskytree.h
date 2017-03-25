@@ -2,6 +2,7 @@ template<class N>
 struct SegTree {
     int lg, sz;
     vector<N> n;
+    SegTree() {}
     SegTree(int sz) {
         assert(sz >= 1);
         lg = bsr(uint(2*sz-1));
@@ -13,6 +14,14 @@ struct SegTree {
         }
         for (int i = sz-1; i >= 1; i--) {
             n[i] = N(n[2*i], n[2*i+1]);
+        }
+    }
+    void all_update() {
+        for (int i = 1; i <= sz-1; i++) {
+            n[i].push();
+        }
+        for (int i = sz-1; i >= 1; i--) {
+            n[i].update(n[2*i], n[2*i+1]);
         }
     }
     template<class Q>
@@ -48,6 +57,11 @@ struct SegTree {
         if (a < sz && 0 < b) query(a, b, q, 1, sz);
         return q;
     }
+    struct NodeQuery {
+        N n;
+        static constexpr bool update() { return false; }
+        void operator+=(N &r) { N nn; nn.update(n, r); n = nn; }
+    };
 };
 
 struct Node {
