@@ -2,7 +2,7 @@ struct TreeOrd {
     using P = pair<int, int>;
     vector<P> s, rs;
     template<class E>
-    TreeOrd(const Graph<E> &g, int r = 0) {
+    TreeOrd(const VV<E> &g, int r = 0) {
         s.push_back(P(r, -1));
         for (int i = 0; i < int(s.size()); i++) {
             P p = s[i];
@@ -20,7 +20,7 @@ struct AllTree {
     vector<vector<N>> ldp;
     AllTree() {}
     template<class E>
-    AllTree(const Graph<E> &g, const TreeOrd &t, int r = 0) {
+    AllTree(const VV<E> &g, const TreeOrd &t, int r = 0) {
         int n = int(g.size());
         auto sm = vector<N>(n), top = vector<N>(n);
         ldp = vector<vector<N>>(n);

@@ -1,35 +1,33 @@
 struct LowLink {
     int r;
-    vector<int> low, ord, par; //low, ord, parent
-    vector<int> vlis; //preorder list
-    vector<vector<int>> tr; //dfs tree
-
-    int co;
-    vector<bool> used;
-    
-    template<class E>
-    LowLink(const Graph<E> &g, int r) : r(r) {
-        int V = int(g.size());
-        low.resize(V); ord.resize(V); par.resize(V);
-        tr.resize(V); used.resize(V);
-        co = 0;
-        used = vector<bool>(V, false);
-        if (r != -1) {
-            dfs(g, r, -1);
-        } else {
-            for (int i = 0; i < V; i++) {
-                if (used[i]) continue;
-                dfs(g, i, -1);
-            }
-        }
+    V<int> low, ord, par, vlis;
+    VV<int> tr;
+    LowLink() {}
+    LowLink(int n, int r) : r(r) {
+        low = V<int>(n, -1);
+        ord = V<int>(n, -1);
+        par = V<int>(n);
+        tr = VV<int>(n);        
     }
-    
-    template<class E>
-    void dfs(const Graph<E> &g, int p, int b) {
+};
+
+template<class E>
+LowLink lowlink(const VV<E> &g, int r) {
+    int n = int(g.size());
+    LowLink lc(n, r);
+    auto &low = lc.low;
+    auto &ord = lc.ord;
+    auto &par = lc.par;
+    auto &vlis = lc.vlis;
+    auto &tr = lc.tr;
+    int co = 0;
+    auto used = V<bool>(n, false);
+    auto dfs = recur([&](auto self, int p, int b) -> void {
         used[p] = true;
-        bool rt = true;
         low[p] = ord[p] = co++; par[p] = b;
         vlis.push_back(p);
+
+        bool rt = true;
         for (auto e: g[p]) {
             int d = e.to;
             if (rt && d == b) {
@@ -37,11 +35,21 @@ struct LowLink {
                 continue;
             }
             if (!used[d]) {
-                tr[p].push_back(d); dfs(g, d, p);
+                tr[p].push_back(d);
+                self(self, d, p);
                 low[p] = min(low[p], low[d]);
             } else {
                 low[p] = min(low[p], ord[d]);
             }
         }
+    });
+    if (r != -1) {
+        dfs(r, -1);
+    } else {
+        for (int i = 0; i < n; i++) {
+            if (used[i]) continue;
+            dfs(i, -1);
+        }
     }
-};
+    return lc;
+}

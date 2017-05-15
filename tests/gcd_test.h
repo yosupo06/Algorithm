@@ -1,5 +1,4 @@
 #include "gtest/gtest.h"
-#include "base.h"
 
 ll gcd2(ll a, ll b) {
     a = abs(a); b = abs(b);

@@ -2,10 +2,10 @@ template<class D, D INF>
 struct BidirectedCut {
     D sum = INF;
     template<class E>
-    BidirectedCut(Graph<E> g) {
+    BidirectedCut(VV<E> g) {
         int n = (int)g.size();
         int m_a = -1, m_b = -1;
-        vector<D> dist_base(n, 0);
+        V<D> dist_base(n, 0);
         for (int m = n; m > 1; m--) {
             int a, b;
             auto dist = dist_base;

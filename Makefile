@@ -1,4 +1,4 @@
-CXXFLAGS=-std=c++11 -O2 -Wall -lpthread
+CXXFLAGS=-std=c++14 -O2 -Wall -lpthread
 INCLUDE = -I./ -I./tests/
 SOURCE = tests/main_test.cpp
 HEADERS := $(wildcard tests/*.h)

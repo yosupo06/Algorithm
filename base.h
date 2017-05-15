@@ -1,17 +1,19 @@
-#pragma once
-#include "includes.h" // for test
+//template
 using uint = unsigned int;
 using ll = long long;
 using ull = unsigned long long;
 template<class T> using V = vector<T>;
 template<class T> using VV = V<V<T>>;
+template<class F> auto recur(F f) { return [f](auto... a){ return f(f, a...); }; }
 constexpr ll TEN(int n) { return (n==0) ? 1 : 10*TEN(n-1); }
 
+//bit op
 int bsr(uint x) { return 31 - __builtin_clz(x); }
 int bsr(ull x) { return 63 - __builtin_clzll(x); }
 int bsf(uint x) { return __builtin_ctz(x); }
 int bsf(ull x) { return __builtin_ctzll(x); }
 
+//binary gcd
 ll gcd(ll _a, ll _b) {
     ull a = abs(_a), b = abs(_b);
     if (a == 0) return b;

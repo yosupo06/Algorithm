@@ -1,7 +1,4 @@
 #include "gtest/gtest.h"
-#include "base.h"
-#include "random.h"
-#include "string/suffixarray.h"
 
 TEST(SATest, SAExample) {
     string s = "abraca";

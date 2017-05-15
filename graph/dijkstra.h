@@ -1,11 +1,11 @@
 template<class D, D INF>
 struct Dijkstra {
-    vector<D> res; //res[i] = sからiまでの最短距離
+    V<D> res; //res[i] = sからiまでの最短距離
     
     template<class E>
-    Dijkstra(const Graph<E> &g, int s) {
-        int V = (int)g.size();
-        res = vector<D>(V, INF);
+    Dijkstra(const VV<E> &g, int s) {
+        int n = (int)g.size();
+        res = V<D>(n, INF);
         
         using P = pair<D, int>;
         priority_queue<P, vector<P>, greater<P>> q;

@@ -1,22 +1,27 @@
 struct Dominator {
-    vector<int> idom, sdom;
-
+    V<int> idom, sdom;
+    LowLink lc;
+    Dominator() {}
     template<class E>
-    Dominator(const Graph<E> &g, const Graph<E> &rg, int s, const LowLink &lc) {
-        int V = (int)g.size();
+    Dominator(const VV<E> &g, const VV<E> &rg, int s) {
+        lc = LowLink(g, s);
+        int n = (int)g.size();
         
         // uf init
         p.resize(V); mv.resize(V);
         fill_n(p.begin(), V, -1);
         iota(mv.begin(), mv.end(), 0);
-        idom.resize(V); sdom.resize(V);
+        idom = vector<int>(V, -1);
+        sdom = vector<int>(V);
         iota(sdom.begin(), sdom.end(), 0);
 
         vector<int> up(V);
         vector<vector<int>> bucket(V);
-        for (int i = V-1; i > 0; i--) {
+        int U = int(lc.vlis.size());
+        for (int i = U-1; i > 0; i--) {
             int u = lc.vlis[i];
             for (E e: rg[u]) {
+                if (lc.ord[e.to] == -1) continue;
                 sdom[u] = lc.vlis[min(lc.ord[sdom[u]], lc.ord[sdom[compress(e.to)]])];
             }
             bucket[sdom[u]].push_back(u);
@@ -27,8 +32,7 @@ struct Dominator {
             p[u] = lc.par[u]; // uf merge
         }
 
-        idom[s] = -1;
-        for (int i = 1; i < V; i++) {
+        for (int i = 1; i < U; i++) {
             int u = lc.vlis[i], v = up[u];
             if (sdom[u] == sdom[v]) idom[u] = sdom[u];
             else idom[u] = idom[v];

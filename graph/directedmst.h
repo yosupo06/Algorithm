@@ -1,7 +1,7 @@
 template<class E>
 struct DirectedMST {
     decltype(E::dist) cost = 0;
-    vector<E> mine; // min edge
+    V<E> mine; // min edge
     DirectedMST(const Graph<E> &g, int r) {
         int n = (int)g.size();
         mine = vector<E>(n);
@@ -12,7 +12,7 @@ struct DirectedMST {
                 [](const E &l, const E &r){return l.dist < r.dist;});
             cost += mine[i].dist;
         }
-        vector<int> i2g(n, -1); i2g[r] = 0;
+        V<int> i2g(n, -1); i2g[r] = 0;
         int gc = 1;
         for (int i = 0; i < n; i++) {
             if (i2g[i] != -1) continue;

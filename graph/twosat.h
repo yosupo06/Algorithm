@@ -1,27 +1,26 @@
 struct TwoSat {
-    int V;
-    vector<bool> res;
+    V<bool> res;
+
+    struct Edge { int to; };
+    VV<Edge> g;
+    
+    //(a == a_exp) || (b == b_exp)
+    void add_cond(int a, bool a_exp, int b, bool b_exp) {
+        g[2*a+(a_exp?0:1)].push_back(Edge{2*b+(b_exp?1:0)});
+        g[2*b+(b_exp?0:1)].push_back(Edge{2*a+(a_exp?1:0)});
+    }    
     bool exec() {
-        SCC scc(g, rg);
-        for (int i = 0; i < V; i++) {
-            if (scc.res[i] == scc.res[i+V]) return false;
-            res[i] = scc.res[i] > scc.res[i+V];
+        int n = int(res.size());
+        auto s = scc(g);
+        for (int i = 0; i < n; i++) {
+            if (s.id[2*i] == s.id[2*i+1]) return false;
+            res[i] = s.id[2*i] < s.id[2*i+1];
         }
         return true;
     }
-
-    struct Edge { int to; };
-    Graph<Edge> g, rg;
-    TwoSat(int V) : V(V) {
-        g = Graph<Edge>(2*V);
-        res.resize(V);
+    TwoSat() {}
+    TwoSat(int n) {
+        g = VV<Edge>(2*n);
+        res = V<bool>(n);
     }
-    void addEdge(int a, int b) {
-        g[a].push_back(b);
-        rg[b].push_back(a);
-    }
-    void add(int a, bool apos, int b, bool bpos) {
-        addEdge(a+(apos?V:0), b+(bpos?0:V));
-        addEdge(b+(bpos?V:0), a+(apos?0:V));
-    }
-}
+};

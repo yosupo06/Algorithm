@@ -1,46 +1,53 @@
 struct SCC {
-    int gc; /// group count
-    vector<int> res; /// res[i] = 頂点iの属する強連結成分のID
-    vector<vector<int>> scc; /// scc[i] = i個目の強連結成分に属する頂点
-
-    template<class E>
-    SCC(const Graph<E> &g, const Graph<E> &rg) {
-        int V = (int)g.size();
-        used = vector<bool>(V);
-        res = vector<int>(V);
-        gc = 0;
-
-        fill(begin(used), end(used), false);
-        for (int i = 0; i < V; i++) {
-            if (!used[i]) dfs(g, i);
-        }
-        fill(begin(used), end(used), false);
-        for (int i = vs.size()-1; i >= 0; i--) {
-            if (!used[vs[i]]) {
-                scc.push_back(vector<int>());
-                rdfs(rg, vs[i], gc++, scc.back());
-            }
-        }        
-    }
-
-    vector<bool> used;
-    vector<int> vs;
-
-    template<class E>
-    void dfs(const Graph<E> &g, int v) {
-        used[v] = true;
-        for (E e: g[v]) {
-            if (!used[e.to]) dfs(g, e.to);
-        }
-        vs.push_back(v);
-    }
-
-    template<class E>
-    void rdfs(const Graph<E> &rg, int v, int k, vector<int> &vv) {
-        used[v] = true;
-        res[v] = k; vv.push_back(v);
-        for (E e: rg[v]) {
-            if (!used[e.to]) rdfs(rg, e.to, k, vv);
-        }
-    }
+    V<int> id;
+    VV<int> groups;
+    SCC() {}
+    SCC(int n) { id = V<int>(n); }
 };
+ 
+template<class E>
+SCC scc(const VV<E> &g) {
+    int n = int(g.size());
+    SCC scc(n);
+    auto &id = scc.id;
+    auto &groups = scc.groups;
+    V<bool> inS(n);
+    V<int> low(n);
+    V<int> ord(n, -1);
+    V<int> st;
+    int tm = 0;
+    auto dfs = recur([&](auto self, int v) -> void {
+        low[v] = ord[v] = tm++;
+        st.push_back(v);
+        inS[v] = true;
+        for (auto e: g[v]) {
+            if (ord[e.to] == -1) {
+                self(self, e.to);
+                low[v] = min(low[v], low[e.to]);
+            } else if (inS[e.to]) {
+                low[v] = min(low[v], ord[e.to]);
+            }
+        }
+        if (low[v] == ord[v]) {
+            V<int> gr;
+            while (true) {
+                int u = st.back(); st.pop_back();
+                gr.push_back(u);
+                if (u == v) break;
+            }
+            for (int x: gr) inS[x] = false;
+            groups.push_back(gr);
+        }
+    });
+ 
+    for (int i = 0; i < n; i++) {
+        if (ord[i] == -1) dfs(i);
+    }
+    reverse(begin(groups), end(groups));
+    for (int i = 0; i < int(groups.size()); i++) {
+        for (int x: groups[i]) {
+            id[x] = i;
+        }
+    }
+    return scc;
+}

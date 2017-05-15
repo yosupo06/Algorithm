@@ -6,7 +6,7 @@ struct MinCostFlow {
     V<D> h, dist;
 
     template<class E>
-    MinCostFlow(const Graph<E> &g, D INF, D EPS) : INF(INF), EPS(EPS) {
+    MinCostFlow(const VV<E> &g, D INF, D EPS) : INF(INF), EPS(EPS) {
         N = int(g.size());
         h = V<D>(N);
         dist = V<D>(N);
@@ -18,12 +18,12 @@ struct MinCostFlow {
 
     int s, t;
     template<class E>
-    void set_ends(const Graph<E> &g, int s, int t, bool neg = false) {
+    void set_ends(const VV<E> &g, int s, int t, bool neg = false) {
         this->s = s; this->t = t;
         pot_ref(g, neg);
     }
     template<class E>
-    C single_flow(Graph<E> &g, C c) {
+    C single_flow(VV<E> &g, C c) {
         c = min(c, nc);
         for (int v = t; v != s; v = pv[v]) {
             E &e = g[pv[v]][pe[v]];
@@ -37,7 +37,7 @@ struct MinCostFlow {
 
     V<int> visited; int vid = 114514;
     template<class E>
-    C dfs(Graph<E> &g, int v, C c) {
+    C dfs(VV<E> &g, int v, C c) {
         visited[v] = vid;
         C sm = 0;
         for (E &e: g[v]) {
@@ -58,7 +58,7 @@ struct MinCostFlow {
         return sm;
     }
     template<class E>
-    C multi_flow(Graph<E> &g, C c) {
+    C multi_flow(VV<E> &g, C c) {
         C sm = 0;
         while (true) {
             vid++;
@@ -71,13 +71,13 @@ struct MinCostFlow {
         return sm;
     }
     template<class R, class E> // R = C*T
-    R max_flow(Graph<E> &g, int s, int t, C c, bool neg = false) {
+    R max_flow(VV<E> &g, int s, int t, C c, bool neg = false) {
         R res = 0;
         set_ends(g, s, t, neg);
         while (c) {
             D d = nd;
             C f = multi_flow(g, c);
-//            C f = singleFlow(g, c);
+//            C f = single_flow(g, c);
             if (!f) break;
             res += R(f) * d;
             c -= f;
@@ -87,7 +87,7 @@ struct MinCostFlow {
 
     V<int> pv, pe;
     template<class E>
-    void pot_ref(const Graph<E> &g, bool neg) {
+    void pot_ref(const VV<E> &g, bool neg) {
         fill(begin(dist), end(dist), INF);
         using P = pair<D, int>;
         queue<int> ref_v;
