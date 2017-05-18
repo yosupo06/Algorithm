@@ -1,18 +1,18 @@
 using R = double;
 const R PI = 4*atan(R(1));
 
-void fft(bool type, vector<Pc> &c) {
-    static vector<Pc> buf[30];
+void fft(bool type, V<Pc> &c) {
+    static V<Pc> buf[30];
     int N = int(c.size());
     int s = bsr(N);
     assert(1<<s == N);
     if (!buf[s].size()) {
-        buf[s] = vector<Pc>(N);
+        buf[s] = V<Pc>(N);
         for (int i = 0; i < N; i++) {
             buf[s][i] = Pc::polar(1, i*2*PI/N);
         }
     }
-    vector<Pc> a = c, b(N);
+    V<Pc> a = c, b(N);
     for (int i = 1; i <= s; i++) {
         int W = 1<<(s-i); //変更後の幅W
         for (int y = 0; y < N/2; y += W) {
@@ -30,15 +30,15 @@ void fft(bool type, vector<Pc> &c) {
 }
 
 template<class Mint>
-vector<Mint> multiply(vector<Mint> x, vector<Mint> y) {
+V<Mint> multiply(V<Mint> x, V<Mint> y) {
     constexpr int B = 3, SHIFT = 10;
     int S = x.size()+y.size()-1;
     int N = 2<<bsr(S-1);
-    vector<Pc> a[B], b[B];
+    V<Pc> a[B], b[B];
     for (int fe = 0; fe < B; fe++) {
-        a[fe] = vector<Pc>(N);
-        b[fe] = vector<Pc>(N);
-        vector<Pc> c(N);
+        a[fe] = V<Pc>(N);
+        b[fe] = V<Pc>(N);
+        V<Pc> c(N);
         for (int i = 0; i < int(x.size()); i++) {
             c[i].x = (x[i].v >> (fe*SHIFT)) & ((1<<SHIFT)-1);
         }
@@ -55,10 +55,10 @@ vector<Mint> multiply(vector<Mint> x, vector<Mint> y) {
             b[fe][i] = Pc(c[i].y+c[j].y, -c[i].x+c[j].x);
         }
     }
-    vector<Mint> z(S);
-    vector<Pc> c[B];
+    V<Mint> z(S);
+    V<Pc> c[B];
     for (int fe = 0; fe < B; fe++) {
-        c[fe] = vector<Pc>(N);
+        c[fe] = V<Pc>(N);
     }
     for (int af = 0; af < B; af++) {
         for (int bf = 0; bf < B; bf++) {
@@ -92,13 +92,12 @@ vector<Mint> multiply(vector<Mint> x, vector<Mint> y) {
 }
 
 template<int B, uint MD>
-void nft(bool type, vector<ModInt<MD>> &c) {
+void nft(bool type, V<ModInt<MD>> &c) {
     using Mint = ModInt<MD>;
     int N = int(c.size());
     int s = bsr(N);
     assert(1<<s == N);
-    vector<Mint> a(N), b(N);
-    copy(begin(c), end(c), begin(a));
+    V<Mint> a = c, b(N);
     for (int i = 1; i <= s; i++) {
         int W = 1<<(s-i); //変更後の幅W
         Mint base = pow(Mint(B), (MD-1)/(1<<i));
@@ -115,5 +114,5 @@ void nft(bool type, vector<ModInt<MD>> &c) {
         }
         swap(a, b);
     }
-    copy(begin(a), end(a), begin(c));
+    c = a;
 }
