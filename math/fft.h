@@ -95,7 +95,7 @@ template<int B, uint MD>
 void nft(bool type, V<ModInt<MD>> &c) {
     using Mint = ModInt<MD>;
     int N = int(c.size());
-    int s = bsr(N);
+    int s = bsr(uint(N));
     assert(1<<s == N);
     V<Mint> a = c, b(N);
     for (int i = 1; i <= s; i++) {
