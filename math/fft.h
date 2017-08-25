@@ -4,7 +4,7 @@ const R PI = 4*atan(R(1));
 void fft(bool type, V<Pc> &c) {
     static V<Pc> buf[30];
     int N = int(c.size());
-    int s = bsr(N);
+    int s = bsr(uint(N));
     assert(1<<s == N);
     if (!buf[s].size()) {
         buf[s] = V<Pc>(N);
@@ -33,7 +33,7 @@ template<class Mint>
 V<Mint> multiply(V<Mint> x, V<Mint> y) {
     constexpr int B = 3, SHIFT = 10;
     int S = x.size()+y.size()-1;
-    int N = 2<<bsr(S-1);
+    int N = 2<<bsr(uint(S-1));
     V<Pc> a[B], b[B];
     for (int fe = 0; fe < B; fe++) {
         a[fe] = V<Pc>(N);
