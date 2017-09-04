@@ -56,8 +56,8 @@ struct ModInt {
     ModInt() : v{0} {}
     ModInt(ll v) : v{normS(v%MD+MD)} {}
     explicit operator bool() const {return v != 0;}
-    static uint normS(const uint &x) {return (x<MD)?x:x-MD;};
-    static ModInt make(const uint &x) {ModInt m; m.v = x; return m;}
+    static uint normS(uint x) {return (x<MD)?x:x-MD;};
+    static ModInt make(uint x) {ModInt m; m.v = x; return m;}
     static ModInt inv(const ModInt &x) {return pow(ModInt(x), MD-2);} 
     ModInt operator+(const ModInt &r) const {return make(normS(v+r.v));}
     ModInt operator-(const ModInt &r) const {return make(normS(v+MD-r.v));}

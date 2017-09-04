@@ -4,7 +4,7 @@ struct LCA {
 
     /// 事前処理を行う rはroot頂点のid
     template<class E>
-    LCA(const Graph<E> &g, int r) {
+    LCA(VV<E> &g, int r) {
         int V = int(g.size());
         ro[0] = vector<int>(V, -1);
         dps.resize(V);
@@ -35,7 +35,7 @@ struct LCA {
     }
     
     template<class E>
-    void dfs(const Graph<E> &g, int p, int b, int now) {
+    void dfs(VV<E> &g, int p, int b, int now) {
         ro[0][p] = b;
         dps[p] = now;
         for (E e: g[p]) {
