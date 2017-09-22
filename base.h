@@ -41,7 +41,7 @@ EG ext_gcd(ll a, ll b) {
 }
 
 template<class T>
-T pow(T x, ll n, T r = 1) {
+T pow(T x, ll n, T r) {
     while (n) {
         if (n & 1) r *= x;
         x *= x;
@@ -49,6 +49,7 @@ T pow(T x, ll n, T r = 1) {
     }
     return r;
 }
+template<class T> T pow(T x, ll n) { return pow(x, n, T(1)); }
 
 template<uint MD>
 struct ModInt {
@@ -61,7 +62,7 @@ struct ModInt {
     static ModInt inv(const ModInt &x) {return pow(ModInt(x), MD-2);} 
     ModInt operator+(const ModInt &r) const {return make(normS(v+r.v));}
     ModInt operator-(const ModInt &r) const {return make(normS(v+MD-r.v));}
-    ModInt operator*(const ModInt &r) const {return make((ull)v*r.v%MD);}
+    ModInt operator*(const ModInt &r) const {return make(ull(v)*r.v%MD);}
     ModInt operator/(const ModInt &r) const {return *this*inv(r);}
     ModInt& operator+=(const ModInt &r) {return *this=*this+r;}
     ModInt& operator-=(const ModInt &r) {return *this=*this-r;}
@@ -70,19 +71,3 @@ struct ModInt {
 };
 template<uint MD> string to_string(ModInt<MD> m) {return to_string(m.v);}
 using Mint = ModInt<TEN(9)+7>;
-
-template<class R>
-struct Pc {
-    R x, y;
-    Pc() : x(0), y(0) {}
-    Pc(R x, R y) : x(x), y(y) {}
-    Pc operator+(const Pc &r) const {return Pc(x+r.x, y+r.y);}
-    Pc operator-(const Pc &r) const {return Pc(x-r.x, y-r.y);}
-    Pc operator*(const Pc &r) const {return Pc(x*r.x-y*r.y, x*r.y+y*r.x);}
-    Pc operator*(const R &r) const {return Pc(x*r, y*r);}
-    Pc& operator+=(const Pc &r) {return *this=*this+r;}
-    Pc& operator-=(const Pc &r) {return *this=*this-r;}
-    Pc& operator*=(const Pc &r) {return *this=*this*r;}   
-    Pc& operator*=(const R &r) {return *this=*this*r;}
-    static Pc polar(R r, R th) {return Pc(cos(th)*r, sin(th)*r);}
-};

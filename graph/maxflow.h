@@ -9,14 +9,14 @@
  */
 template<class C, C INF> // Cap
 struct MaxFlow {
-    int V;
-    vector<int> level, iter;
+    int N;
+    V<int> level, iter;
     //gを破壊するので注意
     template<class E>
-    C exec(Graph<E> &g, int s, int t) {
-        V = (int)g.size();
-        level.resize(V);
-        iter.resize(V);
+    C exec(VV<N> &g, int s, int t) {
+        N = int(g.size());
+        level = V<int>(N);
+        iter = V<int>(N);
         C flow = 0;
         while (true) {
             bfs(g, s);
@@ -31,8 +31,8 @@ struct MaxFlow {
     }
 
     template<class E>
-    void bfs(const Graph<E> &g, int s) {
-        fill_n(level.begin(), V, -1);
+    void bfs(const VV<E> &g, int s) {
+        fill(begin(level), end(level), -1);
         queue<int> que;
         level[s] = 0;
         que.push(s);
@@ -49,9 +49,9 @@ struct MaxFlow {
     }
 
     template<class E>
-    C dfs(Graph<E> &g, int v, int t, C f) {
+    C dfs(VV<E> &g, int v, int t, C f) {
         if (v == t) return f;
-        for (int &i = iter[v]; i < (int)g[v].size(); i++) {
+        for (int &i = iter[v]; i < int(g[v].size()); i++) {
             E &e = g[v][i];
             if (e.cap <= 0) continue;
             if (level[v] < level[e.to]) {

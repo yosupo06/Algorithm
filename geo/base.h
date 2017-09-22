@@ -1,5 +1,21 @@
 using R = long double;
 using P = complex<R>;
+template<class R>
+struct Pc {
+    R x, y;
+    Pc() : x(0), y(0) {}
+    Pc(R x, R y) : x(x), y(y) {}
+    Pc operator+(const Pc &r) const {return Pc(x+r.x, y+r.y);}
+    Pc operator-(const Pc &r) const {return Pc(x-r.x, y-r.y);}
+    Pc operator*(const Pc &r) const {return Pc(x*r.x-y*r.y, x*r.y+y*r.x);}
+    Pc operator*(const R &r) const {return Pc(x*r, y*r);}
+    Pc& operator+=(const Pc &r) {return *this=*this+r;}
+    Pc& operator-=(const Pc &r) {return *this=*this-r;}
+    Pc& operator*=(const Pc &r) {return *this=*this*r;}   
+    Pc& operator*=(const R &r) {return *this=*this*r;}
+    static Pc polar(R r, R th) {return Pc(cos(th)*r, sin(th)*r);}
+};
+
 
 const R EPS = 1e-10;
 const R PI = acos((R)(-1));
