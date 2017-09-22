@@ -53,7 +53,7 @@ struct LowMemorySparseTable {
         if (l == r) return e;
         int lb = (l+B-1)/B, rb = r/B;
         T res = e;
-        if (lb > rb) {
+        if (lb >= rb) {
             for (int i = l; i < r; i++) {
                 res = op(res, d[i]);
             }

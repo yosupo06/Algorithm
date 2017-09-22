@@ -2,6 +2,7 @@ template<class T>
 struct Fenwick {
     int N, lg;
     V<T> seg;
+    Fenwick() {}
     Fenwick(int N) : N(N) {
         seg.resize(N+1);
         lg = bsr(uint(N));
