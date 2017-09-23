@@ -4,7 +4,6 @@ using ll = long long;
 using ull = unsigned long long;
 template<class T> using V = vector<T>;
 template<class T> using VV = V<V<T>>;
-template<class F> auto recur(F f) { return [f](auto... a){ return f(f, a...); }; }
 constexpr ll TEN(int n) { return (n==0) ? 1 : 10*TEN(n-1); }
 
 //bit op
@@ -33,7 +32,8 @@ ll gcd(ll _a, ll _b) {
 struct EG { ll g, x, y; };
 EG ext_gcd(ll a, ll b) {
     if (b==0) {
-        return EG{a, 1, 0};
+        if (a >= 0) return EG{a, 1, 0};
+        else return EG{-a, -1, 0};
     } else {
         auto e = ext_gcd(b, a%b);
         return EG{e.g, e.y, e.x-a/b*e.y};
