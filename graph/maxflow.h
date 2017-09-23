@@ -7,39 +7,54 @@
  * }
  * ---
  */
-template<class C, C INF> // Cap
+
+template<class C>
 struct MaxFlow {
+    C flow;
+    V<bool> dual;
+};
+
+template<class C, C EPS, class E>
+struct MF_EXEC {
+    static const C INF = numeric_limits<C>::max();
+    VV<E> &g;
+    int s, t;
     int N;
     V<int> level, iter;
-    //gを破壊するので注意
-    template<class E>
-    C exec(VV<N> &g, int s, int t) {
+
+    MaxFlow<C> info;
+    MF_EXEC(VV<E> &g, int s, int t): g(g), s(s), t(t) {
         N = int(g.size());
         level = V<int>(N);
         iter = V<int>(N);
+
         C flow = 0;
         while (true) {
-            bfs(g, s);
-            if (level[t] < 0) return flow;
-            fill_n(iter.begin(), V, 0);
+            bfs();
+            if (level[t] < 0) break;
+            fill(begin(iter), end(iter), 0);
             while (true) {
-                C f = dfs(g, s, t, INF);
+                C f = dfs(s, INF);
                 if (!f) break;
                 flow += f;
             }
         }
+        V<bool> dual(N);
+        for (int i = 0; i < N; i++) {
+            dual[i] = level[i] == -1;
+        }
+        info = MaxFlow<C>{flow, dual};
     }
 
-    template<class E>
-    void bfs(const VV<E> &g, int s) {
-        fill(begin(level), end(level), -1);
+    void bfs() {
         queue<int> que;
+        fill(begin(level), end(level), -1);
         level[s] = 0;
         que.push(s);
         while (!que.empty()) {
             int v = que.front(); que.pop();
             for (E e: g[v]) {
-                if (e.cap <= 0) continue;
+                if (e.cap <= EPS) continue;
                 if (level[e.to] < 0) {
                     level[e.to] = level[v] + 1;
                     que.push(e.to);
@@ -48,15 +63,14 @@ struct MaxFlow {
         }
     }
 
-    template<class E>
-    C dfs(VV<E> &g, int v, int t, C f) {
+    C dfs(int v, C f) {
         if (v == t) return f;
         for (int &i = iter[v]; i < int(g[v].size()); i++) {
             E &e = g[v][i];
-            if (e.cap <= 0) continue;
+            if (e.cap <= EPS) continue;
             if (level[v] < level[e.to]) {
-                C d = dfs(g, e.to, t, min(f, e.cap));
-                if (d <= 0) continue;
+                C d = dfs(e.to, min(f, e.cap));
+                if (d <= EPS) continue;
                 e.cap -= d;
                 g[e.to][e.rev].cap += d;
                 return d;
@@ -65,3 +79,8 @@ struct MaxFlow {
         return 0;
     }
 };
+
+template<class C, C EPS, class E>
+MaxFlow<C> max_flow(VV<E> &g, int s, int t) {
+    return MF_EXEC<C, EPS, E>(g, s, t).info;
+}

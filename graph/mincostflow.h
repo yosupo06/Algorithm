@@ -1,3 +1,117 @@
+template<class C, class D, class E>
+struct MinCostFlow {
+    static const D INF = numeric_limits<D>::max();
+    VV<E> g;
+    int s, t;
+    C nc, cap_flow;
+    D nd, flow;
+
+    V<D> dual;
+    V<int> pv, pe;
+
+    MinCostFlow(VV<E> g, int s, int t, bool neg) : g(g), s(s), t(t), cap_flow(0), flow(0) {
+        assert(s != t);       
+        dual = V<D>(g.size());
+        pv = V<int>(g.size());
+        pe = V<int>(g.size());
+        dual_ref(neg);
+    }
+
+
+
+    C single_flow(C c) {
+        if (nd == INF) return nc;
+        c = min(c, nc);
+        for (int v = t; v != s; v = pv[v]) {
+            E &e = g[pv[v]][pe[v]];
+            e.cap -= c;
+            g[v][e.rev].cap += c;
+        }
+        cap_flow += c;
+        flow += c * nd;
+        nc -= c;
+        if (!nc) dual_ref(false);
+        return c;
+    }
+    void max_flow(C c) {
+        while (c) {
+            C f = single_flow(c);
+            if (!f) break;
+            c -= f;
+        }
+    }
+        
+    void dual_ref(bool neg) {
+        V<D> dist(g.size(), INF);
+        fill(begin(pv), end(pv), -1);
+        fill(begin(pe), end(pe), -1);
+        
+        using P = pair<D, int>;
+        queue<int> ref_v;
+        priority_queue<P, vector<P>, greater<P>> que1;
+        queue<P> que2;
+        auto empty = [&] {
+            return (!neg) ? que1.empty() : que2.empty();
+        };
+        auto push = [&](P p) {
+            (!neg) ? que1.push(p) : que2.push(p);
+        };
+        auto pop = [&]() {
+            P p = (!neg) ? que1.top() : que2.front();
+            (!neg) ? que1.pop() : que2.pop();
+            return p;
+        };
+        push(P(0, s));
+        dist[s] = 0;
+        while (!empty()) {
+            P p = pop();
+            int v = p.second;
+            if (dist[v] < p.first) continue;
+            if (!neg) {
+                if (v == t) break;
+                ref_v.push(v);
+            }
+            for (int i = 0; i < int(g[v].size()); i++) {
+                E e = g[v][i];
+                D ed = e.dist + dual[v] - dual[e.to];
+                if (e.cap && dist[e.to] > dist[v] + ed) {
+                    dist[e.to] = dist[v] + ed;
+                    pv[e.to] = v; pe[e.to] = i;
+                    push(P(dist[e.to], e.to));
+                }
+            }
+        }
+        if (dist[t] == INF) {
+            nd = INF;
+            nc = 0;
+            return;
+        }
+        if (!neg) {
+            while (ref_v.size()) {
+                int v = ref_v.front(); ref_v.pop();
+                if (dist[v] >= dist[t]) continue;
+                dual[v] += dist[v]-dist[t];
+            }
+        } else {
+            for (int v = 0; v < int(g.size()); v++) {
+                dual[v] += dist[v];
+            }
+        }
+        nd = dual[t]-dual[s];
+        assert(0 <= nd);
+        nc = numeric_limits<C>::max();
+        for (int v = t; v != s; v = pv[v]) {
+            nc = min(nc, g[pv[v]][pe[v]].cap);
+        }
+    }
+};
+
+template<class C, class D, class E>
+auto min_cost_flow(VV<E> g, int s, int t, bool neg = false) {
+    return MinCostFlow<C, D, E>(g, s, t, neg);
+}
+
+/*
 template<class C, class D> // cap, dist (C must be integer)
 struct MinCostFlow {
     int N;
@@ -147,3 +261,4 @@ struct MinCostFlow {
         }
     }
 };
+*/

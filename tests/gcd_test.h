@@ -13,3 +13,13 @@ TEST(GCDTest, GCDTest) {
         }
     }
 }
+
+TEST(XGCDTest, XGCDTest) {
+    for (int i = -100; i < 100; i++) {
+        for (int j = -100; j < 100; j++) {
+            auto u = ext_gcd(i, j);
+            EXPECT_EQ(u.g, gcd(i, j));
+            EXPECT_EQ(u.x * i + u.y * j, u.g);
+        }
+    }
+}
