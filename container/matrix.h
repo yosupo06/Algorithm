@@ -62,3 +62,39 @@ Matrix<T> pow(Matrix<T> x, ll p) {
     }
     return res;
 }
+
+// m * v = r
+template<class Mat>
+bool solve_linear(Mat m, Mat r) {
+    int N = m.N, M = m.M;
+    int c = 0;
+    for (int x: rng(M)) {
+        int my = -1;
+        for (int y: rng(c, N)) {
+            if (m[y][x].v) {
+                my = y;
+                break;
+            }
+        }
+        if (my == -1) continue;
+        for (int i: rng(M)) {
+            swap(m[c][i], m[my][i]);
+        }
+        swap(r[c][0], r[my][0]);
+        for (int y: rng(N)) {
+            if (c == y) continue;
+            if (m[y][x].v == 0) continue;
+            auto freq = m[y][x] / m[c][x];
+            for (int k: rng(M)) {
+                m[y][k] -= freq * m[c][k];
+            }
+            r[y][0] -= freq * r[c][0];
+        }
+        c++;
+        if (c == N) break;
+    }
+    for (int y: rng(c, N)) {
+        if (r[y][0]) return false;
+    }
+    return true;
+}
