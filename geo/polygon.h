@@ -15,7 +15,7 @@ struct T {
     }
 };
 
-using Pol = vector<P>;
+using Pol = V<P>;
 
 template<class C>
 P cu(const C &p, int i) {
@@ -37,6 +37,13 @@ int contains(const C &pol, P p) {
         }
     }
     return in+1;
+}
+R area2(V<P> &p) {
+    R u = 0;
+    for (int i = 0; i < (int)p.size(); i++) {
+        u += cross(cu(p, i), cu(p, i+1));
+    }
+    return u;
 }
 
 R area_naive(const Pol &p) {
