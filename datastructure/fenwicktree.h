@@ -4,7 +4,7 @@ struct Fenwick {
     V<T> seg;
     Fenwick() {}
     Fenwick(int N) : N(N) {
-        seg.resize(N+1);
+        seg = V<T>(N+1);
         lg = bsr(uint(N));
         fill(begin(seg), end(seg), T(0));
     }

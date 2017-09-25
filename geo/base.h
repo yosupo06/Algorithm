@@ -18,7 +18,7 @@ struct Pc {
 
 
 const R EPS = 1e-10;
-const R PI = acos((R)(-1));
+const R PI = acos(R(-1));
 
 int sgn(R a) {
     if (abs(a) <= EPS) return 0;
