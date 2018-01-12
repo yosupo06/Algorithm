@@ -9,11 +9,13 @@ struct MinCostFlow {
     V<D> dual;
     V<int> pv, pe;
 
+    V<int> visited; int vid = 114514;
     MinCostFlow(VV<E> g, int s, int t, bool neg) : g(g), s(s), t(t), cap_flow(0), flow(0) {
         assert(s != t);       
         dual = V<D>(g.size());
         pv = V<int>(g.size());
         pe = V<int>(g.size());
+        visited = V<int>(g.size());
         dual_ref(neg);
     }
 
@@ -28,11 +30,42 @@ struct MinCostFlow {
             g[v][e.rev].cap += c;
         }
         cap_flow += c;
-        flow += c * nd;
+        flow += nd * c;
         nc -= c;
         if (!nc) dual_ref(false);
         return c;
     }
+    C dfs(int v, C f) {
+        if (v == t) return f;
+        visited[v] = vid;
+        for (E &e: g[v]) {
+            D ed = e.dist + dual[v] - dual[e.to];
+            if (!e.cap || visited[e.to] == vid) continue;
+            if (ed != D(0)) continue;
+            C u = dfs(e.to, min(f, e.cap));
+            if (u > 0) {
+                e.cap -= u;
+                g[e.to][e.rev].cap += u;
+                return u;
+            }
+        }
+        return 0;
+    }
+
+    C multi_flow(C c) {
+        C sm = 0;
+        while (true) {
+            vid++;
+            C res = dfs(s, c);
+            sm += res;
+            flow += nd * res;
+            if (!c || !res) break;
+            c -= res;
+        }
+        cap_flow += sm;
+        dual_ref(false);
+        return sm;
+    }    
     void max_flow(C c) {
         while (c) {
             C f = single_flow(c);
@@ -61,8 +94,8 @@ struct MinCostFlow {
             (!neg) ? que1.pop() : que2.pop();
             return p;
         };
-        push(P(0, s));
-        dist[s] = 0;
+        push(P(D(0), s));
+        dist[s] = D(0);
         while (!empty()) {
             P p = pop();
             int v = p.second;
@@ -98,7 +131,7 @@ struct MinCostFlow {
             }
         }
         nd = dual[t]-dual[s];
-        assert(0 <= nd);
+        if (!neg) assert(0 <= nd);
         nc = numeric_limits<C>::max();
         for (int v = t; v != s; v = pv[v]) {
             nc = min(nc, g[pv[v]][pe[v]].cap);
@@ -107,7 +140,7 @@ struct MinCostFlow {
 };
 
 template<class C, class D, class E>
-auto min_cost_flow(VV<E> g, int s, int t, bool neg = false) {
+auto min_cost_flow(const VV<E> &g, int s, int t, bool neg = false) {
     return MinCostFlow<C, D, E>(g, s, t, neg);
 }
 

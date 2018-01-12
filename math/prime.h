@@ -44,7 +44,7 @@ bool isPrime(ll n) {
     for (ll a: alist) {
         if (n <= a) break;
         ll t = d;
-        ll y = pow<__int128>(a, t, n); //over
+        ll y = pow_mod<__int128>(a, t, n); //over
         while (t != n-1 && y != 1 && y != n-1) {
             y = __int128(y)*y % n; //flow
             t <<= 1;

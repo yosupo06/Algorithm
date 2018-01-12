@@ -2,10 +2,10 @@ struct FastSet {
     int N, lg;
     VV<ull> seg;
     FastSet(int N) : N(N) {
-        while (N > 1) {
+        do {
             seg.push_back(V<ull>((N+63)/64));
             N = (N+63)/64;
-        }
+        } while (N > 1);
         lg = seg.size();
     }
     bool test(int x) const {
