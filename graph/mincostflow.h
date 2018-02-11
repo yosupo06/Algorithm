@@ -17,8 +17,6 @@ struct MinCostFlow {
         dual_ref(neg);
     }
 
-
-
     C single_flow(C c) {
         if (nd == INF) return nc;
         c = min(c, nc);
