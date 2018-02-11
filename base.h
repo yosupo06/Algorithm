@@ -40,6 +40,16 @@ EG ext_gcd(ll a, ll b) {
     }
 }
 
+ll pow_mod(ll x, ll n, ll md) {
+    ll r = 1 % md;
+    while (n) {
+        if (n & 1) r = (r * x) % md;
+        x = (x * x) % md;
+        n >>= 1;
+    }
+    return r;
+}
+
 template<class T>
 T pow(T x, ll n, T r) {
     while (n) {

@@ -65,18 +65,19 @@ struct MF_EXEC {
 
     C dfs(int v, C f) {
         if (v == t) return f;
+        C res = 0;
         for (int &i = iter[v]; i < int(g[v].size()); i++) {
             E &e = g[v][i];
             if (e.cap <= EPS) continue;
-            if (level[v] < level[e.to]) {
-                C d = dfs(e.to, min(f, e.cap));
-                if (d <= EPS) continue;
-                e.cap -= d;
-                g[e.to][e.rev].cap += d;
-                return d;
-            }
+            if (level[v] >= level[e.to]) continue;
+            C d = dfs(e.to, min(f, e.cap));
+            e.cap -= d;
+            g[e.to][e.rev].cap += d;
+            res += d;
+            f -= d;
+            if (f == 0) break;
         }
-        return 0;
+        return res;
     }
 };
 
