@@ -8,15 +8,15 @@ struct Dominator {
         int n = (int)g.size();
         
         // uf init
-        p.resize(V); mv.resize(V);
-        fill_n(p.begin(), V, -1);
+        p.resize(n); mv.resize(n);
+        fill_n(p.begin(), n, -1);
         iota(mv.begin(), mv.end(), 0);
-        idom = vector<int>(V, -1);
-        sdom = vector<int>(V);
+        idom = vector<int>(n, -1);
+        sdom = vector<int>(n);
         iota(sdom.begin(), sdom.end(), 0);
 
-        vector<int> up(V);
-        vector<vector<int>> bucket(V);
+        vector<int> up(n);
+        vector<vector<int>> bucket(n);
         int U = int(lc.vlis.size());
         for (int i = U-1; i > 0; i--) {
             int u = lc.vlis[i];
@@ -40,7 +40,7 @@ struct Dominator {
     }
 
     // unionfind
-    vector<int> p, mv; // parent, min sdom's v
+    V<int> p, mv; // parent, min sdom's v
     int compress(int a) {
         if (p[a] != -1) {
             compress(p[a]);

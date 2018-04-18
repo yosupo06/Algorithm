@@ -6,7 +6,6 @@ struct Dijkstra {
     Dijkstra(const VV<E> &g, int s) {
         int n = (int)g.size();
         res = V<D>(n, INF);
-        
         using P = pair<D, int>;
         priority_queue<P, vector<P>, greater<P>> q;
         q.push(P(0, s));
