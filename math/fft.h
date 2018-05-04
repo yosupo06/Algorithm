@@ -92,6 +92,34 @@ V<R> fft_to_double(bool type, const V<Pc> &c) {
     return e;
 }
 
+template<int G, uint MD>
+void nft(bool type, V<ModInt<MD>> &c) {
+    using Mint = ModInt<MD>;
+    int N = int(c.size());
+    int s = 0;
+    while ((1<<s) < N) s++;
+    assert(1<<s == N);
+
+    V<Mint> a = c, b(N);
+    for (int i = 1; i <= s; i++) {
+        int W = 1<<(s-i);
+        Mint base = Mint(G).pow((MD-1)/(1<<i));
+        if (type) base = Mint::inv(base);
+        Mint now = 1;
+        for (int y = 0; y < N/2; y += W) {
+            for (int x = 0; x < W; x++) {
+                auto l =       a[y<<1 | x];
+                auto r = now * a[y<<1 | x | W];
+                b[y | x]        = l+r;
+                b[y | x | N>>1] = l-r;
+            }
+            now *= base;
+        }
+        swap(a, b);
+    }
+    c = a;
+}
+
 V<Pc> multiply(const V<Pc> &a, const V<Pc> &b) {
     int A = int(a.size()), B = int(b.size());
     if (!A || !B) return {};
@@ -179,6 +207,29 @@ V<R> multiply_opt2(const V<R> &a, const V<R> &b) {
     V<R> c(A+B-1);
     for (int i = 0; i < A+B-1; i++) {
         c[i] = e[i] / N;
+    }
+    return c;
+}
+
+template<uint G, class Mint>
+V<Mint> multiply(const V<Mint> &a, const V<Mint> &b) {
+    int A = int(a.size()), B = int(b.size());
+    if (!A || !B) return {};
+    int lg = 0;
+    while ((1<<lg) < A+B-1) lg++;
+    int N = 1<<lg;
+    V<Mint> ac(N, Mint(0)), bc(N, Mint(0));
+    for (int i = 0; i < A; i++) ac[i] = a[i];
+    for (int i = 0; i < B; i++) bc[i] = b[i];
+    nft<G>(false, ac);
+    nft<G>(false, bc);
+    for (int i = 0; i < N; i++) {
+        ac[i] *= bc[i];
+    }
+    nft<G>(true, ac);
+    V<Mint> c(A+B-1);
+    for (int i = 0; i < A+B-1; i++) {
+        c[i] = ac[i] / Mint(N);
     }
     return c;
 }
