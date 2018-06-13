@@ -87,20 +87,21 @@ Pol convex_cut(const Pol &p, const L &l) {
 
 
 Pol convex(Pol p) {
-    sort(p.begin(), p.end(), lessP);
+    sort(begin(p), end(p), lessP);
+    p.erase(unique(begin(p), end(p), near), end(p));
     if (p.size() <= 2) return p;
     Pol up;
     for (P d: p) {
         while (up.size() > 1 && ccw(up[up.size()-2], up[up.size()-1], d) == 1) up.pop_back();
         up.push_back(d);
     }
-    reverse(up.begin(), up.end());
+    reverse(begin(up), end(up));
     Pol down;
     for (P d: p) {
         while (down.size() > 1 && ccw(down[down.size()-2], down[down.size()-1], d) == -1) down.pop_back();
         down.push_back(d);
     }
-    down.insert(down.begin(), up.begin()+1, up.end()-1);
+    down.insert(begin(down), begin(up)+1, end(up)-1);
     return down;
 }
 

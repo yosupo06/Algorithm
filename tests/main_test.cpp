@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 
 #include <vector>
+#include <stack>
 #include <iostream>
 #include <set>
 #include <map>
@@ -12,16 +13,16 @@
 
 using namespace std;
 
-#include "base.h"
+#include "../base.h"
 
-#include "graph/scc.h"
-#include "graph/twosat.h"
-#include "graph/maxflow.h"
-#include "graph/mincostflow.h"
+#include "../graph/scc.h"
+#include "../graph/twosat.h"
+#include "../graph/maxflow.h"
+#include "../graph/mincostflow.h"
 
-#include "string/suffixarray.h"
+#include "../string/suffixarray.h"
 
-#include "random.h"
+#include "../random.h"
 
 #include "gcd_test.h"
 #include "sa_test.h"
