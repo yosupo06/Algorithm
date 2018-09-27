@@ -176,3 +176,12 @@ array<int, 2> find(const SA<Str>& sa, const string& t) {
     ans[1] = r;
     return ans;
 }
+
+
+/*
+template<class Str>
+int cp_len(SA<Str> sa, SparseTable<int> &st, int l, int r) {
+    if (l == r) return int(sa.s.size()) - l;
+    int li = sa.rsa[l], ri = sa.rsa[r];
+    return st.query(min(li, ri), max(li, ri), TEN(9));
+}*/
