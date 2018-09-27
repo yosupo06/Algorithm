@@ -1,3 +1,38 @@
+struct Prime {
+    int n;
+    vector<bool> used;
+    vector<int> pr;
+    vector<ull> bpr;
+    Prime(int n) : n(n) {
+        used = vector<bool>(n+1, false);
+        for (int i = 2; i <= n; i++) {
+            if (used[i]) continue;
+            pr.push_back(i);
+            bpr.push_back(((__int128(1)<<64)+i-1) / i);
+            for (int j = 2*i; j <= n; j += i) {
+                used[j] = true;
+            }
+        }
+    }
+    map<ll, int> fact(ll x) {
+        assert(x <= (ll)n*n);
+        int pc = (int)pr.size();
+        map<ll, int> mp;
+        for (int i = 0; i < pc; i++) {
+            ll d = pr[i]; ull rd = bpr[i];
+            if (x < d*d) break;
+            while (true) {
+                ll xd = __int128(x)*rd >> 64;
+                if (xd * d != x) break;
+                x = xd;
+                mp[d]++;
+            }
+        }
+        if (x > 1) mp[x]++;
+        return mp;
+    }
+};
+
 bool is_prime(ll n) {
     if (n <= 1) return false;
     if (n == 2) return true;
