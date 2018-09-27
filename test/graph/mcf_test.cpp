@@ -1,4 +1,7 @@
 #include "gtest/gtest.h"
+#include "base.h"
+#include "random.h"
+#include "graph/mincostflow.h"
 
 TEST(MCFTest, IssueNegative) {
     struct E {
@@ -13,7 +16,6 @@ TEST(MCFTest, IssueNegative) {
     };
 
     int n = 3;
-    int m = 5;
     int s = 1;
     int t = 0;
     g = VV<E>(n); elist = VV<E>(n);
@@ -22,7 +24,7 @@ TEST(MCFTest, IssueNegative) {
     add_edge(2, 1, 79, 100);
     add_edge(2, 1, 90, 42);
     
-    auto res = min_cost_flow<int, int>(g, s, t, 0, rand_int(0, 1));
+    auto res = get_mcf<int, int>(g, s, t, rand_int(0, 1));
     res.max_flow(TEN(9));
 
     int sm = (res.dual[t] - res.dual[s]) * res.cap_flow;
@@ -71,7 +73,7 @@ TEST(MCFTest, ManyRandomSmall) {
             add_edge(x, y, c, d);
             elist[x].push_back(E{y, c, d, -1});
         }
-        auto res = min_cost_flow<int, int>(g, s, t, 0, rand_int(0, 1));
+        auto res = get_mcf<int, int>(g, s, t, rand_int(0, 1));
         res.max_flow(TEN(9));
 
         int sm = (res.dual[t] - res.dual[s]) * res.cap_flow;
@@ -125,7 +127,7 @@ TEST(MCFTest, ManyRandom) {
             elist[x].push_back(E{y, c, d, -1});
         }
 
-        auto res = min_cost_flow<int, int>(g, s, t, 0, rand_int(0, 1));
+        auto res = get_mcf<int, int>(g, s, t, rand_int(0, 1));
         res.max_flow(TEN(9));
 
         int sm = (res.dual[t] - res.dual[s]) * res.cap_flow;
@@ -137,7 +139,7 @@ TEST(MCFTest, ManyRandom) {
         }
         EXPECT_EQ(res.flow, sm);
     };
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 300; i++) {
         f();
     }
 }
@@ -182,7 +184,7 @@ TEST(MCFTest, ManyRandomDouble) {
             elist[x].push_back(E{y, c, d, -1});
         }
 
-        auto res = min_cost_flow<int, double>(g, s, t, 1e-8, rand_int(0, 1));
+        auto res = get_mcf<int, double>(g, s, t, rand_int(0, 1));
         res.max_flow(TEN(9));
 
         D sm = (res.dual[t] - res.dual[s]) * res.cap_flow;
@@ -193,7 +195,7 @@ TEST(MCFTest, ManyRandomDouble) {
         }
         EXPECT_NEAR(res.flow, sm, 1e-6);
     };
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 300; i++) {
         f();
     }
 }

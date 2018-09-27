@@ -1,7 +1,11 @@
 #include "gtest/gtest.h"
+#include "base.h"
+#include "random.h"
+#include "graph/scc.h"
+#include "graph/twosat.h"
 
 TEST(SATTest, ManyRandom) {
-    for (int i = 0; i < 1000; i++) {
+    for (int ph = 0; ph < 1000; ph++) {
         int n = rand_int(1, 50);
         int m = rand_int(1, 100);
         V<bool> ans(n);

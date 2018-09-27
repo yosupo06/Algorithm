@@ -10,3 +10,5 @@
 !?*.md
 !?*.css
 !?*.html
+cmake-build-debug
+build
