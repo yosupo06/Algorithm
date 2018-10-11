@@ -1,10 +1,27 @@
 #include "gtest/gtest.h"
+#include "algotest/datastructure/fenwick_test.h"
+
+using namespace algotest;
+
 #include "base.h"
 #include "datastructure/fenwick.h"
 
-TEST(FenwickYosupo, Usage) {
-    Fenwick<int> fw(4);
-    fw.add(1, 1);
-    fw.add(3, 1);
-    assert(fw.sum_lower_bound(2) == 4);
-}
+struct FenwickTester : public FenwickTesterBase {
+    Fenwick<ll> fw;
+    void setup(V<ll> a) final {
+        int n = int(a.size());
+        fw = Fenwick<ll>(n);
+        for (int i = 0; i < n; i++) {
+            fw.add(i, a[i]);
+        }
+    }
+    void add(int k, ll x) final {
+        fw.add(k, x);
+    }
+    ll sum(int l, int r) final {
+        return fw.sum(l, r);
+    }
+};
+
+using FenwickTypes = ::testing::Types<FenwickTester>;
+INSTANTIATE_TYPED_TEST_CASE_P(MyWavelet, FenwickTest, FenwickTypes);

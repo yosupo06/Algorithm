@@ -55,11 +55,11 @@ gtest_discover_tests(LCATest)
 
 add_executable(FenwickTest datastructure/fenwick_test.cpp)
 target_link_libraries(FenwickTest gtest gtest_main)
-gtest_add_tests(TARGET FenwickTest)
+gtest_discover_tests(FenwickTest)
 
 add_executable(WaveletTest datastructure/wavelet_test.cpp)
 target_link_libraries(WaveletTest gtest gtest_main)
-gtest_add_tests(TARGET WaveletTest)
+gtest_discover_tests(WaveletTest)
 
 # String
 
