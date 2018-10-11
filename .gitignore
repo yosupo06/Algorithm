@@ -1,15 +1,2 @@
-*
-!*/
-!.gitignore
-!.gitmodules
-!Makefile
-!?*.h
-!?*.cpp
-!?*.cc
-!?*.d
-!?*.md
-!?*.css
-!?*.html
-!algorithm-test
-cmake-build-debug
-build
+.idea/
+*/cmake-build-debug/
