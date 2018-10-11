@@ -1,30 +1,21 @@
 #include "gtest/gtest.h"
+#include "algotest/math/prime_test.h"
+
+using namespace algotest;
+
 #include "base.h"
-#include "random.h"
 #include "math.h"
+#include "random.h"
 #include "prime.h"
 
-bool eq_v(V<ll> v, V<ll> w) {
-    if (v.size() != w.size()) return false;
-    sort(begin(v), end(v));
-    sort(begin(w), end(w));
-    int n = int(v.size());
-    for (int i = 0; i < n; i++) {
-        if (v[i] != w[i]) return false;
+struct PrimeTester : public PrimeTesterBase {
+    bool is_prime(ll x) final {
+        return ::is_prime(x);
     }
-    return true;
-}
+    V<ll> factor(ll x) final {
+        return pollard(x);
+    }
+};
 
-TEST(PrimeYosupo, Usage) {
-    ASSERT_FALSE(is_prime(0));
-    ASSERT_FALSE(is_prime(1));
-    ASSERT_TRUE(is_prime(2));
-    ASSERT_TRUE(is_prime(3));
-    ASSERT_FALSE(is_prime(4));
-    ASSERT_TRUE(is_prime(5));
-    ASSERT_TRUE(is_prime(TEN(9)+7));
-    ASSERT_FALSE(is_prime((TEN(9)+7)*(TEN(9)+9)));
-
-    ASSERT_TRUE(eq_v(pollard(12), {2, 2, 3}));
-    ASSERT_TRUE(eq_v(pollard((TEN(9)+7)*(TEN(9)+9)), {TEN(9)+7, TEN(9)+9}));
-}
+using PrimeTypes = ::testing::Types<PrimeTester>;
+INSTANTIATE_TYPED_TEST_CASE_P(MyPrime, PrimeTest, PrimeTypes);
