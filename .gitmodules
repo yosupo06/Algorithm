@@ -1,3 +1,6 @@
 [submodule "test/googletest"]
 	path = test/googletest
 	url = https://github.com/google/googletest
+[submodule "test/algorithm-test"]
+	path = test/algorithm-test
+	url = https://github.com/yosupo06/algorithm-test

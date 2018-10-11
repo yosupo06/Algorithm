@@ -10,5 +10,6 @@
 !?*.md
 !?*.css
 !?*.html
+!algorithm-test
 cmake-build-debug
 build
