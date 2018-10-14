@@ -11,21 +11,27 @@ include_directories(../src)
 include_directories(.)
 enable_testing()
 
-add_executable(ModIntTest modint_test.cpp)
+# Math
+
+add_executable(ModIntTest math/modint_test.cpp)
 target_link_libraries(ModIntTest gtest gtest_main)
 gtest_add_tests(TARGET ModIntTest)
 
-add_executable(GcdTest gcd_test.cpp)
+add_executable(GcdTest math/gcd_test.cpp)
 target_link_libraries(GcdTest gtest gtest_main)
 gtest_add_tests(TARGET GcdTest)
 
-add_executable(PrimeTest prime_test.cpp)
+add_executable(PrimeTest math/prime_test.cpp)
 target_link_libraries(PrimeTest gtest gtest_main)
 gtest_discover_tests(PrimeTest)
 
-add_executable(FFTTest fft_test.cpp)
+add_executable(FFTTest math/fft_test.cpp)
 target_link_libraries(FFTTest gtest gtest_main)
 gtest_add_tests(TARGET FFTTest)
+
+add_executable(MatModTest math/matrix_mod_test.cpp)
+target_link_libraries(MatModTest gtest gtest_main)
+gtest_discover_tests(MatModTest)
 
 # Graph
 

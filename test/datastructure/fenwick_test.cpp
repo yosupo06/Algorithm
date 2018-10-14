@@ -24,4 +24,4 @@ struct FenwickTester : public FenwickTesterBase {
 };
 
 using FenwickTypes = ::testing::Types<FenwickTester>;
-INSTANTIATE_TYPED_TEST_CASE_P(MyWavelet, FenwickTest, FenwickTypes);
+INSTANTIATE_TYPED_TEST_CASE_P(MyFenwick, FenwickTest, FenwickTypes);

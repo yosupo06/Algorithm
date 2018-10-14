@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "base.h"
-#include "math.h"
+#include "math/math.h"
 
 
 ll gcd2(ll a, ll b) {

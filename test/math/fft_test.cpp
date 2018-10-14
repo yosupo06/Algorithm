@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "base.h"
 #include "random.h"
-#include "modint.h"
+#include "math/modint.h"
 #include "fft.h"
 
 TEST(FFTYosupo, FFTRandom) {

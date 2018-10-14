@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "base.h"
-#include "modint.h"
+#include "math/modint.h"
 
 TEST(ModIntYosupo, Usage) {
     const int MD = 13;

@@ -4,9 +4,9 @@
 using namespace algotest;
 
 #include "base.h"
-#include "math.h"
+#include "math/math.h"
 #include "random.h"
-#include "prime.h"
+#include "math/prime.h"
 
 struct PrimeTester : public PrimeTesterBase {
     bool is_prime(ll x) final {
