@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 set(CMAKE_CXX_STANDARD 11)
 add_definitions(-D_GLIBCXX_DEBUG -ftrapv)
+add_compile_options(-Wall -Wextra -pedantic)
 
 include(GoogleTest)
 add_subdirectory(googletest)

@@ -11,20 +11,20 @@ using Mint = ModInt<MatrixModTesterBase::kMod>;
 
 struct MatrixModTester : public MatrixModTesterBase {
     int rank(VV<ll> _mat) final {
-        Mat<Mint> mat;
+        VV<Mint> mat;
         for (auto v: _mat) {
             mat.push_back({});
             for (auto d: v) mat.back().push_back(d);
         }
-        return ::rank(mat);
+        return calc_rank(mat);
     }
     V<ll> linear_equation(VV<ll> _mat, V<ll> _vec) final {
-        Mat<Mint> mat;
+        VV<Mint> mat;
         for (auto v: _mat) {
             mat.push_back({});
             for (auto d: v) mat.back().push_back(d);
         }
-        Vec<Mint> vec;
+        V<Mint> vec;
         for (auto d: _vec) vec.push_back(d);
         auto res = solve_linear(mat, vec);
         V<ll> _res;

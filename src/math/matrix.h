@@ -1,37 +1,8 @@
 // Matrix type = VV<T>, Vector type = V<T>
 
-template<class T>
-struct Vec : public V<T> {
-    using V<T>::V;
-};
-
-template<class T>
-struct Mat : public VV<T> {
-    int h() const { return int(this->size()); }
-    int w() const { return int((*this)[0].size()); }
-};
-
-template<class T>
-Vec<T> operator+(const Vec<T> &l, const Vec<T> &r) {
-    assert(l.size() == r.size());
-    int N = int(l.size());
-    V<T> res(N);
-    for (int i = 0; i < N; i++) res[i] = l[i] + r[i];
-    return res;
-}
-
-template<class T>
-Mat<T> operator+(const Mat<T> &l, const Mat<T> &r) {
-    assert(l.size() == r.size());
-    int N = int(l.size());
-    VV<T> res(N);
-    for (int i = 0; i < N; i++) res[i] = l[i] + r[i];
-    return res;
-}
-
-template<class T>
-int rank(Mat<T> m) {
-    int h = m.h(), w = m.w();
+template<class Mat>
+int calc_rank(Mat m) {
+    int h = m.size(), w = m[0].size();
     int c = 0;
     for (int x = 0; x < w; x++) {
         int my = -1;
@@ -57,9 +28,9 @@ int rank(Mat<T> m) {
     return c;
 }
 
-template<class T>
-Vec<T> solve_linear(Mat<T> m, Vec<T> r) {
-    int h = m.h(), w = m.w();
+template<class Mat, class Vec>
+Vec solve_linear(Mat m, Vec r) {
+    int h = m.size(), w = m[0].size();
     int c = 0;
     for (int x = 0; x < w; x++) {
         int my = -1;
@@ -84,10 +55,10 @@ Vec<T> solve_linear(Mat<T> m, Vec<T> r) {
         c++;
         if (c == h) break;
     }
-    Vec<T> v(w);
+    Vec v(w);
     for (int y = 0; y < c; y++) {
         int f = -1;
-        T sm;
+        typename Vec::value_type sm;
         for (int x = 0; x < w; x++) {
             if (m[y][x].v && f == -1) {
                 f = x;
