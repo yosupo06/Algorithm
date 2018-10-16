@@ -6,6 +6,7 @@ struct ModInt {
     ModInt(ll _v) { set_v(_v % MD + MD); }
     M& set_v(uint _v) { v = (_v < MD) ? _v : _v - MD; return *this; }
     explicit operator bool() const { return v != 0; }
+    M operator-() const { return M(0) - *this; }
     M operator+(const M& r) const { return M().set_v(v + r.v); }
     M operator-(const M& r) const { return M().set_v(v + MD - r.v); }
     M operator*(const M& r) const { return M().set_v(ull(v) * r.v % MD); }

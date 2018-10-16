@@ -11,7 +11,7 @@ using Mint = ModInt<MatrixModTesterBase::kMod>;
 
 struct MatrixModTester : public MatrixModTesterBase {
     int rank(VV<ll> _mat) final {
-        VV<Mint> mat;
+        V<Vec<Mint>> mat;
         for (auto v: _mat) {
             mat.push_back({});
             for (auto d: v) mat.back().push_back(d);
