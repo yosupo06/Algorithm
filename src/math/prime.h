@@ -8,7 +8,7 @@ struct Prime {
         for (int i = 2; i <= n; i++) {
             if (used[i]) continue;
             pr.push_back(i);
-            bpr.push_back(((__int128(1)<<64)+i-1) / i);
+            bpr.push_back(((__int128_t(1)<<64)+i-1) / i);
             for (int j = 2*i; j <= n; j += i) {
                 used[j] = true;
             }
