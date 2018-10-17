@@ -19,12 +19,12 @@ struct MatrixModTester : public MatrixModTesterBase {
         return calc_rank(mat);
     }
     V<ll> linear_equation(VV<ll> _mat, V<ll> _vec) final {
-        VV<Mint> mat;
+        V<Vec<Mint>> mat;
         for (auto v: _mat) {
             mat.push_back({});
             for (auto d: v) mat.back().push_back(d);
         }
-        V<Mint> vec;
+        Vec<Mint> vec;
         for (auto d: _vec) vec.push_back(d);
         auto res = solve_linear(mat, vec);
         V<ll> _res;

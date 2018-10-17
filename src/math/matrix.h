@@ -1,14 +1,21 @@
 // Matrix type = VV<T>, Vector type = V<T>
 
 struct BitVec {
+    using value_type = uint;
     int n;
     V<ull> d;
     BitVec(int _n = 0) : n(_n), d((n+63)/64) {}
     size_t size() const { return n; }
-    bool operator[](size_t i) const { return (d[i/64] >> (i%64)) & 1; }
-    void set(size_t i, bool f) {
-        if (f) d[i/64] |= (1ULL << (i%64));
+    uint operator[](size_t i) const { return (d[i/64] >> (i%64)) & 1; }
+    void set(size_t i, uint f) {
+        if (f & 1) d[i/64] |= (1ULL << (i%64));
         else d[i/64] &= ~(1ULL << (i%64));
+    }
+    void push_back(uint f) {
+        assert(f <= 1);
+        if (n % 64 == 0) d.push_back(0);
+        set(n, f);
+        n++;
     }
     template<class OP>
     BitVec& op1(OP op) {
@@ -27,7 +34,8 @@ struct BitVec {
     BitVec& operator+=(const BitVec& r) { return op2(r, bit_xor<ull>()); }
     BitVec& operator-=(const BitVec& r) { return op2(r, bit_xor<ull>()); }
 
-    BitVec& muladd(const BitVec& a, bool b) { if (b) *this += a; return *this; }
+    BitVec& muladd(const BitVec& a, uint b) { if (b & 1) *this += a; return *this; }
+    void swap_elms(int a, int b) { uint f = (*this)[a]; set(a, (*this)[b]); set(b, f); }
 
     BitVec operator+(const BitVec& r) const { return BitVec(*this) += r; }
     BitVec operator-(const BitVec& r) const { return BitVec(*this) -= r; }
@@ -37,7 +45,7 @@ template<class T>
 struct Vec : V<T> {
     using V<T>::V;
     using V<T>::size;
-
+    void set(int i, T x) { (*this)[i] = x; }
     template<class OP>
     Vec& op1(OP op) {
         int n = int(size());
@@ -59,12 +67,11 @@ struct Vec : V<T> {
     Vec& muladd(const Vec& a, const T& b) {
         return op2(a, [&](T x, T y){ return x+y*b; });
     }
-
+    void swap_elms(int a, int b) { swap((*this)[a], (*this)[b]); }
     Vec operator+(const Vec& r) const { return Vec(*this) += r; }
     Vec operator-(const Vec& r) const { return Vec(*this) -= r; }
     Vec operator*(const T& r) const { return Vec(*this) *= r; }
 };
-template<class T> void swap(Vec<T>& l, Vec<T>& r) { l.swap(r); }
 
 template<class Mat>
 int calc_rank(Mat m) {
@@ -96,6 +103,7 @@ template<class Mat, class Vec>
 Vec solve_linear(Mat m, Vec r) {
     int h = m.size(), w = m[0].size();
     int c = 0;
+    V<int> idxs;
     for (int x = 0; x < w; x++) {
         int my = -1;
         for (int y = c; y < h; y++) {
@@ -105,32 +113,28 @@ Vec solve_linear(Mat m, Vec r) {
             }
         }
         if (my == -1) continue;
-        if (c != my) {
-            swap(m[c], m[my]);
-            swap(r[c], r[my]);
-        }
+        idxs.push_back(x);
+        if (c != my) swap(m[c], m[my]);
+        r.swap_elms(c, my);
         for (int y = 0; y < h; y++) {
             if (c == y) continue;
             if (!m[y][x]) continue;
             auto freq = m[y][x] / m[c][x];
             m[y].muladd(m[c], -freq);
-            r[y] -= freq * r[c];
+            r.set(y, r[y] - freq * r[c]);
         }
         c++;
         if (c == h) break;
     }
     Vec v(w);
     for (int y = 0; y < c; y++) {
-        int f = -1;
+        int f = idxs[y];
         typename Vec::value_type sm;
         for (int x = 0; x < w; x++) {
-            if (m[y][x] && f == -1) {
-                f = x;
-            }
             sm += m[y][x] * v[x];
         }
         assert(0 <= f && f < w);
-        v[f] += (r[y] - sm) / m[y][f];
+        v.set(f, (r[y] - sm) / m[y][f]);
     }
     return v;
 }
