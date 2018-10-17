@@ -30,6 +30,10 @@ add_executable(FFTTest math/fft_test.cpp)
 target_link_libraries(FFTTest gtest gtest_main)
 gtest_add_tests(TARGET FFTTest)
 
+add_executable(NFTTest math/nft_test.cpp)
+target_link_libraries(NFTTest gtest gtest_main)
+gtest_discover_tests(NFTTest)
+
 add_executable(MatModTest math/matrix_mod_test.cpp)
 target_link_libraries(MatModTest gtest gtest_main)
 gtest_discover_tests(MatModTest)
