@@ -129,12 +129,12 @@ Vec solve_linear(Mat m, Vec r) {
     Vec v(w);
     for (int y = 0; y < c; y++) {
         int f = idxs[y];
-        typename Vec::value_type sm;
-        for (int x = 0; x < w; x++) {
-            sm += m[y][x] * v[x];
-        }
         assert(0 <= f && f < w);
-        v.set(f, (r[y] - sm) / m[y][f]);
+        v.set(f, r[y]);
+        for (int x = f+1; x < w; x++) {
+            v.set(f, v[f] - m[y][x] * v[x]);
+        }
+        v.set(f, v[f] / m[y][f]);
     }
     return v;
 }

@@ -1,8 +1,20 @@
 cmake_minimum_required(VERSION 3.10)
-
 set(CMAKE_CXX_STANDARD 11)
-add_definitions(-D_GLIBCXX_DEBUG -ftrapv)
 add_compile_options(-Wall -Wextra -pedantic)
+add_compile_options(-fsplit-stack)
+
+#TODO: ignore (upper/lower)case
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    message("Build with debug mode")
+    #add_compile_definitions(_GLIBCXX_DEBUG) v3.12
+    add_compile_options(-D_GLIBCXX_DEBUG)
+    add_compile_options(-ftrapv)
+ELSE()
+    message("Build with release mode")
+    #add_compile_definitions(NDEBUG) v3.12
+    add_compile_options(-O3 -march=native)
+    add_compile_options(-DNDEBUG)
+ENDIF()
 
 include(GoogleTest)
 add_subdirectory(googletest)
