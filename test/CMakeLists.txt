@@ -20,7 +20,7 @@ gtest_add_tests(TARGET ModIntTest)
 
 add_executable(GcdTest math/gcd_test.cpp)
 target_link_libraries(GcdTest gtest gtest_main)
-gtest_add_tests(TARGET GcdTest)
+gtest_discover_tests(GcdTest)
 
 add_executable(PrimeTest math/prime_test.cpp)
 target_link_libraries(PrimeTest gtest gtest_main)

@@ -1,29 +1,23 @@
 #include "gtest/gtest.h"
+#include "algotest/math/gcd_test.h"
+
+using namespace algotest;
+
 #include "base.h"
 #include "bitop.h"
 #include "math/math.h"
 
-
-ll gcd2(ll a, ll b) {
-    a = abs(a); b = abs(b);
-    if (b == 0) return a;
-    return gcd2(b, a%b);
-}
-
-TEST(GCDTest, GCDTest) {
-    for (int i = -100; i < 100; i++) {
-        for (int j = -100; j < 100; j++) {
-            EXPECT_EQ(gcd(i, j), gcd2(i, j));
-        }
+struct GCDTester : public GCDTesterBase {
+    /// gcd(x, y)を返す (|x|, |y| <= 1e18)
+    ll gcd(ll x, ll y) final {
+        return ::gcd(x, y);
     }
-}
-
-TEST(XGCDTest, XGCDTest) {
-    for (int i = -100; i < 100; i++) {
-        for (int j = -100; j < 100; j++) {
-            auto u = ext_gcd(i, j);
-            EXPECT_EQ(u.g, gcd(i, j));
-            EXPECT_EQ(u.x * i + u.y * j, u.g);
-        }
+    /// p.first * x + p.second * y = gcd(x, y)なるpairを返す (|x|, |y| <= 1e18)
+    pair<ll, ll> ext_gcd(ll x, ll y) final {
+        auto g = ::ext_gcd(x, y);
+        return make_pair(g.x, g.y);
     }
-}
+};
+
+using GCDTypes = ::testing::Types<GCDTester>;
+INSTANTIATE_TYPED_TEST_CASE_P(MyGCD, GCDTest, GCDTypes);
