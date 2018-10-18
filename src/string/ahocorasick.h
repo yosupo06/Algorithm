@@ -29,6 +29,7 @@ struct ACTrie {
     }
   public:
     // opは2引数の関数, パターンにマッチするたびにop(文字ID, 発見位置の終端)を呼び出す
+    // 終端が同じで複数マッチする文字列が存在する場合，長い順に呼び出される
     // たとえばs = "abaaba", pattern = {"ab", "ba"}ならop(0, 2), op(1, 3), op(0, 5), op(1, 6)
     template<class OP>
     void match(const string &s, OP op, int p = 0) {
