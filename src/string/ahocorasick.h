@@ -13,30 +13,32 @@ struct AhoTrie {
         }
         next[s[p]]->add(s, p+1, id);
     }
-    NP count(V<int> &res) {
+    template<class OP>
+    NP count(OP op, int p) {
         if (fail == nullptr) return this;
         for (int id : acc) {
-            res[id]++;
+            op(id, p);
         }
         if (dnx) {
-            dnx->count(res);
+            dnx->count(op, p);
         } else {
-            dnx = fail->count(res);
+            dnx = fail->count(op, p);
         }
         return acc.size() ? this : dnx;
     }
-    void match(V<int> &res, const string &s, int p) {
+    template<class OP>
+    void match(const string &s, OP op, int p = 0) {
         if (p == int(s.size())) return;
         if (next[s[p]]) {
-            next[s[p]]->count(res);
-            next[s[p]]->match(res, s, p+1);
+            next[s[p]]->count(op, p+1);
+            next[s[p]]->match(s, op, p+1);
         } else {
-            if (!fail) match(res, s, p+1); // root
-            else fail->match(res, s, p); // other
+            if (!fail) match(s, op, p+1); // root
+            else fail->match(s, op, p); // other
         }
     }
     static NP make(V<string> v) {
-        int n = (int)v.size();
+        int n = int(v.size());
         NP tr = new AhoTrie();
         for (int i = 0; i < n; i++) {
             tr->add(v[i], 0, i);

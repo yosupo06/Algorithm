@@ -78,6 +78,10 @@ gtest_discover_tests(WaveletTest)
 
 # String
 
+add_executable(AhoCorasickTest string/ahocorasick_test.cpp)
+target_link_libraries(AhoCorasickTest gtest gtest_main)
+gtest_discover_tests(AhoCorasickTest)
+
 add_executable(SATest string/suffixarray_test.cpp)
 target_link_libraries(SATest gtest gtest_main)
 gtest_discover_tests(SATest)
