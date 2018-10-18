@@ -10,7 +10,7 @@ using namespace algotest;
 struct AhoCorasickTester : public AhoCorasickTesterBase {
     VV<int> enumerate(string target, V<string> patterns) final {
         int m = int(patterns.size());
-        auto tree = AhoTrie::make(patterns);
+        auto tree = ACTrie::make(patterns);
         VV<int> res(m);
         tree->match(target, [&](int id, int r) {
                 res[id].push_back(r - int(patterns[id].size()));
