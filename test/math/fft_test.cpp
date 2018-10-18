@@ -5,7 +5,7 @@ using namespace algotest;
 
 #include "base.h"
 #include "math/modint.h"
-#include "fft.h"
+#include "math/fft.h"
 
 
 struct DoubleFFTTester : public FFTTesterBase {

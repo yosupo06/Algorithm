@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "base.h"
+#include "bitop.h"
 #include "math/math.h"
 
 

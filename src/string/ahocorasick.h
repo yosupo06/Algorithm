@@ -1,6 +1,6 @@
 struct AhoTrie {
     using NP = AhoTrie*;
-    vector<int> acc;
+    V<int> acc;
     map<int, NP> next;
     NP fail = nullptr, dnx = nullptr;
     void add(const string &s, int p, int id) {
@@ -13,7 +13,7 @@ struct AhoTrie {
         }
         next[s[p]]->add(s, p+1, id);
     }
-    NP count(vector<int> &res) {
+    NP count(V<int> &res) {
         if (fail == nullptr) return this;
         for (int id : acc) {
             res[id]++;
@@ -25,7 +25,7 @@ struct AhoTrie {
         }
         return acc.size() ? this : dnx;
     }
-    void match(vector<int> &res, const string &s, int p) {
+    void match(V<int> &res, const string &s, int p) {
         if (p == int(s.size())) return;
         if (next[s[p]]) {
             next[s[p]]->count(res);
@@ -35,7 +35,7 @@ struct AhoTrie {
             else fail->match(res, s, p); // other
         }
     }
-    static NP make(vector<string> v) {
+    static NP make(V<string> v) {
         int n = (int)v.size();
         NP tr = new AhoTrie();
         for (int i = 0; i < n; i++) {

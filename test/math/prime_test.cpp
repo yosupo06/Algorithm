@@ -4,6 +4,7 @@
 using namespace algotest;
 
 #include "base.h"
+#include "bitop.h"
 #include "math/math.h"
 #include "random.h"
 #include "math/prime.h"

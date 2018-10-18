@@ -1,10 +1,16 @@
+//binary gcd
 ll gcd(ll _a, ll _b) {
     ull a = abs(_a), b = abs(_b);
-    while (b) {
-        swap(a, b);
-        b %= a;
-    }
-    return a;
+    if (a == 0) return b;
+    if (b == 0) return a;
+    int shift = bsf(a|b);
+    a >>= bsf(a);
+    do {
+        b >>= bsf(b);
+        if (a > b) swap(a, b);
+        b -= a;
+    } while (b);
+    return (a << shift);
 }
 
 /// g:gcd(a, b), ax+by=g

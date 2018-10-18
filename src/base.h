@@ -16,6 +16,11 @@ ostream& operator<<(ostream& os, const V<T>& v) {
     return os;
 }
 
-// cin.tie(0);
-// ios::sync_with_stdio(false);
-// cout << setprecision(20) << fixed;
+/*
+int main() {
+    cin.tie(0);
+    ios::sync_with_stdio(false);
+    cout << setprecision(20) << fixed;
+    return 0;
+}
+*/
