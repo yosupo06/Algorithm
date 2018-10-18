@@ -1,17 +1,18 @@
-struct AhoTrie {
-    using NP = AhoTrie*;
+struct ACTrie {
+    using NP = ACTrie*;
     V<int> acc;
     map<int, NP> next;
     NP fail = nullptr, dnx = nullptr;
-    void add(const string &s, int p, int id) {
+  private:
+    void add(const string &s, int id, int p = 0) {
         if (p == int(s.size())) {
             acc.push_back(id);
             return;
         }
         if (next[s[p]] == nullptr) {
-            next[s[p]] = new AhoTrie();
+            next[s[p]] = new ACTrie();
         }
-        next[s[p]]->add(s, p+1, id);
+        next[s[p]]->add(s, id, p+1);
     }
     template<class OP>
     NP count(OP op, int p) {
@@ -26,6 +27,9 @@ struct AhoTrie {
         }
         return acc.size() ? this : dnx;
     }
+  public:
+    // opは2引数の関数, パターンにマッチするたびにop(文字ID, 発見位置の終端)を呼び出す
+    // たとえばs = "abaaba", pattern = {"ab", "ba"}ならop(0, 2), op(1, 3), op(0, 5), op(1, 6)
     template<class OP>
     void match(const string &s, OP op, int p = 0) {
         if (p == int(s.size())) return;
@@ -38,10 +42,9 @@ struct AhoTrie {
         }
     }
     static NP make(V<string> v) {
-        int n = int(v.size());
-        NP tr = new AhoTrie();
-        for (int i = 0; i < n; i++) {
-            tr->add(v[i], 0, i);
+        NP tr = new ACTrie();
+        for (int i = 0; i < int(v.size()); i++) {
+            tr->add(v[i], i);
         }
         queue<NP> q;
         q.push(tr);
@@ -51,7 +54,7 @@ struct AhoTrie {
             for (auto p: ntr->next) {
                 int i = p.first;
                 NP fail = ntr->fail;
-                while (fail and !fail->next.count(i)) {
+                while (fail && !fail->next.count(i)) {
                     fail = fail->fail;
                 }
                 ntr->next[i]->fail = (fail == nullptr) ? tr : fail->next[i];
