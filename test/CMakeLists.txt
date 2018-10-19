@@ -84,9 +84,9 @@ add_executable(MCFTest graph/mcf_test.cpp)
 target_link_libraries(MCFTest gtest gtest_main)
 gtest_discover_tests(MCFTest)
 
-add_executable(MCFOldTest graph/mcf_test_old.cpp)
-target_link_libraries(MCFOldTest gtest gtest_main)
-gtest_add_tests(TARGET MCFOldTest)
+add_executable(MCFDTest graph/mcf_double_test.cpp)
+target_link_libraries(MCFDTest gtest gtest_main)
+gtest_discover_tests(MCFDTest)
 
 add_executable(UFTest graph/uf_test.cpp)
 target_link_libraries(UFTest gtest gtest_main)
