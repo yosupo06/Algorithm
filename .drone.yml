@@ -1,0 +1,20 @@
+pipeline:
+  test-debug:
+    image: rikorose/gcc-cmake
+    commands:
+      - cd test
+      - mkdir build-debug
+      - cd build-debug
+      - cmake .. -DCMAKE_BUILD_TYPE=Debug
+      - make
+      - make test
+
+  test-release:
+    image: rikorose/gcc-cmake
+    commands:
+    - cd test
+    - mkdir build-release
+    - cd build-release
+    - cmake .. -DCMAKE_BUILD_TYPE=Release
+    - make
+    - make test
