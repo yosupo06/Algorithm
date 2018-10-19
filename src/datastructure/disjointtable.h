@@ -1,10 +1,10 @@
 template<class D, class OP>
 struct DisjointTable {
-    OP op;
     D e;
+    OP op;
     int lg;
     VV<D> data;
-    DisjointTable(V<D> v, OP _op, D _e) : op(_op), e(_e) {
+    DisjointTable(V<D> v = V<D>(), D _e = D(), OP _op = OP()) : e(_e), op(_op) {
         lg = 1;
         while ((1<<lg) < int(v.size())) lg++;
         int n = 1<<lg;
@@ -38,6 +38,6 @@ struct DisjointTable {
     }
 };
 template<class D, class OP>
-NazoTable<D, OP> get_nazo(V<D> v, OP op, D e) {
-    return NazoTable<D, OP>(v, op, e);
+DisjointTable<D, OP> get_disjoint_table(V<D> v, D e, OP op) {
+    return DisjointTable<D, OP>(v, e, op);
 }

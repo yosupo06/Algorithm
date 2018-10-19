@@ -1,12 +1,17 @@
 cmake_minimum_required(VERSION 3.10)
 set(CMAKE_CXX_STANDARD 11)
+
 add_compile_options(-Wall -Wextra -pedantic)
+add_compile_options(-O3 -march=native)
+
+#extend stack
 if(APPLE)
+    message("Build with os x")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-stack_size,1000000000")
 ELSE()
+    message("Build with linux")
     add_compile_options(-fsplit-stack)
 ENDIF()
-add_compile_options(-O3 -march=native)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     message("Build with debug mode")
@@ -94,6 +99,10 @@ gtest_discover_tests(FenwickTest)
 add_executable(WaveletTest datastructure/wavelet_test.cpp)
 target_link_libraries(WaveletTest gtest gtest_main)
 gtest_discover_tests(WaveletTest)
+
+add_executable(StaticRMQTest datastructure/staticrmq_test.cpp)
+target_link_libraries(StaticRMQTest gtest gtest_main)
+gtest_discover_tests(StaticRMQTest)
 
 # String
 
