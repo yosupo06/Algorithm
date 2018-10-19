@@ -1,25 +1,25 @@
 struct QuickFind {
-    V<int> ig;
-    VV<int> gi;
+    V<int> id;
+    VV<int> groups;
     int gc;  // group count
     QuickFind(int n = 0) {
-        ig = V<int>(n);
-        gi = VV<int>(n);
+        id = V<int>(n);
+        groups = VV<int>(n);
         for (int i = 0; i < n; i++) {
-            ig[i] = i; gi[i] = {i};
+            id[i] = i; groups[i] = {i};
         }
         gc = n;
     }
     void merge(int a, int b) {
         if (same(a, b)) return;
         gc--;
-        int x = ig[a], y = ig[b];
-        if (gi[x].size() < gi[y].size()) swap(x, y);
-        for (int j: gi[y]) {
-            ig[j] = x;
+        int x = id[a], y = id[b];
+        if (groups[x].size() < groups[y].size()) swap(x, y);
+        for (int j: groups[y]) {
+            id[j] = x;
+            groups[x].push_back(j);
         }
-        gi[x].insert(gi[x].end(), gi[y].begin(), gi[y].end());
-        gi[y].clear();
+        groups[y].clear();
     }
-    bool same(int a, int b) { return ig[a] == ig[b]; }
+    bool same(int a, int b) { return id[a] == id[b]; }
 };

@@ -4,7 +4,7 @@
 using namespace algotest;
 
 #include "base.h"
-#include "graph/lca.h"
+#include "tree/lca.h"
 
 struct LCATester : public LCATesterBase {
     LCA lca;
