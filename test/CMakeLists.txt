@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 set(CMAKE_CXX_STANDARD 11)
 add_compile_options(-Wall -Wextra -pedantic)
-add_compile_options(-fsplit-stack)
-
+if(APPLE)
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-stack_size,1000000000")
+ELSE()
+    add_compile_options(-fsplit-stack)
+ENDIF()
 add_compile_options(-O3 -march=native)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
