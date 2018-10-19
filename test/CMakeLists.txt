@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.10)
 set(CMAKE_CXX_STANDARD 11)
 
 add_compile_options(-Wall -Wextra -pedantic)
-add_compile_options(-O3 -march=native)
 
 #extend stack
 if(APPLE)
@@ -18,9 +17,14 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
     #add_compile_definitions(_GLIBCXX_DEBUG) v3.12
     add_compile_options(-D_GLIBCXX_DEBUG)
     add_compile_options(-ftrapv)
+ELSEIF(CMAKE_BUILD_TYPE MATCHES RelWithDebInfo)
+    message("Build with relwithdebinfo mode")
+    add_compile_options(-O3 -march=native)
+    add_compile_options(-D_GLIBCXX_DEBUG)
+    add_compile_options(-ftrapv)
 ELSE()
     message("Build with release mode")
-    #add_compile_definitions(NDEBUG) v3.12
+    add_compile_options(-O3 -march=native)
     add_compile_options(-DNDEBUG)
 ENDIF()
 
@@ -78,7 +82,11 @@ gtest_add_tests(TARGET MFTest)
 
 add_executable(MCFTest graph/mcf_test.cpp)
 target_link_libraries(MCFTest gtest gtest_main)
-gtest_add_tests(TARGET MCFTest)
+gtest_discover_tests(MCFTest)
+
+add_executable(MCFOldTest graph/mcf_test_old.cpp)
+target_link_libraries(MCFOldTest gtest gtest_main)
+gtest_add_tests(TARGET MCFOldTest)
 
 add_executable(UFTest graph/uf_test.cpp)
 target_link_libraries(UFTest gtest gtest_main)
