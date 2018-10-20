@@ -31,14 +31,12 @@ SparseTable<D, OP> get_sparse_table(V<D> v, D e, OP op) {
 
 template <class D, class OP> struct LowMemorySparseTable {
     static constexpr int B = 16;
+    V<D> data;
     D e;
     OP op;
-    V<D> data;
     SparseTable<D, OP> st;
-    LowMemorySparseTable(V<D> v = V<D>(), D _e = D(), OP _op = OP())
-        : e(_e), op(_op) {
+    V<D> comp_arr(V<D> v) {
         int n = int(v.size());
-        data = v;
         V<D> comp(n / B);
         for (int i = 0; i < n / B; i++) {
             D res = data[i * B];
@@ -47,8 +45,10 @@ template <class D, class OP> struct LowMemorySparseTable {
             }
             comp[i] = res;
         }
-        st = SparseTable<D, OP>(comp, _e, _op);
+        return comp;
     }
+    LowMemorySparseTable(V<D> v = V<D>(), D _e = D(), OP _op = OP())
+        : data(v), e(_e), op(_op), st(comp_arr(v), _e, _op) {}
     D query(int l, int r) const {
         assert(l <= r);
         if (l == r) return e;

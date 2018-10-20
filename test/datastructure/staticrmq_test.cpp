@@ -39,6 +39,21 @@ struct DisjointTester : public StaticRMQTesterBase {
     int range_min(int l, int r) final { return table.query(l, r); }
 };
 
-using StaticRMQTypes = ::testing::
-    Types<SparseTableTester, LowMemorySparseTableTester, DisjointTester>;
+auto minl = [](int a, int b) { return min(a, b); };
+
+struct LambdaLowMemorySparseTableTester : public StaticRMQTesterBase {
+    struct Table {
+        LowMemorySparseTable<int, decltype(minl)> table;
+        Table(V<int> a)
+            : table(
+                  get_low_memory_sparse_table(a, int(TEN(9) + TEN(6)), minl)) {}
+    } * table;
+    void setup(V<int> a) final { table = new Table(a); }
+    int range_min(int l, int r) final { return table->table.query(l, r); }
+};
+
+using StaticRMQTypes = ::testing::Types<SparseTableTester,
+                                        LowMemorySparseTableTester,
+                                        DisjointTester,
+                                        LambdaLowMemorySparseTableTester>;
 INSTANTIATE_TYPED_TEST_CASE_P(StaticRMQ, StaticRMQTest, StaticRMQTypes);
