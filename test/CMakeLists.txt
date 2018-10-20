@@ -92,6 +92,10 @@ add_executable(UFTest graph/uf_test.cpp)
 target_link_libraries(UFTest gtest gtest_main)
 gtest_discover_tests(UFTest)
 
+add_executable(DijkstraTest graph/dijkstra_test.cpp)
+target_link_libraries(DijkstraTest gtest gtest_main)
+gtest_discover_tests(DijkstraTest)
+
 # Tree
 
 add_executable(LCATest tree/lca_test.cpp)
