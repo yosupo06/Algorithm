@@ -96,6 +96,10 @@ add_executable(DijkstraTest graph/dijkstra_test.cpp)
 target_link_libraries(DijkstraTest gtest gtest_main)
 gtest_discover_tests(DijkstraTest)
 
+add_executable(DijkstraRadixTest graph/dijkstra_radix_test.cpp)
+target_link_libraries(DijkstraRadixTest gtest gtest_main)
+gtest_discover_tests(DijkstraRadixTest)
+
 # Tree
 
 add_executable(LCATest tree/lca_test.cpp)
