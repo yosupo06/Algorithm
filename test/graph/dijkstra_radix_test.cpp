@@ -11,9 +11,7 @@ using namespace algotest;
 
 struct DijkstraRadixTester : public DijkstraTesterBase {
     ll min_dist(VV<DijkstraEdge> g, int s, int t) final {
-        auto u = mindist<ull>(g, s).dist[t];
-        if (u == numeric_limits<ull>::max()) return numeric_limits<ll>::max();
-        return u;
+        return mindist<ll>(g, s).dist[t];
     }
 };
 

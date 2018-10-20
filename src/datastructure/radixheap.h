@@ -1,13 +1,13 @@
 // D.key must be unsigned integer
 template <class D> struct RadixHeap {
-    using C = decltype(D().key);
+    using C = typename make_unsigned<decltype(D().key)>::type;
     static int bsr1(C x) { return (x == 0) ? 0 : bsr(x) + 1; }
     int sz = 0;
     C last = 0;
     VV<D> v = VV<D>(sizeof(C) * 8 + 1);
     RadixHeap() {}
     void push(D x) {
-        assert(last <= x.key);
+        assert(decltype(x.key)(last) <= x.key);
         sz++;
         v[bsr1(x.key ^ last)].push_back(x);
     }

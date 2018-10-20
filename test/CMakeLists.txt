@@ -84,6 +84,11 @@ add_executable(MCFTest graph/mcf_test.cpp)
 target_link_libraries(MCFTest gtest gtest_main)
 gtest_discover_tests(MCFTest)
 
+add_executable(MCFRadixTest graph/mcf_radix_test.cpp)
+target_link_libraries(MCFRadixTest gtest gtest_main)
+gtest_discover_tests(MCFRadixTest)
+
+
 add_executable(MCFDTest graph/mcf_double_test.cpp)
 target_link_libraries(MCFDTest gtest gtest_main)
 gtest_discover_tests(MCFDTest)

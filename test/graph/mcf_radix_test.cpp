@@ -4,9 +4,12 @@
 using namespace algotest;
 
 #include "base.h"
+#include "bitop.h"
+#include "datastructure/radixheap.h"
+#define priority_queue RadixHeap
 #include "graph/mincostflow.h"
 
-class MCFTester : MinCostFlowTesterBase {
+class MCFRadixTester : MinCostFlowTesterBase {
   public:
     ll max_flow_min_cost(VV<MinCostFlowEdge> _g, int s, int t) final {
         int n = int(_g.size());
@@ -31,5 +34,5 @@ class MCFTester : MinCostFlowTesterBase {
     }
 };
 
-using MCFTypes = ::testing::Types<MCFTester>;
-INSTANTIATE_TYPED_TEST_CASE_P(MCF, MinCostFlowTest, MCFTypes);
+using MCFRadixTypes = ::testing::Types<MCFRadixTester>;
+INSTANTIATE_TYPED_TEST_CASE_P(MCF, MinCostFlowTest, MCFRadixTypes);

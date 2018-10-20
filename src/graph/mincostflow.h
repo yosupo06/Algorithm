@@ -76,13 +76,18 @@ struct MinCostFlow {
     void dual_ref() {
         V<D> dist(g.size(), D(INF));
         pv = pe = V<int>(n, -1);
-        using Q = pair<D, int>;
-        priority_queue<Q, vector<Q>, greater<Q>> que;
+        struct Q {
+            D key;
+            int to;
+            bool operator<(Q r) const { return key > r.key; }
+        };
+        //using Q = pair<D, int>;
+        priority_queue<Q> que;//, vector<Q>, greater<Q>> que;
         dist[s] = 0;
-        que.push(Q(D(0), s));
-        V<bool> vis(n);
+        que.push(Q{D(0), s});
+        V<char> vis(n);
         while (!que.empty()) {
-            int v = que.top().second; que.pop();
+            int v = que.top().to; que.pop();
             if (v == t) break;
             if (vis[v]) continue;
             vis[v] = true;
@@ -93,7 +98,7 @@ struct MinCostFlow {
                 if (dist[e.to] > cost) {
                     dist[e.to] = cost;
                     pv[e.to] = v; pe[e.to] = i;
-                    que.push(Q(dist[e.to], e.to));
+                    que.push(Q{dist[e.to], e.to});
                 }
             }
         }
