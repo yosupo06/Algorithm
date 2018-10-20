@@ -10,7 +10,7 @@ struct Dice {
     int d[3];
     Dice(int a, int b) {
         for (int i = 0; i < 3; i++) {
-            d[i] = (a+i)%3+a/3*3;
+            d[i] = (a + i) % 3 + a / 3 * 3;
         }
         while (d[1] != b) rot(1);
     }
@@ -19,18 +19,18 @@ struct Dice {
             return d[dir];
         } else {
             dir -= 2;
-            return 5-d[dir];
+            return 5 - d[dir];
         }
     }
     void rot(int dir) {
         int t = d[2];
         if (dir < 2) {
-            d[2] = 5-d[dir];
+            d[2] = 5 - d[dir];
             d[dir] = t;
         } else {
             dir -= 2;
             d[2] = d[dir];
-            d[dir] = 5-t;
+            d[dir] = 5 - t;
         }
     }
 };

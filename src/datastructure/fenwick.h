@@ -1,8 +1,7 @@
-template<class T>
-struct Fenwick {
+template <class T> struct Fenwick {
     int n;
     V<T> seg;
-    Fenwick(int _n = 0) : n(_n), seg(n+1) {}
+    Fenwick(int _n = 0) : n(_n), seg(n + 1) {}
     /// i番目の要素にxを追加する
     void add(int i, T x) {
         i++;

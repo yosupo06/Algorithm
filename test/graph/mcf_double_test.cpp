@@ -30,8 +30,6 @@ class MCFDTester : MinCostFlowDoubleTesterBase {
     }
 };
 
-
-
 using MCFDTypes = ::testing::Types<MCFDTester>;
 INSTANTIATE_TYPED_TEST_CASE_P(MCFD, MinCostFlowDoubleTest, MCFDTypes);
 

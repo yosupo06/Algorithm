@@ -6,7 +6,8 @@ struct QuickFind {
         id = V<int>(n);
         groups = VV<int>(n);
         for (int i = 0; i < n; i++) {
-            id[i] = i; groups[i] = {i};
+            id[i] = i;
+            groups[i] = {i};
         }
         gc = n;
     }
@@ -15,7 +16,7 @@ struct QuickFind {
         gc--;
         int x = id[a], y = id[b];
         if (groups[x].size() < groups[y].size()) swap(x, y);
-        for (int j: groups[y]) {
+        for (int j : groups[y]) {
             id[j] = x;
             groups[x].push_back(j);
         }
