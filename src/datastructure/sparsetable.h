@@ -28,3 +28,52 @@ template <class D, class OP>
 SparseTable<D, OP> get_sparse_table(V<D> v, D e, OP op) {
     return SparseTable<D, OP>(v, e, op);
 }
+
+template <class D, class OP> struct LowMemorySparseTable {
+    static constexpr int B = 16;
+    D e;
+    OP op;
+    V<D> data;
+    SparseTable<D, OP> st;
+    LowMemorySparseTable(V<D> v = V<D>(), D _e = D(), OP _op = OP())
+        : e(_e), op(_op) {
+        int n = int(v.size());
+        data = v;
+        V<D> comp(n / B);
+        for (int i = 0; i < n / B; i++) {
+            D res = data[i * B];
+            for (int j = 1; j < B; j++) {
+                res = op(res, data[i * B + j]);
+            }
+            comp[i] = res;
+        }
+        st = SparseTable<D, OP>(comp, _e, _op);
+    }
+    D query(int l, int r) const {
+        assert(l <= r);
+        if (l == r) return e;
+        int lb = (l + B - 1) / B, rb = r / B;
+        D res = e;
+        if (lb >= rb) {
+            for (int i = l; i < r; i++) {
+                res = op(res, data[i]);
+            }
+            return res;
+        }
+
+        while (l % B) {
+            res = op(res, data[l]);
+            l++;
+        }
+        while (r % B) {
+            r--;
+            res = op(res, data[r]);
+        }
+        res = op(res, st.query(lb, rb));
+        return res;
+    }
+};
+template <class D, class OP>
+LowMemorySparseTable<D, OP> get_low_memory_sparse_table(V<D> v, D e, OP op) {
+    return LowMemorySparseTable<D, OP>(v, e, op);
+}

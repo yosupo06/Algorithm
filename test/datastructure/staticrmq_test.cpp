@@ -1,12 +1,12 @@
-#include "gtest/gtest.h"
 #include "algotest/datastructure/staticrmq_test.h"
+#include "gtest/gtest.h"
 
 using namespace algotest;
 
 #include "base.h"
 #include "bitop.h"
-#include "datastructure/sparsetable.h"
 #include "datastructure/disjointtable.h"
+#include "datastructure/sparsetable.h"
 
 struct minf {
     int operator()(int a, int b) const { return min(a, b); }
@@ -18,9 +18,16 @@ struct SparseTableTester : public StaticRMQTesterBase {
     void setup(V<int> a) final {
         table = get_sparse_table(a, int(TEN(9) + TEN(6)), minf());
     }
-    int range_min(int l, int r) final {
-        return table.query(l, r);
+    int range_min(int l, int r) final { return table.query(l, r); }
+};
+
+struct LowMemorySparseTableTester : public StaticRMQTesterBase {
+    LowMemorySparseTable<int, minf> table;
+
+    void setup(V<int> a) final {
+        table = get_low_memory_sparse_table(a, int(TEN(9) + TEN(6)), minf());
     }
+    int range_min(int l, int r) final { return table.query(l, r); }
 };
 
 struct DisjointTester : public StaticRMQTesterBase {
@@ -29,10 +36,9 @@ struct DisjointTester : public StaticRMQTesterBase {
     void setup(V<int> a) final {
         table = get_disjoint_table(a, int(TEN(9) + TEN(6)), minf());
     }
-    int range_min(int l, int r) final {
-        return table.query(l, r);
-    }
+    int range_min(int l, int r) final { return table.query(l, r); }
 };
 
-using StaticRMQTypes = ::testing::Types<SparseTableTester, DisjointTester>;
+using StaticRMQTypes = ::testing::
+    Types<SparseTableTester, LowMemorySparseTableTester, DisjointTester>;
 INSTANTIATE_TYPED_TEST_CASE_P(StaticRMQ, StaticRMQTest, StaticRMQTypes);
