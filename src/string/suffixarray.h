@@ -1,5 +1,4 @@
-template<class Str>
-struct SA {
+template <class Str> struct SA {
     Str s;
     V<int> sa, rsa, lcp;
     SA() {}
@@ -24,14 +23,14 @@ struct SA {
     }
 };
 
-template<class Str>
-V<int> sa_is(Str s, int B = 200) {
+template <class Str> V<int> sa_is(Str s, int B = 200) {
     int n = int(s.size());
     V<int> sa(n + 1);
     if (n == 0) return sa;
 
     for (int i = 0; i < n; i++) s[i]++;
-    s.push_back(0); B++;
+    s.push_back(0);
+    B++;
 
     V<bool> ls(n + 1);
     ls[n] = true;
@@ -85,7 +84,7 @@ V<int> sa_is(Str s, int B = 200) {
     if (lms.size() >= 2) {
         int m = int(lms.size()) - 1;
         V<int> lms2;
-        for (int v: sa) {
+        for (int v : sa) {
             if (lms_map[v] != -1) lms2.push_back(v);
         }
         int rec_n = 1;
@@ -102,7 +101,8 @@ V<int> sa_is(Str s, int B = 200) {
                         rec_n++;
                         break;
                     }
-                    l++; r++;
+                    l++;
+                    r++;
                 }
             }
             rec_s[lms_map[lms2[i]]] = rec_n;
@@ -110,7 +110,7 @@ V<int> sa_is(Str s, int B = 200) {
 
         V<int> nx_lms;
         auto ch_sa = sa_is(rec_s, rec_n);
-        for (int d: ch_sa) {
+        for (int d : ch_sa) {
             nx_lms.push_back(lms[d]);
         }
         induce(nx_lms);
@@ -119,8 +119,7 @@ V<int> sa_is(Str s, int B = 200) {
     return sa;
 }
 
-template<class Str>
-V<int> doublingSA(Str s) {
+template <class Str> V<int> doublingSA(Str s) {
     int n = (int)s.size();
     V<int> sa(n + 1);
     V<int> rsa(n + 1);
@@ -147,8 +146,7 @@ V<int> doublingSA(Str s) {
 }
 
 // tを完全に含む範囲を出力,O(|t|logn)
-template<class Str>
-array<int, 2> find(const SA<Str>& sa, const string& t) {
+template <class Str> array<int, 2> find(const SA<Str>& sa, const string& t) {
     int n = (int)sa.s.size(), m = (int)t.size();
     array<int, 2> ans;
     int l, r;
@@ -176,7 +174,6 @@ array<int, 2> find(const SA<Str>& sa, const string& t) {
     ans[1] = r;
     return ans;
 }
-
 
 /*
 template<class Str>

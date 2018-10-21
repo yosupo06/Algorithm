@@ -1,4 +1,4 @@
-template<class S> V<int> mp(const S& s) {
+template <class S> V<int> mp(const S& s) {
     int n = int(s.size());
     V<int> R(n + 1);
     R[0] = -1;

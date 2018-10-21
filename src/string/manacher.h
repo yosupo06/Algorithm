@@ -1,4 +1,4 @@
-template<class S> V<int> manacher(const S& s) {
+template <class S> V<int> manacher(const S& s) {
     int n = int(s.size());
     V<int> R(n);
     R[0] = 1;
@@ -11,7 +11,7 @@ template<class S> V<int> manacher(const S& s) {
     return R;
 }
 
-template<class S> V<int> manacherEven(const S& s) {
+template <class S> V<int> manacherEven(const S& s) {
     int n = int(s.size());
     V<int> R(n - 1);
     if (n == 1) return R;
