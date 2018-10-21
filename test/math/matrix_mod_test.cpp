@@ -39,6 +39,20 @@ struct MatrixModTester : public MatrixModTesterBase {
         for (auto d: res) _res.push_back(d.v);
         return _res;
     }
+    VV<ll> inverse(VV<ll> _mat) final {
+        V<Vec<Mint>> mat;
+        for (auto v: _mat) {
+            mat.push_back({});
+            for (auto d: v) mat.back().push_back(d);
+        }
+        auto out = ::inverse(mat);
+        VV<ll> _out;
+        for (auto v: out) {
+            _out.push_back({});
+            for (auto d: v) _out.back().push_back(d.v);
+        }
+        return _out;
+    }
 };
 
 using MatrixModTypes = ::testing::Types<MatrixModTester>;

@@ -173,3 +173,46 @@ Vec solve_linear(Mat m, Vec r) {
     }
     return v;
 }
+
+template<class Mat>
+Mat inverse(Mat m) {
+    int n = m.size();
+    assert(n == int(m[0].size()));
+    Mat r(n, typename Mat::value_type(n));
+    for (int i = 0; i < n; i++) r[i][i] = 1;
+
+    for (int x = 0; x < n; x++) {
+        int my = -1;
+        for (int y = x; y < n; y++) {
+            if (m[y][x]) {
+                my = y;
+                break;
+            }
+        }
+        if (my == -1) continue;
+        if (x != my) {
+            swap(m[x], m[my]);
+            swap(r[x], r[my]);
+        }
+        auto freq = m[x][x];
+        for (int j = 0; j < n; j++) {
+            m[x][j] /= freq;
+            r[x][j] /= freq;
+        }
+        for (int y = 0; y < n; y++) {
+            if (x == y) continue;
+            if (!m[y][x]) continue;
+            auto freq = m[y][x];
+            m[y].muladd(m[x], -freq);
+            r[y].muladd(r[x], -freq);
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i == j) assert(m[i][j].v == 1);
+            else assert(m[i][j].v == 0);
+        }
+    }
+    return r;
+}
