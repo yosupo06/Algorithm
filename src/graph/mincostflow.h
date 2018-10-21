@@ -1,11 +1,11 @@
 /*
 struct E {
-    int to, cap, dist, rev;
+    int to, rev, cap, dist;
 };
 VV<E> g;
 auto add_edge = [&](int from, int to, int cap, int dist) {
-    g[from].push_back(E{to, cap, dist, int(g[to].size())});
-    g[to].push_back(E{from, 0, -dist, int(g[from].size())-1});
+    g[from].push_back(E{to, int(g[to].size()), cap, dist});
+    g[to].push_back(E{from, int(g[from].size())-1, 0, -dist});
 };
 
 auto res = min_cost_flow<int, int>(g, s, t, false);
@@ -81,8 +81,7 @@ struct MinCostFlow {
             int to;
             bool operator<(Q r) const { return key > r.key; }
         };
-        //using Q = pair<D, int>;
-        priority_queue<Q> que;//, vector<Q>, greater<Q>> que;
+        priority_queue<Q> que;
         dist[s] = 0;
         que.push(Q{D(0), s});
         V<char> vis(n);
