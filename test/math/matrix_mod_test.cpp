@@ -18,6 +18,14 @@ struct MatrixModTester : public MatrixModTesterBase {
         }
         return calc_rank(mat);
     }
+    long long det(VV<ll> _mat) final {
+        V<Vec<Mint>> mat;
+        for (auto v: _mat) {
+            mat.push_back({});
+            for (auto d: v) mat.back().push_back(d);
+        }
+        return calc_det(mat).v;
+    }
     V<ll> linear_equation(VV<ll> _mat, V<ll> _vec) final {
         V<Vec<Mint>> mat;
         for (auto v: _mat) {

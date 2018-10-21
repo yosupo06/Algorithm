@@ -99,6 +99,41 @@ int calc_rank(Mat m) {
     return c;
 }
 
+template<class Mat, class D = typename Mat::value_type::value_type>
+D calc_det(Mat m) {
+    int n = m.size();
+    assert(n == int(m[0].size()));
+    int c = 0;
+    bool flip = false;
+    for (int x = 0; x < n; x++) {
+        int my = -1;
+        for (int y = c; y < n; y++) {
+            if (m[y][x]) {
+                my = y;
+                break;
+            }
+        }
+        if (my == -1) return D(0);
+        if (c != my) {
+            swap(m[c], m[my]);
+            if ((c - my) % 2) flip = !flip;
+        }
+        for (int y = 0; y < n; y++) {
+            if (c == y) continue;
+            if (!m[y][x]) continue;
+            auto freq = m[y][x] / m[c][x];
+            m[y].muladd(m[c], -freq);
+        }
+        c++;
+        if (c == n) break;
+    }
+    D det = D(1);
+    for (int i = 0; i < n; i++) {
+        det *= m[i][i];
+    }
+    return det;
+}
+
 template<class Mat, class Vec>
 Vec solve_linear(Mat m, Vec r) {
     int h = m.size(), w = m[0].size();
