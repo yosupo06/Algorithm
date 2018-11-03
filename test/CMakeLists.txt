@@ -72,10 +72,6 @@ add_executable(SCCTest graph/scc_test.cpp)
 target_link_libraries(SCCTest gtest gtest_main)
 gtest_discover_tests(SCCTest)
 
-add_executable(SCCOldTest graph/scc_old_test.cpp)
-target_link_libraries(SCCOldTest gtest gtest_main)
-gtest_add_tests(TARGET SCCOldTest)
-
 add_executable(TWOSATTest graph/twosat_test.cpp)
 target_link_libraries(TWOSATTest gtest gtest_main)
 gtest_add_tests(TARGET TWOSATTest)
