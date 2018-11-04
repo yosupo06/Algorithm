@@ -40,7 +40,7 @@ bool is_prime(ll n) {
     ll d = n - 1;
     while (d % 2 == 0) d /= 2;
     // Michal Forisek, Jakub Jancina, Fast Primality Testing for Integers That Fit into a Machine Word
-    V<ll> alist{2, 325, 9375, 28178, 450775, 9780504, 1795265022LL};  // n < 2^64
+    V<ll> alist{2, 325, 9375, 28178, 450775, 9780504, 1795265022};  // n < 2^64
     for (ll a : alist) {
         if (n <= a) break;
         ll t = d;

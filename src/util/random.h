@@ -12,8 +12,10 @@ double rand_double(double l, double r) { //[l, r]
     return D(l, r)(gen);
 }
 
-template<class URNG>
-ll rand_int_log(ll l, ll r, URNG &gen) {
+ll rand_int_log(ll l, ll r) {
+    using D = uniform_real_distribution<double>;
+    static random_device rd;
+    static mt19937 gen(rd());
     assert(0 <= l);
     long double a = log1p(l);
     long double b = log1p(r);

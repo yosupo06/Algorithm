@@ -66,6 +66,10 @@ add_executable(MatMod2Test math/matrix_mod2_test.cpp)
 target_link_libraries(MatMod2Test gtest gtest_main)
 gtest_discover_tests(MatMod2Test)
 
+add_executable(PolyTest math/poly_test.cpp)
+target_link_libraries(PolyTest gtest gtest_main)
+gtest_discover_tests(PolyTest)
+
 # Graph
 
 add_executable(SCCTest graph/scc_test.cpp)

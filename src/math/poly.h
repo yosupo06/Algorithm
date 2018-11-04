@@ -112,8 +112,8 @@ template<class D>
 Poly<D> nth_mod(ll n, const Poly<D> &mod) {
     int B = mod.size() * 2 - 1;
     Poly<D> mod_inv = mod.inv(B);
-    Poly<D> p = V<D>{Mint(1)};
-    int m = (!n) ? -1 : bsr(n);
+    Poly<D> p = V<D>{D(1)};
+    int m = (!n) ? -1 : bsr(ull(n));
     for (int i = m; i >= 0; i--) {
         if (n & (1LL<<i)) {
             // += 1
@@ -171,7 +171,7 @@ V<Mint> randV(int N) {
 }
 
 template<class Mint>
-Mint det(const V<Mint> &diag, const V<P> &edges) {
+Mint det(const V<Mint> &diag, const V<pair<int, int>> &edges) {
     int N = int(diag.size());
     if (N == 0) return 1;
     V<Mint> c = randV<Mint>(N), l = randV<Mint>(N), r = randV<Mint>(N);

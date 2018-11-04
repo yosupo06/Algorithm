@@ -4,20 +4,21 @@ struct SCC {
 };
 
 template<class E>
-struct SCC_EXEC : SCC {
+struct SCCExec : SCC {
+    int n;
     const VV<E>& g;
     int tm = 0;
-    V<bool> inS;
+    V<bool> flag;
     V<int> low, ord, st;
     void dfs(int v) {
         low[v] = ord[v] = tm++;
         st.push_back(v);
-        inS[v] = true;
+        flag[v] = true;
         for (auto e: g[v]) {
             if (ord[e.to] == -1) {
                 dfs(e.to);
                 low[v] = min(low[v], low[e.to]);
-            } else if (inS[e.to]) {
+            } else if (flag[e.to]) {
                 low[v] = min(low[v], ord[e.to]);
             }
         }
@@ -28,20 +29,17 @@ struct SCC_EXEC : SCC {
                 gr.push_back(u);
                 if (u == v) break;
             }
-            for (int x: gr) inS[x] = false;
+            for (int x: gr) flag[x] = false;
             groups.push_back(gr);
         }
     }
-    SCC_EXEC(const VV<E>& _g) : g(_g) {
-        int n = int(g.size());
-        inS = V<bool>(n);
+    SCCExec(const VV<E>& _g) : n(int(_g.size())), g(_g),
+                                flag(n), low(n), ord(n, -1) {
         id = V<int>(n);
-        low = V<int>(n);
-        ord = V<int>(n, -1);
         for (int i = 0; i < n; i++) {
             if (ord[i] == -1) dfs(i);
         }
-        reverse(begin(groups), end(groups));
+        reverse(groups.begin(), groups.end());
         for (int i = 0; i < int(groups.size()); i++) {
             for (int x: groups[i]) {
                 id[x] = i;
@@ -50,4 +48,4 @@ struct SCC_EXEC : SCC {
     }
 };
 
-template<class E> SCC get_scc(const VV<E>& g) { return SCC_EXEC<E>(g); }
+template<class E> SCC get_scc(const VV<E>& g) { return SCCExec<E>(g); }
