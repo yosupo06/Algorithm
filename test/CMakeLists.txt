@@ -66,11 +66,15 @@ add_executable(MatMod2Test math/matrix_mod2_test.cpp)
 target_link_libraries(MatMod2Test gtest gtest_main)
 gtest_discover_tests(MatMod2Test)
 
+add_executable(PolyTest math/poly_test.cpp)
+target_link_libraries(PolyTest gtest gtest_main)
+gtest_discover_tests(PolyTest)
+
 # Graph
 
 add_executable(SCCTest graph/scc_test.cpp)
 target_link_libraries(SCCTest gtest gtest_main)
-gtest_add_tests(TARGET SCCTest)
+gtest_discover_tests(SCCTest)
 
 add_executable(TWOSATTest graph/twosat_test.cpp)
 target_link_libraries(TWOSATTest gtest gtest_main)
