@@ -1,7 +1,7 @@
-struct BitVector {
+struct BitVec {
     size_t n;
     V<ull> d;
-    BitVector(size_t _n = 0) : n(_n), d((n+63)/64) {}
+    BitVec(size_t _n = 0) : n(_n), d((n+63)/64) {}
     size_t size() const { return n; }
     bool operator[](size_t i) const { return (d[i/64] >> (i%64)) & 1; }
     void set(size_t i, bool f) {

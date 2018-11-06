@@ -5,13 +5,14 @@ using namespace algotest;
 
 #include "base.h"
 #include "math/modint.h"
+#include "datastructure/bitvector.h"
 #include "math/matrix.h"
 
 
 struct MatMod2MintTester : public MatrixMod2TesterBase {
     using Mint = ModInt<2>;
     int rank(VV<int> _mat) final {
-        V<Vec<Mint>> mat;
+        Mat<Mint> mat;
         for (auto v: _mat) {
             mat.push_back({});
             for (auto d: v) mat.back().push_back(d);
@@ -19,12 +20,12 @@ struct MatMod2MintTester : public MatrixMod2TesterBase {
         return calc_rank(mat);
     }
     V<int> linear_equation(VV<int> _mat, V<int> _vec) final {
-        V<Vec<Mint>> mat;
+        Mat<Mint> mat;
         for (auto v: _mat) {
             mat.push_back({});
             for (auto d: v) mat.back().push_back(d);
         }
-        Vec<Mint> vec;
+        V<Mint> vec;
         for (auto d: _vec) vec.push_back(d);
         auto res = solve_linear(mat, vec);
         V<int> _res;

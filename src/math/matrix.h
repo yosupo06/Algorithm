@@ -1,227 +1,3 @@
-// Matrix type = VV<T>, Vector type = V<T>
-
-struct BitVec {
-    using value_type = uint;
-    int n;
-    V<ull> d;
-    BitVec(int _n = 0) : n(_n), d((n + 63) / 64) {}
-    size_t size() const { return n; }
-    uint operator[](size_t i) const { return (d[i / 64] >> (i % 64)) & 1; }
-    void set(size_t i, uint f) {
-        if (f & 1)
-            d[i / 64] |= (1ULL << (i % 64));
-        else
-            d[i / 64] &= ~(1ULL << (i % 64));
-    }
-    void push_back(uint f) {
-        assert(f <= 1);
-        if (n % 64 == 0) d.push_back(0);
-        set(n, f);
-        n++;
-    }
-    template <class OP> BitVec& op1(OP op) {
-        int sz = int(d.size());
-        for (int i = 0; i < sz; i++) d[i] = op(d[i]);
-        return *this;
-    }
-
-    template <class OP> BitVec& op2(const BitVec& r, OP op) {
-        assert(n == r.n);
-        int sz = int(d.size());
-        for (int i = 0; i < sz; i++) d[i] = op(d[i], r.d[i]);
-        return *this;
-    }
-    BitVec& operator+=(const BitVec& r) { return op2(r, bit_xor<ull>()); }
-    BitVec& operator-=(const BitVec& r) { return op2(r, bit_xor<ull>()); }
-
-    BitVec& muladd(const BitVec& a, uint b) {
-        if (b & 1) *this += a;
-        return *this;
-    }
-    void swap_elms(int a, int b) {
-        uint f = (*this)[a];
-        set(a, (*this)[b]);
-        set(b, f);
-    }
-
-    BitVec operator+(const BitVec& r) const { return BitVec(*this) += r; }
-    BitVec operator-(const BitVec& r) const { return BitVec(*this) -= r; }
-};
-
-template <class T> struct Vec : V<T> {
-    using V<T>::V;
-    using V<T>::size;
-    void set(int i, T x) { (*this)[i] = x; }
-    template <class OP> Vec& op1(OP op) {
-        int n = int(size());
-        for (int i = 0; i < n; i++) (*this)[i] = op((*this)[i]);
-        return *this;
-    }
-
-    template <class OP> Vec& op2(const Vec& r, OP op) {
-        assert(size() == r.size());
-        int n = int(size());
-        for (int i = 0; i < n; i++) (*this)[i] = op((*this)[i], r[i]);
-        return *this;
-    }
-    Vec& operator+=(const Vec& r) { return op2(r, plus<T>()); }
-    Vec& operator-=(const Vec& r) { return op2(r, minus<T>()); }
-    Vec& operator*=(const T& r) {
-        return op1([&](T l) { return l * r; });
-    }
-
-    Vec& muladd(const Vec& a, const T& b) {
-        return op2(a, [&](T x, T y) { return x + y * b; });
-    }
-    void swap_elms(int a, int b) { swap((*this)[a], (*this)[b]); }
-    Vec operator+(const Vec& r) const { return Vec(*this) += r; }
-    Vec operator-(const Vec& r) const { return Vec(*this) -= r; }
-    Vec operator*(const T& r) const { return Vec(*this) *= r; }
-};
-
-template <class Mat> int calc_rank(Mat m) {
-    int h = m.size(), w = m[0].size();
-    int c = 0;
-    for (int x = 0; x < w; x++) {
-        int my = -1;
-        for (int y = c; y < h; y++) {
-            if (m[y][x]) {
-                my = y;
-                break;
-            }
-        }
-        if (my == -1) continue;
-        if (c != my) swap(m[c], m[my]);
-        for (int y = 0; y < h; y++) {
-            if (c == y) continue;
-            if (!m[y][x]) continue;
-            auto freq = m[y][x] / m[c][x];
-            m[y].muladd(m[c], -freq);
-        }
-        c++;
-        if (c == h) break;
-    }
-    return c;
-}
-
-template <class Mat, class D = typename Mat::value_type::value_type>
-D calc_det(Mat m) {
-    int n = m.size();
-    assert(n == int(m[0].size()));
-    int c = 0;
-    bool flip = false;
-    for (int x = 0; x < n; x++) {
-        int my = -1;
-        for (int y = c; y < n; y++) {
-            if (m[y][x]) {
-                my = y;
-                break;
-            }
-        }
-        if (my == -1) return D(0);
-        if (c != my) {
-            swap(m[c], m[my]);
-            if ((c - my) % 2) flip = !flip;
-        }
-        for (int y = 0; y < n; y++) {
-            if (c == y) continue;
-            if (!m[y][x]) continue;
-            auto freq = m[y][x] / m[c][x];
-            m[y].muladd(m[c], -freq);
-        }
-        c++;
-        if (c == n) break;
-    }
-    D det = D(1);
-    for (int i = 0; i < n; i++) {
-        det *= m[i][i];
-    }
-    return det;
-}
-
-template <class Mat, class Vec> Vec solve_linear(Mat m, Vec r) {
-    int h = m.size(), w = m[0].size();
-    int c = 0;
-    V<int> idxs;
-    for (int x = 0; x < w; x++) {
-        int my = -1;
-        for (int y = c; y < h; y++) {
-            if (m[y][x]) {
-                my = y;
-                break;
-            }
-        }
-        if (my == -1) continue;
-        idxs.push_back(x);
-        if (c != my) swap(m[c], m[my]);
-        r.swap_elms(c, my);
-        for (int y = 0; y < h; y++) {
-            if (c == y) continue;
-            if (!m[y][x]) continue;
-            auto freq = m[y][x] / m[c][x];
-            m[y].muladd(m[c], -freq);
-            r.set(y, r[y] - freq * r[c]);
-        }
-        c++;
-        if (c == h) break;
-    }
-    Vec v(w);
-    for (int y = c - 1; y >= 0; y--) {
-        int f = idxs[y];
-        assert(0 <= f && f < w);
-        v.set(f, r[y]);
-        for (int x = f + 1; x < w; x++) {
-            v.set(f, v[f] - m[y][x] * v[x]);
-        }
-        v.set(f, v[f] / m[y][f]);
-    }
-    return v;
-}
-
-template <class Mat> Mat inverse(Mat m) {
-    int n = m.size();
-    assert(n == int(m[0].size()));
-    Mat r(n, typename Mat::value_type(n));
-    for (int i = 0; i < n; i++) r[i][i] = 1;
-
-    for (int x = 0; x < n; x++) {
-        int my = -1;
-        for (int y = x; y < n; y++) {
-            if (m[y][x]) {
-                my = y;
-                break;
-            }
-        }
-        if (my == -1) continue;
-        if (x != my) {
-            swap(m[x], m[my]);
-            swap(r[x], r[my]);
-        }
-        auto freq = m[x][x];
-        for (int j = 0; j < n; j++) {
-            m[x][j] /= freq;
-            r[x][j] /= freq;
-        }
-        for (int y = 0; y < n; y++) {
-            if (x == y) continue;
-            if (!m[y][x]) continue;
-            auto freq = m[y][x];
-            m[y].muladd(m[x], -freq);
-            r[y].muladd(r[x], -freq);
-        }
-    }
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (i == j)
-                assert(m[i][j].v == 1);
-            else
-                assert(m[i][j].v == 0);
-        }
-    }
-    return r;
-}
-
 template <class D> struct Mat : VV<D> {
     using VV<D>::VV;
     using VV<D>::size;
@@ -257,6 +33,203 @@ template <class D> V<D> solve_linear(Mat<D> a, V<D> b, D eps) {
             v[f] -= a[y][x] * v[x];
         }
         v[f] /= a[y][f];
+    }
+    return v;
+}
+
+template <class Mint> V<Mint> solve_linear(Mat<Mint> a, V<Mint> b) {
+    int h = a.h(), w = a.w();
+    int r = 0;
+    V<int> idxs;
+    for (int x = 0; x < w; x++) {
+        int my = -1;
+        for (int y = r; y < h; y++) {
+            if (a[y][x]) {
+                my = y;
+                break;
+            }
+        }
+        if (my == -1) continue;
+        if (r != my) swap(a[r], a[my]);
+        swap(b[r], b[my]);
+        for (int y = r + 1; y < h; y++) {
+            if (!a[y][x]) continue;
+            auto freq = a[y][x] / a[r][x];
+            for (int k = x; k < w; k++) a[y][k] -= freq * a[r][k];
+            b[y] -= freq * b[r];
+        }
+        r++;
+        idxs.push_back(x);
+        if (r == h) break;
+    }
+    V<Mint> v(w);
+    for (int y = r - 1; y >= 0; y--) {
+        int f = idxs[y];
+        v[f] = b[y];
+        for (int x = f + 1; x < w; x++) {
+            v[f] -= a[y][x] * v[x];
+        }
+        v[f] /= a[y][f];
+    }
+    return v;
+}
+
+template <class Mint> int calc_rank(Mat<Mint> a) {
+    int h = a.h(), w = a.w();
+    int r = 0;
+    V<int> idxs;
+    for (int x = 0; x < w; x++) {
+        int my = -1;
+        for (int y = r; y < h; y++) {
+            if (a[y][x]) {
+                my = y;
+                break;
+            }
+        }
+        if (my == -1) continue;
+        if (r != my) swap(a[r], a[my]);
+        for (int y = r + 1; y < h; y++) {
+            if (!a[y][x]) continue;
+            auto freq = a[y][x] / a[r][x];
+            for (int k = x; k < w; k++) a[y][k] -= freq * a[r][k];
+        }
+        r++;
+        idxs.push_back(x);
+        if (r == h) break;
+    }
+    return r;
+}
+
+template <class Mint> Mint calc_det(Mat<Mint> a) {
+    assert(a.h() == a.w());
+    int n = a.h();
+
+    bool flip = false;
+    for (int x = 0; x < n; x++) {
+        int my = -1;
+        for (int y = x; y < n; y++) {
+            if (a[y][x]) {
+                my = y;
+                break;
+            }
+        }
+        if (my == -1) return 0;
+        if (x != my) {
+            swap(a[x], a[my]);
+            if ((x - my) % 2) flip = !flip;
+        }
+        for (int y = x + 1; y < n; y++) {
+            if (!a[y][x]) continue;
+            auto freq = a[y][x] / a[x][x];
+            for (int k = x; k < n; k++) a[y][k] -= freq * a[x][k];
+        }
+    }
+    Mint det = (!flip ? 1 : -1);
+    for (int i = 0; i < n; i++) {
+        det *= a[i][i];
+    }
+    return det;
+}
+
+template <class Mint> Mat<Mint> inverse(Mat<Mint> a) {
+    assert(a.h() == a.w());
+    int n = a.h();
+
+    Mat<Mint> b(n, V<Mint>(n));
+    for (int i = 0; i < n; i++) b[i][i] = 1;
+
+    for (int x = 0; x < n; x++) {
+        int my = -1;
+        for (int y = x; y < n; y++) {
+            if (a[y][x]) {
+                my = y;
+                break;
+            }
+        }
+        if (my == -1) return {};
+        if (x != my) {
+            swap(a[x], a[my]);
+            swap(b[x], b[my]);
+        }
+        auto freq = a[x][x];
+        for (int j = 0; j < n; j++) {
+            a[x][j] /= freq;
+            b[x][j] /= freq;
+        }
+        for (int y = 0; y < n; y++) {
+            if (x == y) continue;
+            if (!a[y][x]) continue;
+            auto freq = a[y][x];
+            for (int k = 0; k < n; k++) a[y][k] -= freq * a[x][k];
+            for (int k = 0; k < n; k++) b[y][k] -= freq * b[x][k];
+        }
+    }
+    return b;
+}
+
+struct Mat2 : V<BitVec> {
+    using V<BitVec>::V;
+    using V<BitVec>::size;
+    int h() const { return int(size()); }
+    int w() const { return int((*this)[0].size()); }
+};
+
+int calc_rank(Mat2 a) {
+    int h = a.h(), w = a.w();
+    int r = 0;
+    V<int> idxs;
+    for (int x = 0; x < w; x++) {
+        int my = -1;
+        for (int y = r; y < h; y++) {
+            if (a[y][x]) {
+                my = y;
+                break;
+            }
+        }
+        if (my == -1) continue;
+        if (r != my) swap(a[r], a[my]);
+        for (int y = r + 1; y < h; y++) {
+            if (!a[y][x]) continue;
+            a[y] ^= a[r];
+        }
+        r++;
+        idxs.push_back(x);
+        if (r == h) break;
+    }
+    return r;
+}
+
+BitVec solve_linear(Mat2 a, BitVec b) {
+    int h = a.h(), w = a.w();
+    int r = 0;
+    V<int> idxs;
+    for (int x = 0; x < w; x++) {
+        int my = -1;
+        for (int y = r; y < h; y++) {
+            if (a[y][x]) {
+                my = y;
+                break;
+            }
+        }
+        if (my == -1) continue;
+        if (r != my) swap(a[r], a[my]);
+        b.swap_elms(r, my);
+        for (int y = r + 1; y < h; y++) {
+            if (!a[y][x]) continue;
+            a[y] ^= a[r];
+            b.set(y, b[y] ^ b[r]);
+        }
+        r++;
+        idxs.push_back(x);
+        if (r == h) break;
+    }
+    BitVec v(w);
+    for (int y = r - 1; y >= 0; y--) {
+        int f = idxs[y];
+        v.set(f, b[y]);
+        for (int x = f + 1; x < w; x++) {
+            v.set(f, v[f] ^ (a[y][x] && v[x]));
+        }
     }
     return v;
 }
