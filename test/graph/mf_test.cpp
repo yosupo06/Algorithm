@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "base.h"
-#include "random.h"
+#include "util/random.h"
 #include "graph/maxflow.h"
 
 TEST(MFTest, ManyRandom) {
