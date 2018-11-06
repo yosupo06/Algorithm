@@ -4,12 +4,14 @@ struct BitVec {
     using value_type = uint;
     int n;
     V<ull> d;
-    BitVec(int _n = 0) : n(_n), d((n+63)/64) {}
+    BitVec(int _n = 0) : n(_n), d((n + 63) / 64) {}
     size_t size() const { return n; }
-    uint operator[](size_t i) const { return (d[i/64] >> (i%64)) & 1; }
+    uint operator[](size_t i) const { return (d[i / 64] >> (i % 64)) & 1; }
     void set(size_t i, uint f) {
-        if (f & 1) d[i/64] |= (1ULL << (i%64));
-        else d[i/64] &= ~(1ULL << (i%64));
+        if (f & 1)
+            d[i / 64] |= (1ULL << (i % 64));
+        else
+            d[i / 64] &= ~(1ULL << (i % 64));
     }
     void push_back(uint f) {
         assert(f <= 1);
@@ -17,15 +19,13 @@ struct BitVec {
         set(n, f);
         n++;
     }
-    template<class OP>
-    BitVec& op1(OP op) {
+    template <class OP> BitVec& op1(OP op) {
         int sz = int(d.size());
         for (int i = 0; i < sz; i++) d[i] = op(d[i]);
         return *this;
     }
 
-    template<class OP>
-    BitVec& op2(const BitVec& r, OP op) {
+    template <class OP> BitVec& op2(const BitVec& r, OP op) {
         assert(n == r.n);
         int sz = int(d.size());
         for (int i = 0; i < sz; i++) d[i] = op(d[i], r.d[i]);
@@ -34,27 +34,31 @@ struct BitVec {
     BitVec& operator+=(const BitVec& r) { return op2(r, bit_xor<ull>()); }
     BitVec& operator-=(const BitVec& r) { return op2(r, bit_xor<ull>()); }
 
-    BitVec& muladd(const BitVec& a, uint b) { if (b & 1) *this += a; return *this; }
-    void swap_elms(int a, int b) { uint f = (*this)[a]; set(a, (*this)[b]); set(b, f); }
+    BitVec& muladd(const BitVec& a, uint b) {
+        if (b & 1) *this += a;
+        return *this;
+    }
+    void swap_elms(int a, int b) {
+        uint f = (*this)[a];
+        set(a, (*this)[b]);
+        set(b, f);
+    }
 
     BitVec operator+(const BitVec& r) const { return BitVec(*this) += r; }
     BitVec operator-(const BitVec& r) const { return BitVec(*this) -= r; }
 };
 
-template<class T>
-struct Vec : V<T> {
+template <class T> struct Vec : V<T> {
     using V<T>::V;
     using V<T>::size;
     void set(int i, T x) { (*this)[i] = x; }
-    template<class OP>
-    Vec& op1(OP op) {
+    template <class OP> Vec& op1(OP op) {
         int n = int(size());
         for (int i = 0; i < n; i++) (*this)[i] = op((*this)[i]);
         return *this;
     }
 
-    template<class OP>
-    Vec& op2(const Vec& r, OP op) {
+    template <class OP> Vec& op2(const Vec& r, OP op) {
         assert(size() == r.size());
         int n = int(size());
         for (int i = 0; i < n; i++) (*this)[i] = op((*this)[i], r[i]);
@@ -62,10 +66,12 @@ struct Vec : V<T> {
     }
     Vec& operator+=(const Vec& r) { return op2(r, plus<T>()); }
     Vec& operator-=(const Vec& r) { return op2(r, minus<T>()); }
-    Vec& operator*=(const T& r) { return op1([&](T l) { return l*r; }); }
+    Vec& operator*=(const T& r) {
+        return op1([&](T l) { return l * r; });
+    }
 
     Vec& muladd(const Vec& a, const T& b) {
-        return op2(a, [&](T x, T y){ return x+y*b; });
+        return op2(a, [&](T x, T y) { return x + y * b; });
     }
     void swap_elms(int a, int b) { swap((*this)[a], (*this)[b]); }
     Vec operator+(const Vec& r) const { return Vec(*this) += r; }
@@ -73,8 +79,7 @@ struct Vec : V<T> {
     Vec operator*(const T& r) const { return Vec(*this) *= r; }
 };
 
-template<class Mat>
-int calc_rank(Mat m) {
+template <class Mat> int calc_rank(Mat m) {
     int h = m.size(), w = m[0].size();
     int c = 0;
     for (int x = 0; x < w; x++) {
@@ -99,7 +104,7 @@ int calc_rank(Mat m) {
     return c;
 }
 
-template<class Mat, class D = typename Mat::value_type::value_type>
+template <class Mat, class D = typename Mat::value_type::value_type>
 D calc_det(Mat m) {
     int n = m.size();
     assert(n == int(m[0].size()));
@@ -134,8 +139,7 @@ D calc_det(Mat m) {
     return det;
 }
 
-template<class Mat, class Vec>
-Vec solve_linear(Mat m, Vec r) {
+template <class Mat, class Vec> Vec solve_linear(Mat m, Vec r) {
     int h = m.size(), w = m[0].size();
     int c = 0;
     V<int> idxs;
@@ -162,11 +166,11 @@ Vec solve_linear(Mat m, Vec r) {
         if (c == h) break;
     }
     Vec v(w);
-    for (int y = 0; y < c; y++) {
+    for (int y = c - 1; y >= 0; y--) {
         int f = idxs[y];
         assert(0 <= f && f < w);
         v.set(f, r[y]);
-        for (int x = f+1; x < w; x++) {
+        for (int x = f + 1; x < w; x++) {
             v.set(f, v[f] - m[y][x] * v[x]);
         }
         v.set(f, v[f] / m[y][f]);
@@ -174,8 +178,7 @@ Vec solve_linear(Mat m, Vec r) {
     return v;
 }
 
-template<class Mat>
-Mat inverse(Mat m) {
+template <class Mat> Mat inverse(Mat m) {
     int n = m.size();
     assert(n == int(m[0].size()));
     Mat r(n, typename Mat::value_type(n));
@@ -210,9 +213,50 @@ Mat inverse(Mat m) {
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            if (i == j) assert(m[i][j].v == 1);
-            else assert(m[i][j].v == 0);
+            if (i == j)
+                assert(m[i][j].v == 1);
+            else
+                assert(m[i][j].v == 0);
         }
     }
     return r;
+}
+
+template <class D> struct Mat : VV<D> {
+    using VV<D>::VV;
+    using VV<D>::size;
+    int h() const { return int(size()); }
+    int w() const { return int((*this)[0].size()); }
+};
+
+template <class D> V<D> solve_linear(Mat<D> a, V<D> b, D eps) {
+    int h = a.h(), w = a.w();
+    int r = 0;
+    V<int> idxs;
+    for (int x = 0; x < w; x++) {
+        for (int y = r + 1; y < h; y++) {
+            D d = hypot(a[r][x], a[y][x]);
+            if (abs(d) <= eps) continue;
+            D c = a[r][x] / d, s = a[y][x] / d;
+            auto rot = [&](D& x, D& y) {
+                tie(x, y) = make_pair(c * x + s * y, c * y - s * x);
+            };
+            rot(b[r], b[y]);
+            for (int k = x; k < w; k++) rot(a[r][k], a[y][k]);
+        }
+        if (a[r][x] <= eps) continue;
+        r++;
+        idxs.push_back(x);
+        if (r == h) break;
+    }
+    V<D> v(w);
+    for (int y = r - 1; y >= 0; y--) {
+        int f = idxs[y];
+        v[f] = b[y];
+        for (int x = f + 1; x < w; x++) {
+            v[f] -= a[y][x] * v[x];
+        }
+        v[f] /= a[y][f];
+    }
+    return v;
 }

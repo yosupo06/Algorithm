@@ -8,15 +8,15 @@ struct Poly {
     D freq(int p) const { return (p < size()) ? v[p] : D(0); }
 
     Poly operator+(const Poly &r) const {
-        int N = size(), M = r.size();
-        V<D> res(max(N, M));
-        for (int i = 0; i < max(N, M); i++) res[i] = freq(i)+r.freq(i);
+        auto n = max(size(), r.size());
+        V<D> res(n);
+        for (int i = 0; i < n; i++) res[i] = freq(i)+r.freq(i);
         return Poly(res);
     }
     Poly operator-(const Poly &r) const {
-        int N = size(), M = r.size();
-        V<D> res(max(N, M));
-        for (int i = 0; i < max(N, M); i++) res[i] = freq(i)-r.freq(i);
+        int n = max(size(), r.size());
+        V<D> res(n);
+        for (int i = 0; i < n; i++) res[i] = freq(i)-r.freq(i);
         return Poly(res);
     }
     Poly operator*(const Poly &r) const {
