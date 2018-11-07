@@ -58,7 +58,6 @@ struct BitVec {
         return *this;
     }
     BitVec& operator>>=(const size_t& s) {
-        // don't work
         auto block = s / B, rem = s % B;
         if (d.size() <= block) {
             reset();

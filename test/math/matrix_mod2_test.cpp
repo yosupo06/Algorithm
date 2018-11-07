@@ -35,19 +35,18 @@ struct MatMod2MintTester : public MatrixMod2TesterBase {
 };
 
 struct MatMod2BitVecTester : public MatrixMod2TesterBase {
-
     int rank(VV<int> _mat) final {
-        V<BitVec> mat;
+        Mat2 mat;
         for (auto v: _mat) {
-            mat.push_back({});
+            mat.push_back(BitVec());
             for (auto d: v) mat.back().push_back(d);
         }
         return calc_rank(mat);
     }
     V<int> linear_equation(VV<int> _mat, V<int> _vec) final {
-        V<BitVec> mat;
+        Mat2 mat;
         for (auto v: _mat) {
-            mat.push_back({});
+            mat.push_back(BitVec());
             for (auto d: v) mat.back().push_back(d);
         }
         BitVec vec;
