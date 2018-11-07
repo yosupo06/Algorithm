@@ -48,15 +48,17 @@ struct BitVec {
             if (rem == 0)
                 d[i] = d[i - block];
             else {
-                d[i] = (d[i - block] << rem) | ((d[i - block - 1]) >> (B - rem));
+                d[i] =
+                    (d[i - block] << rem) | ((d[i - block - 1]) >> (B - rem));
             }
         }
         d[block] = d[0] << rem;
-        fill(d.begin(), d.begin() + block, 0);
+        if (n % B) d.back() &= ull(-1) >> (B - n % B);
+        fill(d.begin(), d.begin() + block, 0ULL);
         return *this;
     }
     BitVec& operator>>=(const size_t& s) {
-        //don't work
+        // don't work
         auto block = s / B, rem = s % B;
         if (d.size() <= block) {
             reset();
@@ -66,14 +68,11 @@ struct BitVec {
             if (rem == 0)
                 d[i] = d[i + block];
             else {
-                ull u = (d[i + block] << rem);
-                if (i + block + 1 < d.size())
-                    u |= (d[i + block + 1]) >> (B - rem);
-                d[i] = u;
+                d[i] = (d[i + block + 1]) << (B - rem) | (d[i + block] >> rem);
             }
         }
-        d[d.size() - block - 1] = (d[d.size() - 1] << rem);
-        for (size_t i = d.size() - block; i < d.size(); i++) d[i] = 0;
+        d[d.size() - block - 1] = d.back() << rem;
+        fill(d.begin() + d.size() - block, d.end(), 0ULL);
         return *this;
     }
     BitVec operator&(const BitVec& r) const { return BitVec(*this) &= r; }
