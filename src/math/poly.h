@@ -2,7 +2,7 @@ template<class D>
 struct Poly {
     V<D> v;
     int size() const {return int(v.size());}
-    Poly(int N = 0) : v(V<D>(N)) {}
+    Poly() {}
     Poly(const V<D> &v) : v(v) {shrink();}
     Poly& shrink() {while (v.size() && !v.back()) v.pop_back(); return *this;}
     D freq(int p) const { return (p < size()) ? v[p] : D(0); }
@@ -20,11 +20,8 @@ struct Poly {
         return Poly(res);
     }
     Poly operator*(const Poly &r) const {
-        int N = size(), M = r.size();
-        if (min(N, M) == 0) return Poly();
-        assert(N+M-1 >= 0);
-        V<D> res = multiply(v, r.v);
-        return Poly(res);
+        if (size() == 0 || r.size() == 0) return Poly();
+        return Poly(multiply(v, r.v));
     }
     Poly operator*(const D &r) const {
         V<D> res(size());
@@ -36,26 +33,20 @@ struct Poly {
     Poly& operator*=(const Poly &r) {return *this = *this*r;}
     Poly& operator*=(const D &r) {return *this = *this*r;}
 
-    Poly operator<<(const int n) const {
-        assert(n >= 0);
+    Poly operator<<(size_t n) const {
         V<D> res(size()+n);
-        for (int i = 0; i < size(); i++) {
-            res[i+n] = v[i];
-        }
+        for (size_t i = 0; i < size(); i++) res[i+n] = v[i];
         return Poly(res);
     }
-    Poly operator>>(const int n) const {
-        assert(n >= 0);
+    Poly operator>>(size_t n) const {
         if (size() <= n) return Poly();
         V<D> res(size()-n);
-        for (int i = n; i < size(); i++) {
-            res[i-n] = v[i];
-        }
+        for (size_t i = 0; i < size()-n; i++) res[i] = v[i+n];
         return Poly(res);
     }
 
     // x % y
-    Poly rem(const Poly &y) const {
+    Poly operator%(const Poly &y) const {
         return *this - y * div(y);
     }
     Poly rem_inv(const Poly &y, const Poly &ny, int B) const {
@@ -170,37 +161,42 @@ V<Mint> randV(int N) {
     return res;
 }
 
-template<class Mint>
-Mint det(const V<Mint> &diag, const V<pair<int, int>> &edges) {
-    int N = int(diag.size());
-    if (N == 0) return 1;
-    V<Mint> c = randV<Mint>(N), l = randV<Mint>(N), r = randV<Mint>(N);
+template<class Mint, class E>
+Mint sparse_det(const VV<E>& g){
+    int n = int(g.size());
+    if (n == 0) return 1;
+    auto rand_v = [&]() {
+        V<Mint> res(n);
+        for (int i = 0; i < n; i++) {
+            res[i] = Mint(rand_int(1, Mint(-1).v));
+        }
+        return res;
+    };
+    V<Mint> c = rand_v(), l = rand_v(), r = rand_v();
     // l * mat * r
-    V<Mint> buf(2*N), tmp(N);
-    for (int fe = 0; fe < 2*N; fe++) {
-        for (int i = 0; i < N; i++) {
+    V<Mint> buf(2*n), tmp(n);
+    for (int fe = 0; fe < 2*n; fe++) {
+        for (int i = 0; i < n; i++) {
             buf[fe] += l[i]*r[i];
         }
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < n; i++) {
             r[i] *= c[i];
         }
-        for (int i = 0; i < N; i++) {
-            tmp[i] = diag[i] * r[i];
-        }
-        for (auto e: edges) {
-            tmp[e.first] -= r[e.second];
-            tmp[e.second] -= r[e.first];
+        for (int i = 0; i < n; i++) {
+            for (auto e: g[i]) {
+                tmp[i] += r[e.to] * e.f;
+            }
         }
         r = tmp;
     }
     auto u = berlekamp_massey(buf);
+    if (u.size() != n+1) return sparse_det<Mint>(g);
     auto acdet = u.freq(0) * Mint(-1);
     if (!acdet) return 0;
-    if (u.size() != N+1) return det(diag, edges);
     Mint cdet = 1;
-    for (int i = 0; i < N; i++) {
+    for (int i = 0; i < n; i++) {
         cdet *= c[i];
     }
-    if (N % 2) acdet *= Mint(-1);
+    if (n % 2) acdet *= Mint(-1);
     return acdet / cdet;
 }

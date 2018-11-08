@@ -4,9 +4,12 @@
 using namespace algotest;
 
 #include "base.h"
+#include "bitop.h"
+#include "util/random.h"
 #include "math/modint.h"
 #include "datastructure/bitvector.h"
 #include "math/matrix.h"
+#include "math/poly.h"
 
 using Mint = ModInt<MatrixModTesterBase::kMod>;
 
@@ -56,5 +59,26 @@ struct MatrixModTester : public MatrixModTesterBase {
     }
 };
 
-using MatrixModTypes = ::testing::Types<MatrixModTester>;
-INSTANTIATE_TYPED_TEST_CASE_P(MyMatrixMod, MatrixModTest, MatrixModTypes);
+struct BMDetTester : public MatrixModTesterBase {
+    int rank(VV<ll>) final { return 0; }
+    ll det(VV<ll> mat) final {
+        struct E { int to; Mint f; };
+        int n = int(mat.size());
+        VV<E> edges(n);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                edges[i].push_back(E{j, Mint(mat[i][j])});
+            }
+        }
+        return sparse_det<Mint>(edges).v;
+    }
+    V<ll> linear_equation(VV<ll>, V<ll>) final { return {}; }
+    VV<ll> inverse(VV<ll>) final { return {}; }
+};
+
+
+INSTANTIATE_TYPED_TEST_CASE_P(MatrixMod, MatrixModRankTest, ::testing::Types<MatrixModTester>);
+using MatrixDetTypes = ::testing::Types<MatrixModTester, BMDetTester>;
+INSTANTIATE_TYPED_TEST_CASE_P(MatrixMod, MatrixModDetTest, MatrixDetTypes);
+INSTANTIATE_TYPED_TEST_CASE_P(MatrixMod, MatrixModLinearEquationTest, ::testing::Types<MatrixModTester>);
+INSTANTIATE_TYPED_TEST_CASE_P(MatrixMod, MatrixModInverseTest, ::testing::Types<MatrixModTester>);
