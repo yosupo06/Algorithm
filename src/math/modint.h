@@ -1,10 +1,12 @@
-template<uint MD>
-struct ModInt {
+template <uint MD> struct ModInt {
     using M = ModInt;
     uint v;
     ModInt() : v{0} {}
     ModInt(ll _v) { set_v(_v % MD + MD); }
-    M& set_v(uint _v) { v = (_v < MD) ? _v : _v - MD; return *this; }
+    M& set_v(uint _v) {
+        v = (_v < MD) ? _v : _v - MD;
+        return *this;
+    }
     explicit operator bool() const { return v != 0; }
     M operator-() const { return M(0) - *this; }
     M operator+(const M& r) const { return M().set_v(v + r.v); }
@@ -25,4 +27,5 @@ struct ModInt {
         return r;
     }
     M inv() const { return (*this).pow(MD - 2); }
+    friend ostream& operator<<(ostream& os, const M& r) { return os << r.v; }
 };

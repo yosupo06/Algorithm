@@ -85,18 +85,18 @@ template <class D> struct Poly {
         }
         return d.rev(n + 1 - N);
     }
-};
-template <class D> string to_string(const Poly<D>& p) {
-    if (p.size() == 0) return "0";
-    string s = "";
-    for (int i = 0; i < p.size(); i++) {
-        if (p.v[i]) {
-            s += to_string(p.v[i]) + "x^" + to_string(i);
-            if (i != p.size() - 1) s += "+";
+    friend ostream& operator<<(ostream& os, const Poly& p) {
+        if (p.size() == 0) return os << "0";
+        for (auto i = 0; i < p.size(); i++) {
+            if (p.v[i]) {
+                os << p.v[i] << "x^" << i;
+                if (i != p.size() - 1) os << "+";
+            }
         }
+        return os;
     }
-    return s;
-}
+};
+
 // x^n % mod
 template <class D> Poly<D> nth_mod(ll n, const Poly<D>& mod) {
     int B = mod.size() * 2 - 1;
@@ -115,40 +115,39 @@ template <class D> Poly<D> nth_mod(ll n, const Poly<D>& mod) {
     }
     return p;
 }
-template <class D> Poly<D> berlekamp_massey(const V<D>& s) {
-    int N = int(s.size());
-    V<D> b = {D(-1)}, c = {D(-1)};
-    D y = D(1);
-    for (int ed = 1; ed <= N; ed++) {
-        int L = int(c.size()), M = int(b.size());
-        D x = 0;
-        for (int i = 0; i < L; i++) {
-            x += c[i] * s[ed - L + i];
+template <class Mint> Poly<Mint> berlekamp_massey(const V<Mint>& s) {
+    int n = int(s.size());
+    V<Mint> b = {Mint(-1)}, c = {Mint(-1)};
+    Mint y = Mint(1);
+    for (int ed = 1; ed <= n; ed++) {
+        int l = int(c.size()), m = int(b.size());
+        Mint x = 0;
+        for (int i = 0; i < l; i++) {
+            x += c[i] * s[ed - l + i];
         }
         b.push_back(0);
-        M++;
-        if (!x) {
-            continue;
-        }
-        D freq = x / y;
-        if (L < M) {
+        m++;
+        if (!x) continue;
+        Mint freq = x / y;
+        if (l < m) {
             // use b
             auto tmp = c;
-            c.insert(begin(c), M - L, D(0));
-            for (int i = 0; i < M; i++) {
-                c[M - 1 - i] -= freq * b[M - 1 - i];
+            c.insert(begin(c), m - l, Mint(0));
+            for (int i = 0; i < m; i++) {
+                c[m - 1 - i] -= freq * b[m - 1 - i];
             }
             b = tmp;
             y = x;
         } else {
             // use c
-            for (int i = 0; i < M; i++) {
-                c[L - 1 - i] -= freq * b[M - 1 - i];
+            for (int i = 0; i < m; i++) {
+                c[l - 1 - i] -= freq * b[m - 1 - i];
             }
         }
     }
-    return Poly<D>(c);
+    return Poly<Mint>(c);
 }
+
 template <class Mint, class E> Mint sparse_det(const VV<E>& g) {
     int n = int(g.size());
     if (n == 0) return 1;
