@@ -151,16 +151,6 @@ Poly<D> berlekamp_massey(const V<D> &s) {
     }
     return Poly<D>(c);
 }
-
-template<class Mint>
-V<Mint> randV(int N) {
-    V<Mint> res(N);
-    for (int i = 0; i < N; i++) {
-        res[i] = Mint(rand_int(1, Mint(-1).v));
-    }
-    return res;
-}
-
 template<class Mint, class E>
 Mint sparse_det(const VV<E>& g){
     int n = int(g.size());
@@ -174,7 +164,7 @@ Mint sparse_det(const VV<E>& g){
     };
     V<Mint> c = rand_v(), l = rand_v(), r = rand_v();
     // l * mat * r
-    V<Mint> buf(2*n), tmp(n);
+    V<Mint> buf(2*n);
     for (int fe = 0; fe < 2*n; fe++) {
         for (int i = 0; i < n; i++) {
             buf[fe] += l[i]*r[i];
@@ -182,6 +172,7 @@ Mint sparse_det(const VV<E>& g){
         for (int i = 0; i < n; i++) {
             r[i] *= c[i];
         }
+        V<Mint> tmp(n);
         for (int i = 0; i < n; i++) {
             for (auto e: g[i]) {
                 tmp[i] += r[e.to] * e.f;
