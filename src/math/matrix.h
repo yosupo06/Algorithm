@@ -3,6 +3,30 @@ template <class D> struct Mat : VV<D> {
     using VV<D>::size;
     int h() const { return int(size()); }
     int w() const { return int((*this)[0].size()); }
+    Mat operator*(const Mat& r) const {
+        assert(w() == r.h());
+        Mat res(h(), V<D>(r.w()));
+        for (int i = 0; i < h(); i++) {
+            for (int j = 0; j < r.w(); j++) {
+                for (int k = 0; k < w(); k++) {
+                    res[i][j] += (*this)[i][k] * r[k][j];
+                }
+            }
+        }
+        return res;
+    }
+    Mat& operator*=(const Mat& r) { return *this = *this * r; }
+    Mat pow(ll n) const {
+        assert(h() == w());
+        Mat x = *this, r(h(), V<D>(w()));
+        for (int i = 0; i < h(); i++) r[i][i] = D(1);
+        while (n) {
+            if (n & 1) r *= x;
+            x *= x;
+            n >>= 1;
+        }
+        return r;
+    }
 };
 
 template <class D> V<D> solve_linear(Mat<D> a, V<D> b, D eps) {
