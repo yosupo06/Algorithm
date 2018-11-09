@@ -30,11 +30,11 @@ template <class D> struct Poly {
         for (int i = 0; i < size(); i++) res[i] = v[i] * r;
         return Poly(res);
     }
-    Poly& operator+=(const Poly& r) { return *this = *this + r; }
-    Poly& operator-=(const Poly& r) { return *this = *this - r; }
-    Poly& operator*=(const Poly& r) { return *this = *this * r; }
-    Poly& operator*=(const D& r) { return *this = *this * r; }
-
+    Poly operator/(const Poly& r) const {
+        int n = max(size(), r.size());
+        return div_inv(r.inv(n), n);
+    }
+    Poly operator%(const Poly& r) const { return *this - r * (*this) / r; }
     Poly operator<<(size_t n) const {
         V<D> res(size() + n);
         for (size_t i = 0; i < size(); i++) res[i + n] = v[i];
@@ -46,20 +46,21 @@ template <class D> struct Poly {
         for (size_t i = 0; i < size() - n; i++) res[i] = v[i + n];
         return Poly(res);
     }
+    Poly& operator+=(const Poly& r) { return *this = *this + r; }
+    Poly& operator-=(const Poly& r) { return *this = *this - r; }
+    Poly& operator*=(const Poly& r) { return *this = *this * r; }
+    Poly& operator*=(const D& r) { return *this = *this * r; }
+    Poly& operator/=(const Poly& r) { return *this = *this / r; }
+    Poly& operator%=(const Poly& r) { return *this = *this % r; }
+    Poly& operator<<=(const size_t& n) { return *this = *this << n; }
+    Poly& operator>>=(const size_t& n) { return *this = *this >> n; }
 
-    // x % y
-    Poly operator%(const Poly& y) const { return *this - y * div(y); }
-    Poly rem_inv(const Poly& y, const Poly& ny, int B) const {
-        return *this - y * div_inv(ny, B);
-    }
-    Poly div(const Poly& y) const {
-        int B = max(size(), y.size());
-        return div_inv(y.inv(B), B);
-    }
     Poly div_inv(const Poly& ny, int B) const {
         return (*this * ny) >> (B - 1);
     }
-    // this * this.inv() = x^n + r(x) (size())
+    Poly rem_inv(const Poly& y, const Poly& ny, int B) const {
+        return *this - y * div_inv(ny, B);
+    }
     Poly strip(int n) const {
         V<D> res = v;
         res.resize(min(n, size()));
