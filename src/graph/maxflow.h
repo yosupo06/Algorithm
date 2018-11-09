@@ -1,11 +1,11 @@
 /*
 struct E {
-    int to, cap, rev;
+    int to, rev, cap;
 };
 VV<E> g;
 auto add_edge = [&](int from, int to, int cap) {
-    g[from].push_back(E{to, cap, int(g[to].size())});
-    g[to].push_back(E{from, 0, int(g[from].size())-1});
+    g[from].push_back(E{to, int(g[to].size()), cap});
+    g[to].push_back(E{from, int(g[from].size())-1, 0});
 };
 */
 
@@ -16,7 +16,7 @@ struct MaxFlow {
 };
 
 template<class C, class E>
-struct MF_EXEC {
+struct MFExec {
     static constexpr C INF = numeric_limits<C>::max();
     C eps;
     VV<E>& g;
@@ -40,7 +40,7 @@ struct MF_EXEC {
     }
 
     MaxFlow<C> info;
-    MF_EXEC(VV<E>& _g, int _s, int _t, C _eps)
+    MFExec(VV<E>& _g, int _s, int _t, C _eps)
         : eps(_eps), g(_g), s(_s), t(_t) {
         int N = int(g.size());
 
@@ -72,5 +72,5 @@ struct MF_EXEC {
 
 template<class C, class E>
 MaxFlow<C> get_mf(VV<E>& g, int s, int t, C eps) {
-    return MF_EXEC<C, E>(g, s, t, eps).info;
+    return MFExec<C, E>(g, s, t, eps).info;
 }

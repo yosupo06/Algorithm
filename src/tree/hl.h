@@ -51,11 +51,11 @@ struct HL {
     }
 };
 
-template <class E> struct HL_EXEC : HL {
+template <class E> struct HLExec : HL {
     const VV<E>& g;
     V<int> tch;
     int id = 0;
-    HL_EXEC(const VV<E>& _g, int r) : HL(_g.size()), g(_g), tch(g.size(), -1) {
+    HLExec(const VV<E>& _g, int r) : HL(_g.size()), g(_g), tch(g.size(), -1) {
         assert(dfs_sz(r, -1) == int(g.size()));
         dfs(r, -1);
         init_extra();
@@ -114,4 +114,4 @@ template <class E> struct HL_EXEC : HL {
     }
 };
 
-template <class E> HL get_hl(const VV<E>& g, int r) { return HL_EXEC<E>(g, r); }
+template <class E> HL get_hl(const VV<E>& g, int r) { return HLExec<E>(g, r); }
