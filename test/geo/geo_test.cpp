@@ -56,34 +56,57 @@ TEST(GeoTest, CrossSS) {
 }
 
 TEST(GeoTest, TangentCC) {
-    auto check = [](C c1, C c2, int expectInner, int expectOuter) {
+    struct Q {
+        C c1, c2;
+        int expect_inner, expect_outer;
+    };
+
+    V<Q> que;
+
+    que.push_back(Q{C(P(0, 0), 1), C(P(0, 2), 1), 1, 2});
+    que.push_back(Q{C(P(0, 0), 1), C(P(0, 3), 1), 2, 2});
+    que.push_back(Q{C(P(0, 0), 1), C(P(2, 0), 1), 1, 2});
+    que.push_back(Q{C(P(0, 0), 1), C(P(0, 3), 1), 2, 2});
+    que.push_back(Q{C(P(0, 0), 3), C(P(0, 2), 1), 0, 1});
+    que.push_back(Q{C(P(0, 0), 1), C(P(0, 2), 3), 0, 1});
+    que.push_back(Q{C(P(0, 2), 1), C(P(0, 0), 3), 0, 1});
+    que.push_back(Q{C(P(0, 0), 1), C(P(0, 0), 2), 0, 0});
+    que.push_back(Q{C(P(0, 0), 2), C(P(0, 1), 2), 0, 2});
+    que.push_back(Q{C(P(0, 0), 2), C(P(1, 0), 2), 0, 2});
+
+    for (auto q: que) {
+        C c1 = q.c1, c2 = q.c2;
+        int expect_inner = q.expect_inner, expect_outer = q.expect_outer;
         L l1, l2;
-        ASSERT_EQ(tangent(c1, c2, l1, l2, true), expectInner);
-        if (expectInner) {
+        ASSERT_EQ(tangent(c1, c2, l1, l2, true), expect_inner);
+        if (expect_inner == 2) {
             L buf;
             ASSERT_EQ(crossCL(c1, l1, buf), 1);
             ASSERT_EQ(crossCL(c1, l2, buf), 1);
             ASSERT_EQ(crossCL(c2, l1, buf), 1);
             ASSERT_EQ(crossCL(c2, l2, buf), 1);
+        } else if (expect_inner == 1) {
+            ASSERT_EQ(l1.s, l1.t);
+            ASSERT_EQ(l1.t, l2.s);
+            ASSERT_EQ(l2.s, l2.t);
+            ASSERT_EQ(sgn((l1.s - c1.p).abs(), c1.r), 0);
+            ASSERT_EQ(sgn((l1.s - c2.p).abs(), c2.r), 0);
         }
-        ASSERT_EQ(tangent(c1, c2, l1, l2, false), expectOuter);
-        if (expectOuter) {
+        ASSERT_EQ(tangent(c1, c2, l1, l2, false), expect_outer);
+        if (expect_outer == 2) {
             L buf;
             ASSERT_EQ(crossCL(c1, l1, buf), 1);
             ASSERT_EQ(crossCL(c1, l2, buf), 1);
             ASSERT_EQ(crossCL(c2, l1, buf), 1);
             ASSERT_EQ(crossCL(c2, l2, buf), 1);
+        } else if (expect_outer == 1) {
+            ASSERT_EQ(l1.s, l1.t);
+            ASSERT_EQ(l1.t, l2.s);
+            ASSERT_EQ(l2.s, l2.t);
+            ASSERT_EQ(sgn((l1.s - c1.p).abs(), c1.r), 0);
+            ASSERT_EQ(sgn((l1.s - c2.p).abs(), c2.r), 0);
         }
     };
-    check(C(P(0, 0), 1), C(P(0, 2), 1), 1, 2);
-    check(C(P(0, 0), 1), C(P(0, 3), 1), 2, 2);
-    check(C(P(0, 0), 1), C(P(2, 0), 1), 1, 2);
-    check(C(P(0, 0), 3), C(P(0, 2), 1), 0, 1);
-    check(C(P(0, 0), 1), C(P(0, 2), 3), 0, 1);
-    check(C(P(0, 2), 1), C(P(0, 0), 3), 0, 1);
-    check(C(P(0, 0), 1), C(P(0, 0), 2), 0, 0);
-    check(C(P(0, 0), 2), C(P(0, 1), 2), 0, 2);
-    check(C(P(0, 0), 2), C(P(1, 0), 2), 0, 2);
 }
 
 TEST(GeoTest, Diameter) {
@@ -196,7 +219,7 @@ TEST(GeoTest, Contain) {
 TEST(GeoTest, CircumCircle) {
     auto check = [&](P a, P b, P c) {
         ASSERT_NE(ccw(a, b, c) % 2, 0);
-        C cir = circumCircle(a, b, c);
+        C cir = circum_circle(a, b, c);
         ASSERT_NEAR(cir.r, (cir.p - a).abs(), 1e-8);
         ASSERT_NEAR(cir.r, (cir.p - b).abs(), 1e-8);
         ASSERT_NEAR(cir.r, (cir.p - c).abs(), 1e-8);
@@ -231,7 +254,7 @@ TEST(GeoTest, SmallestCircle) {
         for (int i = 0; i < n; i++) {
             for (int j = i+1; j < n; j++) {
                 for (int k = j+1; k < n; k++) {
-                    ref(circumCircle(ps[i], ps[j], ps[k]));
+                    ref(circum_circle(ps[i], ps[j], ps[k]));
                 }
             }
         }
@@ -264,7 +287,7 @@ TEST(GeoTest, Delaunay) {
                     for (int l = 0; l < n; l++) {
                         if (ccw(ps[i], ps[j], ps[k]) != 1) continue;
                         if (ccw(ps[i], ps[j], ps[l]) != -1) continue;
-                        auto c = circumCircle(ps[i], ps[j], ps[k]);
+                        auto c = circum_circle(ps[i], ps[j], ps[k]);
                         ASSERT_NE(sgn((ps[l]-c.p).abs(), c.r), -1);
                     }
                 }

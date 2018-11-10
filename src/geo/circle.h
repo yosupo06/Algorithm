@@ -79,7 +79,7 @@ int tangent(const C& c, const C& d, L& l, L& r, bool inter) {
     return 2;
 }
 
-C circumCircle(P a, P b, P c) {
+C circum_circle(P a, P b, P c) {
     b -= a; c -= a;
     D s = 2 * cross(b, c);
     D x = (b - c).norm(), y = c.norm(), z = b.norm();
@@ -98,7 +98,7 @@ C smallest_circle(const Pol& p, int i, array<P, 3> q, int j) {
             case 2:
                 return C((q[0] + q[1]) / D(2.0), (q[0] - q[1]).abs() / D(2.0));
             case 3:
-                return circumCircle(q[0], q[1], q[2]);
+                return circum_circle(q[0], q[1], q[2]);
         }
         assert(false);
     }
