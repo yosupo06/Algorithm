@@ -75,11 +75,7 @@ int tangent(const C& c, const C& d, L& l, L& r, bool inter) {
     l = L(c.p + base * c.r, d.p + base * d.r * (inter ? -1 : 1));
     base = P::polar(1, ar + th);
     r = L(c.p + base * c.r, d.p + base * d.r * (inter ? -1 : 1));
-    if (si == 0) {
-        l.t += P::polar(1, ar + PI / 2);
-        r.t += P::polar(1, ar + PI / 2);
-        return 1;
-    }
+    if (si == 0) return 1;
     return 2;
 }
 
