@@ -21,6 +21,63 @@ int argcmp(P l, P r) {
     return 0;
 }
 
+V<L> halfplane_intersects(V<L> lines) {
+    sort(lines.begin(), lines.end(), [&](const L &a, const L &b) {
+        return a.arg() < b.arg();
+    });
+    V<L> _lines = lines;
+    lines.clear();
+    for (auto l: _lines) {
+        if (!lines.size()) {
+            lines.push_back(l);
+            continue;
+        }
+        L bk = lines.back();
+        if (sgn(bk.arg(), l.arg())) {
+            lines.push_back(l);
+            continue;
+        }
+        //same arg
+        if (ccw(bk, l.s) != 1) continue;
+        lines.back() = l;
+    }
+
+    V<L> st;
+    auto calc = [&]() {
+        for (auto l: lines) {
+            while (int(st.size()) >= 1) {
+                P c;
+                if (ccw(st[st.size()-1].vec(), l.vec()) != 1) return false;
+                if (st.size() == 1) break;
+                assert(crossLL(st[st.size()-1], st[st.size()-2], c));
+                if (ccw(l, c) == 1) break;
+                st.pop_back();
+            }
+            st.push_back(l);
+        }
+        return true;
+    };
+    _lines = lines;
+    for (auto l: _lines) lines.push_back(l);
+    if (!calc()) {
+        return {};
+    }
+
+    map<L, int> cnt;
+    for (auto l: st) cnt[l]++;
+    st.clear();
+    for (auto p: cnt) {
+        if (p.second >= 2) st.push_back(p.first);
+    }
+
+    sort(st.begin(), st.end(), [&](const L &a, const L &b) {
+        return a.arg() < b.arg();
+    });
+
+    return st;
+}
+
+
 //線分アレンジメント
 // l->線分 n->線分の数 p->点集合結果 g->エッジの情報
 // pのサイズはlC2+2*l確保
