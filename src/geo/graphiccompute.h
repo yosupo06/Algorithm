@@ -23,58 +23,34 @@ int argcmp(P l, P r) {
 
 V<L> halfplane_intersects(V<L> lines) {
     sort(lines.begin(), lines.end(), [&](const L &a, const L &b) {
-        return a.arg() < b.arg();
+        int u = argcmp(a.vec(), b.vec());
+        if (u) return u == -1;
+        return ccw(a, b.s) == -1;
     });
-    V<L> _lines = lines;
-    lines.clear();
-    for (auto l: _lines) {
-        if (!lines.size()) {
-            lines.push_back(l);
-            continue;
-        }
-        L bk = lines.back();
-        if (sgn(bk.arg(), l.arg())) {
-            lines.push_back(l);
-            continue;
-        }
-        //same arg
-        if (ccw(bk, l.s) != 1) continue;
-        lines.back() = l;
+    lines.erase(unique(lines.begin(), lines.end(), [&](const L& a, const L& b) {
+        return argcmp(a.vec(), b.vec()) == 0;
+    }), lines.end());
+
+    deque<L> st;
+    for (auto l: lines) {
+        bool err = false;
+        auto is_need = [&](L a, L b, L c) {
+            if (ccw(b.vec(), a.vec()) != -1 || ccw(b.vec(), c.vec()) != 1) return true;
+            D crl1 = crs(a.vec(), b.vec()), crl2 = crs(a.vec(), a.t - b.s);
+            D crr1 = crs(c.vec(), b.vec()), crr2 = crs(c.vec(), c.t - b.s);
+            bool f = sgn(crr2 / crr1, crl2 / crl1) == 1;
+            if (!f && ccw(a.vec(), c.vec()) == -1) err = true;
+            // TODO: think EPS, sgncrs
+            return f;
+        };
+        while (st.size() >= 2 && !is_need(l, st[0], st[1])) st.pop_front();
+        while (st.size() >= 2 && !is_need(st[st.size()-2], st[st.size()-1], l)) st.pop_back();
+        if (st.size() < 2 || is_need(st.back(), l, st.front())) st.push_back(l);
+        if (err) return {};
     }
+    if (st.size() == 2 && ccw(st[0].vec(), st[1].vec()) % 2 == 0 && ccw(st[0], st[1].s) % 2 == 0) return {};
 
-    V<L> st;
-    auto calc = [&]() {
-        for (auto l: lines) {
-            while (int(st.size()) >= 1) {
-                P c;
-                if (ccw(st[st.size()-1].vec(), l.vec()) != 1) return false;
-                if (st.size() == 1) break;
-                assert(crossLL(st[st.size()-1], st[st.size()-2], c));
-                if (ccw(l, c) == 1) break;
-                st.pop_back();
-            }
-            st.push_back(l);
-        }
-        return true;
-    };
-    _lines = lines;
-    for (auto l: _lines) lines.push_back(l);
-    if (!calc()) {
-        return {};
-    }
-
-    map<L, int> cnt;
-    for (auto l: st) cnt[l]++;
-    st.clear();
-    for (auto p: cnt) {
-        if (p.second >= 2) st.push_back(p.first);
-    }
-
-    sort(st.begin(), st.end(), [&](const L &a, const L &b) {
-        return a.arg() < b.arg();
-    });
-
-    return st;
+    return V<L>(st.begin(), st.end());
 }
 
 
