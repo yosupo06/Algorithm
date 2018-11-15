@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "base.h"
+#include "util/cout.h"
 #include "util/random.h"
 #include "geo/primitive.h"
 #include "geo/intersect.h"
@@ -376,5 +377,38 @@ TEST(GeoTest, crossCL) {
         D x = 3.535533905932;
         ASSERT_NEAR((r.s - P(x, x)).abs(), 0, 1e-6);
         ASSERT_NEAR((r.t - P(-x, -x)).abs(), 0, 1e-6);
+    }
+}
+
+TEST(GeoTest, HalfPlaneIntersec) {
+    auto eq_vl = [&](V<L> a, V<L> b) {
+        if (a.size() != b.size()) return false;
+        if (!a.size()) return true;
+        int n = int(a.size());
+        for (int i = 0; i < n; i++) {
+            bool f = true;
+            for (int j = 0; j < n; j++) {
+                if (a[j].s != b[j].s) f = false;
+                if (a[j].t != b[j].t) f = false;
+            }
+            if (f) return true;
+            rotate(a.begin(), a.begin()+1, a.end());
+        }
+        return false;
+    };
+    {
+        V<L> lines;
+        lines.push_back(L{P(0, 1), P(1, 1)});
+        lines.push_back(L{P(1, 1), P(1, 0)});
+        lines.push_back(L{P(1, 0), P(0, 0)});
+        lines.push_back(L{P(0, 0), P(0, 1)});
+        ASSERT_PRED2(eq_vl, halfplane_intersects(lines), V<L>{});
+    }
+    {
+        V<L> lines;
+        lines.push_back(L{P(2, 0), P(0, 0)});
+        lines.push_back(L{P(0, 0), P(1, 2)});
+        lines.push_back(L{P(1, 2), P(2, 0)});
+        ASSERT_PRED2(eq_vl, halfplane_intersects(lines), V<L>{});
     }
 }

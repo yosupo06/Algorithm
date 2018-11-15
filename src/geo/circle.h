@@ -81,7 +81,7 @@ int tangent(const C& c, const C& d, L& l, L& r, bool inter) {
 
 C circum_circle(P a, P b, P c) {
     b -= a; c -= a;
-    D s = 2 * cross(b, c);
+    D s = 2 * crs(b, c);
     D x = (b - c).norm(), y = c.norm(), z = b.norm();
     D S = x + y + z;
     P r = (b * (S - 2 * y) * y + c * z * (S - 2 * z)) / (s * s);
@@ -120,7 +120,7 @@ D area2CT(const C& c, const P& _a, const P& _b) {
     D r = c.r;
     if (a == b) return 0;
     auto single = [&](P x, P y, bool tri) {
-        if (tri) return cross(x, y);
+        if (tri) return crs(x, y);
         else return r * r * ((y * P(x.x, -x.y)).arg());
     };
     bool ia = sgn(a.abs(), r) != 1, ib = sgn(b.abs(), r) != 1;

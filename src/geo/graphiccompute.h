@@ -14,7 +14,7 @@ int argcmp(P l, P r) {
     if (lsgn < rsgn) return -1;
     if (lsgn > rsgn) return 1;
 
-    D x = cross(l, r);
+    D x = crs(l, r);
     if (x > 0) return -1;
     if (x < 0) return 1;
 
@@ -22,6 +22,40 @@ int argcmp(P l, P r) {
 }
 
 V<L> halfplane_intersects(V<L> lines) {
+    sort(lines.begin(), lines.end(), [&](const L& a, const L& b) {
+        if (int u = argcmp(a.vec(), b.vec())) return u == -1;
+        return sgncrs(a.vec(), b.s - a.s) < 0;
+    });
+    lines.erase(unique(lines.begin(), lines.end(), [&](const L& a, const L& b) {
+        return argcmp(a.vec(), b.vec()) == 0;
+    }), lines.end());
+
+    deque<L> st;
+    for (auto l: lines) {
+        bool err = false;
+        auto is_need = [&](L a, L b, L c) {
+            D ab_dw = crs(a.vec(), b.vec()), ab_up = crs(a.vec(), a.t - b.s);
+            D bc_dw = crs(b.vec(), c.vec()), bc_up = crs(c.t - b.s, c.vec());
+            if (ab_dw <= 0 || bc_dw <= 0) return true;
+            bool f = bc_up * ab_dw > bc_dw * ab_up;
+            if (!f && crs(a.vec(), c.vec()) < 0) err = true;
+            return f;
+        };
+        while (st.size() >= 2 && !is_need(l, st[0], st[1])) st.pop_front();
+        while (st.size() >= 2 && !is_need(st[st.size()-2], st[st.size()-1], l)) st.pop_back();
+        if (st.size() < 2 || is_need(st.back(), l, st.front())) st.push_back(l);
+        if (err) return {};
+    }
+    if (st.size() == 2 && !sgncrs(st[0].vec(), st[1].vec()) && sgncrs(st[0].vec(), st[1].s - st[0].s) <= 0) return {};
+
+    return V<L>(st.begin(), st.end());
+}
+
+/*
+V<L> halfplane_intersects(V<L> lines) {
+
+//    cout << halfplane_intersects(lines) << endl;
+
     sort(lines.begin(), lines.end(), [&](const L &a, const L &b) {
         int u = argcmp(a.vec(), b.vec());
         if (u) return u == -1;
@@ -51,7 +85,7 @@ V<L> halfplane_intersects(V<L> lines) {
     if (st.size() == 2 && ccw(st[0].vec(), st[1].vec()) % 2 == 0 && ccw(st[0], st[1].s) % 2 == 0) return {};
 
     return V<L>(st.begin(), st.end());
-}
+}*/
 
 
 //線分アレンジメント
@@ -231,9 +265,9 @@ VV<int> delaunay(const V<P>& p) {
             if (max(u, v) < n) {
                 P a = p[u] - p[x], b = p[v] - p[x], c = p[w] - p[x];
                 D z = 0;
-                z += a.norm() * cross(b, c);
-                z += b.norm() * cross(c, a);
-                z += c.norm() * cross(a, b);
+                z += a.norm() * crs(b, c);
+                z += b.norm() * crs(c, a);
+                z += c.norm() * crs(a, b);
                 if (z <= 0) continue;
             } else {
                 if (u < n && ccw(p[x], p[w], p[u]) != 1) continue;

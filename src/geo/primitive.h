@@ -29,6 +29,7 @@ struct Pt2 {
 
     bool operator<(const Pt2& r) const { return 2*sgn(x, r.x)+sgn(y, r.y)<0; }
     bool operator==(const Pt2& r) const { return sgn((*this-r).rabs()) == 0; }
+    bool operator!=(const Pt2& r) const { return !(*this == r); }
 
     D norm() const { return x * x + y * y; }
     D abs() const { return sqrt(norm()); }
@@ -54,11 +55,11 @@ ostream& operator<<(ostream& os, const L& l) {
     return os << "L(" << l.s << ", " << l.t << ")";
 }
 
-D cross(P a, P b) { return a.x * b.y - a.y * b.x; }
+D crs(P a, P b) { return a.x * b.y - a.y * b.x; }
 D dot(P a, P b) { return a.x * b.x + a.y * b.y; }
 // cross(a, b) is too small?
 int sgncrs(P a, P b) {
-    D cr = cross(a, b);
+    D cr = crs(a, b);
     if (abs(cr) <= (a.rabs() + b.rabs()) * EPS) return 0;
     return (cr < 0) ? -1 : 1;
 }

@@ -4,7 +4,7 @@ D area2(const Pol& pol) {
     D u = 0;
     if (!pol.size()) return u;
     P a = pol.back();
-    for (auto b: pol) u += cross(a, b), a = b;
+    for (auto b: pol) u += crs(a, b), a = b;
     return u;
 }
 
@@ -19,7 +19,7 @@ int contains(const Pol& pol, P p) {
         if (ccw(a, b, p) == 0) return 1;
         if (a.y > b.y) swap(a, b);
         if (!(a.y <= p.y && p.y < b.y)) continue;
-        if (sgn(a.y, p.y) ? (cross(a - p, b - p) > 0) : (a.x > p.x)) in *= -1;
+        if (sgn(a.y, p.y) ? (crs(a - p, b - p) > 0) : (a.x > p.x)) in *= -1;
     }
     return in + 1;
 }
@@ -33,7 +33,7 @@ int contains(const Pol& pol, const L& l) {
         P p;
         if (crossSS(L(a, b), l, p)) v.push_back(p);
     }
-    sort(begin(v), end(v), [&](const P& x, const P& y) {
+    sort(v.begin(), v.end(), [&](const P& x, const P& y) {
         return (l.s - x).rabs() < (l.s - y).rabs();
     });
     bool f = false;
@@ -64,13 +64,13 @@ Pol convex_down(const V<P>& ps) {
 }
 
 Pol convex(V<P> ps) {
-    sort(begin(ps), end(ps));
-    ps.erase(unique(begin(ps), end(ps)), end(ps));
+    sort(ps.begin(), ps.end());
+    ps.erase(unique(ps.begin(), ps.end()), ps.end());
     if (ps.size() <= 1) return ps;
     Pol dw = convex_down(ps);
-    reverse(begin(ps), end(ps));
+    reverse(ps.begin(), ps.end());
     Pol up = convex_down(ps);
-    dw.insert(begin(dw), begin(up) + 1, end(up) - 1);
+    dw.insert(dw.begin(), up.begin() + 1, up.end() - 1);
     return dw;
 }
 
@@ -111,7 +111,7 @@ D diameter(const Pol& p) {
     while (sx != y || sy != x) {
         ans = max(ans, (p[x] - p[y]).abs());
         int nx = (x + 1 < n) ? x + 1 : 0, ny = (y + 1 < n) ? y + 1 : 0;
-        if (cross(p[nx] - p[x], p[ny] - p[y]) < 0)
+        if (crs(p[nx] - p[x], p[ny] - p[y]) < 0)
             x = nx;
         else
             y = ny;

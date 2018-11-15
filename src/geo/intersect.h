@@ -20,7 +20,7 @@ bool insSS(const L& s, const L& t) {
 }
 
 D distLP(const L& l, const P& p) {
-    return abs(cross(l.vec(), p - l.s)) / l.abs();
+    return abs(crs(l.vec(), p - l.s)) / l.abs();
 }
 
 D distSP(const L& s, const P& p) {
@@ -36,7 +36,7 @@ D distSS(const L& s, const L& t) {
 }
 
 int crossLL(const L& l, const L& m, P& r) {
-    D cr1 = cross(l.vec(), m.vec()), cr2 = cross(l.vec(), l.t - m.s);
+    D cr1 = crs(l.vec(), m.vec()), cr2 = crs(l.vec(), l.t - m.s);
     if (sgncrs(l.vec(), m.vec()) == 0) {
         r = l.s;
         if (sgncrs(l.vec(), l.t - m.s)) return 0;
