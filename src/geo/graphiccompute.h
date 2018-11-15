@@ -4,21 +4,14 @@ arg(-1, 0) = PI, arg(0, 0) = arg(1, 0) = 0として扱う
 */
 int argcmp(P l, P r) {
     auto psgn = [&](P p) {
-        if (p.y < 0) return -1;
-        if (p.y > 0) return 1;
-        if (p.x < 0) return 2;
+        if (int u = sgn(p.y)) return u;
+        if (sgn(p.x) == -1) return 2;
         return 0;
     };
-    int lsgn = psgn(l);
-    int rsgn = psgn(r);
+    int lsgn = psgn(l), rsgn = psgn(r);
     if (lsgn < rsgn) return -1;
     if (lsgn > rsgn) return 1;
-
-    D x = crs(l, r);
-    if (x > 0) return -1;
-    if (x < 0) return 1;
-
-    return 0;
+    return sgncrs(r, l);
 }
 
 V<L> halfplane_intersects(V<L> lines) {
@@ -50,42 +43,6 @@ V<L> halfplane_intersects(V<L> lines) {
 
     return V<L>(st.begin(), st.end());
 }
-
-/*
-V<L> halfplane_intersects(V<L> lines) {
-
-//    cout << halfplane_intersects(lines) << endl;
-
-    sort(lines.begin(), lines.end(), [&](const L &a, const L &b) {
-        int u = argcmp(a.vec(), b.vec());
-        if (u) return u == -1;
-        return ccw(a, b.s) == -1;
-    });
-    lines.erase(unique(lines.begin(), lines.end(), [&](const L& a, const L& b) {
-        return argcmp(a.vec(), b.vec()) == 0;
-    }), lines.end());
-
-    deque<L> st;
-    for (auto l: lines) {
-        bool err = false;
-        auto is_need = [&](L a, L b, L c) {
-            if (ccw(b.vec(), a.vec()) != -1 || ccw(b.vec(), c.vec()) != 1) return true;
-            D crl1 = crs(a.vec(), b.vec()), crl2 = crs(a.vec(), a.t - b.s);
-            D crr1 = crs(c.vec(), b.vec()), crr2 = crs(c.vec(), c.t - b.s);
-            bool f = sgn(crr2 / crr1, crl2 / crl1) == 1;
-            if (!f && ccw(a.vec(), c.vec()) == -1) err = true;
-            // TODO: think EPS, sgncrs
-            return f;
-        };
-        while (st.size() >= 2 && !is_need(l, st[0], st[1])) st.pop_front();
-        while (st.size() >= 2 && !is_need(st[st.size()-2], st[st.size()-1], l)) st.pop_back();
-        if (st.size() < 2 || is_need(st.back(), l, st.front())) st.push_back(l);
-        if (err) return {};
-    }
-    if (st.size() == 2 && ccw(st[0].vec(), st[1].vec()) % 2 == 0 && ccw(st[0], st[1].s) % 2 == 0) return {};
-
-    return V<L>(st.begin(), st.end());
-}*/
 
 
 //線分アレンジメント
