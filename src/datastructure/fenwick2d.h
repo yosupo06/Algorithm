@@ -4,7 +4,7 @@ template <class D, class I> struct Fenwick2D {
     VV<I> ys;
     V<Fenwick<D>> fws;
     int lg, sz;
-    TwoDimSeg(V<P> _points) : points(_points) {
+    Fenwick2D(V<P> _points) : points(_points) {
         sort(points.begin(), points.end());
         points.erase(unique(points.begin(), points.end()), points.end());
         int n = int(points.size());
