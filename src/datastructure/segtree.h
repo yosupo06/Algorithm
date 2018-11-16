@@ -56,3 +56,28 @@ struct SegTree {
     void add(int a, int b, L x) { add(a, b, x, 0, sz, 1); }
 
 };
+
+template<class D, class L, class OPDD, class OPDL, class OPLL>
+SegTree<D, L, OPDD, OPDL, OPLL> get_seg(V<D> first, D e_d, L e_l, OPDD opdd, OPDL opdl, OPLL opll) {
+    return SegTree<D, L, OPDD, OPDL, OPLL>(first, e_d, e_l, opdd, opdl, opll);
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int n, q;
+    cin >> n >> q;
+    auto seg = SegTree<int, int, my_min, add, add>(V<int>(n, 0), (1<<30) - 1000, 0);
+    for (int i = 0; i < q; i++) {
+        int ty, x, y;
+        cin >> ty >> x >> y; y++;
+        if (ty == 0) {
+            int z;
+            cin >> z;
+            seg.add(x, y, z);
+        } else {
+            cout << seg.sum(x, y) << endl;
+        }
+    }
+    return 0;
+}
