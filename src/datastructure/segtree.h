@@ -1,22 +1,69 @@
-template <class D, class L, class OPDD, class OPDL, class OPLL> struct SegTree {
+template <class D, class Op> struct SimpleSeg {
+    D e;
+    Op op;
+    int sz, lg;  //(2^lgに拡張後の)サイズ, lg
+    V<D> d;
+
+    SimpleSeg(const V<D>& v, D _e, Op _op) : e(_e), op(_op) {
+        int n = int(v.size());
+        lg = 1;
+        while ((1 << lg) < n) lg++;
+        sz = 1 << lg;
+        d = V<D>(2 * sz, e);
+        for (int i = 0; i < n; i++) d[sz + i] = v[i];
+        for (int i = sz - 1; i >= 0; i--) {
+            update(i);
+        }
+    }
+
+    void update(int k) { d[k] = op(d[2 * k], d[2 * k + 1]); }
+
+    void set(int p, D x) {
+        p += sz;
+        d[p] = x;
+        for (int i = 1; i <= lg; i++) update(p >> i);
+    }
+
+    D single(int p) { return d[p + sz]; }
+
+    D sum(int a, int b, int l, int r, int k) {
+        if (b <= l || r <= a) return e;
+        if (a <= l && r <= b) return d[k];
+        int mid = (l + r) / 2;
+        return op(sum(a, b, l, mid, 2 * k), sum(a, b, mid, r, 2 * k + 1));
+    }
+    D sum(int a, int b) { return sum(a, b, 0, sz, 1); }
+};
+
+template <class D, class Op>
+SimpleSeg<D, Op> get_simple_seg(V<D> v, D e, Op op) {
+    return SimpleSeg<D, Op>(v, e, op);
+}
+
+template <class D, class L, class OpDD, class OpDL, class OpLL> struct SegTree {
     D e_d;
     L e_l;
-    OPDD op_dd;
-    OPDL op_dl;
-    OPLL op_ll;
+    OpDD op_dd;
+    OpDL op_dl;
+    OpLL op_ll;
     int sz, lg;  //(2^lgに拡張後の)サイズ, lg
     V<D> d;
     V<L> lz;
 
-    SegTree(V<D> first, D _e_d, L _e_l, OPDD _op_dd, OPDL _op_dl, OPLL _op_ll)
+    SegTree(const V<D>& v,
+            D _e_d,
+            L _e_l,
+            OpDD _op_dd,
+            OpDL _op_dl,
+            OpLL _op_ll)
         : e_d(_e_d), e_l(_e_l), op_dd(_op_dd), op_dl(_op_dl), op_ll(_op_ll) {
-        int n = int(first.size());
+        int n = int(v.size());
         lg = 1;
         while ((1 << lg) < n) lg++;
         sz = 1 << lg;
         d = V<D>(2 * sz, e_d);
         lz = V<L>(2 * sz, e_l);
-        for (int i = 0; i < n; i++) d[sz + i] = first[i];
+        for (int i = 0; i < n; i++) d[sz + i] = v[i];
         for (int i = sz - 1; i >= 0; i--) {
             update(i);
         }
@@ -33,14 +80,12 @@ template <class D, class L, class OPDD, class OPDL, class OPLL> struct SegTree {
     }
     void update(int k) { d[k] = op_dd(d[2 * k], d[2 * k + 1]); }
 
-    D sum(int a, int b, int l, int r, int k) {
-        if (b <= l || r <= a) return e_d;
-        if (a <= l && r <= b) return d[k];
-        push(k);
-        int mid = (l + r) / 2;
-        return op_dd(sum(a, b, l, mid, 2 * k), sum(a, b, mid, r, 2 * k + 1));
+    void set(int p, D x) {
+        p += sz;
+        for (int i = lg; i >= 1; i--) push(p >> i);
+        d[p] = x;
+        for (int i = 1; i <= lg; i++) update(p >> i);
     }
-    D sum(int a, int b) { return sum(a, b, 0, sz, 1); }
 
     void add(int a, int b, L x, int l, int r, int k) {
         if (b <= l || r <= a) return;
@@ -55,14 +100,29 @@ template <class D, class L, class OPDD, class OPDL, class OPLL> struct SegTree {
         update(k);
     }
     void add(int a, int b, L x) { add(a, b, x, 0, sz, 1); }
+
+    D single(int p) {
+        p += sz;
+        for (int i = lg; i >= 1; i--) push(p >> i);
+        return d[p];
+    }
+
+    D sum(int a, int b, int l, int r, int k) {
+        if (b <= l || r <= a) return e_d;
+        if (a <= l && r <= b) return d[k];
+        push(k);
+        int mid = (l + r) / 2;
+        return op_dd(sum(a, b, l, mid, 2 * k), sum(a, b, mid, r, 2 * k + 1));
+    }
+    D sum(int a, int b) { return sum(a, b, 0, sz, 1); }
 };
 
-template <class D, class L, class OPDD, class OPDL, class OPLL>
-SegTree<D, L, OPDD, OPDL, OPLL> get_seg(V<D> first,
+template <class D, class L, class OpDD, class OpDL, class OpLL>
+SegTree<D, L, OpDD, OpDL, OpLL> get_seg(V<D> v,
                                         D e_d,
                                         L e_l,
-                                        OPDD opdd,
-                                        OPDL opdl,
-                                        OPLL opll) {
-    return SegTree<D, L, OPDD, OPDL, OPLL>(first, e_d, e_l, opdd, opdl, opll);
+                                        OpDD op_dd,
+                                        OpDL op_dl,
+                                        OpLL op_ll) {
+    return SegTree<D, L, OpDD, OpDL, OpLL>(v, e_d, e_l, op_dd, op_dl, op_ll);
 }
