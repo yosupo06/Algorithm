@@ -19,12 +19,14 @@ V<L> halfplane_intersects(V<L> lines) {
         if (int u = argcmp(a.vec(), b.vec())) return u == -1;
         return sgncrs(a.vec(), b.s - a.s) < 0;
     });
-    lines.erase(unique(lines.begin(), lines.end(), [&](const L& a, const L& b) {
-        return argcmp(a.vec(), b.vec()) == 0;
-    }), lines.end());
+    lines.erase(unique(lines.begin(), lines.end(),
+                       [&](const L& a, const L& b) {
+                           return argcmp(a.vec(), b.vec()) == 0;
+                       }),
+                lines.end());
 
     deque<L> st;
-    for (auto l: lines) {
+    for (auto l : lines) {
         bool err = false;
         auto is_need = [&](L a, L b, L c) {
             D ab_dw = crs(a.vec(), b.vec()), ab_up = crs(a.vec(), a.t - b.s);
@@ -35,15 +37,18 @@ V<L> halfplane_intersects(V<L> lines) {
             return f;
         };
         while (st.size() >= 2 && !is_need(l, st[0], st[1])) st.pop_front();
-        while (st.size() >= 2 && !is_need(st[st.size()-2], st[st.size()-1], l)) st.pop_back();
+        while (st.size() >= 2 &&
+               !is_need(st[st.size() - 2], st[st.size() - 1], l))
+            st.pop_back();
         if (st.size() < 2 || is_need(st.back(), l, st.front())) st.push_back(l);
         if (err) return {};
     }
-    if (st.size() == 2 && !sgncrs(st[0].vec(), st[1].vec()) && sgncrs(st[0].vec(), st[1].s - st[0].s) <= 0) return {};
+    if (st.size() == 2 && !sgncrs(st[0].vec(), st[1].vec()) &&
+        sgncrs(st[0].vec(), st[1].s - st[0].s) <= 0)
+        return {};
 
     return V<L>(st.begin(), st.end());
 }
-
 
 //線分アレンジメント
 // l->線分 n->線分の数 p->点集合結果 g->エッジの情報
@@ -111,7 +116,7 @@ DualGraph dualGraph(V<P> ps, VV<int> g) {
     VV<int> vis(n), rev(n);
     for (int i = 0; i < n; i++) {
         vis[i] = V<int>(g[i].size(), -3);
-        for (int d: g[i]) {
+        for (int d : g[i]) {
             rev[i].push_back(mp[Pi(d, i)]);
         }
     }
@@ -130,7 +135,8 @@ DualGraph dualGraph(V<P> ps, VV<int> g) {
                 int nidx = rev[p][idx] + 1;
                 if (nidx == int(g[np].size())) nidx = 0;
 
-                p = np; idx = nidx;
+                p = np;
+                idx = nidx;
             }
             int id = -1;
             if (sgn(area2(pol)) == 1) {
@@ -144,7 +150,8 @@ DualGraph dualGraph(V<P> ps, VV<int> g) {
                 int nidx = rev[p][idx] + 1;
                 if (nidx == int(g[np].size())) nidx = 0;
 
-                p = np; idx = nidx;
+                p = np;
+                idx = nidx;
             }
         }
     }
@@ -173,14 +180,18 @@ VV<int> delaunay(const V<P>& p) {
     assert(n > 1);
     VV<int> mp(n + 2, V<int>(n + 2, -1));
     int special = 0;
-    for (int i = 1; i < n; i++) if (p[i] < p[special]) special = i;
+    for (int i = 1; i < n; i++)
+        if (p[i] < p[special]) special = i;
     using Pi = pair<int, int>;
     stack<Pi> st;
     auto set_tr = [&](int i, int j, int k) {
-        mp[i][j] = k; mp[j][k] = i; mp[k][i] = j;
+        mp[i][j] = k;
+        mp[j][k] = i;
+        mp[k][i] = j;
         st.push(Pi(i, j));
     };
-    set_tr(special, n, n + 1); st.pop();
+    set_tr(special, n, n + 1);
+    st.pop();
     for (int l = 0; l < n; l++) {
         if (l == special) continue;
         int i = n, j = n + 1, k = mp[i][j];
@@ -193,9 +204,12 @@ VV<int> delaunay(const V<P>& p) {
                 if (x == n + 1 || y == n) return p[min(x, y)] < p[l];
                 return ccw(p[x], p[y], p[l]) == 1;
             };
-            if (succ(i, k)) j = k;
-            else if (succ(k, j)) i = k;
-            else break;
+            if (succ(i, k))
+                j = k;
+            else if (succ(k, j))
+                i = k;
+            else
+                break;
             k = mp[i][j];
         } while (true);
         auto on_line = [&](int x, int y, int z) {
@@ -215,7 +229,8 @@ VV<int> delaunay(const V<P>& p) {
         }
         while (st.empty() == false) {
             int u, v;
-            tie(u, v) = st.top(); st.pop();
+            tie(u, v) = st.top();
+            st.pop();
             int w = mp[u][v], x = mp[v][u];
             assert(w == l);
             if (w < 0 || x < 0 || max(w, x) >= n) continue;
@@ -246,8 +261,10 @@ VV<int> delaunay(const V<P>& p) {
         int j = s;
         bool unbounded = false;
         do {
-            if (j < n) g[i].push_back(j);
-            else unbounded = true;
+            if (j < n)
+                g[i].push_back(j);
+            else
+                unbounded = true;
             j = mp[i][j];
         } while (j != s);
         if (unbounded) g[i].push_back(n);

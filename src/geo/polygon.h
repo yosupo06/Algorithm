@@ -4,7 +4,7 @@ D area2(const Pol& pol) {
     D u = 0;
     if (!pol.size()) return u;
     P a = pol.back();
-    for (auto b: pol) u += crs(a, b), a = b;
+    for (auto b : pol) u += crs(a, b), a = b;
     return u;
 }
 
@@ -13,8 +13,9 @@ int contains(const Pol& pol, P p) {
     if (!pol.size()) return 0;
     int in = -1;
     P _a, _b = pol.back();
-    for (auto now: pol) {
-        _a = _b; _b = now;
+    for (auto now : pol) {
+        _a = _b;
+        _b = now;
         P a = _a, b = _b;
         if (ccw(a, b, p) == 0) return 1;
         if (a.y > b.y) swap(a, b);
@@ -28,8 +29,9 @@ int contains(const Pol& pol, P p) {
 int contains(const Pol& pol, const L& l) {
     V<P> v = {l.s, l.t};
     P a, b = pol.back();
-    for (auto now: pol) {
-        a = b; b = now;
+    for (auto now : pol) {
+        a = b;
+        b = now;
         P p;
         if (crossSS(L(a, b), l, p)) v.push_back(p);
     }
@@ -37,8 +39,8 @@ int contains(const Pol& pol, const L& l) {
         return (l.s - x).rabs() < (l.s - y).rabs();
     });
     bool f = false;
-    for (int i = 0; i < int(v.size())-1; i++) {
-        P p = (v[i] + v[i+1]) / D(2);
+    for (int i = 0; i < int(v.size()) - 1; i++) {
+        P p = (v[i] + v[i + 1]) / D(2);
         int u = contains(pol, p);
         if (!u) return 0;
         if (u == 2) f = true;
@@ -51,7 +53,7 @@ int contains(const Pol& pol, const L& l) {
 Pol convex_down(const V<P>& ps) {
     assert(ps.size() >= 2);
     Pol dw;
-    for (P d: ps) {
+    for (P d : ps) {
         size_t n;
         while ((n = dw.size()) > 1) {
             // if (ccw(dw[n - 2], dw[n - 1], d) != -1) break; // line上も取る
@@ -79,8 +81,9 @@ Pol convex_cut(const Pol& po, const L& l) {
     if (!po.size()) return Pol{};
     Pol q;
     P a, b = po.back();
-    for (auto now: po) {
-        a = b; b = now;
+    for (auto now : po) {
+        a = b;
+        b = now;
         if ((ccw(l, a) % 2) * (ccw(l, b) % 2) < 0) {
             P buf;
             crossLL(l, L(a, b), buf);

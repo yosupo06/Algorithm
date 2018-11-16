@@ -22,8 +22,10 @@ int crossCS(const C& c, const L& s, L& l) {
     bool f1 = !ccw(s, l.s), f2 = !ccw(s, l.t);
     if (f1 && f2) return 2;
     if (!f1 && !f2) return 0;
-    if (f1) l.t = l.s;
-    else l.s = l.t;
+    if (f1)
+        l.t = l.s;
+    else
+        l.s = l.t;
     return 1;
 }
 
@@ -40,7 +42,8 @@ int crossCC(const C& c, const C& d, D& l, D& r) {
     if (ty == -1) return 0;
     if (ty == 0) costh = sgn(costh);
     D th = acos(costh);
-    l = bth - th; r = bth + th;
+    l = bth - th;
+    r = bth + th;
     return ty + 1;
 }
 
@@ -67,8 +70,10 @@ int tangent(const C& c, const C& d, L& l, L& r, bool inter) {
     D costh = c.r + (inter ? d.r : -d.r);
     int si = sgn(abs(costh), di);
     costh /= di;
-    if (si == 1) return 0;
-    else if (si == 0) costh = sgn(costh);
+    if (si == 1)
+        return 0;
+    else if (si == 0)
+        costh = sgn(costh);
     D th = acos(costh);
     P base;
     base = P::polar(1, ar - th);
@@ -80,7 +85,8 @@ int tangent(const C& c, const C& d, L& l, L& r, bool inter) {
 }
 
 C circum_circle(P a, P b, P c) {
-    b -= a; c -= a;
+    b -= a;
+    c -= a;
     D s = 2 * crs(b, c);
     D x = (b - c).norm(), y = c.norm(), z = b.norm();
     D S = x + y + z;
@@ -120,8 +126,10 @@ D area2CT(const C& c, const P& _a, const P& _b) {
     D r = c.r;
     if (a == b) return 0;
     auto single = [&](P x, P y, bool tri) {
-        if (tri) return crs(x, y);
-        else return r * r * ((y * P(x.x, -x.y)).arg());
+        if (tri)
+            return crs(x, y);
+        else
+            return r * r * ((y * P(x.x, -x.y)).arg());
     };
     bool ia = sgn(a.abs(), r) != 1, ib = sgn(b.abs(), r) != 1;
     if (ia && ib) return single(a, b, true);
@@ -134,8 +142,9 @@ D area2CT(const C& c, const P& _a, const P& _b) {
 D area2CPol(const C& c, const Pol& po) {
     D sm = 0;
     P a, b = po.back();
-    for (auto p: po) {
-        a = b; b = p;
+    for (auto p : po) {
+        a = b;
+        b = p;
         sm += area2CT(c, a, b);
     }
     return sm;

@@ -25,8 +25,10 @@ D distLP(const L& l, const P& p) {
 
 D distSP(const L& s, const P& p) {
     P q = project(s, p);
-    if (ccw(s, q) == 0) return (p - q).abs();
-    else return min((s.s - p).abs(), (s.t - p).abs());
+    if (ccw(s, q) == 0)
+        return (p - q).abs();
+    else
+        return min((s.s - p).abs(), (s.t - p).abs());
 }
 
 D distSS(const L& s, const L& t) {

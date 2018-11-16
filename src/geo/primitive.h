@@ -13,7 +13,8 @@ struct Pt2 {
     Pt2(D _x = D(), D _y = D()) : x(_x), y(_y) {}
     Pt2 operator+(const Pt2& r) const { return Pt2(x + r.x, y + r.y); }
     Pt2 operator-(const Pt2& r) const { return Pt2(x - r.x, y - r.y); }
-    Pt2 operator*(const Pt2& r) const { return Pt2(x*r.x-y*r.y, x*r.y+y*r.x);
+    Pt2 operator*(const Pt2& r) const {
+        return Pt2(x * r.x - y * r.y, x * r.y + y * r.x);
     }
 
     Pt2 operator*(const D& r) const { return Pt2(x * r, y * r); }
@@ -27,8 +28,10 @@ struct Pt2 {
 
     Pt2 operator-() const { return Pt2(-x, -y); }
 
-    bool operator<(const Pt2& r) const { return 2*sgn(x, r.x)+sgn(y, r.y)<0; }
-    bool operator==(const Pt2& r) const { return sgn((*this-r).rabs()) == 0; }
+    bool operator<(const Pt2& r) const {
+        return 2 * sgn(x, r.x) + sgn(y, r.y) < 0;
+    }
+    bool operator==(const Pt2& r) const { return sgn((*this - r).rabs()) == 0; }
     bool operator!=(const Pt2& r) const { return !(*this == r); }
 
     D norm() const { return x * x + y * y; }
