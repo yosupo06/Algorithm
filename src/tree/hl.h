@@ -1,14 +1,16 @@
 struct HL {
     V<int> _ord, _rord, big, small;  // primitive
-    V<int> pid, psz;
-    int pc = 0;  // path id, size, count(optional)
-    V<int> out;  // [id, out[id]) is subtree(optional)
-    HL(int n = 0) : _ord(n), _rord(n), big(n), small(n), pid(n), out(n) {}
-    int ord(int i) const { return i == -1 ? -1 : _ord[i]; }
+    V<int> dps;                      // node depth(optional)
+    int pc = 0;                      // path count(optional)
+    V<int> pid, psz;                 // path id, size (optional)
+    V<int> out;                      // [id, out[id]) is subtree(optional)
+    HL(int n = 0)
+        : _ord(n), _rord(n), big(n), small(n), dps(n), pid(n), out(n) {}
+    int ord(int v) const { return v == -1 ? -1 : _ord[v]; }
     int rord(int i) const { return i == -1 ? -1 : _rord[i]; }
-    int par(int a) const {
-        a = ord(a);
-        return rord(small[a] == a ? big[a] : a - 1);
+    int par(int v) const {
+        v = ord(v);
+        return rord(small[v] == v ? big[v] : v - 1);
     }
     int lca(int a, int b) const {
         a = ord(a);
@@ -63,6 +65,12 @@ template <class E> struct HLExec : HL {
     void init_extra() {
         // ord, rord, big, small以外を使わないなら不要
         int n = int(g.size());
+
+        // dps
+        dps[0] = 0;
+        for (int i = 1; i < n; i++) {
+            dps[i] = dps[ord(par(rord(i)))] + 1;
+        }
 
         // pid, psz, pc
         int l = 0;
