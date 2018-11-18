@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "base.h"
-#include "util/cout.h"
+#include "util/ostream.h"
 #include "util/random.h"
 #include "geo/primitive.h"
 #include "geo/intersect.h"

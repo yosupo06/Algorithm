@@ -1,10 +1,9 @@
 template <class D, class OP> struct DisjointTable {
     D e;
     OP op;
-    int lg;
     VV<D> data;
     DisjointTable(V<D> v = V<D>(), D _e = D(), OP _op = OP()) : e(_e), op(_op) {
-        lg = 1;
+        int lg = 1;
         while ((1 << lg) < int(v.size())) lg++;
         int n = 1 << lg;
         v.resize(n, e);

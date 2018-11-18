@@ -20,11 +20,11 @@ struct LCA {
     }
 };
 
-template <class E> struct LCA_EXEC : LCA {
+template <class E> struct LCAExec : LCA {
     const VV<E>& g;
 
     /// 事前処理を行う rはroot頂点のid
-    LCA_EXEC(const VV<E>& _g, int r) : g(_g) {
+    LCAExec(const VV<E>& _g, int r) : g(_g) {
         int N = int(g.size());
         lg = 1;
         while ((1 << lg) < N) lg++;
@@ -50,5 +50,5 @@ template <class E> struct LCA_EXEC : LCA {
 };
 
 template <class E> LCA get_lca(const VV<E>& g, int r) {
-    return LCA_EXEC<E>(g, r);
+    return LCAExec<E>(g, r);
 }
