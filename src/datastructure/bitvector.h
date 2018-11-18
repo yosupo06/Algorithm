@@ -5,17 +5,30 @@ struct BitVec {
     explicit BitVec(size_t _n = 0) : n(_n), d((n + B - 1) / B) {}
     size_t size() const { return n; }
     bool operator[](size_t i) const { return ((d[i / B] >> (i % B)) & 1) != 0; }
-    void set(size_t i, bool f) {
+    void set(size_t i, bool f = true) {
         if (f)
             d[i / B] |= (1ULL << (i % B));
         else
             d[i / B] &= ~(1ULL << (i % B));
     }
     void reset() { fill(d.begin(), d.end(), 0); }
+    void reset(size_t i) { set(i, false); }
     void push_back(bool f) {
         if (n % B == 0) d.push_back(0);
         set(n, f);
         n++;
+    }
+    bool empty() const {
+        for (auto& x : d) if (x) return false;
+        return true;
+    }
+
+    size_t bsf() const {
+        auto m = d.size();
+        for (size_t i = 0; i < m; i++) {
+            if (d[i]) return i * B + ::bsf(d[i]);
+        }
+        assert(false);
     }
 
     void swap_elms(size_t a, size_t b) {
@@ -49,7 +62,7 @@ struct BitVec {
                 d[i] = d[i - block];
             else {
                 d[i] =
-                    (d[i - block] << rem) | ((d[i - block - 1]) >> (B - rem));
+                        (d[i - block] << rem) | ((d[i - block - 1]) >> (B - rem));
             }
         }
         d[block] = d[0] << rem;
