@@ -1,14 +1,6 @@
-/**
-Convex Hull Trick
-Params:
-    T = value type
-    queryType = if queries are increase, use CHMode.incr.
-                if queries are decrease, use CHMode.decr.
- */
 template<class T>
 struct ConvexHull {
     using L = array<T, 2>;
-    static T value(L l, T x) { return l[0]*x + l[1]; }
 
     bool que_incr;
     ConvexHull(bool _que_incr) : que_incr(_que_incr) {}
@@ -66,6 +58,7 @@ struct ConvexHull {
     /// get maximum y
     long max_y(T x) {
         assert(lines.size());
+        auto value = [&](L l, T x) { return l[0] * x + l[1]; };
         if (que_incr) {
             while (lines.size() >= 2 &&
                    value(lines[0], x) <= value(lines[1], x)) {
