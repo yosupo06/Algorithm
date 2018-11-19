@@ -1,39 +1,62 @@
 struct Ariticulation {
-    V<bool> is_arit; // is Ariticulation point
-    V<bool> is_div; // is Div when parent remove
-    Ariticulation() {}
-    Ariticulation(int n) {
-        is_arit = V<bool>(n);
-        is_div = V<bool>(n);
-    }
+    VV<int> tr;
 };
 
-template<class E>
-Ariticulation ariticulation(const VV<E> &g, const LowLink &lc) {
-    int n = int(g.size());
-    Ariticulation ar(n);
-    auto &is_arit = ar.is_arit;
-    auto &is_div = ar.is_div;
-    for (int p: lc.vlis) {
-        if (lc.par[p] == -1) {
-            //root
-            is_arit[p] = (lc.tr[p].size() >= 2);
-            for (int d: lc.tr[p]) {
-                is_div[d] = true;
+template <class E> struct AriticulationExec : Ariticulation {
+    const VV<E>& g;
+    int n;
+    int ordc = 0;
+    V<int> low, ord;
+    V<int> used;
+    AriticulationExec(const VV<E>& _g)
+            : g(_g), n(int(g.size())), low(n), ord(n), used(n) {
+        tr = VV<int>(n);
+        for (int i = 0; i < n; i++) {
+            if (used[i]) continue;
+            dfs1(i, -1);
+            dfs2(i, -1);
+        }
+    }
+    void dfs1(int p, int b) {
+        used[p] = 1;
+        low[p] = ord[p] = ordc++;
+        bool rt = true;
+        for (auto e : g[p]) {
+            int d = e.to;
+            if (rt && d == b) {
+                rt = false;
+                continue;
             }
-        } else {
-            is_arit[p] = false;
-            for (int d: lc.tr[p]) {
-                if (lc.low[d] >= lc.ord[p]) {
-                    is_arit[p] = true;
-                    is_div[d] = true;
-                }
+            if (!used[d]) {
+                dfs1(d, p);
+                low[p] = min(low[p], low[d]);
+            } else {
+                low[p] = min(low[p], ord[d]);
             }
         }
     }
-    return ar;
-}
-template<class E>
-Ariticulation ariticulation(const VV<E> &g) {
-    return ariticulation(g, lowlink(g, -1));
+    void dfs2(int p, int bid = -1) {
+        used[p] = 2;
+        if (bid != -1) {
+            tr[p].push_back(bid);
+            tr[bid].push_back(p);
+        }
+        for (auto e: g[p]) {
+            int d = e.to;
+            if (used[d] == 2) continue;
+            if (low[d] < ord[p]) {
+                dfs2(d, bid);
+                continue;
+            }
+            int nid = int(tr.size());
+            tr.push_back({});
+            tr[p].push_back(nid);
+            tr[nid].push_back(p);
+            dfs2(d, nid);
+        }
+    }
+};
+
+template <class E> Ariticulation get_ariticulation(const VV<E>& g) {
+    return AriticulationExec<E>(g);
 }

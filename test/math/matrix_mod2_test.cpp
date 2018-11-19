@@ -4,6 +4,7 @@
 using namespace algotest;
 
 #include "base.h"
+#include "bitop.h"
 #include "math/modint.h"
 #include "datastructure/bitvector.h"
 #include "math/matrix.h"
