@@ -30,6 +30,11 @@ struct BitVec {
         }
         assert(false);
     }
+    size_t count() const {
+        size_t sm = 0;
+        for (auto x: d) sm += popcnt(x);
+        return sm;
+    }
 
     void swap_elms(size_t a, size_t b) {
         bool f = (*this)[a];
@@ -48,6 +53,11 @@ struct BitVec {
         return *this;
     }
 
+    BitVec& flip() {
+        op1(bit_not<ull>());
+        if (n % B) d.back() &= ~(-1ULL << (n % B));
+        return *this;
+    }
     BitVec& operator&=(const BitVec& r) { return op2(r, bit_and<ull>()); }
     BitVec& operator|=(const BitVec& r) { return op2(r, bit_or<ull>()); }
     BitVec& operator^=(const BitVec& r) { return op2(r, bit_xor<ull>()); }
@@ -87,6 +97,7 @@ struct BitVec {
         fill(d.begin() + d.size() - block, d.end(), 0ULL);
         return *this;
     }
+    BitVec& operator~() const { return BitVec(*this).flip(); }
     BitVec operator&(const BitVec& r) const { return BitVec(*this) &= r; }
     BitVec operator|(const BitVec& r) const { return BitVec(*this) |= r; }
     BitVec operator^(const BitVec& r) const { return BitVec(*this) ^= r; }
