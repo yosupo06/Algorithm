@@ -196,6 +196,22 @@ struct Mat2 : V<BitVec> {
     using V<BitVec>::size;
     int h() const { return int(size()); }
     int w() const { return int((*this)[0].size()); }
+    Mat2 operator*(const Mat2& r) const {
+        assert(w() == r.h());
+        Mat2 r_t = Mat2(r.h(), BitVec(r.w()));
+        for (int y = 0; y < r_t.h(); y++) {
+            for (int x = 0; x < r_t.w(); x++) {
+                r_t[y].set(x, r[x][y]);
+            }
+        }
+        Mat2 res(h(), BitVec(r_t.h()));
+        for (int i = 0; i < h(); i++) {
+            for (int j = 0; j < r_t.h(); j++) {
+                res[i].set(j, ((*this)[i] ^ r_t[j]).count() % 2 == 1);
+            }
+        }
+        return res;
+    }
 };
 
 int calc_rank(Mat2 a) {
