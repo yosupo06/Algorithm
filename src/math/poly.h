@@ -2,7 +2,7 @@ template <class D> struct Poly {
     V<D> v;
     int size() const { return int(v.size()); }
     Poly() {}
-    Poly(const V<D>& v) : v(v) { shrink(); }
+    Poly(const V<D>& _v) : v(_v) { shrink(); }
     Poly& shrink() {
         while (v.size() && !v.back()) v.pop_back();
         return *this;
@@ -86,6 +86,26 @@ template <class D> struct Poly {
         }
         return d.rev(n + 1 - N);
     }
+
+    // x^n % mod
+    static Poly nth_mod(ll n, const Poly& mod) {
+        int B = mod.size() * 2 - 1;
+        Poly mod_inv = mod.inv(B);
+        Poly p = V<D>{D(1)};
+        int m = (!n) ? -1 : bsr(ull(n));
+        for (int i = m; i >= 0; i--) {
+            if (n & (1LL << i)) {
+                // += 1
+                p = (p << 1).rem_inv(mod, mod_inv, B);
+            }
+            if (i) {
+                // *= 2
+                p = (p * p).rem_inv(mod, mod_inv, B);
+            }
+        }
+        return p;
+    }
+
     friend ostream& operator<<(ostream& os, const Poly& p) {
         if (p.size() == 0) return os << "0";
         for (auto i = 0; i < p.size(); i++) {
@@ -98,24 +118,7 @@ template <class D> struct Poly {
     }
 };
 
-// x^n % mod
-template <class D> Poly<D> nth_mod(ll n, const Poly<D>& mod) {
-    int B = mod.size() * 2 - 1;
-    Poly<D> mod_inv = mod.inv(B);
-    Poly<D> p = V<D>{D(1)};
-    int m = (!n) ? -1 : bsr(ull(n));
-    for (int i = m; i >= 0; i--) {
-        if (n & (1LL << i)) {
-            // += 1
-            p = (p << 1).rem_inv(mod, mod_inv, B);
-        }
-        if (i) {
-            // *= 2
-            p = (p * p).rem_inv(mod, mod_inv, B);
-        }
-    }
-    return p;
-}
+
 template <class Mint> Poly<Mint> berlekamp_massey(const V<Mint>& s) {
     int n = int(s.size());
     V<Mint> b = {Mint(-1)}, c = {Mint(-1)};
