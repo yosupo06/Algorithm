@@ -40,3 +40,18 @@ T pow_mod(T x, U n, T md) {
     }
     return r;
 }
+
+// (rem, mod)
+pair<ll, ll> crt(const V<ll>& b, const V<ll>& c) {
+    int n = int(b.size());
+    ll r = 0, m = 1;
+    for (int i = 0; i < n; i++) {
+        auto eg = ext_gcd(m, c[i]);
+        ll g = eg.g, im = eg.x;
+        if ((b[i] - r) % g) return {0, -1};
+        ll tmp = (b[i] - r) / g * im % (c[i] / g);
+        r += m * tmp;
+        m *= c[i] / g;
+    }
+    return {(r % m + m) % m, m};
+}
