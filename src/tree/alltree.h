@@ -1,70 +1,44 @@
-struct TreeOrd {
-    using P = pair<int, int>;
-    vector<P> s, rs;
-    template<class E>
-    TreeOrd(const VV<E> &g, int r = 0) {
-        s.push_back(P(r, -1));
-        for (int i = 0; i < int(s.size()); i++) {
-            P p = s[i];
-            for (E e: g[p.first]) {
-                if (e.to == p.second) continue;
-                s.push_back(P(e.to, p.first));
-            }
+template <class N, class E> struct AllTree {
+    int n;
+    const VV<E>& g;
+    V<N> sm;
+    VV<N> dp;
+    void dfs1(int p, int b) {
+        sm[p] = N();
+        for (auto e : g[p]) {
+            int d = e.to;
+            if (d == b) continue;
+            dfs1(d, p);
+            sm[p] = sm[p] + sm[d].first(p, e);
         }
-        rs = vector<P>(s.rbegin(), s.rend());
+        sm[p].finish(p);
+    }
+    void dfs2(int p, int b, N top) {
+        int deg = int(g[p].size());
+        dp[p] = V<N>(deg + 1);
+        dp[p][0] = N();
+        for (int i = 0; i < deg; i++) {
+            int d = g[p][i].to;
+            dp[p][i + 1] = dp[p][i] + (d == b ? top : sm[d]).first(p, g[p][i]);
+        }
+        N rnode = N();
+        for (int i = deg - 1; i >= 0; i--) {
+            int d = g[p][i].to;
+            if (d != b) {
+                dfs2(d, p, (dp[p][i] + rnode).finish(p));
+            }
+            dp[p][i] = dp[p][i] + rnode;
+            rnode = rnode + (d == b ? top : sm[d]).first(p, g[p][i]);
+        }
+    }
+    AllTree(const VV<E>& _g) : n(int(_g.size())), g(_g), sm(n), dp(n) {
+        dfs1(0, -1);
+        dfs2(0, -1, N());
     }
 };
-
-template<class N>
-struct AllTree {
-    vector<vector<N>> ldp;
-    AllTree() {}
-    template<class E>
-    AllTree(const VV<E> &g, const TreeOrd &t, int r = 0) {
-        int n = int(g.size());
-        auto sm = vector<N>(n), top = vector<N>(n);
-        ldp = vector<vector<N>>(n);
-        for (int i = 0; i < n; i++) {
-            ldp[i].resize(int(g[i].size())+1);
-        }
-        for (auto pa: t.rs) {
-            // first
-            int p, b; tie(p, b) = pa;
-            sm[p] = N();
-            for (const E &e: g[p]) {
-                int d = e.to;
-                if (d == b) continue;
-                sm[p] = sm[p] + N(sm[d]).first(p, e);
-            }
-            sm[p].finish(p);
-        }
-        top[r] = N();
-        for (auto pa: t.s) {
-            // second
-            int p, b; tie(p, b) = pa;
-            int dg = int(g[p].size());
-            vector<N> &ln = ldp[p];
-            ln[0] = N();
-            for (int i = 0; i < dg; i++) {
-                int d = g[p][i].to;
-                ln[i+1] = ln[i] + N(d==b ? top[p] : sm[d]).first(p, g[p][i]);
-            }
-            N rnode = N();
-            for (int i = dg-1; i >= 0; i--) {
-                int d = g[p][i].to;
-                if (d != b) {
-                    top[d] = (ln[i]+rnode).finish(p);
-                }
-                ln[i] = ln[i] + rnode;
-                rnode = rnode + N(d==b ? top[p] : sm[d]).first(p, g[p][i]);
-            }
-        }
-    }
-    N get(int p, int idx = -1) {
-        if (idx == -1) idx = int(ldp[p].size())-1;
-        return N(ldp[p][idx]).finish(p);
-    }
-};
+template <class N, class E> VV<N> get_all_tree(const VV<E>& g) {
+    return AllTree<N, E>(g).dp;
+}
 
 struct Node {
     // サンプル 木の直径
@@ -74,22 +48,24 @@ struct Node {
     int rd[2];
     Node() {
         // !!!!!森を生成すること!!!!!
-        rad = 0; dia = 0;
+        rad = 0;
+        dia = 0;
         rd[0] = rd[1] = 0;
     }
-    template<class E>
-    Node first(int par, const E &e) {
+    template <class E> Node first(int par, const E& e) {
         // 根付き木->森 上に辺を追加するイメージ e=(par -> node)
-        rd[0] = rad+e.dist;
+        rd[0] = rad + e.dist;
         rd[1] = 0;
         return *this;
     }
-    Node operator+(const Node &r) {
+    Node operator+(const Node& r) {
         // 結合則が必須 上に辺を追加された木をまとめるイメージ
         Node n;
         vector<int> v;
-        v.push_back(rd[0]); v.push_back(rd[1]);
-        v.push_back(r.rd[0]); v.push_back(r.rd[1]);
+        v.push_back(rd[0]);
+        v.push_back(rd[1]);
+        v.push_back(r.rd[0]);
+        v.push_back(r.rd[1]);
         sort(begin(v), end(v), greater<int>());
         n.rd[0] = v[0];
         n.rd[1] = v[1];
@@ -99,7 +75,7 @@ struct Node {
     Node finish(int par) {
         // 元締めとしてidxを追加するイメージ
         rad = rd[0];
-        dia = max(dia, rd[0]+rd[1]);
+        dia = max(dia, rd[0] + rd[1]);
         return *this;
     }
 };
