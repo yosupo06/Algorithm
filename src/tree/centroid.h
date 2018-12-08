@@ -1,45 +1,48 @@
 struct Centroid {
     int r;
-    VV<int> cg;
+    VV<int> tr;
     V<int> par;
+};
+
+template <class E> struct CentroidExec : Centroid {
+    int n;
+    const VV<E>& g;
     V<bool> used;
 
     using P = pair<int, int>;
-    vector<P> info; //(child max, child)
-    template<class E>
-    int dfs(const VV<E> &g, int p, int b) {
+    V<P> info;  //(child max, child)
+
+    int dfs(int p, int b) {
         int sz = 1;
         info[p] = P(0, -1);
-        for (E e: g[p]) {
+        for (E e : g[p]) {
             int d = e.to;
             if (d == b || used[d]) continue;
-            int csz = dfs(g, d, p);
+            int csz = dfs(d, p);
             sz += csz;
             info[p] = max(info[p], P(csz, d));
         }
         return sz;
     }
-    template<class E>
-    int init(const VV<E> &g, int p, int b) {
-        int sz = dfs(g, p, -1);
-        while (info[p].first > sz/2) p = info[p].second;
+    int init(int p, int b) {
+        int sz = dfs(p, -1);
+        while (info[p].first > sz / 2) p = info[p].second;
         par[p] = b;
         used[p] = true;
-        for (E e: g[p]) {
+        for (E e : g[p]) {
             int d = e.to;
             if (used[d]) continue;
-            cg[p].push_back(init(g, d, p));
+            tr[p].push_back(init(d, p));
         }
         return p;
     }
-    Centroid() {}
-    template<class E>
-    Centroid(const VV<E> &g) {
-        int n = (int)g.size();
-        cg = VV<int>(n);
+    CentroidExec(const VV<E>& _g) : n(int(_g.size())), g(_g), used(n), info(n) {
+        tr = VV<int>(n);
         par = V<int>(n);
-        used = V<bool>(n);
-        info = V<P>(n);
-        r = init(g, 0, -1);
+        r = init(0, -1);
     }
 };
+
+template <class E> Centroid get_centroid(const VV<E>& g) {
+    return CentroidExec<E>(g);
+}
