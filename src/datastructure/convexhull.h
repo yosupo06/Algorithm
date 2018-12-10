@@ -56,21 +56,21 @@ struct ConvexHull {
         else assert(false); //line's degree must be minimum or maximum
     }
     /// get maximum y
-    long max_y(T x) {
+    T max_y(T x) {
         assert(lines.size());
-        auto value = [&](L l, T x) { return l[0] * x + l[1]; };
+        auto value = [&](L l) { return l[0] * x + l[1]; };
         if (que_incr) {
             while (lines.size() >= 2 &&
-                   value(lines[0], x) <= value(lines[1], x)) {
+                   value(lines[0]) <= value(lines[1])) {
                 lines.pop_front();
             }
-            return value(lines.front(), x);
+            return value(lines.front());
         } else {
             while (lines.size() >= 2 &&
-                   value(lines[lines.size()-2], x) >= value(lines.back(), x)) {
+                   value(lines[lines.size()-2]) >= value(lines.back())) {
                 lines.pop_back();
             }
-            return value(lines.back(), x);
+            return value(lines.back());
         }
     }
 };
