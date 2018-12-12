@@ -11,6 +11,18 @@ struct ConvexHull {
         assert(left[0] <= mid[0] && mid[0] <= right[0]);
         return (right[0]-mid[0])*(left[1]-mid[1]) < (mid[0]-left[0])*(mid[1]-right[1]);
     }
+    //work with 2^(60 + 64)
+    /*static bool is_need(L mid, L left, L right) {
+        assert(left[0] <= mid[0] && mid[0] <= right[0]);
+        ll a = (right[0]-mid[0]), b = (left[1]-mid[1]), c = (mid[0]-left[0]), d = (mid[1]-right[1]);
+        long double x = (long double)(a) * b - (long double)(c) * d;
+        if (abs(x) > (1LL << 60)) return x < 0;
+        int fl = b < 0, fr = d < 0;
+        if (fl != fr) return fl == 1;
+        ull z = ull(a) * ull(abs(b)) - ull(c) * ull(abs(d));
+        if (fl == 0) return (1ULL << 63) < z;
+        return z < (1ULL << 63);
+    }*/
 
     void insert_front(L l) {
         if (lines.empty()) {
