@@ -1,8 +1,8 @@
-struct Ariticulation {
+struct Articulation {
     VV<int> tr;
 };
 
-template <class E> struct AriticulationExec : Ariticulation {
+template <class E> struct ArticulationExec : Articulation {
     const VV<E>& g;
     int n;
     int ordc = 0;
@@ -57,6 +57,6 @@ template <class E> struct AriticulationExec : Ariticulation {
     }
 };
 
-template <class E> Ariticulation get_ariticulation(const VV<E>& g) {
-    return AriticulationExec<E>(g);
+template <class E> Articulation get_articulation(const VV<E>& g) {
+    return ArticulationExec<E>(g);
 }
