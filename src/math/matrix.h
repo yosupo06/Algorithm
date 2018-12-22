@@ -38,8 +38,8 @@ template <class D> V<D> solve_linear(Mat<D> a, V<D> b, D eps) {
             D d = hypot(a[r][x], a[y][x]);
             if (abs(d) <= eps) continue;
             D c = a[r][x] / d, s = a[y][x] / d;
-            auto rot = [&](D& x, D& y) {
-                tie(x, y) = make_pair(c * x + s * y, c * y - s * x);
+            auto rot = [&](D& u, D& v) {
+                tie(u, v) = make_pair(c * u + s * v, c * v - s * u);
             };
             rot(b[r], b[y]);
             for (int k = x; k < w; k++) rot(a[r][k], a[y][k]);
@@ -183,7 +183,7 @@ template <class Mint> Mat<Mint> inverse(Mat<Mint> a) {
         for (int y = 0; y < n; y++) {
             if (x == y) continue;
             if (!a[y][x]) continue;
-            auto freq = a[y][x];
+            freq = a[y][x];
             for (int k = 0; k < n; k++) a[y][k] -= freq * a[x][k];
             for (int k = 0; k < n; k++) b[y][k] -= freq * b[x][k];
         }

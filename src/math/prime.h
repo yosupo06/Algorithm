@@ -3,7 +3,7 @@ struct Prime {
     vector<bool> used;
     vector<int> pr;
     vector<ull> bpr;
-    Prime(int n) : n(n) {
+    Prime(int _n) : n(_n) {
         used = vector<bool>(n+1, false);
         for (int i = 2; i <= n; i++) {
             if (used[i]) continue;

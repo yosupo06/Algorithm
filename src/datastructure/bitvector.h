@@ -86,14 +86,14 @@ struct BitVec {
             reset();
             return *this;
         }
-        for (size_t i = 0; i < d.size() - block; i++) {
+        for (size_t i = 0; i < d.size() - block - 1; i++) {
             if (rem == 0)
                 d[i] = d[i + block];
             else {
                 d[i] = (d[i + block + 1]) << (B - rem) | (d[i + block] >> rem);
             }
         }
-        d[d.size() - block - 1] = d.back() << rem;
+        d[d.size() - block - 1] = d.back() >> rem;
         fill(d.begin() + d.size() - block, d.end(), 0ULL);
         return *this;
     }
