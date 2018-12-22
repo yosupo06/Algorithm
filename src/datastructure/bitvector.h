@@ -19,7 +19,8 @@ struct BitVec {
         n++;
     }
     bool empty() const {
-        for (auto& x : d) if (x) return false;
+        for (auto& x : d)
+            if (x) return false;
         return true;
     }
 
@@ -32,7 +33,7 @@ struct BitVec {
     }
     size_t count() const {
         size_t sm = 0;
-        for (auto x: d) sm += popcnt(x);
+        for (auto x : d) sm += popcnt(x);
         return sm;
     }
 
@@ -70,10 +71,8 @@ struct BitVec {
         for (size_t i = d.size() - 1; i > block; i--) {
             if (rem == 0)
                 d[i] = d[i - block];
-            else {
-                d[i] =
-                        (d[i - block] << rem) | ((d[i - block - 1]) >> (B - rem));
-            }
+            else
+                d[i] = d[i - block] << rem | (d[i - block - 1]) >> (B - rem);
         }
         d[block] = d[0] << rem;
         if (n % B) d.back() &= ull(-1) >> (B - n % B);
@@ -89,9 +88,8 @@ struct BitVec {
         for (size_t i = 0; i < d.size() - block - 1; i++) {
             if (rem == 0)
                 d[i] = d[i + block];
-            else {
-                d[i] = (d[i + block + 1]) << (B - rem) | (d[i + block] >> rem);
-            }
+            else
+                d[i] = d[i + block + 1] << (B - rem) | d[i + block] >> rem;
         }
         d[d.size() - block - 1] = d.back() >> rem;
         fill(d.begin() + d.size() - block, d.end(), 0ULL);
