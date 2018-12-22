@@ -3,6 +3,9 @@ struct BitVec {
     size_t n;
     V<ull> d;
     explicit BitVec(size_t _n = 0) : n(_n), d((n + B - 1) / B) {}
+    void erase_last() {
+        if (n % B) d.back() &= ull(-1) >> (B - n % B);
+    }
     size_t size() const { return n; }
     bool operator[](size_t i) const { return ((d[i / B] >> (i % B)) & 1) != 0; }
     void set(size_t i, bool f = true) {
@@ -76,7 +79,7 @@ struct BitVec {
                 d[i] = d[i - block] << rem | (d[i - block - 1]) >> (B - rem);
         }
         d[block] = d[0] << rem;
-        if (n % B) d.back() &= ull(-1) >> (B - n % B);
+        erase_last();
         fill(d.begin(), d.begin() + block, 0ULL);
         return *this;
     }
@@ -108,10 +111,24 @@ struct BitVec {
         BitVec res(le);
         size_t i = 0;
         while (i < le) {
-            res.d[i / 64] |= d[(st + i) / 64] >> ((st + i) % 64) << (i % 64);
-            i += min(64 - i % 64, 64 - (st + i) % 64);
+            res.d[i / B] |= d[(st + i) / B] >> ((st + i) % B) << (i % B);
+            i += min(B - i % B, B - (st + i) % B);
         }
-        if (le % B) res.d.back() &= ull(-1) >> (B - le % B);
+        res.erase_last();
         return res;
     }
+    bool substr_match(size_t st, const BitVec& pat) const {
+        size_t le = pat.size();
+        assert(st + le <= n);
+        size_t i = 0;
+        while (i < le) {
+            size_t u = min({le - i, B - i % B, B - (st + i) % B});
+            ull z = pat.d[i / B] >> (i % B) ^ d[(st + i) / B] >> ((st + i) % B);
+            if (z << (B - u)) return false;
+            i += u;
+        }
+        return true;
+    }
+
+    bool operator==(const BitVec& r) const { return d == r.d; }
 };
