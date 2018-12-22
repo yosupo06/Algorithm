@@ -45,3 +45,21 @@ TEST(BitVectorTest, LeftShift) {
         }
     }
 }
+
+
+TEST(BitVectorTest, SubStr) {
+    Random gen;
+
+    for (int le = 0; le < 200; le++) {
+        for (int ph = 0; ph < 30; ph++) {
+            int a = gen.uniform(0, le);
+            int b = gen.uniform(0, le - a);
+            auto bs = BitVec(le);
+            for (int i = 0; i < le; i++) bs.set(i, gen.uniform_bool());
+            auto bs2 = bs.substr(a, b);
+            for (int i = 0; i < b; i++) {
+                ASSERT_EQ(bs[a + i], bs2[i]);
+            }
+        }
+    }
+}

@@ -31,6 +31,7 @@ struct BitVec {
         }
         assert(false);
     }
+
     size_t count() const {
         size_t sm = 0;
         for (auto x : d) sm += popcnt(x);
@@ -101,4 +102,16 @@ struct BitVec {
     BitVec operator^(const BitVec& r) const { return BitVec(*this) ^= r; }
     BitVec operator<<(const size_t& s) const { return BitVec(*this) <<= s; }
     BitVec operator>>(const size_t& s) const { return BitVec(*this) >>= s; }
+
+    BitVec substr(size_t st, size_t le) {
+        assert(st + le <= n);
+        BitVec res(le);
+        size_t i = 0;
+        while (i < le) {
+            res.d[i / 64] |= d[(st + i) / 64] >> ((st + i) % 64) << (i % 64);
+            i += min(64 - i % 64, 64 - (st + i) % 64);
+        }
+        if (le % B) res.d.back() &= ull(-1) >> (B - le % B);
+        return res;
+    }
 };
