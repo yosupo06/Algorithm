@@ -76,7 +76,7 @@ struct BitVec {
             if (rem == 0)
                 d[i] = d[i - block];
             else
-                d[i] = d[i - block] << rem | (d[i - block - 1]) >> (B - rem);
+                d[i] = d[i - block] << rem | d[i - block - 1] >> (B - rem);
         }
         d[block] = d[0] << rem;
         erase_last();
@@ -106,7 +106,7 @@ struct BitVec {
     BitVec operator<<(const size_t& s) const { return BitVec(*this) <<= s; }
     BitVec operator>>(const size_t& s) const { return BitVec(*this) >>= s; }
 
-    BitVec substr(size_t st, size_t le) {
+    BitVec substr(size_t st, size_t le) const {
         assert(st + le <= n);
         BitVec res(le);
         size_t i = 0;
