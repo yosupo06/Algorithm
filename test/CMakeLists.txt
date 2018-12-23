@@ -121,6 +121,10 @@ add_executable(BitVectorTest datastructure/bitvector_test.cpp)
 target_link_libraries(BitVectorTest gtest gtest_main)
 gtest_add_tests(TARGET BitVectorTest)
 
+add_executable(FastSetTest datastructure/fastset_test.cpp)
+target_link_libraries(FastSetTest gtest gtest_main)
+gtest_add_tests(TARGET FastSetTest)
+
 add_executable(FenwickTest datastructure/fenwick_test.cpp)
 target_link_libraries(FenwickTest gtest gtest_main)
 gtest_discover_tests(FenwickTest)

@@ -7,10 +7,10 @@ struct BitVec {
         if (n % B) d.back() &= ull(-1) >> (B - n % B);
     }
     size_t size() const { return n; }
-    bool operator[](size_t i) const { return ((d[i / B] >> (i % B)) & 1) != 0; }
+    bool operator[](size_t i) const { return (d[i / B] >> (i % B) & 1) != 0; }
     void set(size_t i, bool f = true) {
         if (f)
-            d[i / B] |= (1ULL << (i % B));
+            d[i / B] |= 1ULL << (i % B);
         else
             d[i / B] &= ~(1ULL << (i % B));
     }

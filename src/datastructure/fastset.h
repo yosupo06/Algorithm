@@ -1,73 +1,66 @@
 struct FastSet {
-    int N, lg;
+    static constexpr size_t B = 64;
+    size_t n, lg;
     VV<ull> seg;
-    FastSet(int N) : N(N) {
+    FastSet(size_t _n) : n(_n) {
         do {
-            seg.push_back(V<ull>((N + 63) / 64));
-            N = (N + 63) / 64;
-        } while (N > 1);
+            seg.push_back(V<ull>((_n + B - 1) / B));
+            _n = (_n + B - 1) / B;
+        } while (_n > 1);
         lg = seg.size();
     }
-    bool test(int x) const {
-        int D = x / 64, R = x % 64;
-        return (seg[0][D] & (1ULL << R)) != 0;
+    bool operator[](size_t i) const {
+        return (seg[0][i / B] >> (i % B) & 1) != 0;
     }
-    void set(int x) {
-        for (int i = 0; i < lg; i++) {
-            int D = x / 64, R = x % 64;
-            seg[i][D] |= (1ULL << R);
-            x /= 64;
+    void set(size_t i) {
+        for (size_t h = 0; h < lg; h++) {
+            seg[h][i / B] |= 1ULL << (i % B);
+            i /= B;
         }
     }
-    void clear(int x) {
-        for (int i = 0; i < lg; i++) {
-            int D = x / 64, R = x % 64;
-            seg[i][D] &= ~(1ULL << R);
-            if (i && seg[i - 1][x] != 0) {
-                seg[i][D] |= (1ULL << R);
-            }
-            x /= 64;
+    void reset(size_t i) {
+        for (size_t h = 0; h < lg; h++) {
+            seg[h][i / B] &= ~(1ULL << (i % B));
+            if (seg[h][i / B]) break;
+            i /= B;
         }
     }
     // x以上最小の要素
-    int next(int x) {
-        for (int i = 0; i < lg; i++) {
-            int D = x / 64, R = x % 64;
-            if (D == seg[i].size()) break;
-            ull B = seg[i][D] >> R;
-            if (!B) {
-                x = x / 64 + 1;
+    ssize_t next(size_t i) {
+        for (ssize_t h = 0; h < ssize_t(lg); h++) {
+            if (i / 64 == seg[h].size()) break;
+            ull d = seg[h][i / B] >> (i % B);
+            if (!d) {
+                i = i / B + 1;
                 continue;
             }
             // find
-            x += bsf(B);
-            for (int j = i - 1; j >= 0; j--) {
-                x *= 64;
-                int D = x / 64;
-                x += bsf(seg[j][D]);
+            i += bsf(d);
+            for (ssize_t g = h - 1; g >= 0; g--) {
+                i *= 64;
+                i += bsf(seg[g][i / B]);
             }
-            return x;
+            return i;
         }
-        return N;
+        return n;
     }
-    // x以下最大の要素
-    int back(int x) {
-        for (int i = 0; i < lg; i++) {
-            if (x == -1) break;
-            int D = x / 64, R = x % 64;
-            ull B = seg[i][D] << (63 - R);
-            if (!B) {
-                x = x / 64 - 1;
+    // x未満最大の要素
+    ssize_t prev(ssize_t i) {
+        i--;
+        for (ssize_t h = 0; h < ssize_t(lg); h++) {
+            if (i == -1) break;
+            ull d = seg[h][i / B] << (63 - i % 64);
+            if (!d) {
+                i = i / 64 - 1;
                 continue;
             }
             // find
-            x += bsr(B) - 63;
-            for (int j = i - 1; j >= 0; j--) {
-                x *= 64;
-                int D = x / 64;
-                x += bsr(seg[j][D]);
+            i += bsr(d) - 63;
+            for (ssize_t g = h - 1; g >= 0; g--) {
+                i *= 64;
+                i += bsr(seg[g][i / 64]);
             }
-            return x;
+            return i;
         }
         return -1;
     }
