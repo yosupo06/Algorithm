@@ -71,13 +71,19 @@ struct ConvexHull {
     T max_y(T x) {
         assert(lines.size());
         auto value = [&](L l) { return l[0] * x + l[1]; };
+        static T b_x;
+        static bool first = true;
         if (que_incr) {
+            assert(first || b_x <= x);
+            first = false; b_x = x;
             while (lines.size() >= 2 &&
                    value(lines[0]) <= value(lines[1])) {
                 lines.pop_front();
             }
             return value(lines.front());
         } else {
+            assert(first || x <= b_x);
+            first = false; b_x = x;
             while (lines.size() >= 2 &&
                    value(lines[lines.size()-2]) >= value(lines.back())) {
                 lines.pop_back();
