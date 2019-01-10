@@ -58,7 +58,7 @@ struct Arrange {
         for (int i = 0; i < n; i++) {
             ps.push_back(l[i].s);
             ps.push_back(l[i].t);
-            for (int j = i+1; j < n; j++) {
+            for (int j = i + 1; j < n; j++) {
                 P p;
                 int u = crossSS(l[i], l[j], p);
                 if (u == 0) continue;
@@ -79,8 +79,8 @@ struct Arrange {
                 return (ps[x] - l[i].s).abs() < (ps[y] - l[i].s).abs();
             });
             for (int j = 0; j < int(v.size()) - 1; j++) {
-                g[v[j]].push_back(v[j+1]);
-                g[v[j+1]].push_back(v[j]);
+                g[v[j]].push_back(v[j + 1]);
+                g[v[j + 1]].push_back(v[j]);
             }
         }
 
