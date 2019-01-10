@@ -3,49 +3,43 @@ const D PI = acos(D(-1)), EPS = 1e-10;
 
 int sgn(D a) { return (a < -EPS) ? -1 : (a > EPS); }
 int sgn(D a, D b) { return sgn(a - b); }
-// relative sign
-// int rsgn(D a, D f) {
-//     if (abs(a) <= f*EPS) return 0;
-//     return (a < 0) ? -1 : 1;
-// }
-struct Pt2 {
+struct P {
     D x, y;
-    Pt2(D _x = D(), D _y = D()) : x(_x), y(_y) {}
-    Pt2 operator+(const Pt2& r) const { return Pt2(x + r.x, y + r.y); }
-    Pt2 operator-(const Pt2& r) const { return Pt2(x - r.x, y - r.y); }
-    Pt2 operator*(const Pt2& r) const {
-        return Pt2(x * r.x - y * r.y, x * r.y + y * r.x);
+    P(D _x = D(), D _y = D()) : x(_x), y(_y) {}
+    P operator+(const P& r) const { return {x + r.x, y + r.y}; }
+    P operator-(const P& r) const { return {x - r.x, y - r.y}; }
+    P operator*(const P& r) const {
+        return {x * r.x - y * r.y, x * r.y + y * r.x};
     }
 
-    Pt2 operator*(const D& r) const { return Pt2(x * r, y * r); }
-    Pt2 operator/(const D& r) const { return Pt2(x / r, y / r); }
+    P operator*(const D& r) const { return {x * r, y * r}; }
+    P operator/(const D& r) const { return {x / r, y / r}; }
 
-    Pt2& operator+=(const Pt2& r) { return *this = *this + r; }
-    Pt2& operator-=(const Pt2& r) { return *this = *this - r; }
-    Pt2& operator*=(const Pt2& r) { return *this = *this * r; }
-    Pt2& operator*=(const D& r) { return *this = *this * r; }
-    Pt2& operator/=(const D& r) { return *this = *this / r; }
+    P& operator+=(const P& r) { return *this = *this + r; }
+    P& operator-=(const P& r) { return *this = *this - r; }
+    P& operator*=(const P& r) { return *this = *this * r; }
+    P& operator*=(const D& r) { return *this = *this * r; }
+    P& operator/=(const D& r) { return *this = *this / r; }
 
-    Pt2 operator-() const { return Pt2(-x, -y); }
+    P operator-() const { return {-x, -y}; }
 
-    bool operator<(const Pt2& r) const {
+    bool operator<(const P& r) const {
         return 2 * sgn(x, r.x) + sgn(y, r.y) < 0;
     }
-    bool operator==(const Pt2& r) const { return sgn((*this - r).rabs()) == 0; }
-    bool operator!=(const Pt2& r) const { return !(*this == r); }
+    bool operator==(const P& r) const { return sgn((*this - r).rabs()) == 0; }
+    bool operator!=(const P& r) const { return !(*this == r); }
 
     D norm() const { return x * x + y * y; }
     D abs() const { return sqrt(norm()); }
     D rabs() const { return max(std::abs(x), std::abs(y)); }  // robust abs
     D arg() const { return atan2(y, x); }
 
-    pair<D, D> to_pair() const { return make_pair(x, y); }
-    static Pt2 polar(D le, D th) { return Pt2(le * cos(th), le * sin(th)); }
+    pair<D, D> to_pair() const { return {x, y}; }
+    static P polar(D le, D th) { return {le * cos(th), le * sin(th)}; }
 };
-ostream& operator<<(ostream& os, const Pt2& p) {
+ostream& operator<<(ostream& os, const P& p) {
     return os << "P(" << p.x << ", " << p.y << ")";
 }
-using P = Pt2;
 
 struct L {
     P s, t;

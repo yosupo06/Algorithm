@@ -50,43 +50,46 @@ V<L> halfplane_intersects(V<L> lines) {
     return V<L>(st.begin(), st.end());
 }
 
-//線分アレンジメント
-// l->線分 n->線分の数 p->点集合結果 g->エッジの情報
-// pのサイズはlC2+2*l確保
-//返り値として点集合の個数を返す
-/*int arrange(L l[], int n, P p[], vector<int> g[]) {
-    int pc = 0;
-    for (int i = 0; i < n; i++) {
-        p[pc] = l[i].x; pc++;
-        p[pc] = l[i].y; pc++;
-        for (int j = i+1; j < n; j++) {
-            int u = crossSS(l[i], l[j], p[pc]);
-            if (u == 0) continue;
-            pc++;
+struct Arrange {
+    V<P> ps;
+    VV<int> g;
+    Arrange(const V<L>& l) {
+        int n = int(l.size());
+        for (int i = 0; i < n; i++) {
+            ps.push_back(l[i].s);
+            ps.push_back(l[i].t);
+            for (int j = i+1; j < n; j++) {
+                P p;
+                int u = crossSS(l[i], l[j], p);
+                if (u == 0) continue;
+                ps.push_back(p);
+            }
         }
-    }
-    sort(p, p+pc, rless);
-    pc = unique(p, p+pc, near) - p;
-    for (int i = 0; i < n; i++) {
-        vector<int> v;
-        for (int j = 0; j < pc; j++) {
-            if (ccw(l[i].x, l[i].y, p[j]) != 0) continue;
-            v.push_back(j);
+        sort(ps.begin(), ps.end());
+        ps.erase(unique(ps.begin(), ps.end()), ps.end());
+        int m = int(ps.size());
+        g = VV<int>(m);
+        for (int i = 0; i < n; i++) {
+            V<int> v;
+            for (int j = 0; j < m; j++) {
+                if (ccw(l[i].s, l[i].t, ps[j]) != 0) continue;
+                v.push_back(j);
+            }
+            sort(v.begin(), v.end(), [&](int x, int y) {
+                return (ps[x] - l[i].s).abs() < (ps[y] - l[i].s).abs();
+            });
+            for (int j = 0; j < int(v.size()) - 1; j++) {
+                g[v[j]].push_back(v[j+1]);
+                g[v[j+1]].push_back(v[j]);
+            }
         }
-        sort(v.begin(), v.end(), [&](const int &x, const int &y)
-            {return abs(p[x] - l[i].x) < abs(p[y] - l[i].x);});
-        for (int j = 0; j < (int)v.size() - 1; j++) {
-            g[v[j]].push_back(v[j+1]);
-            g[v[j+1]].push_back(v[j]);
-        }
-    }
 
-    for (int i = 0; i < pc; i++) {
-        sort(g[i].begin(), g[i].end());
-        g[i].erase(unique(g[i].begin(), g[i].end()), g[i].end());
+        for (int i = 0; i < m; i++) {
+            sort(g[i].begin(), g[i].end());
+            g[i].erase(unique(g[i].begin(), g[i].end()), g[i].end());
+        }
     }
-    return pc;
-}*/
+};
 
 /*
 双対グラフを返す，psは点の位置，gはグラフ
