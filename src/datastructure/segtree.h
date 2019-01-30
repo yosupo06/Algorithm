@@ -1,7 +1,7 @@
 template <class D, class Op> struct SimpleSeg {
     D e;
     Op op;
-    int sz, lg;  //(2^lgに拡張後の)サイズ, lg
+    int sz, lg;  // size(extended to 2^i), lg
     V<D> d;
 
     SimpleSeg(const V<D>& v, D _e, Op _op) : e(_e), op(_op) {
@@ -26,13 +26,19 @@ template <class D, class Op> struct SimpleSeg {
 
     D single(int p) { return d[p + sz]; }
 
-    D sum(int a, int b, int l, int r, int k) {
-        if (b <= l || r <= a) return e;
-        if (a <= l && r <= b) return d[k];
-        int mid = (l + r) / 2;
-        return op(sum(a, b, l, mid, 2 * k), sum(a, b, mid, r, 2 * k + 1));
+    D sum(int a, int b) {
+        D sml = e, smr = e;
+        a += sz;
+        b += sz;
+
+        while (a < b) {
+            if (a & 1) sml = op(sml, d[a++]);
+            if (b & 1) smr = op(d[--b], smr);
+            a >>= 1;
+            b >>= 1;
+        }
+        return op(sml, smr);
     }
-    D sum(int a, int b) { return sum(a, b, 0, sz, 1); }
 };
 
 template <class D, class Op>
