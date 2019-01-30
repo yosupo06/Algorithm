@@ -15,9 +15,9 @@ template <class D> struct RadixHeap {
         if (cnt < v[0].size()) return;
         int i = 1;
         while (v[i].empty()) i++;
-        last = min_element(v[i].begin(), v[i].end(),
-                           [&](D l, D r) { return l.key < r.key; })
-                   ->key;
+        last = min_element(v[i].begin(), v[i].end(), [&](D l, D r) {
+                   return l.key < r.key;
+               })->key;
         for (D x : v[i]) {
             v[bsr1(x.key ^ last)].push_back(x);
         }

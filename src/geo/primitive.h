@@ -73,6 +73,7 @@ int ccw(P b, P c) {
 int ccw(P a, P b, P c) { return ccw(b - a, c - a); }
 int ccw(L l, P p) { return ccw(l.s, l.t, p); }
 
+/*
 D deg2rad(D x) { return x / 180 * PI; }
 D rad2deg(D x) { return x / PI * 180; }
 
@@ -85,14 +86,14 @@ D radNorN(D x) {
     if (x >= PI) x -= 2 * PI;
     return x;
 }
-
+*/
 /**
  * radianで、xが[l, r]に入っているかを判別する
  * 0:OFF
  * 1:IN
  * 2:ON
  */
-bool inR(D l, D r, D x) {
+/*bool inR(D l, D r, D x) {
     l = radNorP(l);
     r = radNorP(r);
     x = radNorP(x);
@@ -115,3 +116,4 @@ D sacos(D d) {
     d = min(D(1), d);
     return acos(d);
 }
+*/

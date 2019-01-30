@@ -153,7 +153,7 @@ D area2CPol(const C& c, const Pol& po) {
 // ここからold
 
 //扇型ライブラリ
-struct Sec {
+/*struct Sec {
     C c;
     D l, r;
     Sec() {}
@@ -176,3 +176,4 @@ int crossSC(const L& l, const C& c) {
     if (sgn(c.r, (l.t - c.p).abs()) != -1) u++;
     return u;
 }
+*/
