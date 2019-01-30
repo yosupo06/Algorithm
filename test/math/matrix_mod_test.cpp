@@ -70,7 +70,7 @@ struct BMDetTester : public MatrixModTesterBase {
                 edges[i].push_back(E{j, Mint(mat[i][j])});
             }
         }
-        return sparse_det<Mint>(edges).v;
+        return sparse_det(edges).v;
     }
     V<ll> linear_equation(VV<ll>, V<ll>) final { return {}; }
     VV<ll> inverse(VV<ll>) final { return {}; }

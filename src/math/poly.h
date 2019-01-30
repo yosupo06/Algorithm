@@ -152,7 +152,7 @@ template <class Mint> Poly<Mint> berlekamp_massey(const V<Mint>& s) {
     return Poly<Mint>(c);
 }
 
-template <class Mint, class E> Mint sparse_det(const VV<E>& g) {
+template <class E, class Mint = decltype(E().f)> Mint sparse_det(const VV<E>& g) {
     int n = int(g.size());
     if (n == 0) return 1;
     auto rand_v = [&]() {
@@ -181,7 +181,7 @@ template <class Mint, class E> Mint sparse_det(const VV<E>& g) {
         r = tmp;
     }
     auto u = berlekamp_massey(buf);
-    if (u.size() != n + 1) return sparse_det<Mint>(g);
+    if (u.size() != n + 1) return sparse_det(g);
     auto acdet = u.freq(0) * Mint(-1);
     if (n % 2) acdet *= Mint(-1);
     if (!acdet) return 0;

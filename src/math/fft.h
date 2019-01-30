@@ -34,9 +34,8 @@ void fft(bool type, V<Pc>& c) {
     c = a;
 }
 
-template<int G, uint MD>
-void nft(bool type, V<ModInt<MD>>& c) {
-    using Mint = ModInt<MD>;
+template<int G, class Mint>
+void nft(bool type, V<Mint>& c) {
     int N = int(c.size());
     int s = 0;
     while ((1 << s) < N) s++;
@@ -45,7 +44,7 @@ void nft(bool type, V<ModInt<MD>>& c) {
     V<Mint> a = c, b(N);
     for (int i = 1; i <= s; i++) {
         int W = 1 << (s - i);
-        Mint base = Mint(G).pow((MD - 1) / (1 << i));
+        Mint base = Mint(G).pow(Mint(-1).v / (1 << i));
         if (type) base = base.inv();
         Mint now = 1;
         for (int y = 0; y < N / 2; y += W) {
