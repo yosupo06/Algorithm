@@ -6,13 +6,11 @@ struct UnionFind {
         int x = group(a), y = group(b);
         if (x == y) return;  // same
         gn--;
-        if (r[x] < r[y])
+        if (r[x] < r[y]) {
             p[x] = y;
-        else if (r[x] > r[y])
+        } else {
             p[y] = x;
-        else {
-            p[x] = y;
-            r[x]++;
+            if (r[x] == r[y]) r[x]++;
         }
     }
     int group(int a) {
