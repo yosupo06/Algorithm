@@ -100,7 +100,7 @@ struct DualGraph {
     V<Pol> pols;
     VV<int> g;
 };
-DualGraph dualGraph(V<P> ps, VV<int> g) {
+DualGraph dual_graph(V<P> ps, VV<int> g) {
     assert(ps.size() == g.size());
     int n = int(ps.size());
     using Pi = pair<int, int>;
