@@ -6,11 +6,11 @@ template <class E> struct MaxMatching {
     V<int> mt;
 
     using P = pair<int, int>;
-    V<int> ty, gr_buf;
+    V<int> is_ev, gr_buf;
     V<P> nx;
-
+    int st;
     int group(int x) {
-        if (gr_buf[x] == -1 || ty[gr_buf[x]] == 1) return gr_buf[x];
+        if (gr_buf[x] == -1 || is_ev[gr_buf[x]] != st) return gr_buf[x];
         return gr_buf[x] = group(gr_buf[x]);
     }
 
@@ -27,68 +27,58 @@ template <class E> struct MaxMatching {
         }
     }
 
-    bool arg(int st) {
-        ty[st] = gr_buf[st] = -1;
+    bool arg() {
+        is_ev[st] = st;
+        gr_buf[st] = -1;
         nx[st] = P(-1, -1);
         queue<int> q;
-        V<int> vis;
         q.push(st);
-        vis.push_back(st);
         while (q.size()) {
             int a = q.front();
             q.pop();
             for (auto e : g[a]) {
                 int b = e.to;
-                if (ty[b] == 1) continue;  // odd point
-                if (ty[b] == 0) {
-                    if (mt[b] == -1) {
-                        // increase matching
-                        mt[b] = a;
-                        match(a, b);
-                        for (int d : vis) ty[d] = 0;
-                        return true;
+                if (b == st) continue;
+                if (mt[b] == -1) {
+                    mt[b] = a;
+                    match(a, b);
+                    return true;
+                }
+                if (is_ev[b] == st) {
+                    int x = group(a), y = group(b);
+                    if (x == y) continue;
+                    int z = -1;
+                    while (x != -1 || y != -1) {
+                        if (y != -1) swap(x, y);
+                        if (nx[x] == P(a, b)) {
+                            z = x;
+                            break;
+                        }
+                        nx[x] = P(a, b);
+                        x = group(nx[mt[x]].first);
                     }
-                    // connect
-                    vis.push_back(b);
-                    vis.push_back(mt[b]);
-                    ty[b] = 1;
-                    ty[mt[b]] = -1;
+                    for (int v : {group(a), group(b)}) {
+                        while (v != z) {
+                            q.push(v);
+                            is_ev[v] = st;
+                            gr_buf[v] = z;
+                            v = group(nx[mt[v]].first);
+                        }
+                    }
+                } else if (is_ev[mt[b]] != st) {
+                    is_ev[mt[b]] = st;
                     nx[b] = P(-1, -1);
                     nx[mt[b]] = P(a, -1);
                     gr_buf[mt[b]] = b;
                     q.push(mt[b]);
-                    continue;
-                }
-                int x = group(a), y = group(b);
-                if (x == y) continue;
-                if (x != -1) nx[x] = P(a, b);
-                if (y != -1) nx[y] = P(a, b);
-                int z = -1;
-                while (x != -1 || y != -1) {
-                    if (y != -1) swap(x, y);
-                    x = group(nx[mt[x]].first);
-                    if (x == -1) continue;
-                    if (nx[x] == P(a, b)) {
-                        z = x;
-                        break;
-                    }
-                    nx[x] = P(a, b);
-                }
-                for (int v : {group(a), group(b)}) {
-                    while (v != z) {
-                        q.push(v);
-                        ty[v] = -1;
-                        gr_buf[v] = z;
-                        v = group(nx[mt[v]].first);
-                    }
                 }
             }
         }
         return false;
     }
     MaxMatching(const VV<E>& _g)
-        : n(int(_g.size())), g(_g), mt(n, -1), ty(n, 0), gr_buf(n), nx(n) {
-        for (int st = 0; st < n; st++)
-            if (mt[st] == -1) arg(st);
+        : n(int(_g.size())), g(_g), mt(n, -1), is_ev(n, -1), gr_buf(n), nx(n) {
+        for (st = 0; st < n; st++)
+            if (mt[st] == -1) arg();
     }
 };
