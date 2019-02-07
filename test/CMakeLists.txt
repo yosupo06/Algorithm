@@ -14,9 +14,7 @@ ENDIF()
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     message("Build with debug mode")
-    #add_compile_definitions(_GLIBCXX_DEBUG) v3.12
-    add_compile_options(-D_GLIBCXX_DEBUG)
-    add_compile_options(-ftrapv)
+    add_compile_options(-D_GLIBCXX_DEBUG -ftrapv)
 ELSEIF(CMAKE_BUILD_TYPE MATCHES RelWithDebInfo)
     message("Build with relwithdebinfo mode")
     add_compile_options(-O3 -march=native)
@@ -83,6 +81,10 @@ gtest_add_tests(TARGET TWOSATTest)
 add_executable(MFTest graph/mf_test.cpp)
 target_link_libraries(MFTest gtest gtest_main)
 gtest_add_tests(TARGET MFTest)
+
+add_executable(MaxMatchTest graph/maxmatch_test.cpp)
+target_link_libraries(MaxMatchTest gtest gtest_main)
+gtest_add_tests(TARGET MaxMatchTest)
 
 add_executable(MCFTest graph/mcf_test.cpp)
 target_link_libraries(MCFTest gtest gtest_main)
