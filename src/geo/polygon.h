@@ -76,7 +76,6 @@ Pol convex(V<P> ps) {
     return dw;
 }
 
-// スパゲッティソースをパクった、直線の左側の多角形を返却する
 Pol convex_cut(const Pol& po, const L& l) {
     if (!po.size()) return Pol{};
     Pol q;
@@ -127,26 +126,6 @@ D diameter(const Pol& p) {
 // // -1: cw, 0: line, 1: ccw
 // int is_ccw(const Pol &p) {
 //     return sgn(area2_noabs(p));
-// }
-
-// D area2(V<P> &p) {
-//     D u = 0;
-//     for (int i = 0; i < (int)p.size(); i++) {
-//         u += cross(cu(p, i), cu(p, i+1));
-//     }
-//     return u;
-// }
-
-// D area_naive(const Pol &p) {
-//     D u = 0;
-//     for (int i = 0; i < (int)p.size(); i++) {
-//         u += cross(cu(p, i), cu(p, i+1));
-//     }
-//     return u/2;
-// }
-
-// D area(const Pol &p) {
-//     return abs(area_naive(p));
 // }
 
 // int contains(const Pol& pol, const L& l) {
