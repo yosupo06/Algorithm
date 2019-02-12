@@ -149,31 +149,3 @@ D area2CPol(const C& c, const Pol& po) {
     }
     return sm;
 }
-
-// ここからold
-
-//扇型ライブラリ
-/*struct Sec {
-    C c;
-    D l, r;
-    Sec() {}
-    Sec(C _c, D _l, D _r) : c(_c), l(_l), r(_r) {}
-};
-
-bool crossSecP(const Sec& s, const P& p) {
-    P pp = p - s.c.p;
-    if (sgn(s.c.r, pp.abs()) == 1) return false;
-    if (sgn(pp.abs()) == 0) return true;
-    return inR(s.l, s.r, pp.arg()) > 0;
-}
-
-int crossSC(const L& l, const C& c) {
-    D mi = distSP(l, c.p);
-    if (sgn(c.r, mi) == -1) return 0;
-    if (sgn(c.r, mi) == 0) return 1;
-    int u = 0;
-    if (sgn(c.r, (l.s - c.p).abs()) != -1) u++;
-    if (sgn(c.r, (l.t - c.p).abs()) != -1) u++;
-    return u;
-}
-*/
