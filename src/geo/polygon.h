@@ -120,39 +120,3 @@ D diameter(const Pol& p) {
     }
     return ans;
 }
-
-///// ここからOLD
-
-// // -1: cw, 0: line, 1: ccw
-// int is_ccw(const Pol &p) {
-//     return sgn(area2_noabs(p));
-// }
-
-// int contains(const Pol& pol, const L& l) {
-//     int n = int(pol.size());
-//     vector<P> v = {l.s, l.t};
-//     for (int i = 0; i < n; i++) {
-//         P a = pol[i], b = pol[(i + 1) % n];
-//         P p;
-//         if (crossSS(L(a, b), l, p)) {
-//             v.push_back(p);
-//         }
-//     }
-
-//     sort(v.begin(), v.end(), [&](const P& x, const P& y) {
-//         return (l.s - x).abs() < (l.s - y).abs();
-//     });
-
-//     int sz = int(v.size());
-//     for (int i = 0; i < sz - 1; i++) {
-//         v.push_back((v[i] + v[i + 1]) / D(2));
-//     }
-//     bool f = false;
-//     for (P p: v) {
-//         int u = contains(pol, p);
-//         if (!u) return 0;
-//         if (u == 2) f = true;
-//     }
-//     if (f) return 2;
-//     return 1;
-// }
