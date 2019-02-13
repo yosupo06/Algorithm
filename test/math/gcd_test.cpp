@@ -5,7 +5,7 @@ using namespace algotest;
 
 #include "base.h"
 #include "bitop.h"
-#include "math/math.h"
+#include "math/primitive.h"
 
 struct GCDTester : public GCDTesterBase {
     /// gcd(x, y)を返す (|x|, |y| <= 1e18)
