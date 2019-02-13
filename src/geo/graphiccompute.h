@@ -60,8 +60,7 @@ struct Arrange {
             ps.push_back(l[i].t);
             for (int j = i + 1; j < n; j++) {
                 P p;
-                int u = crossSS(l[i], l[j], p);
-                if (u == 0) continue;
+                if (crossSS(l[i], l[j], p) != 1) continue;
                 ps.push_back(p);
             }
         }
@@ -72,11 +71,10 @@ struct Arrange {
         for (int i = 0; i < n; i++) {
             V<int> v;
             for (int j = 0; j < m; j++) {
-                if (ccw(l[i].s, l[i].t, ps[j]) != 0) continue;
-                v.push_back(j);
+                if (!ccw(l[i].s, l[i].t, ps[j])) v.push_back(j);
             }
             sort(v.begin(), v.end(), [&](int x, int y) {
-                return (ps[x] - l[i].s).abs() < (ps[y] - l[i].s).abs();
+                return (ps[x] - l[i].s).rabs() < (ps[y] - l[i].s).rabs();
             });
             for (int j = 0; j < int(v.size()) - 1; j++) {
                 g[v[j]].push_back(v[j + 1]);
@@ -150,9 +148,7 @@ struct DualGraph {
             }
             bool operator<(const S& r) const {
                 D x = (max(s.x, r.s.x) + min(t.x, r.t.x)) / 2;
-                int u = sgn(get_y(x), r.get_y(x));
-                if (u) return u == -1;
-                return id < r.id;
+                return get_y(x) < r.get_y(x);
             }
         };
         struct Q {
