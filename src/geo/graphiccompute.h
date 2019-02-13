@@ -1,6 +1,6 @@
 /*
-argで2つの点をロバストに比較する, 整数点などで誤差を回避したい時に
-arg(-1, 0) = PI, arg(0, 0) = arg(1, 0) = 0として扱う
+return arg(l) < arg(r)
+arg(-1, 0) = PI, arg(0, 0) = arg(1, 0) = 0
 */
 int argcmp(P l, P r) {
     auto psgn = [&](P p) {
@@ -91,90 +91,122 @@ struct Arrange {
     }
 };
 
-/*
-双対グラフを返す，psは点の位置，gはグラフ
-polsよりgのほうがサイズが1大きい，これは外側の連結成分を指す
-連結ではないグラフを入れるときは注意
-*/
 struct DualGraph {
     V<Pol> pols;
     VV<int> g;
-};
-DualGraph dual_graph(V<P> ps, VV<int> g) {
-    assert(ps.size() == g.size());
-    int n = int(ps.size());
-    using Pi = pair<int, int>;
-    map<Pi, int> mp;
-    for (int i = 0; i < n; i++) {
-        sort(begin(g[i]), end(g[i]));
-        assert(unique(begin(g[i]), end(g[i])) == end(g[i]));
-        sort(begin(g[i]), end(g[i]), [&](int l, int r) {
-            return (ps[l] - ps[i]).arg() > (ps[r] - ps[i]).arg();
+    V<int> tr;
+
+    DualGraph(V<P> ps, VV<int> pg) {
+        // prohibit self-loop, multi edge
+        int n = int(ps.size());
+        using Pi = pair<int, int>;
+        map<Pi, int> mp;
+        for (int i = 0; i < n; i++) {
+            if (pg[i].empty()) continue;
+            sort(pg[i].begin(), pg[i].end(), [&](int l, int r) {
+                return (ps[l] - ps[i]).arg() < (ps[r] - ps[i]).arg();
+            });
+            int a, b = pg[i].back();
+            for (int now : pg[i]) {
+                a = b;
+                b = now;
+                mp[{b, i}] = a;
+            }
+        }
+
+        map<Pi, int> vis;
+        int m = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j : pg[i]) {
+                if (vis.count({i, j})) continue;
+                int id = m++;
+                pols.push_back({});
+                Pi pi = {i, j};
+                while (!vis.count(pi)) {
+                    vis[pi] = id;
+                    pols.back().push_back(ps[pi.first]);
+                    pi = {pi.second, mp[pi]};
+                }
+            }
+        }
+
+        g = VV<int>(m);
+        for (int i = 0; i < n; i++) {
+            for (int j : pg[i]) {
+                g[vis[{i, j}]].push_back(vis[{j, i}]);
+            }
+        }
+    }
+    V<int> scan(V<P> que, D eps) {
+        int n = int(pols.size()), m = int(que.size());
+        tr = V<int>(n);
+        iota(tr.begin(), tr.end(), 0);
+        struct S {
+            P s, t;
+            int id;
+            D get_y(D x) const {
+                if (!sgn(s.x, t.x)) return s.y;
+                return (s.y * (t.x - x) + t.y * (x - s.x)) / (t.x - s.x);
+            }
+            bool operator<(const S& r) const {
+                D x = (max(s.x, r.s.x) + min(t.x, r.t.x)) / 2;
+                int u = sgn(get_y(x), r.get_y(x));
+                if (u) return u == -1;
+                return id < r.id;
+            }
+        };
+        struct Q {
+            D x;
+            int ty;
+            S l;
+        };
+        V<Q> ev;
+        for (int i = 0; i < int(que.size()); i++) {
+            auto p = que[i];
+            ev.push_back({p.x, 0, {p, p, n + i}});
+        }
+        for (int ph = 0; ph < n; ph++) {
+            auto v = pols[ph];
+            P a, b = v.back();
+            for (auto now : v) {
+                a = b;
+                b = now;
+                if (sgn(b.x, a.x) == -1) {
+                    ev.push_back({b.x, 2, {b, a, ph}});
+                    ev.push_back({a.x, 1, {b, a, ph}});
+                }
+            }
+            if (area2(v) <= eps) {
+                P mi = *min_element(v.begin(), v.end());
+                tr[ph] = -1;
+                ev.push_back({mi.x, 0, {mi, mi, ph}});
+            }
+        }
+        sort(ev.begin(), ev.end(), [&](Q a, Q b) {
+            if (sgn(a.x, b.x)) return sgn(a.x, b.x) == -1;
+            return a.ty < b.ty;
         });
-        for (int j = 0; j < int(g[i].size()); j++) {
-            mp[Pi(i, g[i][j])] = j;
-        }
-    }
-
-    VV<int> vis(n), rev(n);
-    for (int i = 0; i < n; i++) {
-        vis[i] = V<int>(g[i].size(), -3);
-        for (int d : g[i]) {
-            rev[i].push_back(mp[Pi(d, i)]);
-        }
-    }
-
-    V<Pol> pols;
-    int idc = 0;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < int(g[i].size()); j++) {
-            if (vis[i][j] != -3) continue;
-            Pol pol;
-            int p = i, idx = j;
-            while (vis[p][idx] != -2) {
-                pol.push_back(ps[p]);
-                vis[p][idx] = -2;
-                int np = g[p][idx];
-                int nidx = rev[p][idx] + 1;
-                if (nidx == int(g[np].size())) nidx = 0;
-
-                p = np;
-                idx = nidx;
-            }
-            int id = -1;
-            if (sgn(area2(pol)) == 1) {
-                id = idc;
-                pols.push_back(pol);
-                idc++;
-            }
-            while (vis[p][idx] == -2) {
-                vis[p][idx] = id;
-                int np = g[p][idx];
-                int nidx = rev[p][idx] + 1;
-                if (nidx == int(g[np].size())) nidx = 0;
-
-                p = np;
-                idx = nidx;
+        V<int> res(m);
+        set<S> st;
+        for (auto e : ev) {
+            if (e.ty == 0) {
+                // get
+                auto it = st.lower_bound(e.l);
+                int u = (it == st.end() ? -1 : tr[it->id]);
+                if (e.l.id < n)
+                    tr[e.l.id] = u;
+                else
+                    res[e.l.id - n] = u;
+            } else {
+                if (e.ty == 1)
+                    st.erase(e.l);
+                else
+                    st.insert(e.l);
             }
         }
+        return res;
     }
-    VV<int> g2(idc + 1);
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < int(g[i].size()); j++) {
-            int x = vis[i][j], y = vis[g[i][j]][rev[i][j]];
-            if (x == -1) x = idc;
-            if (y == -1) y = idc;
-            g2[x].push_back(y);
-        }
-    }
-    for (int i = 0; i <= idc; i++) {
-        sort(begin(g2[i]), end(g2[i]));
-        g2[i].erase(unique(begin(g2[i]), end(g2[i])), end(g2[i]));
-    }
-
-    return DualGraph{pols, g2};
-}
+};
 
 // 今pが一直線上の時は絶対に使わないで下さい
 // 挙動がヤバすぎて，ほぼ100%その場でバグってしまいます。
