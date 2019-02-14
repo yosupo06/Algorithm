@@ -2,36 +2,34 @@ using D = double;
 const D PI = acos(D(-1));
 using Pc = complex<D>;
 
-void fft(bool type, V<Pc>& c) {
-    int N = int(c.size());
-    int s = 0;
-    while ((1 << s) < N) s++;
-    assert(1 << s == N);
+void fft(bool type, V<Pc>& a) {
+    int n = int(a.size()), s = 0;
+    while ((1 << s) < n) s++;
+    assert(1 << s == n);
 
     static V<Pc> ep[30];
     if (!ep[s].size()) {
-        for (int i = 0; i < N; i++) {
-            ep[s].push_back(polar<D>(1, i * 2 * PI / N));
+        for (int i = 0; i < n; i++) {
+            ep[s].push_back(polar<D>(1, i * 2 * PI / n));
         }
     }
-    V<Pc> a = c, b(N);
+    V<Pc> b(n);
     for (int i = 1; i <= s; i++) {
-        int W = 1 << (s - i);
-        for (int y = 0; y < N / 2; y += W) {
+        int w = 1 << (s - i);
+        for (int y = 0; y < n / 2; y += w) {
             Pc now = ep[s][y];
             if (type) now = conj(now);
-            for (int x = 0; x < W; x++) {
+            for (int x = 0; x < w; x++) {
                 auto l = a[y << 1 | x];
-                auto u = now, v = a[y << 1 | x | W];
+                auto u = now, v = a[y << 1 | x | w];
                 auto r = Pc(u.real() * v.real() - u.imag() * v.imag(),
                             u.real() * v.imag() + u.imag() * v.real());
                 b[y | x] = l + r;
-                b[y | x | N >> 1] = l - r;
+                b[y | x | n >> 1] = l - r;
             }
         }
         swap(a, b);
     }
-    c = a;
 }
 
 V<Pc> multiply(const V<Pc>& a, const V<Pc>& b) {

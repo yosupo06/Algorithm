@@ -1,27 +1,25 @@
-template <class Mint> void nft(bool type, V<Mint>& c) {
-    int N = int(c.size());
-    int s = 0;
-    while ((1 << s) < N) s++;
-    assert(1 << s == N);
+template <class Mint> void nft(bool type, V<Mint>& a) {
+    int n = int(a.size()), s = 0;
+    while ((1 << s) < n) s++;
+    assert(1 << s == n);
 
-    V<Mint> a = c, b(N);
+    V<Mint> b(n);
     for (int i = 1; i <= s; i++) {
-        int W = 1 << (s - i);
+        int w = 1 << (s - i);
         Mint base = Mint::G.pow(Mint(-1).v / (1 << i));
         if (type) base = base.inv();
         Mint now = 1;
-        for (int y = 0; y < N / 2; y += W) {
-            for (int x = 0; x < W; x++) {
+        for (int y = 0; y < n / 2; y += w) {
+            for (int x = 0; x < w; x++) {
                 auto l = a[y << 1 | x];
-                auto r = now * a[y << 1 | x | W];
+                auto r = now * a[y << 1 | x | w];
                 b[y | x] = l + r;
-                b[y | x | N >> 1] = l - r;
+                b[y | x | n >> 1] = l - r;
             }
             now *= base;
         }
         swap(a, b);
     }
-    c = a;
 }
 
 template <class Mint> V<Mint> multiply(const V<Mint>& a, const V<Mint>& b) {
