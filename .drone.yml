@@ -1,4 +1,9 @@
 pipeline:
+  clone:
+    git:
+      image: plugins/git
+      recursive: true
+
   test-debug:
     image: rikorose/gcc-cmake
     commands:
