@@ -1,47 +1,45 @@
 template <class D> struct Poly {
     V<D> v;
-    int size() const { return int(v.size()); }
     Poly(const V<D>& _v = {}) : v(_v) { shrink(); }
-    Poly& shrink() {
-        while (v.size() && !v.back()) v.pop_back();
-        return *this;
-    }
+    void shrink() { while (v.size() && !v.back()) v.pop_back(); }
+
+    int size() const { return int(v.size()); }
     D freq(int p) const { return (p < size()) ? v[p] : D(0); }
 
     Poly operator+(const Poly& r) const {
         auto n = max(size(), r.size());
         V<D> res(n);
         for (int i = 0; i < n; i++) res[i] = freq(i) + r.freq(i);
-        return Poly(res);
+        return res;
     }
     Poly operator-(const Poly& r) const {
         int n = max(size(), r.size());
         V<D> res(n);
         for (int i = 0; i < n; i++) res[i] = freq(i) - r.freq(i);
-        return Poly(res);
+        return res;
     }
     Poly operator*(const Poly& r) const { return Poly(multiply(v, r.v)); }
     Poly operator*(const D& r) const {
         int n = size();
         V<D> res(n);
         for (int i = 0; i < n; i++) res[i] = v[i] * r;
-        return Poly(res);
+        return res;
     }
     Poly operator/(const Poly& r) const {
         int n = max(size(), r.size());
         return div_inv(r.inv(n), n);
     }
     Poly operator%(const Poly& r) const { return *this - r * (*this) / r; }
-    Poly operator<<(size_t n) const {
-        V<D> res(size() + n);
-        for (size_t i = 0; i < size(); i++) res[i + n] = v[i];
-        return Poly(res);
+    Poly operator<<(size_t s) const {
+        V<D> res(size() + s);
+        for (size_t i = 0; i < size(); i++) res[i + s] = v[i];
+        return res;
     }
-    Poly operator>>(size_t n) const {
-        if (size() <= n) return Poly();
-        V<D> res(size() - n);
-        for (size_t i = 0; i < size() - n; i++) res[i] = v[i + n];
-        return Poly(res);
+    Poly operator>>(size_t s) const {
+        if (size() <= s) return Poly();
+        V<D> res(size() - s);
+        for (size_t i = 0; i < size() - s; i++) res[i] = v[i + s];
+        return res;
     }
     Poly& operator+=(const Poly& r) { return *this = *this + r; }
     Poly& operator-=(const Poly& r) { return *this = *this - r; }
@@ -146,7 +144,7 @@ template <class Mint> Poly<Mint> berlekamp_massey(const V<Mint>& s) {
             }
         }
     }
-    return Poly<Mint>(c);
+    return c;
 }
 
 template <class E, class Mint = decltype(E().f)> Mint sparse_det(const VV<E>& g) {
