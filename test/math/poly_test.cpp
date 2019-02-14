@@ -6,11 +6,12 @@ using namespace algotest;
 #include "base.h"
 #include "bitop.h"
 #include "math/modint.h"
-#include "math/fft.h"
+using Mint = ModInt<PolyTesterBase::kMod>;
+template<> const Mint Mint::G = Mint(3);
+#include "math/nft.h"
 #include "math/poly.h"
 
 struct PolyTester : public PolyTesterBase {
-    using Mint = ModInt<PolyTesterBase::kMod>;
     using MPoly = Poly<Mint>;
     V<ll> add(V<ll> _a, V<ll> _b) final {
         V<Mint> a, b;

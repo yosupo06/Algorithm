@@ -5,7 +5,9 @@ using namespace algotest;
 
 #include "base.h"
 #include "math/modint.h"
-#include "math/fft.h"
+using Mint = ModInt<NFTTesterBase::kMod>;
+template<> const Mint Mint::G = Mint(3);
+#include "math/nft.h"
 
 
 struct NFTTester : public NFTTesterBase {
@@ -14,7 +16,7 @@ struct NFTTester : public NFTTesterBase {
         V<Mint> a, b;
         for (auto d: _a) a.push_back(Mint(d));
         for (auto d: _b) b.push_back(Mint(d));
-        V<Mint> c = ::multiply<NFTTesterBase::kG>(a, b);
+        V<Mint> c = ::multiply(a, b);
         V<ll> _c;
         for (auto d: c) _c.push_back(d.v);
         return _c;
