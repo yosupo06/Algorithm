@@ -1,10 +1,8 @@
-pipeline:
-  clone:
-    git:
-      image: plugins/git
-      recursive: true
+kind: pipeline
+name: default
 
-  test-debug:
+steps:
+  - name: test-debug
     image: rikorose/gcc-cmake
     commands:
       - cd test
@@ -14,22 +12,22 @@ pipeline:
       - make
       - make test
 
-  test-release:
-    image: rikorose/gcc-cmake
-    commands:
-    - cd test
-    - mkdir build-release
-    - cd build-release
-    - cmake .. -DCMAKE_BUILD_TYPE=Release
-    - make
-    - make test
-
-  test-relwithdebinfo:
-    image: rikorose/gcc-cmake
-    commands:
-    - cd test
-    - mkdir build-relwithdebinfo
-    - cd build-relwithdebinfo
-    - cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
-    - make
-    - make test
+#  test-release:
+#    image: rikorose/gcc-cmake
+#    commands:
+#    - cd test
+#    - mkdir build-release
+#    - cd build-release
+#    - cmake .. -DCMAKE_BUILD_TYPE=Release
+#    - make
+#    - make test
+#
+#  test-relwithdebinfo:
+#    image: rikorose/gcc-cmake
+#    commands:
+#    - cd test
+#    - mkdir build-relwithdebinfo
+#    - cd build-relwithdebinfo
+#    - cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
+#    - make
+#    - make test
