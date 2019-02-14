@@ -2,6 +2,11 @@ kind: pipeline
 name: default
 
 steps:
+  - name: submodules
+    image: docker:git
+    commands:
+      - git submodule update --recursive --remote
+
   - name: test-debug
     image: rikorose/gcc-cmake
     commands:
