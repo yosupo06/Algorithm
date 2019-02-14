@@ -70,10 +70,9 @@ template <class D> struct Poly {
     // f * f.inv() = x^B + r(x) (B >= n)
     Poly inv(int n) const {
         int N = size();
-        assert(N >= 1);
-        assert(n >= N - 1);
+        assert(N >= 1 && n >= N - 1);
         Poly c = rev();
-        Poly d = Poly(V<D>({D(1) / c.freq(0)}));
+        Poly d = Poly({D(1) / c.freq(0)});
         int i;
         for (i = 1; i + N - 2 < n; i *= 2) {
             auto u = V<D>({2});
