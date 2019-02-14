@@ -21,8 +21,8 @@ steps:
     image: rikorose/gcc-cmake
     commands:
       - cd test
-      - mkdir build-debug
-      - cd build-debug
+      - mkdir build-release
+      - cd build-release
       - cmake .. -DCMAKE_BUILD_TYPE=Release
       - make
       - make test
@@ -31,8 +31,8 @@ steps:
     image: rikorose/gcc-cmake
     commands:
       - cd test
-      - mkdir build-debug
-      - cd build-debug
+      - mkdir build-relwithdebinfo
+      - cd build-relwithdebinfo
       - cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
       - make
       - make test
