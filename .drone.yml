@@ -17,22 +17,22 @@ steps:
       - make
       - make test
 
-#  test-release:
-#    image: rikorose/gcc-cmake
-#    commands:
-#    - cd test
-#    - mkdir build-release
-#    - cd build-release
-#    - cmake .. -DCMAKE_BUILD_TYPE=Release
-#    - make
-#    - make test
-#
-#  test-relwithdebinfo:
-#    image: rikorose/gcc-cmake
-#    commands:
-#    - cd test
-#    - mkdir build-relwithdebinfo
-#    - cd build-relwithdebinfo
-#    - cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
-#    - make
-#    - make test
+  - name: test-release
+    image: rikorose/gcc-cmake
+    commands:
+      - cd test
+      - mkdir build-debug
+      - cd build-debug
+      - cmake .. -DCMAKE_BUILD_TYPE=Release
+      - make
+      - make test
+
+  - name: test-relwithdebinfo
+    image: rikorose/gcc-cmake
+    commands:
+      - cd test
+      - mkdir build-debug
+      - cd build-debug
+      - cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - make
+      - make test
