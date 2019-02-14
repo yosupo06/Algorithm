@@ -8,6 +8,33 @@ D area2(const Pol& pol) {
     return u;
 }
 
+// (1:left) | (2: right) is inside between v[i] ~ v[i + 1]
+V<pair<P, int>> insPolL(Pol pol, L l) {
+    using Pi = pair<P, int>;
+    V<Pi> v;
+    P a, b = pol.back();
+    for (auto now: pol) {
+        a = b; b = now;
+        P p;
+        if (crossLL({a, b}, l, p) != 1) continue;
+        int sa = ccw(l, a) % 2, sb = ccw(l, b) % 2;
+        if (sa > sb) swap(sa, sb);
+        if (sa != 1 && sb == 1) v.push_back({p, 1});
+        if (sa == -1 && sb != -1) v.push_back({p, 2});
+    }
+    sort(v.begin(), v.end(), [&](Pi x, Pi y){
+        return dot(l.vec(), x.first - l.s) < dot(l.vec(), y.first - l.s);
+    });
+    int m = int(v.size());
+    V<Pi> res;
+    for (int i = 0; i < m; i++) {
+        if (i) v[i].second ^= v[i - 1].second;
+        if (!res.empty() && res.back().first == v[i].first) res.pop_back();
+        res.push_back(v[i]);
+    }
+    return res;
+}
+
 // 0: outside, 1: on line, 2: inside
 int contains(const Pol& pol, P p) {
     if (!pol.size()) return 0;
@@ -23,30 +50,6 @@ int contains(const Pol& pol, P p) {
         if (sgn(a.y, p.y) ? (crs(a - p, b - p) > 0) : (a.x > p.x)) in *= -1;
     }
     return in + 1;
-}
-
-// 0:P is out 1:P is on line 2:P is in
-int contains(const Pol& pol, const L& l) {
-    V<P> v = {l.s, l.t};
-    P a, b = pol.back();
-    for (auto now : pol) {
-        a = b;
-        b = now;
-        P p;
-        if (crossSS(L(a, b), l, p)) v.push_back(p);
-    }
-    sort(v.begin(), v.end(), [&](const P& x, const P& y) {
-        return (l.s - x).rabs() < (l.s - y).rabs();
-    });
-    bool f = false;
-    for (int i = 0; i < int(v.size()) - 1; i++) {
-        P p = (v[i] + v[i + 1]) / D(2);
-        int u = contains(pol, p);
-        if (!u) return 0;
-        if (u == 2) f = true;
-    }
-    if (f) return 2;
-    return 1;
 }
 
 // p must be sorted and uniqued!
