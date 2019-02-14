@@ -1,8 +1,7 @@
 template <class D> struct Poly {
     V<D> v;
     int size() const { return int(v.size()); }
-    Poly() {}
-    Poly(const V<D>& _v) : v(_v) { shrink(); }
+    Poly(const V<D>& _v = {}) : v(_v) { shrink(); }
     Poly& shrink() {
         while (v.size() && !v.back()) v.pop_back();
         return *this;
@@ -21,13 +20,11 @@ template <class D> struct Poly {
         for (int i = 0; i < n; i++) res[i] = freq(i) - r.freq(i);
         return Poly(res);
     }
-    Poly operator*(const Poly& r) const {
-        if (size() == 0 || r.size() == 0) return Poly();
-        return Poly(multiply(v, r.v));
-    }
+    Poly operator*(const Poly& r) const { return Poly(multiply(v, r.v)); }
     Poly operator*(const D& r) const {
-        V<D> res(size());
-        for (int i = 0; i < size(); i++) res[i] = v[i] * r;
+        int n = size();
+        V<D> res(n);
+        for (int i = 0; i < n; i++) res[i] = v[i] * r;
         return Poly(res);
     }
     Poly operator/(const Poly& r) const {
