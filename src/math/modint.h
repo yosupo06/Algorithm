@@ -30,5 +30,5 @@ template <uint MD> struct ModInt {
     M inv() const { return pow(MD - 2); }
     friend ostream& operator<<(ostream& os, const M& r) { return os << r.v; }
 };
-// using Mint = ModInt<998244353>
+// using Mint = ModInt<998244353>;
 // template<> const Mint Mint::G = Mint(3);
