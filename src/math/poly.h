@@ -1,8 +1,9 @@
-
 template <class D> struct Poly {
     V<D> v;
     Poly(const V<D>& _v = {}) : v(_v) { shrink(); }
-    void shrink() { while (v.size() && !v.back()) v.pop_back(); }
+    void shrink() {
+        while (v.size() && !v.back()) v.pop_back();
+    }
 
     int size() const { return int(v.size()); }
     D freq(int p) const { return (p < size()) ? v[p] : D(0); }
@@ -52,7 +53,9 @@ template <class D> struct Poly {
     Poly& operator<<=(const size_t& n) { return *this = *this << n; }
     Poly& operator>>=(const size_t& n) { return *this = *this >> n; }
 
-    Poly pre(int le) const { return {{v.begin(), v.begin() + min(size(), le)}}; }
+    Poly pre(int le) const {
+        return {{v.begin(), v.begin() + min(size(), le)}};
+    }
     Poly rev(int n = -1) const {
         V<D> res = v;
         if (n != -1) res.resize(n);
@@ -123,7 +126,8 @@ template <class Mint> Poly<Mint> berlekamp_massey(const V<Mint>& s) {
     return c;
 }
 
-template <class E, class Mint = decltype(E().f)> Mint sparse_det(const VV<E>& g) {
+template <class E, class Mint = decltype(E().f)>
+Mint sparse_det(const VV<E>& g) {
     int n = int(g.size());
     if (n == 0) return 1;
     auto rand_v = [&]() {
