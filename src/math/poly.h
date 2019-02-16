@@ -1,7 +1,9 @@
 template <class D> struct Poly {
     V<D> v;
     Poly(const V<D>& _v = {}) : v(_v) { shrink(); }
-    void shrink() { while (v.size() && !v.back()) v.pop_back(); }
+    void shrink() {
+        while (v.size() && !v.back()) v.pop_back();
+    }
 
     int size() const { return int(v.size()); }
     D freq(int p) const { return (p < size()) ? v[p] : D(0); }
@@ -51,7 +53,9 @@ template <class D> struct Poly {
     Poly& operator<<=(const size_t& n) { return *this = *this << n; }
     Poly& operator>>=(const size_t& n) { return *this = *this >> n; }
 
-    Poly pre(int le) const { return {{v.begin(), v.begin() + min(size(), le)}}; }
+    Poly pre(int le) const {
+        return {{v.begin(), v.begin() + min(size(), le)}};
+    }
     Poly rev(int n = -1) const {
         V<D> res = v;
         if (n != -1) res.resize(n);
@@ -64,8 +68,26 @@ template <class D> struct Poly {
         for (int i = 1; i < m; i *= 2) {
             res = (res * D(2) - res * res * pre(2 * i)).pre(2 * i);
         }
-        return res;
+        return res.pre(m);
     }
+    /*Poly inv(int m) const {
+        //fast inv for nft
+        V<D> res = {D(1) / freq(0)};
+        D i2 = D(2).inv(), inv_i4 = i2 * i2;
+        for (int i = 1; i < m; i *= 2) {
+            res.resize(4 * i);
+            V<D> my = pre(2 * i).v; my.resize(4 * i);
+            nft(false, res);
+            nft(false, my);
+            for (int j = 0; j < 4 * i; j++) res[j] = res[j] * (D(2) - res[j] * my[j]);
+            nft(true, res);
+            res.resize(2 * i);
+            for (int j = 0; j < 2 * i; j++) res[j] *= inv_i4;
+            inv_i4 *= i2;
+        }
+        res.resize(m);
+        return res;
+    }*/
     // TODO: reuse inv
     Poly pow_mod(ll n, const Poly& mod) {
         Poly x = *this, r = {{1}};
@@ -91,35 +113,42 @@ template <class D> struct Poly {
 
 template <class Mint>
 struct MultiEval {
-    using MPoly = Poly<Mint>;
     using NP = MultiEval*;
     NP l, r;
+    V<Mint> que;
     int sz;
-    MPoly mul;
-    MultiEval(const V<Mint>& que, int off, int _sz) : sz(_sz) {
-        if (sz == 1) {
-            mul = {{-que[off], 1}};
+    Poly<Mint> mul;
+    MultiEval(const V<Mint>& _que, int off, int _sz) : sz(_sz) {
+        if (sz <= 100) {
+            que = {_que.begin() + off, _que.begin() + off + sz};
+            mul = {{1}};
+            for (auto x: que) mul *= {{-x, 1}};
             return;
         }
-        l = new MultiEval(que, off, sz / 2);
-        r = new MultiEval(que, off + sz / 2, sz - sz / 2);
+        l = new MultiEval(_que, off, sz / 2);
+        r = new MultiEval(_que, off + sz / 2, sz - sz / 2);
         mul = l->mul * r->mul;
     }
-    V<Mint> query(const MPoly& _pol) const {
-        auto pol = _pol;
-        if (100 < sz) pol %= mul;
-        if (sz == 1) {
-            Mint sm = 0, base = 1;
-            for (int i = 0; i < _pol.size(); i++) {
-                sm += base * _pol.freq(i);
-                base *= -mul.freq(0);
+    MultiEval(const V<Mint>& _que) : MultiEval(_que, 0, int(_que.size())) {}
+    void query(const Poly<Mint>& _pol, V<Mint>& res) const {
+        if (sz <= 100) {
+            for (auto x: que) {
+                Mint sm = 0, base = 1;
+                for (int i = 0; i < _pol.size(); i++) {
+                    sm += base * _pol.freq(i);
+                    base *= x;
+                }
+                res.push_back(sm);
             }
-            return {sm};
-        };
-        auto lres = l->query(pol);
-        auto rres = r->query(pol);
-        lres.insert(lres.end(), rres.begin(), rres.end());
-        return lres;
+            return;
+        }
+        auto pol = _pol % mul;
+        l->query(pol, res); r->query(pol, res);
+    }
+    V<Mint> query(const Poly<Mint>& pol) const {
+        V<Mint> res;
+        query(pol, res);
+        return res;
     }
 };
 
