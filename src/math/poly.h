@@ -1,3 +1,4 @@
+
 template <class D> struct Poly {
     V<D> v;
     Poly(const V<D>& _v = {}) : v(_v) { shrink(); }
@@ -18,7 +19,7 @@ template <class D> struct Poly {
         for (int i = 0; i < n; i++) res[i] = freq(i) - r.freq(i);
         return res;
     }
-    Poly operator*(const Poly& r) const { return Poly(multiply(v, r.v)); }
+    Poly operator*(const Poly& r) const { return {multiply(v, r.v)}; }
     Poly operator*(const D& r) const {
         int n = size();
         V<D> res(n);
@@ -26,19 +27,20 @@ template <class D> struct Poly {
         return res;
     }
     Poly operator/(const Poly& r) const {
-        int n = max(size(), r.size());
-        return div_inv(r.inv(n), n);
+        if (size() < r.size()) return {{}};
+        int n = size() - r.size() + 1;
+        return (rev().pre(n) * r.rev().inv(n)).pre(n).rev();
     }
-    Poly operator%(const Poly& r) const { return *this - r * (*this) / r; }
-    Poly operator<<(size_t s) const {
+    Poly operator%(const Poly& r) const { return *this - (*this) / r * r; }
+    Poly operator<<(int s) const {
         V<D> res(size() + s);
-        for (size_t i = 0; i < size(); i++) res[i + s] = v[i];
+        for (int i = 0; i < size(); i++) res[i + s] = v[i];
         return res;
     }
-    Poly operator>>(size_t s) const {
+    Poly operator>>(int s) const {
         if (size() <= s) return Poly();
         V<D> res(size() - s);
-        for (size_t i = 0; i < size() - s; i++) res[i] = v[i + s];
+        for (int i = 0; i < size() - s; i++) res[i] = v[i + s];
         return res;
     }
     Poly& operator+=(const Poly& r) { return *this = *this + r; }
@@ -50,54 +52,30 @@ template <class D> struct Poly {
     Poly& operator<<=(const size_t& n) { return *this = *this << n; }
     Poly& operator>>=(const size_t& n) { return *this = *this >> n; }
 
-    Poly div_inv(const Poly& ny, int B) const {
-        return (*this * ny) >> (B - 1);
-    }
-    Poly rem_inv(const Poly& y, const Poly& ny, int B) const {
-        return *this - y * div_inv(ny, B);
-    }
-    Poly strip(int n) const {
-        V<D> res = v;
-        res.resize(min(n, size()));
-        return Poly(res);
-    }
+    Poly pre(int le) const { return {{v.begin(), v.begin() + min(size(), le)}}; }
     Poly rev(int n = -1) const {
         V<D> res = v;
         if (n != -1) res.resize(n);
         reverse(begin(res), end(res));
         return Poly(res);
     }
-    // f * f.inv() = x^B + r(x) (B >= n)
-    Poly inv(int n) const {
-        int N = size();
-        assert(N >= 1 && n >= N - 1);
-        Poly c = rev();
-        Poly d = Poly({D(1) / c.freq(0)});
-        int i;
-        for (i = 1; i + N - 2 < n; i *= 2) {
-            auto u = V<D>({2});
-            d = (d * (Poly(V<D>{2}) - c * d)).strip(2 * i);
+    // f * f.inv() = 1 + g(x)x^m
+    Poly inv(int m) const {
+        Poly res = Poly({D(1) / freq(0)});
+        for (int i = 1; i < m; i *= 2) {
+            res = (res * D(2) - res * res * pre(2 * i)).pre(2 * i);
         }
-        return d.rev(n + 1 - N);
+        return res;
     }
-
-    // x^n % mod
-    static Poly nth_mod(ll n, const Poly& mod) {
-        int B = mod.size() * 2 - 1;
-        Poly mod_inv = mod.inv(B);
-        Poly p = V<D>{D(1)};
-        int m = (!n) ? -1 : bsr(ull(n));
-        for (int i = m; i >= 0; i--) {
-            if (n & (1LL << i)) {
-                // += 1
-                p = (p << 1).rem_inv(mod, mod_inv, B);
-            }
-            if (i) {
-                // *= 2
-                p = (p * p).rem_inv(mod, mod_inv, B);
-            }
+    // TODO: reuse inv
+    Poly pow_mod(ll n, const Poly& mod) {
+        Poly x = *this, r = {{1}};
+        while (n) {
+            if (n & 1) r = r * x % mod;
+            x = x * x % mod;
+            n >>= 1;
         }
-        return p;
+        return r;
     }
 
     friend ostream& operator<<(ostream& os, const Poly& p) {
@@ -111,7 +89,6 @@ template <class D> struct Poly {
         return os;
     }
 };
-
 
 template <class Mint> Poly<Mint> berlekamp_massey(const V<Mint>& s) {
     int n = int(s.size());
