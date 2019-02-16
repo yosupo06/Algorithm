@@ -31,17 +31,16 @@ template <class Mint> V<Mint> multiply(const V<Mint>& a, const V<Mint>& b) {
     int lg = 0;
     while ((1 << lg) < n + m - 1) lg++;
     int z = 1 << lg;
-    V<Mint> ac(z, Mint(0)), bc(z, Mint(0));
-    for (int i = 0; i < n; i++) ac[i] = a[i];
-    for (int i = 0; i < m; i++) bc[i] = b[i];
-    nft(false, ac);
-    nft(false, bc);
+    auto a2 = a, b2 = b;
+    a2.resize(z); b2.resize(z);
+    nft(false, a2);
+    nft(false, b2);
     for (int i = 0; i < z; i++) {
-        ac[i] *= bc[i];
+        a2[i] *= b2[i];
     }
-    nft(true, ac);
-    ac.resize(n + m - 1);
+    nft(true, a2);
+    a2.resize(n + m - 1);
     Mint iz = Mint(z).inv();
-    for (int i = 0; i < n + m - 1; i++) ac[i] *= iz;
-    return ac;
+    for (int i = 0; i < n + m - 1; i++) a2[i] *= iz;
+    return a2;
 }
