@@ -32,7 +32,8 @@ template <class Mint> V<Mint> multiply(const V<Mint>& a, const V<Mint>& b) {
     while ((1 << lg) < n + m - 1) lg++;
     int z = 1 << lg;
     auto a2 = a, b2 = b;
-    a2.resize(z); b2.resize(z);
+    a2.resize(z);
+    b2.resize(z);
     nft(false, a2);
     nft(false, b2);
     for (int i = 0; i < z; i++) {
