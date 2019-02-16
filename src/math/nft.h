@@ -28,6 +28,12 @@ template <class Mint> void nft(bool type, V<Mint>& a) {
 template <class Mint> V<Mint> multiply(const V<Mint>& a, const V<Mint>& b) {
     int n = int(a.size()), m = int(b.size());
     if (!n || !m) return {};
+    if (min(n, m) <= 8) {
+        V<Mint> ans(n + m - 1);
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++) ans[i + j] += a[i] * b[j];
+        return ans;
+    }
     int lg = 0;
     while ((1 << lg) < n + m - 1) lg++;
     int z = 1 << lg;
@@ -36,9 +42,7 @@ template <class Mint> V<Mint> multiply(const V<Mint>& a, const V<Mint>& b) {
     b2.resize(z);
     nft(false, a2);
     nft(false, b2);
-    for (int i = 0; i < z; i++) {
-        a2[i] *= b2[i];
-    }
+    for (int i = 0; i < z; i++) a2[i] *= b2[i];
     nft(true, a2);
     a2.resize(n + m - 1);
     Mint iz = Mint(z).inv();
