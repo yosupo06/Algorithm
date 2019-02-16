@@ -1,9 +1,7 @@
 template <class D> struct Poly {
     V<D> v;
     Poly(const V<D>& _v = {}) : v(_v) { shrink(); }
-    void shrink() {
-        while (v.size() && !v.back()) v.pop_back();
-    }
+    void shrink() { while (v.size() && !v.back()) v.pop_back(); }
 
     int size() const { return int(v.size()); }
     D freq(int p) const { return (p < size()) ? v[p] : D(0); }
@@ -32,7 +30,7 @@ template <class D> struct Poly {
         int n = size() - r.size() + 1;
         return (rev().pre(n) * r.rev().inv(n)).pre(n).rev();
     }
-    Poly operator%(const Poly& r) const { return *this - (*this) / r * r; }
+    Poly operator%(const Poly& r) const { return *this - *this / r * r; }
     Poly operator<<(int s) const {
         V<D> res(size() + s);
         for (int i = 0; i < size(); i++) res[i + s] = v[i];
@@ -53,13 +51,11 @@ template <class D> struct Poly {
     Poly& operator<<=(const size_t& n) { return *this = *this << n; }
     Poly& operator>>=(const size_t& n) { return *this = *this >> n; }
 
-    Poly pre(int le) const {
-        return {{v.begin(), v.begin() + min(size(), le)}};
-    }
+    Poly pre(int le) const { return {{v.begin(), v.begin() + min(size(), le)}}; }
     Poly rev(int n = -1) const {
         V<D> res = v;
         if (n != -1) res.resize(n);
-        reverse(begin(res), end(res));
+        reverse(res.begin(), res.end());
         return Poly(res);
     }
     // f * f.inv() = 1 + g(x)x^m
@@ -90,6 +86,40 @@ template <class D> struct Poly {
             }
         }
         return os;
+    }
+};
+
+template <class Mint>
+struct MultiEval {
+    using MPoly = Poly<Mint>;
+    using NP = MultiEval*;
+    NP l, r;
+    int sz;
+    MPoly mul;
+    MultiEval(const V<Mint>& que, int off, int _sz) : sz(_sz) {
+        if (sz == 1) {
+            mul = {{-que[off], 1}};
+            return;
+        }
+        l = new MultiEval(que, off, sz / 2);
+        r = new MultiEval(que, off + sz / 2, sz - sz / 2);
+        mul = l->mul * r->mul;
+    }
+    V<Mint> query(const MPoly& _pol) const {
+        auto pol = _pol;
+        if (100 < sz) pol %= mul;
+        if (sz == 1) {
+            Mint sm = 0, base = 1;
+            for (int i = 0; i < _pol.size(); i++) {
+                sm += base * _pol.freq(i);
+                base *= -mul.freq(0);
+            }
+            return {sm};
+        };
+        auto lres = l->query(pol);
+        auto rres = r->query(pol);
+        lres.insert(lres.end(), rres.begin(), rres.end());
+        return lres;
     }
 };
 
