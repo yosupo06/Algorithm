@@ -70,24 +70,6 @@ template <class D> struct Poly {
         }
         return res.pre(m);
     }
-    /*Poly inv(int m) const {
-        //fast inv for nft
-        V<D> res = {D(1) / freq(0)};
-        D i2 = D(2).inv(), inv_i4 = i2 * i2;
-        for (int i = 1; i < m; i *= 2) {
-            res.resize(4 * i);
-            V<D> my = pre(2 * i).v; my.resize(4 * i);
-            nft(false, res);
-            nft(false, my);
-            for (int j = 0; j < 4 * i; j++) res[j] = res[j] * (D(2) - res[j] * my[j]);
-            nft(true, res);
-            res.resize(2 * i);
-            for (int j = 0; j < 2 * i; j++) res[j] *= inv_i4;
-            inv_i4 *= i2;
-        }
-        res.resize(m);
-        return res;
-    }*/
     // TODO: reuse inv
     Poly pow_mod(ll n, const Poly& mod) {
         Poly x = *this, r = {{1}};
@@ -111,8 +93,7 @@ template <class D> struct Poly {
     }
 };
 
-template <class Mint>
-struct MultiEval {
+template <class Mint> struct MultiEval {
     using NP = MultiEval*;
     NP l, r;
     V<Mint> que;
@@ -122,7 +103,7 @@ struct MultiEval {
         if (sz <= 100) {
             que = {_que.begin() + off, _que.begin() + off + sz};
             mul = {{1}};
-            for (auto x: que) mul *= {{-x, 1}};
+            for (auto x : que) mul *= {{-x, 1}};
             return;
         }
         l = new MultiEval(_que, off, sz / 2);
@@ -132,7 +113,7 @@ struct MultiEval {
     MultiEval(const V<Mint>& _que) : MultiEval(_que, 0, int(_que.size())) {}
     void query(const Poly<Mint>& _pol, V<Mint>& res) const {
         if (sz <= 100) {
-            for (auto x: que) {
+            for (auto x : que) {
                 Mint sm = 0, base = 1;
                 for (int i = 0; i < _pol.size(); i++) {
                     sm += base * _pol.freq(i);
@@ -143,7 +124,8 @@ struct MultiEval {
             return;
         }
         auto pol = _pol % mul;
-        l->query(pol, res); r->query(pol, res);
+        l->query(pol, res);
+        r->query(pol, res);
     }
     V<Mint> query(const Poly<Mint>& pol) const {
         V<Mint> res;

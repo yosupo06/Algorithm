@@ -8,9 +8,9 @@ uint64_t mix(uint64_t h) {
     return h;
 }
 
-uint64_t hash_f(ull x) {
+uint64_t hash_f(ull x, ull seed = 0) {
     const uint64_t m = 0x880355f21e6d1965ULL;
-    return mix((m ^ mix(x)) * m);
+    return mix((seed ^ m ^ mix(x)) * m);
 }
 
 template <class T> struct fasthash {};
@@ -26,6 +26,11 @@ template <> struct fasthash<ll> {
 };
 template <> struct fasthash<ull> {
     size_t operator()(ull x) const { return hash_f(x); }
+};
+template<class S, class T> struct fasthash<pair<S, T>> {
+    size_t operator()(pair<S, T> p) const {
+        return hash_f(p.second, hash_f(p.first));
+    }
 };
 
 template <class K, class D> using hashmap = gp_hash_table<K, D, fasthash<K>>;
