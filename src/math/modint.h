@@ -17,6 +17,7 @@ template <uint MD> struct ModInt {
     M& operator-=(const M& r) { return *this = *this - r; }
     M& operator*=(const M& r) { return *this = *this * r; }
     M& operator/=(const M& r) { return *this = *this / r; }
+    bool operator==(const M& r) const { return v == r.v; }
     M pow(ll n) const {
         M x = *this, r = 1;
         while (n) {
