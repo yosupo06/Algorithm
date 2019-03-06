@@ -25,4 +25,6 @@ template <class I> struct Frac {
     bool operator>(const Frac& r) const { return r < *this; }
     bool operator<=(const Frac& r) const { return !(r < *this); }
     bool operator>=(const Frac& r) const { return !(*this < r); }
+    bool operator==(const Frac& r) const { return a * r.b == b * r.a; }
+    bool operator!=(const Frac& r) const { return !(*this == r); }
 };
