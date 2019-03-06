@@ -1,61 +1,45 @@
-namespace Hull {
-ull B = TEN(9) + 7, iB = 13499267949257065399ULL;
-vector<ull> powB{1}, powiB{1};
-struct H {
-    static void expand(int N) {
-        while (powB.size() <= N) {
-            powB.push_back(powB.back() * B);
-            powiB.push_back(powiB.back() * iB);
-        }
+using Mint0 = ModInt<TEN(9) + 7>;
+using Mint1 = ModInt<TEN(9) + 9>;
+
+V<Mint0> powB0{1}, powiB0{1};
+V<Mint1> powB1{1}, powiB1{1};
+Mint0 B0 = rand_int(1, TEN(9)), iB0 = B0.inv();
+Mint1 B1 = rand_int(1, TEN(9)), iB1 = B1.inv();
+void first() {
+    for (int i = 0; i < TEN(6); i++) {
+        powB0.push_back(powB0.back() * B0);
+        powiB0.push_back(powiB0.back() * iB0);
+        powB1.push_back(powB1.back() * B1);
+        powiB1.push_back(powiB1.back() * iB1);
     }
-    ull d;
-    static H make(int x) { return H{ull(x)}; }
-    H operator+(const H& r) const { return H{d + r.d}; }
-    H operator-(const H& r) const { return H{d - r.d}; }
-    H operator<<(int s) const { return H{d * powB[s]}; }
-    H operator>>(int s) const { return H{d * powiB[s]}; }
-    bool operator==(const H& r) const { return d == r.d; }
-};
-}  // namespace Hull
-namespace H2mod {
-using M0 = ModInt<TEN(9) + 7>;
-using M1 = ModInt<TEN(9) + 9>;
-vector<M0> powB0{1}, powiB0{1};
-vector<M1> powB1{1}, powiB1{1};
-M0 B0 = rand() % TEN(9) + 1, iB0 = M0::inv(B0);
-M1 B1 = rand() % TEN(9) + 1, iB1 = M1::inv(B1);
+}
+
 struct H {
-    static void expand(int N) {
-        while (powB0.size() <= N) {
-            powB0.push_back(powB0.back() * B0);
-            powiB0.push_back(powiB0.back() * iB0);
-            powB1.push_back(powB1.back() * B1);
-            powiB1.push_back(powiB1.back() * iB1);
-        }
+    int le = 0;
+    Mint0 h0;
+    Mint1 h1;
+    H() : le(0), h0(0), h1(0) {}
+    H(int _le, Mint0 _h0, Mint1 _h1) : le(_le), h0(_h0), h1(_h1) {}
+    H(int c) {
+        le = 1;
+        h0 = Mint0(c);
+        h1 = Mint1(c);
     }
-    M0 d0;
-    M1 d1;
-    static H make(int x) { return H{x, x}; }
-    H operator+(const H& r) const { return H{d0 + r.d0, d1 + r.d1}; }
-    H operator-(const H& r) const { return H{d0 - r.d0, d1 - r.d1}; }
-    H operator<<(int s) const { return H{d0 * powB0[s], d1 * powB1[s]}; }
-    H operator>>(int s) const { return H{d0 * powiB0[s], d1 * powiB1[s]}; }
+    H operator+(const H& r) const {
+        return H{le + r.le, h0 + r.h0 * powB0[le], h1 + r.h1 * powB1[le]};
+    }
+    H& operator+=(const H& r) { return *this = *this + r; }
+
     bool operator==(const H& r) const {
-        return (d0.v == r.d0.v && d1.v == r.d1.v);
+        return le == r.le && h0 == r.h0 && h1 == r.h1;
     }
-};
-}  // namespace H2mod
-template <class H> struct HashStr {
-    vector<H> v;
-    string s;
-    HashStr(string s) : s(s) {
-        int N = (int)s.size();
-        H::expand(N);
-        v.resize(N + 1);
-        v[0] = H::make(0);
-        for (int i = 1; i <= N; i++) {
-            v[i] = v[i - 1] + (H::make(s[i - 1]) << (i - 1));
-        }
+    bool operator!=(const H& r) const {
+        return !(*this == r);
     }
-    H get(int l, int r) { return (v[r] - v[l]) >> l; }
+    H strip_left(const H& r) const {
+        return H{le - r.le, (h0 - r.h0) * powiB0[r.le], (h1 - r.h1) * powiB1[r.le]};
+    }
+    H strip_right(const H& r) const {
+        return H{le - r.le, h0 - r.h0 * powB0[le - r.le], h1 - r.h1 * powB1[le - r.le]};
+    }
 };
