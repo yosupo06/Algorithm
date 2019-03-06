@@ -68,11 +68,11 @@ struct ConvexHull {
         else assert(false); //line's degree must be minimum or maximum
     }
     /// get maximum y
+    T b_x;
+    T first = true;
     T max_y(T x) {
         assert(lines.size());
         auto value = [&](L l) { return l[0] * x + l[1]; };
-        static T b_x;
-        static bool first = true;
         if (que_incr) {
             assert(first || b_x <= x);
             first = false; b_x = x;
