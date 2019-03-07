@@ -20,11 +20,8 @@ struct H {
     Mint1 h1;
     H() : le(0), h0(0), h1(0) {}
     H(int _le, Mint0 _h0, Mint1 _h1) : le(_le), h0(_h0), h1(_h1) {}
-    H(int c) {
-        le = 1;
-        h0 = Mint0(c);
-        h1 = Mint1(c);
-    }
+    H(int c) : le(1), h0(c), h1(c) {}
+    // H(l) + H(r) = H(lr)
     H operator+(const H& r) const {
         return H{le + r.le, h0 + r.h0 * powB0[le], h1 + r.h1 * powB1[le]};
     }
@@ -36,9 +33,11 @@ struct H {
     bool operator!=(const H& r) const {
         return !(*this == r);
     }
-    H strip_left(const H& r) const {
-        return H{le - r.le, (h0 - r.h0) * powiB0[r.le], (h1 - r.h1) * powiB1[r.le]};
+    // H(lr).strip_left(H(l)) = H(r)
+    H strip_left(const H& l) const {
+        return H{le - l.le, (h0 - l.h0) * powiB0[l.le], (h1 - l.h1) * powiB1[l.le]};
     }
+    // H(lr).strip_right(H(r)) = H(l)
     H strip_right(const H& r) const {
         return H{le - r.le, h0 - r.h0 * powB0[le - r.le], h1 - r.h1 * powB1[le - r.le]};
     }
