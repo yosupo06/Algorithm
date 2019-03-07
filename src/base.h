@@ -1,3 +1,4 @@
+//#undef LOCAL
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -10,9 +11,9 @@ template <class T> using VV = V<V<T>>;
 
 /*
 int main() {
-    cin.tie(0);
+    cin.tie(nullptr);
     ios::sync_with_stdio(false);
-    cout << setprecision(20) << fixed;
+    cout << fixed << setprecision(20);
     return 0;
 }
 */
