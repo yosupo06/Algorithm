@@ -145,9 +145,13 @@ add_executable(AhoCorasickTest string/ahocorasick_test.cpp)
 target_link_libraries(AhoCorasickTest gtest gtest_main)
 gtest_discover_tests(AhoCorasickTest)
 
-add_executable(SATest string/suffixarray_test.cpp)
-target_link_libraries(SATest gtest gtest_main)
-gtest_discover_tests(SATest)
+add_executable(ZAlgoTest string/zalgo_test.cpp)
+target_link_libraries(ZAlgoTest gtest gtest_main)
+gtest_discover_tests(ZAlgoTest)
+
+add_executable(ManacherTest string/manacher_test.cpp)
+target_link_libraries(ManacherTest gtest gtest_main)
+gtest_discover_tests(ManacherTest)
 
 # Geo
 

@@ -1,26 +1,26 @@
 template <class S> V<int> manacher(const S& s) {
     int n = int(s.size());
-    V<int> R(n);
-    R[0] = 1;
+    V<int> r(n);
+    if (n == 0) return r;
+    r[0] = 1;
     for (int i = 1, j = 0; i < n; i++) {
-        int& k = R[i];
-        k = (j + R[j] <= i) ? 0 : min(j + R[j] - i, R[2 * j - i]);
-        while (0 <= i - k and i + k < n and s[i - k] == s[i + k]) k++;
-        if (j + R[j] < i + R[i]) j = i;
+        int& k = r[i];
+        k = (j + r[j] <= i) ? 0 : min(j + r[j] - i, r[2 * j - i]);
+        while (0 <= i - k && i + k < n && s[i - k] == s[i + k]) k++;
+        if (j + r[j] < i + r[i]) j = i;
     }
-    return R;
+    return r;
 }
 
-template <class S> V<int> manacherEven(const S& s) {
+
+template <class S> V<int> manacher_even(const S& s) {
     int n = int(s.size());
-    V<int> R(n - 1);
-    if (n == 1) return R;
-    R[0] = (s[0] == s[1] ? 1 : 0);
-    for (int i = 1, j = 0; i < n - 1; i++) {
-        int& k = R[i];
-        k = (j + R[j] <= i) ? 0 : min(j + R[j] - i, R[2 * j - i]);
-        while (0 <= i - k and i + 1 + k < n and s[i - k] == s[i + 1 + k]) k++;
-        if (j + R[j] < i + R[i]) j = i;
+    V<int> r(n + 1);
+    for (int i = 1, j = 0; i < n; i++) {
+        int& k = r[i];
+        k = (j + r[j] <= i) ? 0 : min(j + r[j] - i, r[2 * j - i]);
+        while (0 <= i - 1 - k && i + k < n && s[i - 1 - k] == s[i + k]) k++;
+        if (j + r[j] < i + r[i]) j = i;
     }
-    return R;
+    return r;
 }

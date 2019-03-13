@@ -1,14 +1,14 @@
-// s[0..res[i]] == s[i..i+res[i]]
+// s[0..r[i]] == s[i..i+r[i]]
 template <class S> V<int> z_algo(const S& s) {
     int n = int(s.size());
-    V<int> R(n + 1);
-    R[0] = 0;
+    V<int> r(n + 1);
+    r[0] = 0;
     for (int i = 1, j = 0; i <= n; i++) {
-        int& k = R[i];
-        k = (j + R[j] <= i) ? 0 : min(j + R[j] - i, R[i - j]);
+        int& k = r[i];
+        k = (j + r[j] <= i) ? 0 : min(j + r[j] - i, r[i - j]);
         while (i + k < n && s[k] == s[i + k]) k++;
-        if (j + R[j] < i + R[i]) j = i;
+        if (j + r[j] < i + r[i]) j = i;
     }
-    R[0] = n;
-    return R;
+    r[0] = n;
+    return r;
 }
