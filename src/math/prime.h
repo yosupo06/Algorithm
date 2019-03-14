@@ -79,7 +79,7 @@ V<ll> pollard(ll n) {
     if (x == n) return {x};
     V<ll> le = pollard(x);
     V<ll> ri = pollard(n / x);
-    le.insert(end(le), begin(ri), end(ri));
+    le.insert(le.end(), ri.begin(), ri.end());
     return le;
 }
 
