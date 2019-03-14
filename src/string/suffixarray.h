@@ -123,7 +123,7 @@ template <class Str> V<int> doublingSA(Str s) {
     int n = (int)s.size();
     V<int> sa(n + 1);
     V<int> rsa(n + 1);
-    iota(begin(sa), end(sa), 0);
+    iota(sa.begin(), sa.end(), 0);
     for (int i = 0; i <= n; i++) {
         rsa[i] = i < n ? s[i] : -1;
     }
@@ -135,12 +135,12 @@ template <class Str> V<int> doublingSA(Str s) {
             int ry = y + k <= n ? rsa[y + k] : -1;
             return rx < ry;
         };
-        sort(begin(sa), end(sa), cmp);
+        sort(sa.begin(), sa.end(), cmp);
         tmp[sa[0]] = 0;
         for (int i = 1; i <= n; i++) {
             tmp[sa[i]] = tmp[sa[i - 1]] + (cmp(sa[i - 1], sa[i]) ? 1 : 0);
         }
-        copy(begin(tmp), end(tmp), begin(rsa));
+        copy(tmp.begin(), tmp.end(), begin(rsa));
     }
     return sa;
 }
@@ -174,11 +174,3 @@ template <class Str> array<int, 2> find(const SA<Str>& sa, const string& t) {
     ans[1] = r;
     return ans;
 }
-
-/*
-template<class Str>
-int cp_len(SA<Str> sa, SparseTable<int> &st, int l, int r) {
-    if (l == r) return int(sa.s.size()) - l;
-    int li = sa.rsa[l], ri = sa.rsa[r];
-    return st.query(min(li, ri), max(li, ri), TEN(9));
-}*/
