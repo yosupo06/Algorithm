@@ -4,9 +4,8 @@ bool is_prime(ll n) {
     if (n % 2 == 0) return false;
     ll d = n - 1;
     while (d % 2 == 0) d /= 2;
-    // Michal Forisek, Jakub Jancina, Fast Primality Testing for Integers That Fit into a Machine Word
-    V<ll> alist{2, 325, 9375, 28178, 450775, 9780504, 1795265022};  // n < 2^64
-    for (ll a : alist) {
+    for (ll a : {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37}) {
+        if (n <= a) break;
         ll t = d;
         ll y = pow_mod<__int128_t>(a, t, n);  // over
         while (t != n - 1 && y != 1 && y != n - 1) {
