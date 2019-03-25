@@ -34,7 +34,8 @@ template <class I> struct Frac {
         auto flip = [&](Frac& f) { f = Frac(1) - f; };
         auto cross = [&](const Frac& f, const Frac& g) {
             return f.a * g.b - f.b * g.a;
-        } Frac m = {l.a + r.a, l.b + r.b};
+        };
+        Frac m = {l.a + r.a, l.b + r.b};
         if (x < m && m < y) return m;
         bool s = !(x < m);
         if (s) {
@@ -46,7 +47,7 @@ template <class I> struct Frac {
             swap(l, r);
             swap(x, y);
         }
-        int k = cross(r, y) / cross(y, l) + 1;
+        I k = cross(r, y) / cross(y, l) + 1;
         Frac p = {k * l.a + r.a, k * l.b + r.b};
         if (x < p) {
             if (s) flip(p);
@@ -57,6 +58,7 @@ template <class I> struct Frac {
         return q;
     }
     static Frac in_bet(Frac x, Frac y) {
+        if (y < x) swap(x, y);
         Frac ret;
         I num = x.a >= 0 ? x.a / x.b : -((x.b - 1 - x.a) / x.b);
         x.a -= x.b * num;
