@@ -14,19 +14,6 @@ struct SCCTester : public SCCTesterBase {
     V<int> topological_order(VV<SCCEdge> g) final { return get_scc(g).id; }
 };
 
-struct KosarajuSCCTester : public SCCTesterBase {
-    V<int> topological_order(VV<SCCEdge> g) final {
-        int n = int(g.size());
-        VV<SCCEdge> rg(n);
-        for (int i = 0; i < n; i++) {
-            for (auto e: g[i]) {
-                rg[e.to].push_back({i});
-            }
-        }
-        return get_kosaraju_scc(g, rg).id;
-    }
-};
-
 struct BitsetSCCTester : public SCCTesterBase {
     using B = bitset<1000>;
     V<int> topological_order(VV<SCCEdge> _g) final {
@@ -44,5 +31,5 @@ struct BitsetSCCTester : public SCCTesterBase {
 };
 
 
-using SCCTypes = ::testing::Types<SCCTester, KosarajuSCCTester, BitsetSCCTester>;
+using SCCTypes = ::testing::Types<SCCTester, BitsetSCCTester>;
 INSTANTIATE_TYPED_TEST_CASE_P(MySCC, SCCTest, SCCTypes);
