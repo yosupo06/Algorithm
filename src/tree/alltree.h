@@ -2,7 +2,7 @@ template <class N, class E> struct AllTree {
     int n;
     const VV<E>& g;
     V<N> sm;
-    VV<N> dp; // tree
+    VV<N> dp;  // tree
     void dfs1(int p, int b) {
         sm[p] = N();
         for (auto e : g[p]) {
@@ -19,7 +19,8 @@ template <class N, class E> struct AllTree {
         dp[p][0] = N();
         for (int i = 0; i < deg; i++) {
             int d = g[p][i].to;
-            dp[p][i + 1] = dp[p][i] + (d == b ? top : sm[d]).to_subs(p, g[p][i]);
+            dp[p][i + 1] =
+                dp[p][i] + (d == b ? top : sm[d]).to_subs(p, g[p][i]);
         }
         N rnode = N();
         dp[p].back() = dp[p].back().join(p);
@@ -59,8 +60,8 @@ struct Node {
 
 struct Node {
     // Diameter of Tree
-    int rad = 0, dia = 0; // radius(tree), diameter
-    array<int, 2> rd = {{0, 0}}; // radiuses(subtrees)
+    int rad = 0, dia = 0;         // radius(tree), diameter
+    array<int, 2> rd = {{0, 0}};  // radiuses(subtrees)
     template <class E> Node to_subs(int, const E& e) const {
         // tree -> subtrees
         return {-1, dia, {rad + e.dist, 0}};
