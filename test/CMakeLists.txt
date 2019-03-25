@@ -68,6 +68,10 @@ add_executable(PolyTest math/poly_test.cpp)
 target_link_libraries(PolyTest gtest gtest_main)
 gtest_discover_tests(PolyTest)
 
+add_executable(PolyLocalTest math/poly_local_test.cpp)
+target_link_libraries(PolyLocalTest gtest gtest_main)
+gtest_discover_tests(PolyLocalTest)
+
 # Graph
 
 add_executable(SCCTest graph/scc_test.cpp)
