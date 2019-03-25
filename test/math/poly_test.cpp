@@ -49,6 +49,22 @@ struct PolyTester : public PolyTesterBase {
         for (auto d: c) _c.push_back(d.v);
         return _c;
     }
+    V<ll> inv(V<ll> _a, size_t b) final {
+        V<Mint> a;
+        for (auto d: _a) a.push_back(Mint(d));
+        auto c = MPoly(a).inv(b).v;
+        V<ll> _c;
+        for (auto d: c) _c.push_back(d.v);
+        return _c;
+    }
+    V<ll> sqrt(V<ll> _a, size_t b) final {
+        V<Mint> a;
+        for (auto d: _a) a.push_back(Mint(d));
+        auto c = MPoly(a).sqrt(b).v;
+        V<ll> _c;
+        for (auto d: c) _c.push_back(d.v);
+        return _c;
+    }
 };
 
 using PolyTypes = ::testing::Types<PolyTester>;

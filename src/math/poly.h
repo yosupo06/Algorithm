@@ -27,6 +27,9 @@ template <class D> struct Poly {
         for (int i = 0; i < n; i++) res[i] = v[i] * r;
         return res;
     }
+    Poly operator/(const D &r) const{
+        return *this * r.inv();
+    }
     Poly operator/(const Poly& r) const {
         if (size() < r.size()) return {{}};
         int n = size() - r.size() + 1;
@@ -49,6 +52,7 @@ template <class D> struct Poly {
     Poly& operator*=(const Poly& r) { return *this = *this * r; }
     Poly& operator*=(const D& r) { return *this = *this * r; }
     Poly& operator/=(const Poly& r) { return *this = *this / r; }
+    Poly& operator/=(const D &r) {return *this = *this/r;}
     Poly& operator%=(const Poly& r) { return *this = *this % r; }
     Poly& operator<<=(const size_t& n) { return *this = *this << n; }
     Poly& operator>>=(const size_t& n) { return *this = *this >> n; }
@@ -99,10 +103,10 @@ template <class D> struct Poly {
         assert(freq(0) == 1);
         Poly f = pre(n + 1);
         Poly g({1});
-        for (int i = 1; i <= n; i *= 2) {
+        for (int i = 1; i < n; i *= 2) {
             g = (g + f.pre(2 * i) * g.inv(2 * i)) / 2;
         }
-        return g.strip(n + 1);
+        return g.pre(n + 1);
     }
 
     Poly pow_mod(ll n, const Poly& mod) {
