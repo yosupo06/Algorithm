@@ -60,7 +60,16 @@ template <class D> struct Poly {
         V<D> res = v;
         if (n != -1) res.resize(n);
         reverse(res.begin(), res.end());
-        return Poly(res);
+        return res;
+    }
+    Poly diff() const {
+        V<D> res(max(0, size() - 1));
+        for (int i = 1; i < size(); i++) res[i - 1] = freq(i) * i;
+        return res;
+    }
+    Poly inte() const {
+        V<D> res(size() + 1);
+        for (int i = 0; i < size(); i++) res[i + 1] = freq(i) * (i + 1);
     }
     // f * f.inv() = 1 + g(x)x^m
     Poly inv(int m) const {
@@ -70,7 +79,32 @@ template <class D> struct Poly {
         }
         return res.pre(m);
     }
-    // TODO: reuse inv
+    Poly exp(int n) const {
+        assert(freq(0) == 0);
+        Poly f({1}), g({1});
+        for (int i = 1; i < n; i *= 2) {
+            g = (g * 2 - f * g * g).pre(i);
+            Poly q = diff().pre(i);
+            Poly w = (q + g * (f.diff() - f * q)).pre(2 * i);
+            f = (f + f * (*this - w.intg()).pre(2 * i)).pre(2 * i);
+        }
+        return f.strip(n + 1);
+    }
+    Poly log(int n) const {
+        assert(freq(0) == 1);
+        auto f = pre(n + 1);
+        return (f.diff() * f.inv(n)).pre(n).intg();
+    }
+    Poly sqrt(int n) const {
+        assert(freq(0) == 1);
+        Poly f = pre(n + 1);
+        Poly g({1});
+        for (int i = 1; i <= n; i *= 2) {
+            g = (g + f.pre(2 * i) * g.inv(2 * i)) / 2;
+        }
+        return g.strip(n + 1);
+    }
+
     Poly pow_mod(ll n, const Poly& mod) {
         Poly x = *this, r = {{1}};
         while (n) {
