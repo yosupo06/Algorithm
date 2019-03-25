@@ -7,6 +7,7 @@
 #include "geo/polygon.h"
 #include "geo/circle.h"
 #include "geo/graphiccompute.h"
+#include "geo/delaunay.h"
 
 TEST(GeoTest, CCW) {
     ASSERT_EQ(ccw(P(0, 0), P(2, 2), P(1, 1)), 0);
