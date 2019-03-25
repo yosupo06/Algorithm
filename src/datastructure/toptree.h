@@ -2,14 +2,15 @@ struct TTNode {
     using NP = TTNode*;
 
     bool rev = false;
-    array<array<NP, 2>, 2> ch = {}; //tree, light-tree
+    array<array<NP, 2>, 2> ch = {};  // tree, light-tree
     NP p = nullptr, lt = nullptr;
 
     struct D {
         ll cnt = 0, pd = 0, upd = 0, dwd = 0;
         // l is parent of r
         static D merge_h(const D& l, const D& r) {
-            return {l.cnt + r.cnt, l.pd + r.pd, l.upd + r.upd + l.pd * r.cnt, l.dwd + r.dwd + r.pd * l.cnt};
+            return {l.cnt + r.cnt, l.pd + r.pd, l.upd + r.upd + l.pd * r.cnt,
+                    l.dwd + r.dwd + r.pd * l.cnt};
         }
         // l and r is parallel
         static D merge_w(const D& l, const D& r) {
@@ -19,7 +20,8 @@ struct TTNode {
         // add parent for r(subtrees)
         static D join(const D& l, const D& r) {
             assert(l.upd == l.dwd);
-            return {l.cnt + r.cnt, l.pd, l.upd + r.upd + l.pd * r.cnt, l.dwd + r.upd + l.pd * r.cnt};
+            return {l.cnt + r.cnt, l.pd, l.upd + r.upd + l.pd * r.cnt,
+                    l.dwd + r.upd + l.pd * r.cnt};
         }
         D rev() { return D{cnt, pd, dwd, upd}; }
         D to_subs() { return D{cnt, 0, upd, 0}; }
@@ -27,7 +29,7 @@ struct TTNode {
     D single = D(), sub = D(), subs = D();
 
     NP search(ll nw, ll f) {
-        //search heavy
+        // search heavy
         assert(sub.cnt >= nw);
         push();
         if (ch[0][1] && ch[0][1]->sub.cnt >= nw) return ch[0][1]->search(nw, f);
@@ -49,8 +51,10 @@ struct TTNode {
             return search(f, f);
         }
         push();
-        if (ch[1][0] && ch[1][0]->subs.cnt >= f) return ch[1][0]->search_light(f);
-        if (ch[1][1] && ch[1][1]->subs.cnt >= f) return ch[1][1]->search_light(f);
+        if (ch[1][0] && ch[1][0]->subs.cnt >= f)
+            return ch[1][0]->search_light(f);
+        if (ch[1][1] && ch[1][1]->subs.cnt >= f)
+            return ch[1][1]->search_light(f);
         expose();
         return nullptr;
     }
@@ -74,7 +78,8 @@ struct TTNode {
         update_subs();
     }
     void revdata() {
-        rev ^= true; swap(ch[0][0], ch[0][1]); // Important
+        rev ^= true;
+        swap(ch[0][0], ch[0][1]);  // Important
         sub = sub.rev();
         update_subs();
     }
@@ -85,7 +90,7 @@ struct TTNode {
             rev = false;
         }
     }
-    //optimize? : template<int ty>
+    // optimize? : template<int ty>
     int pos(int ty) {
         if (p) {
             if (p->ch[ty][0] == this) return 0;
@@ -93,21 +98,29 @@ struct TTNode {
         }
         return -1;
     }
-    static void con(NP p, NP& cp, NP ch) { cp = ch; if (ch) ch->p = p; }
+    static void con(NP p, NP& cp, NP ch) {
+        cp = ch;
+        if (ch) ch->p = p;
+    }
     void rot(int ty) {
         int ps = pos(ty);
         NP _p = p, q = p->p;
         if (ty == 0) {
-            ch[1] = _p->ch[1]; _p->ch[1].fill(nullptr);
-            for (auto& x: ch[1]) if (x) x->p = this;
+            ch[1] = _p->ch[1];
+            _p->ch[1].fill(nullptr);
+            for (auto& x : ch[1])
+                if (x) x->p = this;
         }
-        con(_p, _p->ch[ty][ps], ch[ty][1-ps]);
-        con(this, ch[ty][1-ps], _p);
-        _p->update(); update();
+        con(_p, _p->ch[ty][ps], ch[ty][1 - ps]);
+        con(this, ch[ty][1 - ps], _p);
+        _p->update();
+        update();
         p = q;
         if (!q) return;
         if (q->lt == _p) q->lt = this;
-        for (auto& v: q->ch) for (auto& x: v) if (x == _p) x = this;
+        for (auto& v : q->ch)
+            for (auto& x : v)
+                if (x == _p) x = this;
         q->update();
     }
     void splay(int ty) {
@@ -117,30 +130,38 @@ struct TTNode {
             if (pps == -1) {
                 rot(ty);
             } else if (ps == pps) {
-                p->rot(ty); rot(ty);
+                p->rot(ty);
+                rot(ty);
             } else {
-                rot(ty); rot(ty);
+                rot(ty);
+                rot(ty);
             }
         }
     }
     void expose() {
         supush();
-        splay(0); splay(1);
+        splay(0);
+        splay(1);
         if (NP z = ch[0][1]) {
             z->push();
             con(z, z->ch[1][1], lt);
-            lt = z; ch[0][1] = nullptr;
-            z->update(); update();
+            lt = z;
+            ch[0][1] = nullptr;
+            z->update();
+            update();
         }
         NP u = p;
         while (u) {
-            u->splay(0); u->splay(1);
+            u->splay(0);
+            u->splay(1);
             NP ur = u->lt;
             if (auto r = u->ch[0][1]) {
                 // swap ur, r
                 r->push();
-                r->ch[1] = ur->ch[1]; ur->ch[1].fill(nullptr);
-                for (auto& x: r->ch[1]) if (x) x->p = r;
+                r->ch[1] = ur->ch[1];
+                ur->ch[1].fill(nullptr);
+                for (auto& x : r->ch[1])
+                    if (x) x->p = r;
                 r->update();
                 u->lt = r;
             } else if (!ur->ch[1][0]) {
@@ -152,13 +173,17 @@ struct TTNode {
                 con(u, u->lt, q);
                 q->push();
                 while (q->ch[1][1]) {
-                    q = q->ch[1][1]; q->push();
+                    q = q->ch[1][1];
+                    q->push();
                 }
                 q->splay(1);
-                con(q, q->ch[1][1], ur->ch[1][1]); q->update();
+                con(q, q->ch[1][1], ur->ch[1][1]);
+                q->update();
             }
-            ur->ch[1].fill(nullptr); ur->update();
-            u->ch[0][1] = ur; u->update();
+            ur->ch[1].fill(nullptr);
+            ur->update();
+            u->ch[0][1] = ur;
+            u->update();
             u = u->p;
         }
         splay(0);
@@ -168,7 +193,8 @@ struct TTNode {
         push();
     }
     void link(NP r) {
-        evert(); r->expose();
+        evert();
+        r->expose();
         assert(!r->ch[0][1]);
         con(r, r->ch[0][1], this);
         r->update();
@@ -176,7 +202,8 @@ struct TTNode {
     void cut() {
         expose();
         assert(ch[0][0]);
-        ch[0][0]->p = nullptr; ch[0][0] = nullptr;
+        ch[0][0]->p = nullptr;
+        ch[0][0] = nullptr;
         update();
     }
     void evert() {
