@@ -37,15 +37,13 @@ MPoly log_naive(MPoly po, int n) {
 
 TEST(PolyTest, ExpStressTest) {
     Random gen;
-    for (int a_sz = 1; a_sz < 200; a_sz++) {
-        for (int b_sz = 1; b_sz < 200; b_sz++) {
+    for (int a_sz = 1; a_sz < 30; a_sz++) {
+        for (int b_sz = 1; b_sz < 30; b_sz++) {
             V<Mint> v(a_sz);
             for (int i = 1; i < a_sz; i++) {
                 v[i] = gen.uniform(0, Mod - 1);
             }
             auto po = MPoly(v);
-            cerr << a_sz << " " << b_sz << endl;
-            cerr << po.exp(10).v << " " << exp_naive(po, 10).v << endl;
             ASSERT_EQ(po.exp(b_sz).v, exp_naive(po, b_sz).v);
         }
     }
@@ -53,16 +51,14 @@ TEST(PolyTest, ExpStressTest) {
 
 TEST(PolyTest, LogStressTest) {
     Random gen;
-    for (int a_sz = 1; a_sz < 200; a_sz++) {
-        for (int b_sz = 1; b_sz < 200; b_sz++) {
+    for (int a_sz = 1; a_sz < 30; a_sz++) {
+        for (int b_sz = 1; b_sz < 30; b_sz++) {
             V<Mint> v(a_sz);
             v[0] = 1;
             for (int i = 1; i < a_sz; i++) {
                 v[i] = gen.uniform(0, Mod - 1);
             }
             auto po = MPoly(v);
-//            cerr << a_sz << " " << b_sz << endl;
-//            cerr << po.exp(10).v << " " << exp_naive(po, 10).v << endl;
             ASSERT_EQ(po.log(b_sz).v, log_naive(po, b_sz).v);
         }
     }

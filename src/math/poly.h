@@ -73,7 +73,7 @@ template <class D> struct Poly {
     }
     Poly inte() const {
         V<D> res(size() + 1);
-        for (int i = 0; i < size(); i++) res[i + 1] = freq(i) * (i + 1);
+        for (int i = 0; i < size(); i++) res[i + 1] = freq(i) / (i + 1);
         return res;
     }
     // f * f.inv() = 1 + g(x)x^m
