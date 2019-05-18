@@ -1,0 +1,1 @@
+CXXFLAGS=-D_GLIBCXX_DEBUG -ftrapv -DLOCAL -g -std=c++14
