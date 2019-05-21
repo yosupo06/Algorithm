@@ -279,6 +279,7 @@ TEST(GeoTest, SmallestCircle) {
 }
 
 TEST(GeoTest, Delaunay) {
+    auto gen = Random();
     auto check = [&](const V<P> &ps) {
         int n = int(ps.size());
         auto g = delaunay(ps);
@@ -311,11 +312,11 @@ TEST(GeoTest, Delaunay) {
     check(V<P>{P(0, 0), P(0, 1), P(0, 2)});
     check(V<P>{P(6, 8), P(-10, -10), P(-3, -1), P(-3, 0)});
     for (int ph = 0; ph < 1000; ph++) {
-        auto n = rand_int(2, 15);
+        auto n = gen.uniform(2, 15);
         V<P> ps(n);
         for (int i = 0; i < n; i++) {
-            D x = rand_int(-100, 100);
-            D y = rand_int(-100, 100);
+            D x = gen.uniform(-100, 100);
+            D y = gen.uniform(-100, 100);
             ps[i] = P(x, y);
         }
         sort(begin(ps), end(ps));

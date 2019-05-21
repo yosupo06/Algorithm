@@ -15,12 +15,12 @@ TEST(MFTest, ManyRandom) {
 
 
     auto f = [&]() {
-        int n = rand_int(2, 20);
-        int m = rand_int(0, 200);
+        int n = global_gen.uniform(2, 20);
+        int m = global_gen.uniform(0, 200);
         int s, t;
         while (true) {
-            s = rand_int(0, n-1);
-            t = rand_int(0, n-1);
+            s = global_gen.uniform(0, n-1);
+            t = global_gen.uniform(0, n-1);
             if (s != t) break;
         }
         g = VV<E>(n);
@@ -29,12 +29,12 @@ TEST(MFTest, ManyRandom) {
         for (int i = 0; i < m; i++) {
             int x, y;
             while (true) {
-                x = rand_int(0, n-1);
-                y = rand_int(0, n-1);
+                x = global_gen.uniform(0, n-1);
+                y = global_gen.uniform(0, n-1);
                 if (x == y) continue;
                 break;
             }
-            int c = rand_int(0, 100);
+            int c = global_gen.uniform(0, 100);
             add_edge(x, y, c);            
             elist[x].push_back(E{y, c, -1});
         }
@@ -73,12 +73,12 @@ TEST(MFTest, ManyRandomDouble) {
 
 
     auto f = [&]() {
-        int n = rand_int(2, 20);
-        int m = rand_int(0, 200);
+        int n = global_gen.uniform(2, 20);
+        int m = global_gen.uniform(0, 200);
         int s, t;
         while (true) {
-            s = rand_int(0, n-1);
-            t = rand_int(0, n-1);
+            s = global_gen.uniform(0, n-1);
+            t = global_gen.uniform(0, n-1);
             if (s != t) break;
         }
         g = VV<E>(n);
@@ -87,12 +87,12 @@ TEST(MFTest, ManyRandomDouble) {
         for (int i = 0; i < m; i++) {
             int x, y;
             while (true) {
-                x = rand_int(0, n-1);
-                y = rand_int(0, n-1);
+                x = global_gen.uniform(0, n-1);
+                y = global_gen.uniform(0, n-1);                
                 if (x == y) continue;
                 break;
             }
-            D c = rand_double(0, 100);
+            D c = global_gen.uniform01() * 100;
             add_edge(x, y, c);            
             elist[x].push_back(E{y, c, -1});
         }

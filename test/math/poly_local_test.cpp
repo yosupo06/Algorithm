@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "base.h"
 #include "util/ostream.h"
-#include "random.h"
+#include "util/random.h"
 #include "math/modint.h"
 #include "math/nft.h"
 #include "math/poly.h"

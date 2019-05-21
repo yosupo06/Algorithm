@@ -6,22 +6,22 @@
 
 TEST(SATTest, ManyRandom) {
     for (int ph = 0; ph < 1000; ph++) {
-        int n = rand_int(1, 50);
-        int m = rand_int(1, 100);
+        int n = global_gen.uniform(1, 50);
+        int m = global_gen.uniform(1, 100);
         V<bool> ans(n);
         auto sat = TwoSat(n);
         for (int i = 0; i < n; i++) {
-            ans[i] = rand_int(0, 1) == 1;
+            ans[i] = global_gen.uniform(0, 1) == 1;
         }
         struct N {int i; bool expect;};
         using A = array<N, 2>;
         V<A> conds;
         for (int i = 0; i < m; i++) {
-            int x = rand_int(0, n-1);
-            int y = rand_int(0, n-1);
+            int x = global_gen.uniform(0, n-1);
+            int y = global_gen.uniform(0, n-1);
             while (true) {
-                bool f = rand_int(0, 1) == 1;
-                bool g = rand_int(0, 1) == 1;
+                bool f = global_gen.uniform_bool();
+                bool g = global_gen.uniform_bool();
                 if (ans[x] != f && ans[y] != g) continue;
                 sat.add_cond(x, f, y, g);
                 conds.push_back(A{{N{x, f}, N{y, g}}});

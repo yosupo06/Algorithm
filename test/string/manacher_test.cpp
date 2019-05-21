@@ -2,7 +2,7 @@
 #include "base.h"
 #include "bitop.h"
 #include "util/ostream.h"
-#include "random.h"
+#include "util/random.h"
 #include "string/manacher.h"
 
 

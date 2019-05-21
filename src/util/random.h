@@ -78,11 +78,11 @@ struct Random {
 
     // generate random lower string that length = n
     std::string lower_string(size_t n) {
-        std::string s = "";
+        std::string res = "";
         for (size_t i = 0; i < n; i++) {
-            s += uniform('a', 'z');
+            res += uniform('a', 'z');
         }
-        return s;
+        return res;
     }
 
     // random shuffle
@@ -116,4 +116,4 @@ struct Random {
         while (res.size() < n) res.insert(uniform(lower, upper));
         return {res.begin(), res.end()};
     }
-};
+} global_gen;

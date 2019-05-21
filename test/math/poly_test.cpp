@@ -5,6 +5,7 @@ using namespace algotest;
 
 #include "base.h"
 #include "bitop.h"
+#include "util/random.h"
 #include "math/modint.h"
 using Mint = ModInt<PolyTesterBase::kMod>;
 template<> const Mint Mint::G = Mint(3);

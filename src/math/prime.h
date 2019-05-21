@@ -50,7 +50,7 @@ V<ll> pollard(ll n) {
 ll primitive_root(ll p) {
     auto v = pollard(p - 1);
     while (true) {
-        ll g = rand_int(1, p - 1);  //[1, p-1]
+        ll g = global_gen.uniform(1LL, p - 1);  //[1, p-1]
         bool ok = true;
         for (auto d : v) {
             ll f = (p - 1) / d;
