@@ -1,3 +1,5 @@
+//#pragma GCC optimize("Ofast")
+//#pragma GCC target("avx")
 //#undef LOCAL
 #include <bits/stdc++.h>
 
