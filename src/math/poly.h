@@ -96,7 +96,6 @@ template <class D> struct Poly {
         }
         return res.pre(m);
     }
-<<<<<<< Updated upstream
     Poly exp(int n) const {
         assert(freq(0) == 0);
         Poly f({1}), g({1});
@@ -121,35 +120,6 @@ template <class D> struct Poly {
             g = (g + f.pre(2 * i) * g.inv(2 * i)) / 2;
         }
         return g.pre(n + 1);
-=======
-
-
-    Poly exp(int n) const {
-        assert(freq(0) == 0);
-        Poly f({1}), g({1});
-        for(int i=1;i<=n;i*=2){
-            g = (g*2 - f*g*g).strip(i);
-            Poly q = (this->diff()).strip(i-1);
-            Poly w = (q + g * (f.diff() - f*q)) .strip(2*i-1);
-            f = (f + f * (*this - w.intg()).strip(2*i)) .strip(2*i);
-        }
-        return f.strip(n+1);
-    }
-
-    Poly log(int n) const {
-        assert(freq(0) == 1);
-        auto f = pre(n+1);
-        return (f.diff() * f.inv(n)).pre(n).intg();
-    }
-
-    Poly sqrt(int n) const {
-        assert(freq(0) == 1);
-        Poly f = pre(n+1), g({1});
-        for(int i=1; i<=n; i*=2){
-            g = (g + f.pre(2*i) * g.inv(2*i-1)) / 2;
-        }
-        return g.strip(n+1);
->>>>>>> Stashed changes
     }
 
     Poly pow_mod(ll n, const Poly& mod) {
