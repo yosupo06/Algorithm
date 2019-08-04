@@ -14,7 +14,7 @@ template <class T> using VV = V<V<T>>;
 #ifdef LOCAL
 #define show(x) cerr << __LINE__ << " : " << #x << " = " << (x) << endl
 #else
-#define show(x) true
+#define show(x)
 #endif
 
 template <class T, class U>
