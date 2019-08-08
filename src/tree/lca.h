@@ -47,6 +47,16 @@ template <class E> struct LCAExec : LCA {
             dfs(e.to, p, now + 1);
         }
     }
+
+    int up(int p, int dist) {
+        for (int i = lg - 1; i >= 0; i--) {
+            if (dist >= (1 << i)) {
+                dist -= 1 << i;
+                p = anc[i][p];
+            }
+        }
+        return p;
+    }
 };
 
 template <class E> LCA get_lca(const VV<E>& g, int r) {
