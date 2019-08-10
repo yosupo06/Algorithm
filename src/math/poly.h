@@ -33,7 +33,7 @@ template <class D> struct Poly {
     Poly operator/(const Poly& r) const {
         if (size() < r.size()) return {{}};
         int n = size() - r.size() + 1;
-        return (rev().pre(n) * r.rev().inv(n)).pre(n).rev();
+        return (rev().pre(n) * r.rev().inv(n)).pre(n).rev(n);
     }
     Poly operator%(const Poly& r) const { return *this - *this / r * r; }
     Poly operator<<(int s) const {
