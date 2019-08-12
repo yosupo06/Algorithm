@@ -12,7 +12,25 @@ template <class T> using V = vector<T>;
 template <class T> using VV = V<V<T>>;
 
 #ifdef LOCAL
-#define show(x) cerr << __LINE__ << " : " << #x << " = " << (x) << endl
+struct PrettyOS {
+    ostream& os;
+    bool first;
+    template <class T> auto operator<<(T&& x) {
+        if (!first) os << ", ";
+        first = false;
+        os << x;
+        return *this;
+    }
+};
+template <class... T> void dgb0(T&&... t) {
+    (PrettyOS{cerr, true} << ... << t);
+}
+#define dbg(...)                                            \
+    do {                                                    \
+        cerr << __LINE__ << " : " << #__VA_ARGS__ << " = "; \
+        dbg0(__VA_ARGS__);                                  \
+        cerr << endl;                                       \
+    } while (false);
 #else
 #define show(x)
 #endif
