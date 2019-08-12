@@ -32,7 +32,7 @@ template <class... T> void dbg0(T&&... t) {
         cerr << endl;                                       \
     } while (false);
 #else
-#define dbg(x)
+#define dbg(...)
 #endif
 
 template <class T, class U>
