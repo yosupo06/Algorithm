@@ -22,7 +22,7 @@ struct PrettyOS {
         return *this;
     }
 };
-template <class... T> void dgb0(T&&... t) {
+template <class... T> void dbg0(T&&... t) {
     (PrettyOS{cerr, true} << ... << t);
 }
 #define dbg(...)                                            \
@@ -32,7 +32,7 @@ template <class... T> void dgb0(T&&... t) {
         cerr << endl;                                       \
     } while (false);
 #else
-#define show(x)
+#define dbg(x)
 #endif
 
 template <class T, class U>
