@@ -10,6 +10,7 @@ steps:
   - name: test-library-checker
     image: python
     commands:
+      - pip install toml
       - cd test
       - ./library-checker-problems/generate.py ./library-checker-problems/problems.toml -s solutions.toml
 
