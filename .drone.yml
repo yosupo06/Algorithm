@@ -7,6 +7,12 @@ steps:
     commands:
       - git submodule update --init --recursive --remote
 
+  - name: test-library-checker
+    image: python
+    commands:
+      - cd test
+      - ./library-checker-problems/generate.py ./library-checker-problems/problems.toml -s solutions.toml
+
   - name: test-debug
     image: rikorose/gcc-cmake
     commands:
@@ -36,9 +42,3 @@ steps:
       - cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
       - make
       - make test
-
-  - name: test-library-checker
-    image: rikorose/gcc-cmake
-    commands:
-      - cd test
-      - ./library-checker-problems/generate.py ./library-checker-problems/problems.toml -s solutions.toml
