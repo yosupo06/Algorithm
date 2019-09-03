@@ -4,3 +4,6 @@
 [submodule "test/algorithm-test"]
 	path = test/algorithm-test
 	url = https://github.com/yosupo06/algorithm-test
+[submodule "test/library-checker-problems"]
+	path = test/library-checker-problems
+	url = https://github.com/yosupo06/library-checker-problems

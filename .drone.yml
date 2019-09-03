@@ -36,3 +36,9 @@ steps:
       - cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
       - make
       - make test
+
+  - name: test-library-checker
+    image: rikorose/gcc-cmake
+    commands:
+      - cd test
+      - ./library-checker-problems/generate.py ./library-checker-problems/problems.toml -s solutions.toml
