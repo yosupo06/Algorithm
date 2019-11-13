@@ -15,9 +15,19 @@ jobs:
             cmake .. -DCMAKE_BUILD_TYPE=Debug
             make
             make test
+  test-oj:
+    docker:
+      - image: rikorose/gcc-cmake
+    steps:
+      - checkout
+      - run:
+          command: |
+            cd test-oj
+            ./test.sh
 
 workflows:
   version: 2
   build:
     jobs:
       - test-debug
+      - test-oj
