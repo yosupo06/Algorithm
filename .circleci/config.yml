@@ -22,6 +22,7 @@ jobs:
       - checkout
       - run:
           command: |
+            pip3 install online-judge-tools
             cd test-oj
             ./test.sh
 
