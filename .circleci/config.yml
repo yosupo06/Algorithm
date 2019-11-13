@@ -10,7 +10,7 @@ jobs:
           command: |
             cd test            
             mkdir build-debug
-            cd build-debu
+            cd build-debug
             cmake .. -DCMAKE_BUILD_TYPE=Debug
             make
             make test
