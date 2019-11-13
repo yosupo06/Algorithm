@@ -17,7 +17,7 @@ jobs:
             make test
   test-oj:
     docker:
-      - image: rikorose/gcc-cmake
+      - image: circleci/python:stretch
     steps:
       - checkout
       - run:
