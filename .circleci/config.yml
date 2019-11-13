@@ -8,6 +8,7 @@ jobs:
       - checkout
       - run:
           command: |
+            git submodule update --init --recursive --remote
             cd test            
             mkdir build-debug
             cd build-debug
