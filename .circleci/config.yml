@@ -8,12 +8,12 @@ jobs:
       - checkout
       - run:
           command: |
-            - cd test            
-            - mkdir build-debug
-            - cd build-debu
-            - cmake .. -DCMAKE_BUILD_TYPE=Debug
-            - make
-            - make test
+            cd test            
+            mkdir build-debug
+            cd build-debu
+            cmake .. -DCMAKE_BUILD_TYPE=Debug
+            make
+            make test
 
 workflows:
   version: 2
