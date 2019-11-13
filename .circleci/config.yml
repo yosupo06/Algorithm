@@ -1,0 +1,22 @@
+version: 2
+
+jobs:
+  test-debug:
+    docker:
+      - image: rikorose/gcc-cmake
+    steps:
+      - checkout
+      - run:
+          command: |
+            - cd test            
+            - mkdir build-debug
+            - cd build-debu
+            - cmake .. -DCMAKE_BUILD_TYPE=Debug
+            - make
+            - make test
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - test-debug
