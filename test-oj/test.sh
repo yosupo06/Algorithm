@@ -3,7 +3,7 @@ set -e
 oj --version
 
 CXX=${CXX:-g++}
-CXXFLAGS="${CXXFLAGS:--std=c++14 -O2 -Wall -Wextra -Wshadow -Wconversion -Werror}"
+CXXFLAGS="${CXXFLAGS:--std=c++14 -O2 -Wall -Wextra -Wshadow -Wconversion -Werror -Wno-unknown-pragmas}"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     CXXFLAGS="$CXXFLAGS -Wl,-stack_size,0x10000000"
@@ -18,7 +18,7 @@ run() {
     url=${url#\"}
     dir=test/$(echo -n $url | md5sum | sed 's/ .*//')
     mkdir -p ${dir}
-    $CXX $CXXFLAGS -I . -o ${dir}/a.out "$file"
+    $CXX $CXXFLAGS -I .. -o ${dir}/a.out "$file"
     if [[ -n ${url} ]] ; then
         if [[ ! -e ${dir}/test ]] ; then
             sleep 2

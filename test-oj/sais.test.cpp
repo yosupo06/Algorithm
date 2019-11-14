@@ -1,8 +1,7 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/suffixarray"
 
-#include "../src/base.h"
-#include "../src/util/io.h"
-#include "../src/string/suffixarray.h"
+#include "src/base.h"
+#include "src/string/suffixarray.h"
 
 int main() {
     Scanner sc(stdin);
