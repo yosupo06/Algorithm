@@ -168,5 +168,7 @@ struct Printer {
 #pragma endregion
 
 int main() {
+    Scanner sc(stdin);
+    Printer pr(stdout);
     return 0;
 }
