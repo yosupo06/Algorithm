@@ -1,15 +1,14 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/suffixarray"
 
 #include "../src/base.h"
+#include "../src/util/io.h"
 #include "../src/string/suffixarray.h"
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    Scanner sc(stdin);
+    Printer pr(stdout);
     string s;
-    cin >> s;
+    sc.read(s);
     auto sa = sa_is(s);
-    int n = int(s.size());
-    for (int i = 1; i <= n; i++) cout << sa[i] << " ";
-    cout << endl;
+    pr.writeln(V<int>{sa.begin() + 1, sa.end()});
 }
