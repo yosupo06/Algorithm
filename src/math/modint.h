@@ -2,7 +2,7 @@ template <uint MD> struct ModInt {
     using M = ModInt;
     const static M G;
     uint v;
-    ModInt(ll _v = 0) { set_v(_v % MD + MD); }
+    ModInt(ll _v = 0) { set_v(uint(_v % MD + MD)); }
     M& set_v(uint _v) {
         v = (_v < MD) ? _v : _v - MD;
         return *this;
@@ -11,7 +11,7 @@ template <uint MD> struct ModInt {
     M operator-() const { return M() - *this; }
     M operator+(const M& r) const { return M().set_v(v + r.v); }
     M operator-(const M& r) const { return M().set_v(v + MD - r.v); }
-    M operator*(const M& r) const { return M().set_v(ull(v) * r.v % MD); }
+    M operator*(const M& r) const { return M().set_v(uint(ull(v) * r.v % MD)); }
     M operator/(const M& r) const { return *this * r.inv(); }
     M& operator+=(const M& r) { return *this = *this + r; }
     M& operator-=(const M& r) { return *this = *this - r; }

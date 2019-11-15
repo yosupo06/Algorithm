@@ -109,13 +109,19 @@ struct Scanner {
 
 struct Printer {
   public:
-    template <bool F> void writeln() { write_single('\n'); }
+    template <bool F = false> void write() {}
     template <bool F = false, class H, class... T>
-    void writeln(const H& h, const T&... t) {
+    void write(const H& h, const T&... t) {
         if (F) write_single(' ');
         write_single(h);
-        writeln<true>(t...);
+        write<true>(t...);
     }
+    template <class... T>
+    void writeln(const T&... t) {
+        write(t...);
+        write_single('\n');
+    }
+
     Printer(FILE* _fp) : fp(_fp) {}
     ~Printer() { flush(); }
 
