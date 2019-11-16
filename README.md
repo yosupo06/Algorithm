@@ -1,4 +1,4 @@
-[![Build Status](https://drone.yosupo.jp/api/badges/yosupo06/Algorithm/status.svg)](https://drone.yosupo.jp/yosupo06/Algorithm)
+[![CircleCI](https://circleci.com/gh/yosupo06/Algorithm.svg?style=svg)](https://circleci.com/gh/yosupo06/Algorithm)
 
 # Algorithms
 
