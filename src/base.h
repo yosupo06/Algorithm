@@ -98,6 +98,12 @@ struct Scanner {
         if (neg) ref = -ref;
         return true;
     }
+    template <class T> bool read_single(V<T>& ref) {
+        for (auto& d : ref) {
+            if (!read_single(d)) return false;
+        }
+        return true;
+    }
     void read() {}
     template <class H, class... T> void read(H& h, T&... t) {
         bool f = read_single(h);
