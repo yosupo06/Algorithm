@@ -88,6 +88,7 @@ struct Random {
     // random shuffle
     template <class Iter>
     void shuffle(Iter first, Iter last) {
+        if (first == last) return;
         // Reference and edit:
         // cpprefjp - C++日本語リファレンス
         // (https://cpprefjp.github.io/reference/algorithm/shuffle.html)
