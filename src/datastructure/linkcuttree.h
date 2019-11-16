@@ -98,7 +98,8 @@ template <class N> struct LCNode {
     }
     void cut() {
         expose();
-        l->p = l = nullptr;
+        l->p = nullptr;
+        l = nullptr;
         update();
     }
     void evert() {
