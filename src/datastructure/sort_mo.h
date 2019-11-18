@@ -28,9 +28,9 @@ template <class Q> void sort_mo(V<Q>& ques) {
         ques = nques;
     }
     // 2-opt
-    for (int ph = 0; ph < 30; ph++) {
+    for (int ph = 0; ph < 10; ph++) {
         for (int i = 1; i < n; i++) {
-            for (int j = i + 1; j < min(i + 30, n - 1); j++) {
+            for (int j = i + 1; j < min(i + 10, n - 1); j++) {
                 ll pre =
                     dist(ques[i - 1], ques[i]) + dist(ques[j], ques[j + 1]);
                 ll now =
