@@ -1,3 +1,4 @@
+#pragma once
 // bit op
 int popcnt(uint x) { return __builtin_popcount(x); }
 int popcnt(ull x) { return __builtin_popcountll(x); }

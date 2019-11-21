@@ -1,3 +1,7 @@
+#pragma once
+
+#include "bitop.h"
+
 template <class Mint> void nft(bool type, V<Mint>& a) {
     int n = int(a.size()), s = 0;
     while ((1 << s) < n) s++;

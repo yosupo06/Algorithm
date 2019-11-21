@@ -1,12 +1,6 @@
 #pragma once
 
-#include <algorithm>
-#include <array>
-#include <cassert>
-#include <cstdint>
-#include <numeric>
-#include <random>
-#include <set>
+#include <bits/stdc++.h>
 
 struct Random {
   private:
