@@ -50,13 +50,14 @@ template <class T> ostream& operator<<(ostream& os, const V<T>& v) {
 
 struct Scanner {
     FILE* fp = nullptr;
-    char line[1 << 15];
+    char line[(1 << 15) + 1];
     size_t st = 0, ed = 0;
     void reread() {
         memmove(line, line + st, ed - st);
         ed -= st;
         st = 0;
         ed += fread(line + ed, 1, (1 << 15) - ed, fp);
+        line[ed] = '\0';
     }
     bool succ() {
         while (true) {
