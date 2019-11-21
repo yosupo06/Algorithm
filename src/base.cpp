@@ -50,13 +50,14 @@ template <class T> ostream& operator<<(ostream& os, const V<T>& v) {
 
 struct Scanner {
     FILE* fp = nullptr;
-    char line[1 << 15];
+    char line[(1 << 15) + 1];
     size_t st = 0, ed = 0;
     void reread() {
         memmove(line, line + st, ed - st);
         ed -= st;
         st = 0;
         ed += fread(line + ed, 1, (1 << 15) - ed, fp);
+        line[ed] = '\0';
     }
     bool succ() {
         while (true) {
@@ -98,6 +99,12 @@ struct Scanner {
         if (neg) ref = -ref;
         return true;
     }
+    template <class T> bool read_single(V<T>& ref) {
+        for (auto& d : ref) {
+            if (!read_single(d)) return false;
+        }
+        return true;
+    }
     void read() {}
     template <class H, class... T> void read(H& h, T&... t) {
         bool f = read_single(h);
@@ -109,13 +116,18 @@ struct Scanner {
 
 struct Printer {
   public:
-    template <bool F> void writeln() { write_single('\n'); }
+    template <bool F = false> void write() {}
     template <bool F = false, class H, class... T>
-    void writeln(const H& h, const T&... t) {
+    void write(const H& h, const T&... t) {
         if (F) write_single(' ');
         write_single(h);
-        writeln<true>(t...);
+        write<true>(t...);
     }
+    template <class... T> void writeln(const T&... t) {
+        write(t...);
+        write_single('\n');
+    }
+
     Printer(FILE* _fp) : fp(_fp) {}
     ~Printer() { flush(); }
 
@@ -167,8 +179,8 @@ struct Printer {
 
 #pragma endregion
 
+/*
 int main() {
-    Scanner sc(stdin);
-    Printer pr(stdout);
     return 0;
 }
+*/
