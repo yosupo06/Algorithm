@@ -1,7 +1,18 @@
-//#pragma GCC optimize("Ofast")
-//#pragma GCC target("avx")
-//#undef LOCAL
-#include <bits/stdc++.h>
+#pragma once
+
+#include <algorithm>
+#include <cassert>
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <queue>
+#include <set>
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+
 using namespace std;
 
 using uint = unsigned int;
@@ -10,8 +21,6 @@ using ull = unsigned long long;
 constexpr ll TEN(int n) { return (n == 0) ? 1 : 10 * TEN(n - 1); }
 template <class T> using V = vector<T>;
 template <class T> using VV = V<V<T>>;
-
-#include "util/fast_io.h"
 
 #ifdef LOCAL
 struct PrettyOS {
