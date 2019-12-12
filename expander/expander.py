@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
 
     check_call(['g++-9', args.src,
-        '-E',
+        '-E', '-C', '-P'
         '-I/Users/yosupo/Programs/Algorithm/src',
         '-nostdlib',
         '-I/Users/yosupo/Programs/Algorithm/expander/dummy_include',
