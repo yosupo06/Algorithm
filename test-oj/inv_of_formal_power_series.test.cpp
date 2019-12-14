@@ -1,6 +1,7 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/inv_of_formal_power_series"
 
 #include "src/base.h"
+#include "src/util/fast_io.h"
 #include "src/math/modint.h"
 #include "src/util/random.h"
 #include "src/math/nft.h"

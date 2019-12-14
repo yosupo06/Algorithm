@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <array>
 #include <cassert>
 #include <cstdio>
 #include <cstring>
@@ -56,11 +57,3 @@ template <class T> ostream& operator<<(ostream& os, const V<T>& v) {
     for (auto d : v) os << d << ", ";
     return os << "]";
 }
-
-/*
-int main() {
-    Scanner sc = Scanner(stdin);
-    Printer pr = Printer(stdout);
-    return 0;
-}
-*/

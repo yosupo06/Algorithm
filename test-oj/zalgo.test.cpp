@@ -1,6 +1,7 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/zalgorithm"
 
 #include "src/base.h"
+#include "src/util/fast_io.h"
 #include "src/string/zalgo.h"
 
 int main() {

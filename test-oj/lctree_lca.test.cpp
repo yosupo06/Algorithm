@@ -1,6 +1,7 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/lca"
 
 #include "src/base.h"
+#include "src/util/fast_io.h"
 #include "src/datastructure/linkcuttree.h"
 
 struct Node {

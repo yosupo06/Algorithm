@@ -1,6 +1,7 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/convolution_mod"
 
 #include "src/base.h"
+#include "src/util/fast_io.h"
 #include "src/bitop.h"
 #include "src/math/modint.h"
 #include "src/math/nft.h"

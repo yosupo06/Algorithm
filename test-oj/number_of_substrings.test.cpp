@@ -1,6 +1,7 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/number_of_substrings"
 
 #include "src/base.h"
+#include "src/util/fast_io.h"
 #include "src/string/suffixarray.h"
 
 int main() {
