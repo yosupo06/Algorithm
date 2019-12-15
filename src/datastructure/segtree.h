@@ -5,11 +5,11 @@
 template <class D, class Op> struct SimpleSeg {
     D e;
     Op op;
-    int sz, lg;  // size(extended to 2^i), lg
+    int n, sz, lg;  // size(extended to 2^i), lg
     V<D> d;
 
     SimpleSeg(const V<D>& v, D _e, Op _op) : e(_e), op(_op) {
-        int n = int(v.size());
+        n = int(v.size());
         lg = 1;
         while ((1 << lg) < n) lg++;
         sz = 1 << lg;
@@ -23,14 +23,19 @@ template <class D, class Op> struct SimpleSeg {
     void update(int k) { d[k] = op(d[2 * k], d[2 * k + 1]); }
 
     void set(int p, D x) {
+        assert(0 <= p && p < n);
         p += sz;
         d[p] = x;
         for (int i = 1; i <= lg; i++) update(p >> i);
     }
 
-    D single(int p) { return d[p + sz]; }
+    D single(int p) {
+        assert(0 <= p && p < n);
+        return d[p + sz];
+    }
 
     D sum(int a, int b) {
+        assert(a <= b);
         D sml = e, smr = e;
         a += sz;
         b += sz;
