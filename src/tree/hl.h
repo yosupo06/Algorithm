@@ -14,13 +14,14 @@ struct HL {
     V<int> dps;       // node depth(int -> int)
     int pc = 0;       // path count(optional)
     V<int> pid, psz;  // path id, size (optional)
-    V<int> out;       // [id, out[id]) is subtree(optional)
+    V<int> _out;       // ouv[i] is end of subtree(I -> I)
     HL() {}
     HL(size_t n)
-        : _ord(n), _rord(n), _big(n), _small(n), dps(n), pid(n), out(n) {}
+        : _ord(n), _rord(n), _big(n), _small(n), dps(n), pid(n), _out(n) {}
     I ord(int v) const { return v == -1 ? I{-1} : I{_ord[v]}; }
     int rord(I i) const { return i.i == -1 ? -1 : _rord[i.i]; }
     I par(I i) const { return I{_small[i.i] == i.i ? _big[i.i] : i.i - 1}; }
+    I subtree_out(int v) const { return I{_out[ord(v).i]}; };
     int par(int v) const { return rord(par(ord(v))); }
     int lca(int a, int b) const {
         int ai = ord(a).i;
@@ -34,7 +35,7 @@ struct HL {
         }
         return rord(I{ai});
     }
-    // aの直前までbから登る、fの引数は両閉区間
+    // aの直前までbから登る、f(I, I)の引数は両閉区間
     template <class F> void get_path(int a, int b, F f) const {
         int ai = ord(a).i;
         int bi = ord(b).i;
@@ -95,9 +96,9 @@ template <class E> struct HLExec : HL {
 
         // out
         for (int i = n - 1; i >= 0; i--) {
-            out[i] = max(out[i], i + 1);
+            _out[i] = max(_out[i], i + 1);
             int p = ord(par(rord(I{i}))).i;
-            if (p != -1) out[p] = max(out[p], out[i]);
+            if (p != -1) _out[p] = max(_out[p], _out[i]);
         }
     }
     int dfs_sz(int p, int b) {

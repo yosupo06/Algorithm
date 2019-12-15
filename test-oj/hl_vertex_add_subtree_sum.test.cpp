@@ -41,7 +41,7 @@ int main() {
         } else {
             int u;
             sc.read(u);
-            ll sm = seg.sum(hl.ord(u).i, hl.out[hl.ord(u).i]);
+            ll sm = seg.sum(hl.ord(u).i, hl.subtree_out(u).i);
             pr.writeln(sm);
         }
     }
