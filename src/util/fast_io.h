@@ -118,6 +118,10 @@ struct Printer {
     void write_single(const string& s) {
         for (char c : s) write_single(c);
     }
+    void write_single(const char* s) {
+        size_t len = strlen(s);
+        for (size_t i = 0; i < len; i++) write_single(s[i]);
+    }
     template <class T> void write_single(const V<T>& val) {
         auto n = val.size();
         for (size_t i = 0; i < n; i++) {
