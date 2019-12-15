@@ -60,6 +60,10 @@ struct HL {
         }
         assert(false);
     }
+    int dist(int a, int b) const {
+        int c = lca(a, b);
+        return dps[a] + dps[b] - 2 * dps[c];
+    }
 };
 
 template <class E> struct HLExec : HL {
