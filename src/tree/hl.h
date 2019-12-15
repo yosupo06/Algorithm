@@ -4,48 +4,47 @@
 
 struct HL {
     // inside index of HL
-    struct I { int i; };
-    V<int> _ord; // int -> I
-    V<int> _rord; // I -> int
-    V<int> big, small;  // primitive
-    V<int> dps;                      // node depth(optional)
-    int pc = 0;                      // path count(optional)
-    V<int> pid, psz;                 // path id, size (optional)
-    V<int> out;                      // [id, out[id]) is subtree(optional)
+    struct I {
+        int i;
+    };
+    V<int> _ord;          // int -> I
+    V<int> _rord;         // I -> int
+    V<int> _big, _small;  // I -> I
+    V<int> dps;           // node depth(optional)
+    int pc = 0;           // path count(optional)
+    V<int> pid, psz;      // path id, size (optional)
+    V<int> out;           // [id, out[id]) is subtree(optional)
     HL() {}
     HL(size_t n)
-        : _ord(n), _rord(n), big(n), small(n), dps(n), pid(n), out(n) {}
+        : _ord(n), _rord(n), _big(n), _small(n), dps(n), pid(n), out(n) {}
     I ord(int v) const { return v == -1 ? I{-1} : I{_ord[v]}; }
     int rord(I i) const { return i.i == -1 ? -1 : _rord[i.i]; }
     int par(int v) const {
         int i = ord(v).i;
-        return rord(I{small[i] == i ? big[i] : i - 1});
+        return rord(I{_small[i] == i ? _big[i] : i - 1});
     }
     int lca(int a, int b) const {
         int ai = ord(a).i;
         int bi = ord(b).i;
         while (ai != bi) {
             if (ai > bi) swap(ai, bi);
-            if (small[bi] <= ai)
+            if (_small[bi] <= ai)
                 break;
             else
-                bi = big[bi];
+                bi = _big[bi];
         }
         return rord(I{ai});
     }
     // aの直前までbから登る、fの引数は両閉区間
-    template <class F>
-    void get_path(int a,
-                  int b,
-                  F f) const {  
+    template <class F> void get_path(int a, int b, F f) const {
         int ai = ord(a).i;
         int bi = ord(b).i;
         while (ai < bi) {
-            if (small[bi] <= ai)
+            if (_small[bi] <= ai)
                 f(I{ai + 1}, I{bi});
             else
-                f(I{small[bi]}, I{bi});
-            bi = big[bi];
+                f(I{_small[bi]}, I{bi});
+            bi = _big[bi];
         }
     }
     int to(int a, int b) {  // aからbの方向へ1移動する
@@ -53,11 +52,11 @@ struct HL {
         int bi = ord(b).i;
         assert(ai < bi);
         while (true) {
-            if (small[bi] <= ai)
+            if (_small[bi] <= ai)
                 return rord(I{ai + 1});
-            else if (big[bi] == ai)
-                return rord(I{small[bi]});
-            bi = big[bi];
+            else if (_big[bi] == ai)
+                return rord(I{_small[bi]});
+            bi = _big[bi];
         }
         assert(false);
     }
@@ -86,7 +85,7 @@ template <class E> struct HLExec : HL {
         int l = 0;
         while (l < n) {
             int r = l + 1;
-            while (r < n && small[r] == l) r++;
+            while (r < n && _small[r] == l) r++;
             psz.push_back(r - l);
             for (int i = l; i < r; i++) {
                 pid[i] = pc;
@@ -117,11 +116,11 @@ template <class E> struct HLExec : HL {
         _ord[p] = q;
         _rord[q] = p;
         if (b == -1 || bq != q - 1) {
-            small[q] = q;
-            big[q] = bq;
+            _small[q] = q;
+            _big[q] = bq;
         } else {
-            small[q] = small[bq];
-            big[q] = big[bq];
+            _small[q] = _small[bq];
+            _big[q] = _big[bq];
         }
         if (tch[p] == -1) return;
         dfs(tch[p], p);
