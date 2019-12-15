@@ -3,7 +3,11 @@
 #include "../base.h"
 
 struct HL {
-    V<int> _ord, _rord, big, small;  // primitive
+    // inside index of HL
+    struct I { int i; };
+    V<int> _ord; // int -> I
+    V<int> _rord; // I -> int
+    V<int> big, small;  // primitive
     V<int> dps;                      // node depth(optional)
     int pc = 0;                      // path count(optional)
     V<int> pid, psz;                 // path id, size (optional)
@@ -11,49 +15,49 @@ struct HL {
     HL() {}
     HL(size_t n)
         : _ord(n), _rord(n), big(n), small(n), dps(n), pid(n), out(n) {}
-    int ord(int v) const { return v == -1 ? -1 : _ord[v]; }
-    int rord(int i) const { return i == -1 ? -1 : _rord[i]; }
+    I ord(int v) const { return v == -1 ? I{-1} : I{_ord[v]}; }
+    int rord(I i) const { return i.i == -1 ? -1 : _rord[i.i]; }
     int par(int v) const {
-        v = ord(v);
-        return rord(small[v] == v ? big[v] : v - 1);
+        int i = ord(v).i;
+        return rord(I{small[i] == i ? big[i] : i - 1});
     }
     int lca(int a, int b) const {
-        a = ord(a);
-        b = ord(b);
-        while (a != b) {
-            if (a > b) swap(a, b);
-            if (small[b] <= a)
+        int ai = ord(a).i;
+        int bi = ord(b).i;
+        while (ai != bi) {
+            if (ai > bi) swap(ai, bi);
+            if (small[bi] <= ai)
                 break;
             else
-                b = big[b];
+                bi = big[bi];
         }
-        return rord(a);
+        return rord(I{ai});
     }
     // aの直前までbから登る、fの引数は両閉区間
     template <class F>
     void get_path(int a,
                   int b,
                   F f) const {  
-        a = ord(a);
-        b = ord(b);
-        while (a < b) {
-            if (small[b] <= a)
-                f(a + 1, b);
+        int ai = ord(a).i;
+        int bi = ord(b).i;
+        while (ai < bi) {
+            if (small[bi] <= ai)
+                f(I{ai + 1}, I{bi});
             else
-                f(small[b], b);
-            b = big[b];
+                f(I{small[bi]}, I{bi});
+            bi = big[bi];
         }
     }
     int to(int a, int b) {  // aからbの方向へ1移動する
-        a = ord(a);
-        b = ord(b);
-        assert(a < b);
+        int ai = ord(a).i;
+        int bi = ord(b).i;
+        assert(ai < bi);
         while (true) {
-            if (small[b] <= a)
-                return rord(a + 1);
-            else if (big[b] == a)
-                return rord(small[b]);
-            b = big[b];
+            if (small[bi] <= ai)
+                return rord(I{ai + 1});
+            else if (big[bi] == ai)
+                return rord(I{small[bi]});
+            bi = big[bi];
         }
         assert(false);
     }
@@ -75,7 +79,7 @@ template <class E> struct HLExec : HL {
         // dps
         dps[0] = 0;
         for (int i = 1; i < n; i++) {
-            dps[i] = dps[ord(par(rord(i)))] + 1;
+            dps[i] = dps[ord(par(rord(I{i}))).i] + 1;
         }
 
         // pid, psz, pc
@@ -94,7 +98,7 @@ template <class E> struct HLExec : HL {
         // out
         for (int i = n - 1; i >= 0; i--) {
             out[i] = max(out[i], i + 1);
-            int p = ord(par(rord(i)));
+            int p = ord(par(rord(I{i}))).i;
             if (p != -1) out[p] = max(out[p], out[i]);
         }
     }
@@ -109,7 +113,7 @@ template <class E> struct HLExec : HL {
         return sz;
     }
     void dfs(int p, int b) {
-        int q = id++, bq = ord(b);
+        int q = id++, bq = ord(b).i;
         _ord[p] = q;
         _rord[q] = p;
         if (b == -1 || bq != q - 1) {

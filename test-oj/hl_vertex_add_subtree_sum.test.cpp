@@ -28,7 +28,7 @@ int main() {
     auto seg =
         get_simple_seg(V<ll>(n, 0), 0LL, [&](ll x, ll y) { return x + y; });
     for (int i = 0; i < n; i++) {
-        seg.set(hl.ord(i), a[i]);
+        seg.set(hl.ord(i).i, a[i]);
     }
     for (int i = 0; i < q; i++) {
         int t;
@@ -37,11 +37,11 @@ int main() {
             int p;
             ll x;
             sc.read(p, x);
-            seg.set(hl.ord(p), seg.single(hl.ord(p)) + x);
+            seg.set(hl.ord(p).i, seg.single(hl.ord(p).i) + x);
         } else {
             int u;
             sc.read(u);
-            ll sm = seg.sum(hl.ord(u), hl.out[hl.ord(u)]);
+            ll sm = seg.sum(hl.ord(u).i, hl.out[hl.ord(u).i]);
             pr.writeln(sm);
         }
     }

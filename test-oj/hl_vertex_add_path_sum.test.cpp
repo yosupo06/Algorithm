@@ -28,7 +28,7 @@ int main() {
     auto seg =
         get_simple_seg(V<ll>(n, 0), 0LL, [&](ll x, ll y) { return x + y; });
     for (int i = 0; i < n; i++) {
-        seg.set(hl.ord(i), a[i]);
+        seg.set(hl.ord(i).i, a[i]);
     }
     for (int i = 0; i < q; i++) {
         int t;
@@ -37,14 +37,14 @@ int main() {
             int p;
             ll x;
             sc.read(p, x);
-            seg.set(hl.ord(p), seg.single(hl.ord(p)) + x);
+            seg.set(hl.ord(p).i, seg.single(hl.ord(p).i) + x);
         } else {
             int u, v;
             sc.read(u, v);
             int l = hl.lca(u, v);
-            ll sm = seg.single(hl.ord(l));
-            hl.get_path(l, u, [&](int x, int y) { sm += seg.sum(x, y + 1); });
-            hl.get_path(l, v, [&](int x, int y) { sm += seg.sum(x, y + 1); });
+            ll sm = seg.single(hl.ord(l).i);
+            hl.get_path(l, u, [&](HL::I x, HL::I y) { sm += seg.sum(x.i, y.i + 1); });
+            hl.get_path(l, v, [&](HL::I x, HL::I y) { sm += seg.sum(x.i, y.i + 1); });
             pr.writeln(sm);
         }
     }
