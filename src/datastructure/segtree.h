@@ -1,3 +1,7 @@
+#pragma once
+
+#include "base.h"
+
 template <class D, class Op> struct SimpleSeg {
     D e;
     Op op;

@@ -29,10 +29,11 @@ struct HL {
         }
         return rord(a);
     }
+    // aの直前までbから登る、fの引数は両閉区間
     template <class F>
     void get_path(int a,
                   int b,
-                  F f) const {  // aの直前までbから登る、fの引数は両閉区間
+                  F f) const {  
         a = ord(a);
         b = ord(b);
         while (a < b) {
