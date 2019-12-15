@@ -95,10 +95,6 @@ struct Printer {
         if (pos == SIZE) flush();
         line[pos++] = val;
     }
-    template <class T, enable_if_t<is_same<T, string>::value, int> = 0>
-    void write_single(const T& val) {
-        for (char c : val) write_single(c);
-    }
     template <class T, enable_if_t<is_integral<T>::value, int> = 0>
     void write_single(T val) {
         if (pos > (1 << 15) - 50) flush();
@@ -118,6 +114,9 @@ struct Printer {
         reverse(small, small + len);
         memcpy(line + pos, small, len);
         pos += len;
+    }
+    void write_single(const string& s) {
+        for (char c : s) write_single(c);
     }
     template <class T> void write_single(const V<T>& val) {
         auto n = val.size();
