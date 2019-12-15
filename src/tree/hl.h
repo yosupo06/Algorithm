@@ -1,10 +1,15 @@
+#pragma once
+
+#include "../base.h"
+
 struct HL {
     V<int> _ord, _rord, big, small;  // primitive
     V<int> dps;                      // node depth(optional)
     int pc = 0;                      // path count(optional)
     V<int> pid, psz;                 // path id, size (optional)
     V<int> out;                      // [id, out[id]) is subtree(optional)
-    HL(int n = 0)
+    HL() {}
+    HL(size_t n)
         : _ord(n), _rord(n), big(n), small(n), dps(n), pid(n), out(n) {}
     int ord(int v) const { return v == -1 ? -1 : _ord[v]; }
     int rord(int i) const { return i == -1 ? -1 : _rord[i]; }
