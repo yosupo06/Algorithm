@@ -1,8 +1,8 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/zalgorithm"
 
-#include "src/base.h"
-#include "src/util/fast_io.h"
-#include "src/string/zalgo.h"
+#include "base.h"
+#include "util/fast_io.h"
+#include "string/zalgo.h"
 
 int main() {
     Scanner sc(stdin);

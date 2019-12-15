@@ -1,8 +1,8 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/lca"
 
-#include "src/base.h"
-#include "src/util/fast_io.h"
-#include "src/tree/hl.h"
+#include "base.h"
+#include "util/fast_io.h"
+#include "tree/hl.h"
 
 int main() {
     Scanner sc(stdin);

@@ -1,5 +1,5 @@
-#include "src/base.h"
-#include "src/util/fast_io.h"
+#include "base.h"
+#include "util/fast_io.h"
 
 int main() {
     Printer pr(stdout);

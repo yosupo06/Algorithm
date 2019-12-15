@@ -3,7 +3,7 @@ set -e
 oj --version
 
 CXX=${CXX:-g++}
-CXXFLAGS="${CXXFLAGS:--std=c++14 -O2 -Wall -Wextra -Wshadow -Wconversion -Wno-sign-conversion -Werror -Wno-unknown-pragmas}"
+CXXFLAGS="${CXXFLAGS:--std=c++14 -O2 -Wall -Wextra -Wshadow -Wconversion -Wno-sign-conversion -Werror -Wno-unknown-pragmas -I ../src/}"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     CXXFLAGS="$CXXFLAGS -Wl,-stack_size,0x10000000"

@@ -1,8 +1,8 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/vertex_add_path_sum"
 
-#include "src/base.h"
-#include "src/util/fast_io.h"
-#include "src/datastructure/linkcuttree.h"
+#include "base.h"
+#include "util/fast_io.h"
+#include "datastructure/linkcuttree.h"
 
 struct Node {
     using D = ll;
