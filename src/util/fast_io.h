@@ -26,12 +26,12 @@ struct Scanner {
     bool read_single(T& ref) {
         if (!succ()) return false;
         while (true) {
-            succ();
-            size_t sz = 1;
+            size_t sz = 0;
             while (st + sz < ed && !isspace(line[st + sz])) sz++;
             ref.append(line + st, sz);
             st += sz;
-            if (st != ed) break;
+            if (!sz || st != ed) break;
+            reread();            
         }
         return true;
     }
