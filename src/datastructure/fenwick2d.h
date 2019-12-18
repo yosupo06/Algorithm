@@ -1,3 +1,8 @@
+#pragma once
+
+#include "base.h"
+#include "datastructure/fenwick.h"
+
 template <class D, class I> struct Fenwick2D {
     using P = pair<I, I>;
     V<P> points;
@@ -29,8 +34,8 @@ template <class D, class I> struct Fenwick2D {
             int(lower_bound(points.begin(), points.end(), p) - points.begin());
         k += sz;
         while (k) {
-            int yid = lower_bound(ys[k].begin(), ys[k].end(), p.second) -
-                      ys[k].begin();
+            int yid = int(lower_bound(ys[k].begin(), ys[k].end(), p.second) -
+                          ys[k].begin());
             fws[k].add(yid, x);
             k >>= 1;
         }
@@ -39,10 +44,10 @@ template <class D, class I> struct Fenwick2D {
     D sum(int a, int b, I lw, I up, int l, int r, int k) {
         if (b <= l || r <= a) return D(0);
         if (a <= l && r <= b) {
-            int lid =
-                lower_bound(ys[k].begin(), ys[k].end(), lw) - ys[k].begin();
-            int uid =
-                lower_bound(ys[k].begin(), ys[k].end(), up) - ys[k].begin();
+            int lid = int(lower_bound(ys[k].begin(), ys[k].end(), lw) -
+                          ys[k].begin());
+            int uid = int(lower_bound(ys[k].begin(), ys[k].end(), up) -
+                          ys[k].begin());
             return fws[k].sum(lid, uid);
         }
         int mid = (l + r) / 2;
@@ -51,12 +56,12 @@ template <class D, class I> struct Fenwick2D {
     }
 
     D sum(P lw, P up) {
-        int a = lower_bound(points.begin(), points.end(), lw.first,
-                            [&](P p, I x) { return p.first < x; }) -
-                points.begin();
-        int b = lower_bound(points.begin(), points.end(), up.first,
-                            [&](P p, I x) { return p.first < x; }) -
-                points.begin();
+        int a = int(lower_bound(points.begin(), points.end(), lw.first,
+                                [&](P p, I x) { return p.first < x; }) -
+                    points.begin());
+        int b = int(lower_bound(points.begin(), points.end(), up.first,
+                                [&](P p, I x) { return p.first < x; }) -
+                    points.begin());
         return sum(a, b, lw.second, up.second, 0, sz, 1);
     }
 };
