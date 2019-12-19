@@ -7,12 +7,6 @@ template <class D, class I> struct StaticRangeSum {
         I x, y;
         D val;
     };
-    int lg;
-    V<I> xs, ys;
-
-    V<int> mid;
-    VV<int> bits;
-    VV<D> sums;
 
     StaticRangeSum(V<P> ps) {
         if (!ps.size()) return;
@@ -39,7 +33,7 @@ template <class D, class I> struct StaticRangeSum {
             D val;
         };
         V<Q> v;
-        for (auto p: ps) {
+        for (auto p : ps) {
             int y = int(lower_bound(ys.begin(), ys.end(), p.y) - ys.begin());
             v.push_back({y, p.val});
         }
@@ -51,7 +45,7 @@ template <class D, class I> struct StaticRangeSum {
             array<V<Q>, 2> nx;
             for (int i = 0; i < n; i++) {
                 Q q = v[i];
-                bool f = (q.y >> lv) & 1;                
+                bool f = (q.y >> lv) & 1;
                 bits[lv][i + 1] = bits[lv][i] + (f ? 0 : 1);
                 nx[f].push_back(q);
             }
@@ -65,6 +59,23 @@ template <class D, class I> struct StaticRangeSum {
             }
         }
     }
+    // (lx <= x < ly), (ux <= y < uy)なる点の重みの総和
+    D sum(I lx, I ly, I ux, I uy) {
+        int _lx = int(lower_bound(xs.begin(), xs.end(), lx) - xs.begin());
+        int _ux = int(lower_bound(xs.begin(), xs.end(), ux) - xs.begin());
+        int _ly = int(lower_bound(ys.begin(), ys.end(), ly) - ys.begin());
+        int _uy = int(lower_bound(ys.begin(), ys.end(), uy) - ys.begin());
+        if (_lx >= _ux || _ly >= _uy) return D(0);
+        return sum(_lx, _ux, _uy) - sum(_lx, _ux, _ly);
+    }
+
+  private:
+    int lg;
+    V<I> xs, ys;
+
+    V<int> mid;
+    VV<int> bits;
+    VV<D> sums;
     D sum(int l, int r, int u) {
         if (u == (1 << lg)) return sums[lg][r] - sums[lg][l];
         D ans = 0;
@@ -81,14 +92,5 @@ template <class D, class I> struct StaticRangeSum {
             }
         }
         return ans;
-    }
-    D sum(I _lx, I _ly, I _ux, I _uy) {
-        assert(_lx <= _ux && _ly <= _uy);
-        int lx = int(lower_bound(xs.begin(), xs.end(), _lx) - xs.begin());
-        int ux = int(lower_bound(xs.begin(), xs.end(), _ux) - xs.begin());
-        int ly = int(lower_bound(ys.begin(), ys.end(), _ly) - ys.begin());
-        int uy = int(lower_bound(ys.begin(), ys.end(), _uy) - ys.begin());
-        if (lx == ux || ly == uy) return D(0);
-        return sum(lx, ux, uy) - sum(lx, ux, ly);
     }
 };
