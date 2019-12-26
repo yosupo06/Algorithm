@@ -5,6 +5,7 @@
 #include <cassert>
 #include <complex>
 #include <cstdio>
+#include <bitset>
 #include <cstring>
 #include <iostream>
 #include <map>
