@@ -1,3 +1,7 @@
+#pragma once
+
+#include "base.h"
+
 template <int N, class E> struct MaxClique {
     using B = bitset<N>;
     int n;
@@ -35,7 +39,7 @@ template <int N, class E> struct MaxClique {
                 }
             }
             for (auto& q : nrem) {
-                q.deg = (bs & g[q.id]).count();
+                q.deg = int((bs & g[q.id]).count());
             }
             now.push_back(p.id);
             dfs(dps + 1);
