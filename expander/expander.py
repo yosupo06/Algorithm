@@ -19,7 +19,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
 
-    check_call(['g++-9', args.src,
+    CXX = getenv('CXX', 'g++')
+    check_call([CXX, args.src,
         '-E', '-C', '-P',
         '-I/Users/yosupo/Programs/Algorithm/src',
         '-nostdlib',
