@@ -16,6 +16,7 @@ template <class T> struct Fenwick {
     }
     /// [0, i)のsum
     T sum(int i) {
+        assert(0 <= i && i <= n);
         T s = 0;
         while (i > 0) {
             s += seg[i - 1];
@@ -24,7 +25,10 @@ template <class T> struct Fenwick {
         return s;
     }
     /// [a, b)のsum
-    T sum(int a, int b) { return sum(b) - sum(a); }
+    T sum(int a, int b) {
+        assert(0 <= a && a <= b && b <= n);
+        return sum(b) - sum(a);
+    }
     /// sum[0, idx) >= xなる最小のidx(sum[0, n) < x なら n+1)
     int sum_lower_bound(T x) {
         if (x <= 0) return 0;
