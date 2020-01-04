@@ -7,8 +7,8 @@
 struct Node {
     using D = bool;
     static D e_d() { return false; }
-    static D op_dd(const D& l, const D& r) { return false; }
-    static D rev(const D& x) { return false; }
+    static D op_dd(const D&, const D&) { return false; }
+    static D rev(const D&) { return false; }
 };
 
 int main() {
