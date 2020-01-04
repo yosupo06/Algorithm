@@ -8,8 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v1
-    - name: install-oj
-      run: pip3 install --user online-judge-tools
-    - name: run-oj
-      run: cd test-oj && ./test.sh
+      - uses: actions/checkout@v1
+      - name: Set up Python 3.5.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.5.7
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --user online-judge-tools
+      - name: run-oj
+        run: cd test-oj && ./test.sh
