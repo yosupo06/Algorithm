@@ -59,12 +59,12 @@ template <class D, class I> struct StaticRangeSum {
             }
         }
     }
-    // (lx <= x < ly), (ux <= y < uy)なる点の重みの総和
-    D sum(I lx, I ly, I ux, I uy) {
-        int _lx = int(lower_bound(xs.begin(), xs.end(), lx) - xs.begin());
-        int _ux = int(lower_bound(xs.begin(), xs.end(), ux) - xs.begin());
-        int _ly = int(lower_bound(ys.begin(), ys.end(), ly) - ys.begin());
-        int _uy = int(lower_bound(ys.begin(), ys.end(), uy) - ys.begin());
+    // (low_x <= x < up_x), (low_y <= y < up_y)なる点の重みの総和
+    D sum(I low_x, I low_y, I up_x, I up_y) {
+        int _lx = int(lower_bound(xs.begin(), xs.end(), low_x) - xs.begin());
+        int _ux = int(lower_bound(xs.begin(), xs.end(), up_x) - xs.begin());
+        int _ly = int(lower_bound(ys.begin(), ys.end(), low_y) - ys.begin());
+        int _uy = int(lower_bound(ys.begin(), ys.end(), up_y) - ys.begin());
         if (_lx >= _ux || _ly >= _uy) return D(0);
         return sum(_lx, _ux, _uy) - sum(_lx, _ux, _ly);
     }

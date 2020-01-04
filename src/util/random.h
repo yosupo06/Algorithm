@@ -8,6 +8,7 @@
 #include <random>
 #include <set>
 #include <vector>
+#include <chrono>
 
 struct Random {
   private:
@@ -119,3 +120,7 @@ struct Random {
         return {res.begin(), res.end()};
     }
 } global_gen;
+
+Random get_random_gen() {
+    return Random(chrono::steady_clock::now().time_since_epoch().count());
+}

@@ -12,6 +12,9 @@ struct Node {
     static D op_dd(const D& l, const D& r) {
         return l + r;
     }
+    static D rev(const D& x) {
+        return x;
+    }
 };
 
 int main() {

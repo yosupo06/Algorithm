@@ -5,9 +5,10 @@
 #include "datastructure/linkcuttree.h"
 
 struct Node {
-    using D = ll;
-    static D e_d() { return 0; }
-    static D op_dd(const D& l, const D& r) { return l + r; }
+    using D = bool;
+    static D e_d() { return false; }
+    static D op_dd(const D& l, const D& r) { return false; }
+    static D rev(const D& x) { return false; }
 };
 
 int main() {

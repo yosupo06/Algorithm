@@ -6,6 +6,10 @@ template <class N> struct LCNode {
     bool rev = false;
     D v = N::e_d(), sm = N::e_d();
 
+    void single_set(D x) {
+        v = x;
+        update();
+    }
     void single_add(D x) {
         v = N::op_dd(v, x);
         update();
@@ -32,6 +36,7 @@ template <class N> struct LCNode {
     void revdata() {
         rev ^= true;
         swap(l, r);
+        sm = N::rev(sm);
     }
 
     inline int pos() {
@@ -91,13 +96,16 @@ template <class N> struct LCNode {
         } while ((u = u->p));
         splay();
     }
+    // 親としてnpを接続する
     void link(NP np) {
         evert();
         np->expose();
         p = np;
     }
+    // 親から自分を切り離す
     void cut() {
         expose();
+        assert(l);
         l->p = nullptr;
         l = nullptr;
         update();
