@@ -1,10 +1,10 @@
 #pragma once
 #include <algorithm>
 #include <array>
+#include <bitset>
 #include <cassert>
 #include <complex>
 #include <cstdio>
-#include <bitset>
 #include <cstring>
 #include <iostream>
 #include <map>
@@ -26,9 +26,57 @@ template <class T> using V = vector<T>;
 template <class T> using VV = V<V<T>>;
 
 #ifdef LOCAL
+
+template <class T, class U>
+ostream& operator<<(ostream& os, const pair<T, U>& p);
+template <class T> ostream& operator<<(ostream& os, const V<T>& v);
+template <class T, size_t N>
+ostream& operator<<(ostream& os, const array<T, N>& a);
+template <class T> ostream& operator<<(ostream& os, const set<T>& s);
+
+template <class T, class U>
+ostream& operator<<(ostream& os, const pair<T, U>& p) {
+    return os << "P(" << p.first << ", " << p.second << ")";
+}
+
+template <class T> ostream& operator<<(ostream& os, const V<T>& v) {
+    os << "[";
+    bool f = false;
+    for (auto d : v) {
+        if (f) os << ", ";
+        f = true;
+        os << d;
+    }
+    return os << "]";
+}
+
+template <class T, size_t N>
+ostream& operator<<(ostream& os, const array<T, N>& a) {
+    os << "[";
+    bool f = false;
+    for (auto d : a) {
+        if (f) os << ", ";
+        f = true;
+        os << d;
+    }
+    return os << "]";
+}
+
+template <class T> ostream& operator<<(ostream& os, const set<T>& s) {
+    os << "{";
+    bool f = false;
+    for (auto d : s) {
+        if (f) os << ", ";
+        f = true;
+        os << d;
+    }
+    return os << "}";
+}
+
 struct PrettyOS {
     ostream& os;
     bool first;
+
     template <class T> auto operator<<(T&& x) {
         if (!first) os << ", ";
         first = false;
@@ -48,14 +96,3 @@ template <class... T> void dbg0(T&&... t) {
 #else
 #define dbg(...)
 #endif
-
-template <class T, class U>
-ostream& operator<<(ostream& os, const pair<T, U>& p) {
-    return os << "P(" << p.first << ", " << p.second << ")";
-}
-
-template <class T> ostream& operator<<(ostream& os, const V<T>& v) {
-    os << "[";
-    for (auto d : v) os << d << ", ";
-    return os << "]";
-}

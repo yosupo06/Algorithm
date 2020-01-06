@@ -10,7 +10,7 @@ import shutil
 def run(file):
     print('Start: {}'.format(file.name))
     flags = []
-    flags += ['-std=c++14', '-O2']
+    flags += ['-std=c++17', '-O2']
     flags += ['-Wall', '-Wextra', '-Wshadow', '-Wconversion', '-Wno-sign-conversion', '-Werror']
     if platform.system() == 'Darwin':
         flags += ['-Wl,-stack_size,0x10000000']  # 256MB
