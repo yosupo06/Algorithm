@@ -20,8 +20,6 @@ def run(file):
     print('Output: {}'.format(outdir))
     Path(outdir).mkdir(parents=True, exist_ok=True)
     check_call(cmd)
-#define PROBLEM "https://judge.yosupo.jp/problem/suffixarray"
-#    res = re.findall(r'^#define PROBLEM "([a-zA-Z:/]*)"$', open(file).read())
     res = re.match(r'^#define PROBLEM "(.*)"$', open(file).read(), re.MULTILINE)
 
     if not res:
