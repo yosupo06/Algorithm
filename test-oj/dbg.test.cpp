@@ -18,5 +18,8 @@ int main() {
 
     set<int> g = {1, 2, 3, 4};
     dbg(g);
+
+    map<int, int> h; h[1] = 2; h[3] = 4;
+    dbg(h);
     return 0;
 }
