@@ -2,6 +2,7 @@
 
 #include "base.h"
 #include "util/fast_io.h"
+#include "string/onlinez.h"
 
 struct OnlineZ {
     string s;
@@ -22,7 +23,6 @@ struct OnlineZ {
         int u = nx.back();
         while (u != -1) {
             if (s[u] != c) {
-                // erase n - u
                 res.push_back(int(s.size()) - 1 - u);
                 u = mp[u];
             } else {
@@ -40,7 +40,7 @@ int main() {
     sc.read(s);
     int n = int(s.size());
     s += "$";
-    
+
     V<int> z(n, -1);
     z[0] = n;
     OnlineZ oz;

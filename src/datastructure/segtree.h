@@ -134,6 +134,8 @@ template <class D, class L, class OpDD, class OpDL, class OpLL> struct SegTree {
         return op_dd(sum(a, b, l, mid, 2 * k), sum(a, b, mid, r, 2 * k + 1));
     }
     D sum(int a, int b) { return sum(a, b, 0, sz, 1); }
+
+    D all_sum() const { return d[1]; }
 };
 
 template <class D, class L, class OpDD, class OpDL, class OpLL>
