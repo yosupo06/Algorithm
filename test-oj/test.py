@@ -24,7 +24,7 @@ def run(file):
 
     if not res:
         print('Simple Execute')
-        check_call([output.name], timeout=10.0)
+        check_call([output], timeout=10.0)
         return
     
     url = res.group(1)
