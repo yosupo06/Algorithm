@@ -29,12 +29,12 @@ template <class D, class Op> struct SimpleSeg {
         for (int i = 1; i <= lg; i++) update(p >> i);
     }
 
-    D single(int p) {
+    D single(int p) const {
         assert(0 <= p && p < n);
         return d[p + sz];
     }
 
-    D sum(int a, int b) {
+    D sum(int a, int b) const {
         assert(a <= b);
         D sml = e, smr = e;
         a += sz;
@@ -47,6 +47,10 @@ template <class D, class Op> struct SimpleSeg {
             b >>= 1;
         }
         return op(sml, smr);
+    }
+
+    D all_sum() const {
+        return d[1];
     }
 };
 
