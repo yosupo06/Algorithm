@@ -33,6 +33,8 @@ template <class T> ostream& operator<<(ostream& os, const V<T>& v);
 template <class T, size_t N>
 ostream& operator<<(ostream& os, const array<T, N>& a);
 template <class T> ostream& operator<<(ostream& os, const set<T>& s);
+template <class T, class U>
+ostream& operator<<(ostream& os, const map<T, U>& m);
 
 template <class T, class U>
 ostream& operator<<(ostream& os, const pair<T, U>& p) {
@@ -69,6 +71,18 @@ template <class T> ostream& operator<<(ostream& os, const set<T>& s) {
         if (f) os << ", ";
         f = true;
         os << d;
+    }
+    return os << "}";
+}
+
+template <class T, class U>
+ostream& operator<<(ostream& os, const map<T, U>& s) {
+    os << "{";
+    bool f = false;
+    for (auto p : s) {
+        if (f) os << ", ";
+        f = true;
+        os << p.first << ": " << p.second;
     }
     return os << "}";
 }
