@@ -1,3 +1,5 @@
+#pragma once
+
 // s[0..r[i]] == s[i..i+r[i]]
 template <class S> V<int> z_algo(const S& s) {
     int n = int(s.size());
