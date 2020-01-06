@@ -40,6 +40,7 @@ int main() {
     sc.read(s);
     int n = int(s.size());
     s += "$";
+    
     V<int> z(n, -1);
     z[0] = n;
     OnlineZ oz;

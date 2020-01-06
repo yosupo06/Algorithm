@@ -3,19 +3,34 @@ name: Verify CI
 on: [push]
 
 jobs:
-  build:
-
+  gcc-ubuntu:
     runs-on: ubuntu-latest
     
     steps:
       - uses: actions/checkout@v1
 
-      - name: Set up Python 3.7
+      - name: Set up python 3.7
         uses: actions/setup-python@v1
         with:
           python-version: 3.7
 
       - name: Install dependencies
         run: pip3 install -U online-judge-tools
-      - name: run-oj
+      - name: Run verify
         run: cd test-oj && ulimit -s unlimited && ./test.py
+
+  clang-mac:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+
+      - name: Install dependencies
+        run: pip3 install -U online-judge-tools
+      - name: Run verify
+        run: cd test-oj && ./test.py

@@ -9,9 +9,13 @@ import shutil
 
 def run(file):
     print('Start: {}'.format(file.name))
-    cmd = ['g++']
-    cmd += ['-std=c++14', '-O2']
-    cmd += ['-Wall', '-Wextra', '-Wshadow', '-Wconversion', '-Wno-sign-conversion', '-Werror']
+    flags = []
+    flags += ['-std=c++14', '-O2']
+    flags += ['-Wall', '-Wextra', '-Wshadow', '-Wconversion', '-Wno-sign-conversion', '-Werror']
+    if platform.system() == 'Darwin':
+        flags += ['-Wl,-stack_size,0x10000000']  # 256MB
+
+    cmd = ['g++'] + flags
     cmd += ['-I', '../src/']
     outdir = Path('test') / '_'.join(file.name.split('.'))
     output = outdir / 'a.out'
