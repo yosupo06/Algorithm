@@ -18,4 +18,4 @@ jobs:
       - name: Install dependencies
         run: pip3 install -U online-judge-tools
       - name: run-oj
-        run: cd test-oj && ./test.py
+        run: cd test-oj && ulimit -s unlimited && ./test.py
