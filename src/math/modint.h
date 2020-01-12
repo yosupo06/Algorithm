@@ -78,4 +78,4 @@ struct DynamicModInt {
     }
     friend ostream& operator<<(ostream& os, const M& r) { return os << r.v; }
 };
-uint DynamicModInt::MD = 2;
+uint DynamicModInt::MD;
