@@ -25,6 +25,7 @@ EG ext_gcd(ll a, ll b) {
     }
 }
 
+
 ll inv_mod(ll x, ll md) {
     auto z = ext_gcd(x, md).x;
     return (z % md + md) % md;
