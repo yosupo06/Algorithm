@@ -39,8 +39,9 @@ struct DynamicModInt {
     using M = DynamicModInt;
     const static M G;
     static uint MD;
-    uint v;
-    DynamicModInt(ll _v = 0) { set_v(uint(_v % MD + MD)); }
+    uint v = 0;
+    DynamicModInt() {}
+    DynamicModInt(ll _v) { set_v(uint(_v % MD + MD)); }
     M& set_v(uint _v) {
         v = (_v < MD) ? _v : _v - MD;
         return *this;
@@ -66,13 +67,14 @@ struct DynamicModInt {
         return r;
     }
     M inv() const {
-        array<ll, 3> p = {v, 1, 0}, q = {MD, 0, 1};
-        while (q[0]) {
-            ll t = p[0] / q[0];
-            for (int i = 0; i < 3; i++) p[i] -= t * q[i];
+        pair<uint, ll> p = {MD, 0}, q = {v, 1};
+        while (q.first) {
+            uint t = p.first / q.first;
+            p.first -= t * q.first;
+            p.second -= t * q.second;
             swap(p, q);
         }
-        return M(p[1]);
+        return M(p.second);
     }
     friend ostream& operator<<(ostream& os, const M& r) { return os << r.v; }
 };
