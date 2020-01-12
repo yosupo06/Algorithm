@@ -1,11 +1,11 @@
 #define LOCAL
 #include "base.h"
-#include "math/modint.h"
+#include "math/dynamicmodint.h"
 
 using DMint = DynamicModInt;
 
 int main() {
-    DMint::MD = 103;
+    DMint::set_mod(103);
     for (int i = 1; i < 103; i++) {
         ll a = DMint(i).inv().v;
         assert(1 <= a && a < 103);

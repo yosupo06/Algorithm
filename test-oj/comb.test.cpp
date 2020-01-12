@@ -1,6 +1,7 @@
 #define LOCAL
 #include "base.h"
 #include "math/modint.h"
+#include "math/dynamicmodint.h"
 #include "math/comb.h"
 
 using Mint = ModInt<TEN(9) + 7>;
@@ -12,7 +13,7 @@ int main() {
         assert(c.fact[100] * c.ifact[100] == Mint(1));
     }
     {
-        DMint::MD = 103;
+        DMint::set_mod(103);
         Comb<DMint> c(100);
         assert(c.fact[33] * c.ifact[33] == DMint(1));
         assert(c.fact[100] * c.ifact[100] == DMint(1));

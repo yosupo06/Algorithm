@@ -1,10 +1,18 @@
 #pragma once
 
-template <uint MD> struct ModInt {
-    using M = ModInt;
-    const static M G;
-    uint v;
-    ModInt(ll _v = 0) { set_v(uint(_v % MD + MD)); }
+struct DynamicModInt {
+    using M = DynamicModInt;
+
+  private:
+    static uint MD;
+
+  public:
+    static void set_mod(uint _MD) {
+        MD = _MD;
+    }
+    uint v = 0;
+    DynamicModInt() {}
+    DynamicModInt(ll _v) { set_v(uint(_v % MD + MD)); }
     M& set_v(uint _v) {
         v = (_v < MD) ? _v : _v - MD;
         return *this;
@@ -29,8 +37,16 @@ template <uint MD> struct ModInt {
         }
         return r;
     }
-    M inv() const { return pow(MD - 2); }
+    M inv() const {
+        pair<uint, ll> p = {MD, 0}, q = {v, 1};
+        while (q.first) {
+            uint t = p.first / q.first;
+            p.first -= t * q.first;
+            p.second -= t * q.second;
+            swap(p, q);
+        }
+        return M(p.second);
+    }
     friend ostream& operator<<(ostream& os, const M& r) { return os << r.v; }
 };
-// using Mint = ModInt<998244353>;
-// template<> const Mint Mint::G = Mint(3);
+uint DynamicModInt::MD;

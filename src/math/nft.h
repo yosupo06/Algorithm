@@ -119,7 +119,7 @@ template <class Mint> void butterfly(bool type, V<Mint>& a) {
 template <class Mint> V<Mint> multiply(const V<Mint>& a, const V<Mint>& b) {
     int n = int(a.size()), m = int(b.size());
     if (!n || !m) return {};
-    if (min(n, m) <= 8) {
+    if (min(n, m) < 8) {
         V<Mint> ans(n + m - 1);
         for (int i = 0; i < n; i++)
             for (int j = 0; j < m; j++) ans[i + j] += a[i] * b[j];
