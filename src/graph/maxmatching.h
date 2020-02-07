@@ -78,6 +78,15 @@ template <class E> struct MaxMatching {
     }
     MaxMatching(const VV<E>& _g)
         : n(int(_g.size())), g(_g), mt(n, -1), is_ev(n, -1), gr_buf(n), nx(n) {
+        for (int i = 0; i < n; i++) {
+            for (auto e: g[i]) {
+                int j = e.to;
+                if (mt[i] == -1 && mt[j] == -1) {
+                    mt[i] = mt[j];
+                    mt[j] = mt[i];
+                }
+            }
+        }
         for (st = 0; st < n; st++)
             if (mt[st] == -1) arg();
     }
