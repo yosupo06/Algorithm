@@ -111,8 +111,9 @@ struct Printer {
             small[len++] = char('0' + (val % 10));
             val /= 10;
         }
-        reverse(small, small + len);
-        memcpy(line + pos, small, len);
+        for (size_t i = 0; i < len; i++) {
+            line[pos + i] = small[len - 1 - i];
+        }
         pos += len;
     }
     void write_single(const string& s) {
