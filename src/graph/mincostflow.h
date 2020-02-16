@@ -33,17 +33,23 @@ struct MinCostFlow {
         dual = V<D>(n);
         pv = pe = V<int>(n);
         if (neg) {
-            V<D> dist(g.size(), D(INF));
+            V<D> dist(n, D(INF));
             dist[s] = 0;
             for (int ph = 0; ph < n; ph++) {
+                bool update = false;
                 for (int i = 0; i < n; i++) {
+                    if (dist[i] == INF) continue;
                     for (auto e: g[i]) {
-                        if (!e.cap || dist[i] == INF) continue;
-                        dist[e.to] = min(dist[e.to], dist[i] + e.dist);
+                        if (!e.cap) continue;
+                        if (dist[i] + e.dist < dist[e.to]) {
+                            dist[e.to] = dist[i] + e.dist;
+                            update = true;
+                        }
                     }
                 }
+                if (!update) break;
             }
-            for (int v = 0; v < int(g.size()); v++) {
+            for (int v = 0; v < n; v++) {
                 dual[v] += dist[v];
             }
         }
@@ -105,12 +111,11 @@ struct MinCostFlow {
             nd = INF; nc = 0;
             return;
         }
-        for (int v = 0; v < int(g.size()); v++) {
+        for (int v = 0; v < n; v++) {
             if (!vis[v]) continue;
             dual[v] += dist[v] - dist[t];
         }
         nd = dual[t] - dual[s];
-        assert(0 <= nd);
         nc = numeric_limits<C>::max();
         for (int v = t; v != s; v = pv[v]) {
             nc = min(nc, g[pv[v]][pe[v]].cap);
