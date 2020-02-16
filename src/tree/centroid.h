@@ -1,3 +1,5 @@
+#pragma once
+
 struct Centroid {
     int r;
     VV<int> tr;
