@@ -4,6 +4,7 @@ template<class Mint>
 struct Comb {
     int max_n;
     V<Mint> fact, ifact;
+    Comb() {}
     Comb(int n) : max_n(n) {
         fact = ifact = V<Mint>(n + 1);
         fact[0] = Mint(1);
