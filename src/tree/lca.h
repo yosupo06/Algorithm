@@ -1,3 +1,5 @@
+#pragma once
+
 struct LCA {
     int lg;
     VV<int> anc;
@@ -17,6 +19,19 @@ struct LCA {
             tie(l, r) = tie(anc[i][l], anc[i][r]);
         }
         return anc[0][l];
+    }
+    int up(int p, int dist) {
+        for (int i = lg - 1; i >= 0; i--) {
+            if (dist >= (1 << i)) {
+                dist -= 1 << i;
+                p = anc[i][p];
+            }
+        }
+        return p;
+    }
+    int dist(int l, int r) {
+        int z = query(l, r);
+        return dps[l] + dps[r] - 2 * dps[z];
     }
 };
 
@@ -46,16 +61,6 @@ template <class E> struct LCAExec : LCA {
             if (e.to == b) continue;
             dfs(e.to, p, now + 1);
         }
-    }
-
-    int up(int p, int dist) {
-        for (int i = lg - 1; i >= 0; i--) {
-            if (dist >= (1 << i)) {
-                dist -= 1 << i;
-                p = anc[i][p];
-            }
-        }
-        return p;
     }
 };
 
