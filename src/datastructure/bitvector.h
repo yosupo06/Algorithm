@@ -1,3 +1,7 @@
+#pragma once
+
+#include "bitop.h"
+
 struct BitVec {
     static constexpr size_t B = 64;
     size_t n;
