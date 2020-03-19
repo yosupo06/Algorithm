@@ -2,6 +2,7 @@
 
 template <uint MD> struct ModInt {
     using M = ModInt;
+    static constexpr uint get_mod() { return MD; }
     const static M G;
     uint v;
     ModInt(ll _v = 0) { set_v(uint(_v % MD + MD)); }
