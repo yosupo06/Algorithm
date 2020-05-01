@@ -52,6 +52,33 @@ template <class D, class Op> struct SimpleSeg {
     D all_sum() const {
         return d[1];
     }
+
+    // min i s.t. f(d[a] + d[a+1] + ... d[i]) == true (or return n + 1)
+    template <class Comp> int search_left(int a, Comp f) {
+        a += sz;
+        D sm = e;
+        if (f(e)) return a;
+        while (true) {
+            if (f(op(sm, d[a]))) {
+                while (a < sz) {
+                    a *= 2;
+                    if (!f(op(sm, d[a]))) {
+                        sm = op(sm, d[a]);
+                        a++;
+                    }
+                }
+                a = a + 1 - sz;
+                return a;
+            }
+            if (a & 1) {
+                sm = op(sm, d[a]);
+                a++;
+                if ((a & -a) == a) break;
+            }
+            a >>= 1;
+        }
+        return n + 1;
+    }
 };
 
 template <class D, class Op>

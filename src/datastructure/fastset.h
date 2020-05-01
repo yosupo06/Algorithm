@@ -10,7 +10,7 @@ struct FastSet {
             seg.push_back(V<ull>((_n + B - 1) / B));
             _n = (_n + B - 1) / B;
         } while (_n > 1);
-        lg = seg.size();
+        lg = int(seg.size());
     }
     bool operator[](int i) const {
         return (seg[0][i / B] >> (i % B) & 1) != 0;
