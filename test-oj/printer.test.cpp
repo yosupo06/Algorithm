@@ -5,7 +5,7 @@
 #include "util/fast_io.h"
 
 int main() {
-    Printer pr(stdout);
+    Printer pr(tmpfile());
     pr.writeln("Hello");
     pr.writeln(string("World"));
 
