@@ -1,6 +1,7 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
 
 #define LOCAL
+#include "aplusb.h"
 #include "base.h"
 
 int main() {
@@ -24,8 +25,6 @@ int main() {
     map<int, int> h; h[1] = 2; h[3] = 4;
     dbg(h);
 
-    int x, y;
-    cin >> x >> y;
-    cout << x + y << endl;
+    solve_aplusb();
     return 0;
 }

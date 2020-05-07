@@ -5,6 +5,8 @@
 #include "math/dynamicmodint.h"
 #include "math/comb.h"
 
+#include "aplusb.h"
+
 using Mint = ModInt<TEN(9) + 7>;
 using DMint = DynamicModInt;
 int main() {
@@ -19,8 +21,7 @@ int main() {
         assert(c.fact[33] * c.ifact[33] == DMint(1));
         assert(c.fact[100] * c.ifact[100] == DMint(1));
     }
-    int a, b;
-    cin >> a >> b;
-    cout << a + b << endl;
+
+    solve_aplusb();
     return 0;
 }
