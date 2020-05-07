@@ -1,3 +1,5 @@
+#define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
+
 #include "base.h"
 #include "util/fast_io.h"
 
@@ -16,4 +18,7 @@ void check_separator() {
 
 int main() {
     check_separator();
+    int a, b;
+    cin >> a >> b;
+    cout << a + b << endl;
 }
