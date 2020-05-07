@@ -14,6 +14,7 @@
 "test-oj/modint.test.cpp": "2020-05-07 23:22:08 +0900",
 "test-oj/number_of_substrings.test.cpp": "2020-02-08 03:24:39 +0900",
 "test-oj/online-zalgo.test.cpp": "2020-02-08 03:24:39 +0900",
+"test-oj/printer.test.cpp": "2020-05-07 23:30:29 +0900",
 "test-oj/sais.test.cpp": "2020-02-08 03:24:39 +0900",
 "test-oj/scanner.test.cpp": "2020-05-07 23:04:11 +0900",
 "test-oj/staticrangesum_rectangle_sum.test.cpp": "2020-02-08 03:24:39 +0900",
