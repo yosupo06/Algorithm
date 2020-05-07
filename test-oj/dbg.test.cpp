@@ -24,8 +24,8 @@ int main() {
     map<int, int> h; h[1] = 2; h[3] = 4;
     dbg(h);
 
-    int a, b;
-    cin >> a >> b;
-    cout << a + b << endl;
+    int x, y;
+    cin >> x >> y;
+    cout << x + y << endl;
     return 0;
 }
