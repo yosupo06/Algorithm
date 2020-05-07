@@ -1,4 +1,5 @@
-#define LOCAL
+#define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
+
 #include "base.h"
 #include "math/modint.h"
 #include "math/dynamicmodint.h"
@@ -18,5 +19,8 @@ int main() {
         assert(c.fact[33] * c.ifact[33] == DMint(1));
         assert(c.fact[100] * c.ifact[100] == DMint(1));
     }
+    int a, b;
+    cin >> a >> b;
+    cout << a + b << endl;
     return 0;
 }
