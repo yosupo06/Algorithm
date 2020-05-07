@@ -1,36 +1,36 @@
-name: Verify CI
+name: verify
 
-on: [push]
+on: push
 
 jobs:
-  gcc-ubuntu:
+  build:
     runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v1
-
-      - name: Set up python 3.7
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.7
-
-      - name: Install dependencies
-        run: pip3 install -U online-judge-tools
-      - name: Run verify
-        run: cd test-oj && ulimit -s unlimited && ./test.py
-
-  clang-mac:
-    runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v1
+    - uses: actions/checkout@v1
 
-      - name: Set up python 3.7
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.7
+    - name: Set up Python
+      uses: actions/setup-python@v1
 
-      - name: Install dependencies
-        run: pip3 install -U online-judge-tools
-      - name: Run verify
-        run: cd test-oj && ./test.py
+    - name: Install dependencies
+      run: pip3 install -U online-judge-verify-helper
+
+
+    # required only if you want to verify C# script files
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.101'
+    - name: Install dependencies (C#)
+      run: dotnet tool install -g dotnet-script && echo ::add-path::$HOME/.dotnet/tools
+
+    # required only if you want to verify Nim code
+    - name: Install dependencies (Nim)
+      run: sudo apt install nim
+
+
+    - name: Run tests
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        YUKICODER_TOKEN: ${{ secrets.YUKICODER_TOKEN }}
+        GH_PAT: ${{ secrets.GH_PAT }}
+      run: oj-verify all
