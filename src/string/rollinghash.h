@@ -6,7 +6,7 @@ V<Mint1> powB1{1}, powiB1{1};
 Mint0 B0 = rand_int(1, TEN(9)), iB0 = B0.inv();
 Mint1 B1 = rand_int(1, TEN(9)), iB1 = B1.inv();
 void first() {
-    for (int i = 0; i < TEN(6); i++) {
+    for (int i = 0; i < 2 * TEN(6) + 10000; i++) {
         powB0.push_back(powB0.back() * B0);
         powiB0.push_back(powiB0.back() * iB0);
         powB1.push_back(powB1.back() * B1);

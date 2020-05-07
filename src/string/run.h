@@ -1,3 +1,7 @@
+#pragma once
+
+#include "string/zalgo.h"
+
 struct RunExec {
     VV<pair<int, int>> runs;
 
@@ -9,9 +13,7 @@ struct RunExec {
         return l;
     }
 
-    V<int> sub_a(int l, int r) {
-        return {a.begin() + l, a.begin() + r};
-    }
+    V<int> sub_a(int l, int r) { return {a.begin() + l, a.begin() + r}; }
     V<int> concat(V<int> l, const V<int>& r) {
         l.insert(l.end(), r.begin(), r.end());
         return l;
@@ -32,26 +34,37 @@ struct RunExec {
         }
     }
 
-    template <class Str>
-    RunExec(Str _a) : a(_a) {
+    RunExec(V<int> _a) : a(_a) {
         n = int(a.size());
         runs.resize(n / 2 + 1);
         reverse(a.begin(), a.end());
         run(0, n, 0);
-        for (auto& run: runs) {
-            for (auto& p: run) {
-                tie(p.first, p.second) =
-                        make_pair(n - p.second, n - p.first);
+        for (auto& run : runs) {
+            for (auto& p : run) {
+                tie(p.first, p.second) = make_pair(n - p.second, n - p.first);
             }
         }
         reverse(a.begin(), a.end());
         run(0, n, 1);
 
-        for (auto& run: runs) {
-            sort(run.begin(), run.end());
+        set<pair<int, int>> vis;
+        for (int ph = 1; ph <= n / 2; ph++) {
+            auto& run = runs[ph];
+            sort(run.begin(), run.end(),
+                 [&](pair<int, int> lhs, pair<int, int> rhs) {
+                     if (lhs.first != rhs.first) return lhs.first < rhs.first;
+                     return lhs.second > rhs.second;
+                 });
             V<pair<int, int>> res;
-            for (auto p: run) {
+            for (auto p : run) {
                 if (!res.empty() && p.second <= res.back().second) continue;
+                res.push_back(p);
+            }
+            run = res;
+            res.clear();
+            for (auto p : run) {
+                if (vis.count(p)) continue;
+                vis.insert(p);
                 res.push_back(p);
             }
             run = res;

@@ -1,6 +1,0 @@
-[[solutions.unionfind]]
-    source = 'datastructure/unionfind_test.cpp'
-
-[[solutions.unionfind]]
-    source = 'datastructure/quickfind_test.cpp'
-
