@@ -1,3 +1,3 @@
 [[languages.cpp.environments]]
 CXX = "g++"
-CXXFLAGS = ["-I", "src", "-Wall", "-Wextra", "-Wshadow", "-std=c++17"]
+CXXFLAGS = ["-I", "src", "-Wall", "-Wextra", "-Wshadow", "-std=c++17", "-O2"]
