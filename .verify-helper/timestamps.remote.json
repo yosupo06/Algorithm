@@ -1,5 +1,6 @@
 {
 "test-oj/bimaching.test.cpp": "2020-05-07 22:49:12 +0900",
+"test-oj/comb.test.cpp": "2020-05-07 23:03:34 +0900",
 "test-oj/doublingsa.test.cpp": "2020-02-08 03:24:39 +0900",
 "test-oj/fenwick_2d_rectangle_sum.test.cpp": "2020-02-08 03:24:39 +0900",
 "test-oj/hl_lca.test.cpp": "2020-02-08 03:24:39 +0900",
@@ -12,6 +13,7 @@
 "test-oj/number_of_substrings.test.cpp": "2020-02-08 03:24:39 +0900",
 "test-oj/online-zalgo.test.cpp": "2020-02-08 03:24:39 +0900",
 "test-oj/sais.test.cpp": "2020-02-08 03:24:39 +0900",
+"test-oj/scanner.test.cpp": "2020-05-07 23:04:11 +0900",
 "test-oj/staticrangesum_rectangle_sum.test.cpp": "2020-02-08 03:24:39 +0900",
 "test-oj/zalgo.test.cpp": "2020-02-08 03:24:39 +0900"
 }
