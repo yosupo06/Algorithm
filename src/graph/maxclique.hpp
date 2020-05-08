@@ -1,6 +1,6 @@
 #pragma once
 
-#include "base.h"
+#include "base.hpp"
 
 template <int N, class E> struct MaxClique {
     using B = bitset<N>;

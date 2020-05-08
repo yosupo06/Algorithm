@@ -1,8 +1,8 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/rectangle_sum"
 
-#include "base.h"
-#include "util/fast_io.h"
-#include "datastructure/staticrangesum.h"
+#include "base.hpp"
+#include "util/fast_io.hpp"
+#include "datastructure/staticrangesum.hpp"
 
 int main() {
     Scanner sc(stdin);

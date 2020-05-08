@@ -1,8 +1,8 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/lca"
 
-#include "base.h"
-#include "util/fast_io.h"
-#include "datastructure/linkcuttree.h"
+#include "base.hpp"
+#include "util/fast_io.hpp"
+#include "datastructure/linkcuttree.hpp"
 
 struct Node {
     using D = bool;

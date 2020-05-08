@@ -1,9 +1,9 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
 
-#include "aplusb.h"
+#include "aplusb.hpp"
 
-#include "base.h"
-#include "math/dynamicmodint.h"
+#include "base.hpp"
+#include "math/dynamicmodint.hpp"
 
 using DMint = DynamicModInt;
 

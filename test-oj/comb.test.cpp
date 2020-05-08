@@ -1,11 +1,11 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
 
-#include "base.h"
-#include "math/modint.h"
-#include "math/dynamicmodint.h"
-#include "math/comb.h"
+#include "base.hpp"
+#include "math/modint.hpp"
+#include "math/dynamicmodint.hpp"
+#include "math/comb.hpp"
 
-#include "aplusb.h"
+#include "aplusb.hpp"
 
 using Mint = ModInt<TEN(9) + 7>;
 using DMint = DynamicModInt;

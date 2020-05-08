@@ -1,8 +1,8 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/zalgorithm"
 
-#include "base.h"
-#include "util/fast_io.h"
-#include "string/onlinez.h"
+#include "base.hpp"
+#include "util/fast_io.hpp"
+#include "string/onlinez.hpp"
 
 int main() {
     Scanner sc(stdin);

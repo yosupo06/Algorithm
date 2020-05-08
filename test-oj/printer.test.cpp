@@ -1,8 +1,8 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
 
-#include "aplusb.h"
-#include "base.h"
-#include "util/fast_io.h"
+#include "aplusb.hpp"
+#include "base.hpp"
+#include "util/fast_io.hpp"
 
 int main() {
     Printer pr(tmpfile());

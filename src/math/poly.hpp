@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../util/random.h"
+#include "../util/random.hpp"
 template <class D> struct Poly {
     V<D> v;
     Poly(const V<D>& _v = {}) : v(_v) { shrink(); }

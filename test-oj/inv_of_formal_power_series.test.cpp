@@ -1,11 +1,11 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/inv_of_formal_power_series"
 
-#include "base.h"
-#include "util/fast_io.h"
-#include "math/modint.h"
-#include "util/random.h"
-#include "math/nft.h"
-#include "math/poly.h"
+#include "base.hpp"
+#include "util/fast_io.hpp"
+#include "math/modint.hpp"
+#include "util/random.hpp"
+#include "math/nft.hpp"
+#include "math/poly.hpp"
 
 using Mint = ModInt<998244353>;
 template <> const Mint Mint::G = Mint(3);

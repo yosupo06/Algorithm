@@ -1,6 +1,6 @@
 #pragma once
 
-#include "string/zalgo.h"
+#include "string/zalgo.hpp"
 
 struct RunExec {
     VV<pair<int, int>> runs;

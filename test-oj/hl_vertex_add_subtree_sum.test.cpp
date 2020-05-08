@@ -1,9 +1,9 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/vertex_add_subtree_sum"
 
-#include "base.h"
-#include "datastructure/segtree.h"
-#include "tree/hl.h"
-#include "util/fast_io.h"
+#include "base.hpp"
+#include "datastructure/segtree.hpp"
+#include "tree/hl.hpp"
+#include "util/fast_io.hpp"
 
 int main() {
     Scanner sc(stdin);

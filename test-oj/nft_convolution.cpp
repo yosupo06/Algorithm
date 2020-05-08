@@ -1,10 +1,10 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/convolution_mod"
 
-#include "base.h"
-#include "util/fast_io.h"
-#include "bitop.h"
-#include "math/modint.h"
-#include "math/nft.h"
+#include "base.hpp"
+#include "util/fast_io.hpp"
+#include "bitop.hpp"
+#include "math/modint.hpp"
+#include "math/nft.hpp"
 
 using Mint = ModInt<998244353>;
 template <> const Mint Mint::G = Mint(3);

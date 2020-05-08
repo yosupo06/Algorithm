@@ -1,4 +1,4 @@
-#include "datastructure/bitvector.h"
+#include "datastructure/bitvector.hpp"
 
 template <class D> struct Mat : VV<D> {
     using VV<D>::VV;

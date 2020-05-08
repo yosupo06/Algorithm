@@ -1,8 +1,8 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/bipartitematching"
 
-#include "base.h"
-#include "util/fast_io.h"
-#include "graph/bimaching.h"
+#include "base.hpp"
+#include "util/fast_io.hpp"
+#include "graph/bimaching.hpp"
 
 int main() {
     Scanner sc(stdin);

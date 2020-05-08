@@ -1,7 +1,7 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
 
-#include "base.h"
-#include "util/fast_io.h"
+#include "base.hpp"
+#include "util/fast_io.hpp"
 
 void check_separator() {
     auto tmpf = tmpfile();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "base.h"
+#include "base.hpp"
 
 template <class D, class Op> struct SimpleSeg {
     D e;

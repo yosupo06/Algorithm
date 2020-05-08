@@ -1,8 +1,8 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/rectangle_sum"
 
-#include "base.h"
-#include "util/fast_io.h"
-#include "datastructure/fenwick2d.h"
+#include "base.hpp"
+#include "util/fast_io.hpp"
+#include "datastructure/fenwick2d.hpp"
 
 int main() {
     Scanner sc(stdin);

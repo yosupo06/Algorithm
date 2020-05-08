@@ -1,7 +1,7 @@
 #pragma once
 
-#include "base.h"
-#include "datastructure/fenwick.h"
+#include "base.hpp"
+#include "datastructure/fenwick.hpp"
 
 template <class D, class I> struct Fenwick2D {
     using P = pair<I, I>;

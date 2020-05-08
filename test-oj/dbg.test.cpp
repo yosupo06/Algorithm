@@ -1,8 +1,8 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
 
 #define LOCAL
-#include "aplusb.h"
-#include "base.h"
+#include "aplusb.hpp"
+#include "base.hpp"
 
 int main() {
     pair<int, int> a = {1, 2};

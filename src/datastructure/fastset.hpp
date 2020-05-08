@@ -1,6 +1,6 @@
 #pragma once
 
-#include "bitop.h"
+#include "bitop.hpp"
 struct FastSet {
     static constexpr uint B = 64;
     int n, lg;

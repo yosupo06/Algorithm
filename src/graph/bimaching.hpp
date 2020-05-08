@@ -1,7 +1,7 @@
 #pragma once
 
-#include "datastructure/simplequeue.h"
-#include "graph/csr.h"
+#include "datastructure/simplequeue.hpp"
+#include "graph/csr.hpp"
 
 struct BipartiteMaching {
   public:

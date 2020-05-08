@@ -1,6 +1,6 @@
 #pragma once
 
-#include "base.h"
+#include "base.hpp"
 
 struct Nimber64;
 Nimber64 mul_naive(Nimber64 l, Nimber64 r);

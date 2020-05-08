@@ -2,8 +2,8 @@
 //#pragma GCC target("avx")
 //#undef LOCAL
 
-#include "base.h"
-#include "util/fast_io.h"
+#include "base.hpp"
+#include "util/fast_io.hpp"
 
 Scanner sc = Scanner(stdin);
 Printer pr = Printer(stdout);

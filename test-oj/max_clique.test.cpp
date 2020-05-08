@@ -1,8 +1,8 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/maximum_independent_set"
 
-#include "base.h"
-#include "util/fast_io.h"
-#include "graph/maxclique.h"
+#include "base.hpp"
+#include "util/fast_io.hpp"
+#include "graph/maxclique.hpp"
 
 int main() {
     Scanner sc(stdin);
