@@ -15,8 +15,11 @@ jobs:
     - name: Install dependencies
       run: pip3 install -U online-judge-verify-helper
 
-    - name: gRPC
-      run: mv test/* src/*
+    - name: Copy files
+      run: cp -r test/* src/
+
+    - name: Remove files
+      run: rm -r test
       
     - name: Run tests
       env:
