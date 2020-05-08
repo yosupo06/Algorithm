@@ -1,3 +1,5 @@
+#pragma once
+
 template <int N> struct SmallFind {
     array<int, N> id;
     SmallFind() {
