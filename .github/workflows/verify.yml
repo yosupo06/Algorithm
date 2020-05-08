@@ -16,7 +16,7 @@ jobs:
       run: pip3 install -U online-judge-verify-helper
 
     - name: Copy files
-      run: cp -r test/* src/
+      run: cp -r test-oj/* src/
 
     - name: Remove files
       run: rm -r test
