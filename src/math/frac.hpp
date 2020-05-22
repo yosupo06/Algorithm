@@ -1,3 +1,8 @@
+#pragma once
+
+#include "math/primitive.hpp"
+
+
 template <class I> struct Frac {
     I a, b;  // a / b
     Frac(I _a = 0) : a(_a), b(1) {}

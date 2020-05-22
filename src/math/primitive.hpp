@@ -1,3 +1,7 @@
+#pragma once
+
+#include "bitop.hpp"
+
 //binary gcd
 ll gcd(ll _a, ll _b) {
     ull a = abs(_a), b = abs(_b);

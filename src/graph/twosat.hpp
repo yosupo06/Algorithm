@@ -1,3 +1,6 @@
+#pragma once
+#include "graph/scc.hpp"
+
 struct TwoSat {
     V<bool> res;
 

@@ -136,3 +136,10 @@ struct BitVec {
 
     bool operator==(const BitVec& r) const { return d == r.d; }
 };
+ostream& operator<<(ostream& os, const BitVec& bs) {
+    os << "B(";
+    for (size_t i = 0; i < bs.size(); i++) {
+        os << bs[i];
+    }
+    return os << ")";
+}
