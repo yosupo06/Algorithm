@@ -36,6 +36,11 @@ layout: default
 
 
 
+## Required by
+
+* :warning: <a href="twosat.hpp.html">src/graph/twosat.hpp</a>
+
+
 ## Code
 
 <a id="unbundled"></a>

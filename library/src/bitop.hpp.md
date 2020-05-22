@@ -41,8 +41,10 @@ layout: default
 * :warning: <a href="datastructure/bitvector.hpp.html">src/datastructure/bitvector.hpp</a>
 * :warning: <a href="datastructure/fastset.hpp.html">src/datastructure/fastset.hpp</a>
 * :heavy_check_mark: <a href="math/dynamicmodint.hpp.html">src/math/dynamicmodint.hpp</a>
+* :warning: <a href="math/frac.hpp.html">src/math/frac.hpp</a>
 * :warning: <a href="math/matrix.hpp.html">src/math/matrix.hpp</a>
 * :heavy_check_mark: <a href="math/nft.hpp.html">src/math/nft.hpp</a>
+* :warning: <a href="math/primitive.hpp.html">src/math/primitive.hpp</a>
 * :warning: <a href="nft_convolution.cpp.html">src/nft_convolution.cpp</a>
 
 
