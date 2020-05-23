@@ -47,7 +47,7 @@ layout: default
 
 * :heavy_check_mark: <a href="library/src/aplusb.hpp.html">src/aplusb.hpp</a>
 * :warning: <a href="library/src/base.cpp.html">src/base.cpp</a>
-* :heavy_check_mark: <a href="library/src/base.hpp.html">src/base.hpp</a>
+* :question: <a href="library/src/base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="library/src/bitop.hpp.html">src/bitop.hpp</a>
 
 
@@ -150,7 +150,7 @@ layout: default
 * :heavy_check_mark: <a href="library/src/math/modint.hpp.html">src/math/modint.hpp</a>
 * :heavy_check_mark: <a href="library/src/math/modint61.hpp.html">src/math/modint61.hpp</a>
 * :heavy_check_mark: <a href="library/src/math/nft.hpp.html">src/math/nft.hpp</a>
-* :warning: <a href="library/src/math/nimber.hpp.html">src/math/nimber.hpp</a>
+* :x: <a href="library/src/math/nimber.hpp.html">src/math/nimber.hpp</a>
 * :heavy_check_mark: <a href="library/src/math/poly.hpp.html">src/math/poly.hpp</a>
 * :warning: <a href="library/src/math/prime.hpp.html">src/math/prime.hpp</a>
 * :warning: <a href="library/src/math/primitive.hpp.html">src/math/primitive.hpp</a>
@@ -185,7 +185,7 @@ layout: default
 
 ### src/util
 
-* :heavy_check_mark: <a href="library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
+* :question: <a href="library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
 * :warning: <a href="library/src/util/hash.hpp.html">src/util/hash.hpp</a>
 * :warning: <a href="library/src/util/ostream.hpp.html">src/util/ostream.hpp</a>
 * :heavy_check_mark: <a href="library/src/util/random.hpp.html">src/util/random.hpp</a>
@@ -210,6 +210,7 @@ layout: default
 * :heavy_check_mark: <a href="verify/src/modint.test.cpp.html">src/modint.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/nft_convolution.test.cpp.html">src/nft_convolution.test.cpp</a>
+* :x: <a href="verify/src/nimber.test.cpp.html">src/nimber.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/number_of_substrings.test.cpp.html">src/number_of_substrings.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/online-zalgo.test.cpp.html">src/online-zalgo.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/printer.test.cpp.html">src/printer.test.cpp</a>

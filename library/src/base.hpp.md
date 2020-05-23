@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/base.hpp
+# :question: src/base.hpp
 
 <a href="../../index.html">Back to top page</a>
 
@@ -46,7 +46,7 @@ layout: default
 * :heavy_check_mark: <a href="graph/maxclique.hpp.html">src/graph/maxclique.hpp</a>
 * :heavy_check_mark: <a href="math/comb.hpp.html">src/math/comb.hpp</a>
 * :heavy_check_mark: <a href="math/modint61.hpp.html">src/math/modint61.hpp</a>
-* :warning: <a href="math/nimber.hpp.html">src/math/nimber.hpp</a>
+* :x: <a href="math/nimber.hpp.html">src/math/nimber.hpp</a>
 * :heavy_check_mark: <a href="string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
 * :heavy_check_mark: <a href="tree/hl.hpp.html">src/tree/hl.hpp</a>
 
@@ -68,6 +68,7 @@ layout: default
 * :heavy_check_mark: <a href="../../verify/src/modint.test.cpp.html">src/modint.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/nft_convolution.test.cpp.html">src/nft_convolution.test.cpp</a>
+* :x: <a href="../../verify/src/nimber.test.cpp.html">src/nimber.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/number_of_substrings.test.cpp.html">src/number_of_substrings.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/online-zalgo.test.cpp.html">src/online-zalgo.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/printer.test.cpp.html">src/printer.test.cpp</a>

@@ -25,24 +25,22 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/bimaching.test.cpp
+# :x: src/nimber.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
-* <a href="{{ site.github.repository_url }}/blob/master/src/bimaching.test.cpp">View this file on GitHub</a>
+* <a href="{{ site.github.repository_url }}/blob/master/src/nimber.test.cpp">View this file on GitHub</a>
     - Last commit date: 2020-05-23 17:50:28+09:00
 
 
-* see: <a href="https://judge.yosupo.jp/problem/bipartitematching">https://judge.yosupo.jp/problem/bipartitematching</a>
+* see: <a href="https://judge.yosupo.jp/problem/nim_product_64">https://judge.yosupo.jp/problem/nim_product_64</a>
 
 
 ## Depends on
 
 * :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/datastructure/simplequeue.hpp.html">src/datastructure/simplequeue.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/graph/bimaching.hpp.html">src/graph/bimaching.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/graph/csr.hpp.html">src/graph/csr.hpp</a>
+* :x: <a href="../../library/src/math/nimber.hpp.html">src/math/nimber.hpp</a>
 * :question: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
 
 
@@ -51,31 +49,21 @@ layout: default
 <a id="unbundled"></a>
 {% raw %}
 ```cpp
-#define PROBLEM "https://judge.yosupo.jp/problem/bipartitematching"
+#define PROBLEM "https://judge.yosupo.jp/problem/nim_product_64"
 
 #include "base.hpp"
 #include "util/fast_io.hpp"
-#include "graph/bimaching.hpp"
+#include "math/nimber.hpp"
 
 int main() {
     Scanner sc(stdin);
     Printer pr(stdout);
-    int l, r, m;
-    sc.read(l, r, m);
-    V<pair<int, int>> edges(m);
-    for (int i = 0; i < m; i++) {
-        sc.read(edges[i].first, edges[i].second);
-    }
-    BipartiteMaching bm(l, r, edges);
-    V<pair<int, int>> ans;
-    for (int i = 0; i < l; i++) {
-        if (bm.lmt[i] != -1) {
-            ans.push_back({i, bm.lmt[i]});
-        }
-    }
-    pr.writeln(ans.size());
-    for (auto p : ans) {
-        pr.writeln(p.first, p.second);
+    int t;
+    sc.read(t);
+    for (int i = 0; i < t; i++) {
+        ull a, b;
+        sc.read(a, b);
+        pr.writeln((Nimber64(a) * Nimber64(b)).v);
     }
     return 0;
 }
@@ -97,7 +85,7 @@ Traceback (most recent call last):
     self.update(self._resolve(pathlib.Path(included), included_from=path))
   File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 162, in _resolve
     raise BundleError(path, -1, "no such header")
-onlinejudge_verify.languages.cplusplus_bundle.BundleError: datastructure/simplequeue.hpp: line -1: no such header
+onlinejudge_verify.languages.cplusplus_bundle.BundleError: base.hpp: line -1: no such header
 
 ```
 {% endraw %}

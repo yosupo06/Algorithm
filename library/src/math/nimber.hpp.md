@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :warning: src/math/nimber.hpp
+# :x: src/math/nimber.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
@@ -38,7 +38,12 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
+* :question: <a href="../base.hpp.html">src/base.hpp</a>
+
+
+## Verified with
+
+* :x: <a href="../../../verify/src/nimber.test.cpp.html">src/nimber.test.cpp</a>
 
 
 ## Code
