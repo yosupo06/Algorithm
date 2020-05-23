@@ -1,12 +1,14 @@
 #pragma once
 
+#include "base.hpp"
 #include "string/zalgo.hpp"
 
+template<class Str>
 struct RunExec {
     VV<pair<int, int>> runs;
 
     int n;
-    V<int> a;
+    Str a;
 
     V<int> rev(V<int> l) {
         reverse(l.begin(), l.end());
@@ -33,8 +35,8 @@ struct RunExec {
             if (ri - le >= 2 * peri) runs[md - i].push_back({i - l1, md + l2});
         }
     }
-
-    RunExec(V<int> _a) : a(_a) {
+    
+    RunExec(Str _a) : a(_a) {
         n = int(a.size());
         runs.resize(n / 2 + 1);
         reverse(a.begin(), a.end());
