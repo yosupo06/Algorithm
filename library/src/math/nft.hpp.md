@@ -41,14 +41,10 @@ layout: default
 * :heavy_check_mark: <a href="../bitop.hpp.html">src/bitop.hpp</a>
 
 
-## Required by
-
-* :warning: <a href="../nft_convolution.cpp.html">src/nft_convolution.cpp</a>
-
-
 ## Verified with
 
 * :heavy_check_mark: <a href="../../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/nft_convolution.test.cpp.html">src/nft_convolution.test.cpp</a>
 
 
 ## Code

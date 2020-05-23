@@ -39,7 +39,6 @@ layout: default
 ## Required by
 
 * :warning: <a href="../base.cpp.html">src/base.cpp</a>
-* :warning: <a href="../nft_convolution.cpp.html">src/nft_convolution.cpp</a>
 
 
 ## Verified with
@@ -54,6 +53,7 @@ layout: default
 * :heavy_check_mark: <a href="../../../verify/src/lctree_lca.test.cpp.html">src/lctree_lca.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/lctree_vertex_add_path_sum.test.cpp.html">src/lctree_vertex_add_path_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/max_clique.test.cpp.html">src/max_clique.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/nft_convolution.test.cpp.html">src/nft_convolution.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/number_of_substrings.test.cpp.html">src/number_of_substrings.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/online-zalgo.test.cpp.html">src/online-zalgo.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/printer.test.cpp.html">src/printer.test.cpp</a>

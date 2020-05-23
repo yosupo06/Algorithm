@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../../index.html#ec86b6e05e7d09e98d071ea841edf05f">src/string</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/string/rollinghash.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-23 18:23:53+09:00
+    - Last commit date: 2020-05-23 18:32:04+09:00
 
 
 
@@ -56,16 +56,17 @@ layout: default
 ```cpp
 #pragma once
 
-#include "util/random.hpp"
 #include "math/comb.hpp"
 #include "math/modint61.hpp"
+#include "util/random.hpp"
 
 struct H {
-private:
+  private:
     static ModInt61 B;
     static ModInt61 iB;
     static V<ModInt61> powB, powiB;
-public:
+
+  public:
     static void init(int n) {
         powB = powTable(n, B);
         powiB = powTable(n, iB);
@@ -76,17 +77,11 @@ public:
     H(int _le, ModInt61 _h) : le(_le), h(_h) {}
     H(int c) : le(1), h(c) {}
     // H(l) + H(r) = H(lr)
-    H operator+(const H& r) const {
-        return H{le + r.le, h + r.h * powB[le]};
-    }
+    H operator+(const H& r) const { return H{le + r.le, h + r.h * powB[le]}; }
     H& operator+=(const H& r) { return *this = *this + r; }
 
-    bool operator==(const H& r) const {
-        return le == r.le && h == r.h;
-    }
-    bool operator!=(const H& r) const {
-        return !(*this == r);
-    }
+    bool operator==(const H& r) const { return le == r.le && h == r.h; }
+    bool operator!=(const H& r) const { return !(*this == r); }
     // H(lr).strip_left(H(l)) = H(r)
     H strip_left(const H& l) const {
         return H{le - l.le, (h - l.h) * powiB[l.le]};
@@ -100,6 +95,7 @@ ModInt61 H::B =
     ModInt61(global_random_gen.uniform(0ULL, ModInt61::get_mod() - 1));
 ModInt61 H::iB = H::B.inv();
 V<ModInt61> H::powB, H::powiB;
+
 ```
 {% endraw %}
 
@@ -115,7 +111,7 @@ Traceback (most recent call last):
     self.update(self._resolve(pathlib.Path(included), included_from=path))
   File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 162, in _resolve
     raise BundleError(path, -1, "no such header")
-onlinejudge_verify.languages.cplusplus_bundle.BundleError: util/random.hpp: line -1: no such header
+onlinejudge_verify.languages.cplusplus_bundle.BundleError: math/comb.hpp: line -1: no such header
 
 ```
 {% endraw %}

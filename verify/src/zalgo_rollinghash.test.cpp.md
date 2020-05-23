@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/zalgo_rollinghash.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-23 18:23:53+09:00
+    - Last commit date: 2020-05-23 18:32:04+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/zalgorithm">https://judge.yosupo.jp/problem/zalgorithm</a>
@@ -104,7 +104,7 @@ Traceback (most recent call last):
     self.update(self._resolve(pathlib.Path(included), included_from=path))
   File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 162, in _resolve
     raise BundleError(path, -1, "no such header")
-onlinejudge_verify.languages.cplusplus_bundle.BundleError: util/random.hpp: line -1: no such header
+onlinejudge_verify.languages.cplusplus_bundle.BundleError: math/comb.hpp: line -1: no such header
 
 ```
 {% endraw %}

@@ -25,12 +25,12 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :warning: src/nft_convolution.cpp
+# :heavy_check_mark: src/nft_convolution.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
-* <a href="{{ site.github.repository_url }}/blob/master/src/nft_convolution.cpp">View this file on GitHub</a>
+* <a href="{{ site.github.repository_url }}/blob/master/src/nft_convolution.test.cpp">View this file on GitHub</a>
     - Last commit date: 2020-05-23 17:50:28+09:00
 
 
@@ -39,11 +39,11 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="base.hpp.html">src/base.hpp</a>
-* :heavy_check_mark: <a href="bitop.hpp.html">src/bitop.hpp</a>
-* :heavy_check_mark: <a href="math/modint.hpp.html">src/math/modint.hpp</a>
-* :heavy_check_mark: <a href="math/nft.hpp.html">src/math/nft.hpp</a>
-* :heavy_check_mark: <a href="util/fast_io.hpp.html">src/util/fast_io.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/bitop.hpp.html">src/bitop.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/math/modint.hpp.html">src/math/modint.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/math/nft.hpp.html">src/math/nft.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
 
 
 ## Code
@@ -92,7 +92,7 @@ int main() {
 <a id="bundled"></a>
 {% raw %}
 ```cpp
-#line 1 "src/nft_convolution.cpp"
+#line 1 "src/nft_convolution.test.cpp"
 #define PROBLEM "https://judge.yosupo.jp/problem/convolution_mod"
 
 #line 2 "src/base.hpp"
@@ -561,7 +561,7 @@ template <class Mint> V<Mint> multiply(const V<Mint>& a, const V<Mint>& b) {
     for (int i = 0; i < n + m - 1; i++) a2[i] *= iz;
     return a2;
 }
-#line 8 "src/nft_convolution.cpp"
+#line 8 "src/nft_convolution.test.cpp"
 
 using Mint = ModInt<998244353>;
 template <> const Mint Mint::G = Mint(3);
