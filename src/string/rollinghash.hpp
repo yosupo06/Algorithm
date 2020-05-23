@@ -1,15 +1,16 @@
 #pragma once
 
-#include "util/random.hpp"
 #include "math/comb.hpp"
 #include "math/modint61.hpp"
+#include "util/random.hpp"
 
 struct H {
-private:
+  private:
     static ModInt61 B;
     static ModInt61 iB;
     static V<ModInt61> powB, powiB;
-public:
+
+  public:
     static void init(int n) {
         powB = powTable(n, B);
         powiB = powTable(n, iB);
@@ -20,17 +21,11 @@ public:
     H(int _le, ModInt61 _h) : le(_le), h(_h) {}
     H(int c) : le(1), h(c) {}
     // H(l) + H(r) = H(lr)
-    H operator+(const H& r) const {
-        return H{le + r.le, h + r.h * powB[le]};
-    }
+    H operator+(const H& r) const { return H{le + r.le, h + r.h * powB[le]}; }
     H& operator+=(const H& r) { return *this = *this + r; }
 
-    bool operator==(const H& r) const {
-        return le == r.le && h == r.h;
-    }
-    bool operator!=(const H& r) const {
-        return !(*this == r);
-    }
+    bool operator==(const H& r) const { return le == r.le && h == r.h; }
+    bool operator!=(const H& r) const { return !(*this == r); }
     // H(lr).strip_left(H(l)) = H(r)
     H strip_left(const H& l) const {
         return H{le - l.le, (h - l.h) * powiB[l.le]};
