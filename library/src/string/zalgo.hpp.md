@@ -38,11 +38,12 @@ layout: default
 
 ## Required by
 
-* :warning: <a href="run.hpp.html">src/string/run.hpp</a>
+* :heavy_check_mark: <a href="run.hpp.html">src/string/run.hpp</a>
 
 
 ## Verified with
 
+* :heavy_check_mark: <a href="../../../verify/src/run.test.cpp.html">src/run.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/zalgo.test.cpp.html">src/zalgo.test.cpp</a>
 
 

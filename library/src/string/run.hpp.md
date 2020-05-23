@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :warning: src/string/run.hpp
+# :heavy_check_mark: src/string/run.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
@@ -40,6 +40,11 @@ layout: default
 
 * :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="zalgo.hpp.html">src/string/zalgo.hpp</a>
+
+
+## Verified with
+
+* :heavy_check_mark: <a href="../../../verify/src/run.test.cpp.html">src/run.test.cpp</a>
 
 
 ## Code
