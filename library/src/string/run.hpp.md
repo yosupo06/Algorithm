@@ -31,13 +31,14 @@ layout: default
 
 * category: <a href="../../../index.html#ec86b6e05e7d09e98d071ea841edf05f">src/string</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/string/run.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-08 21:35:33+09:00
+    - Last commit date: 2020-05-23 19:01:40+09:00
 
 
 
 
 ## Depends on
 
+* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="zalgo.hpp.html">src/string/zalgo.hpp</a>
 
 
@@ -48,13 +49,15 @@ layout: default
 ```cpp
 #pragma once
 
+#include "base.hpp"
 #include "string/zalgo.hpp"
 
+template<class Str>
 struct RunExec {
     VV<pair<int, int>> runs;
 
     int n;
-    V<int> a;
+    Str a;
 
     V<int> rev(V<int> l) {
         reverse(l.begin(), l.end());
@@ -81,8 +84,8 @@ struct RunExec {
             if (ri - le >= 2 * peri) runs[md - i].push_back({i - l1, md + l2});
         }
     }
-
-    RunExec(V<int> _a) : a(_a) {
+    
+    RunExec(Str _a) : a(_a) {
         n = int(a.size());
         runs.resize(n / 2 + 1);
         reverse(a.begin(), a.end());
@@ -135,7 +138,7 @@ Traceback (most recent call last):
     self.update(self._resolve(pathlib.Path(included), included_from=path))
   File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 162, in _resolve
     raise BundleError(path, -1, "no such header")
-onlinejudge_verify.languages.cplusplus_bundle.BundleError: string/zalgo.hpp: line -1: no such header
+onlinejudge_verify.languages.cplusplus_bundle.BundleError: base.hpp: line -1: no such header
 
 ```
 {% endraw %}
