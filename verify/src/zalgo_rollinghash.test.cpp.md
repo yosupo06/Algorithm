@@ -25,26 +25,26 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/comb.test.cpp
+# :heavy_check_mark: src/zalgo_rollinghash.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
-* <a href="{{ site.github.repository_url }}/blob/master/src/comb.test.cpp">View this file on GitHub</a>
+* <a href="{{ site.github.repository_url }}/blob/master/src/zalgo_rollinghash.test.cpp">View this file on GitHub</a>
     - Last commit date: 2020-05-23 18:23:53+09:00
 
 
-* see: <a href="https://judge.yosupo.jp/problem/aplusb">https://judge.yosupo.jp/problem/aplusb</a>
+* see: <a href="https://judge.yosupo.jp/problem/zalgorithm">https://judge.yosupo.jp/problem/zalgorithm</a>
 
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../../library/src/aplusb.hpp.html">src/aplusb.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/bitop.hpp.html">src/bitop.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/math/comb.hpp.html">src/math/comb.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/math/dynamicmodint.hpp.html">src/math/dynamicmodint.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/math/modint.hpp.html">src/math/modint.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/math/modint61.hpp.html">src/math/modint61.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Code
@@ -52,32 +52,39 @@ layout: default
 <a id="unbundled"></a>
 {% raw %}
 ```cpp
-#define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
+#define PROBLEM "https://judge.yosupo.jp/problem/zalgorithm"
 
 #include "base.hpp"
-#include "math/modint.hpp"
-#include "math/dynamicmodint.hpp"
-#include "math/comb.hpp"
+#include "util/fast_io.hpp"
+#include "string/rollinghash.hpp"
 
-#include "aplusb.hpp"
-
-using Mint = ModInt<TEN(9) + 7>;
-using DMint = DynamicModInt;
 int main() {
-    {
-        Comb<Mint> c(100);
-        assert(c.fact[33] * c.ifact[33] == Mint(1));
-        assert(c.fact[100] * c.ifact[100] == Mint(1));
+    H::init(TEN(6));
+    Scanner sc(stdin);
+    Printer pr(stdout);
+    string s;
+    sc.read(s);
+    int n = int(s.size());
+    V<H> hs = {H()};
+    for (char c: s) {
+        H nh = hs.back() + H(c);
+        hs.push_back(nh);
     }
-    {
-        DMint::set_mod(103);
-        Comb<DMint> c(100);
-        assert(c.fact[33] * c.ifact[33] == DMint(1));
-        assert(c.fact[100] * c.ifact[100] == DMint(1));
+    dbg(H::powB[3]);
+    for (int i = 0; i < n; i++) {
+        int lw = 0, up = n - i + 1;
+        while (up - lw > 1) {
+            int md = (lw + up) / 2;
+            if (hs[md] == hs[i + md].strip_left(hs[i])) {
+                lw = md;
+            } else {
+                up = md;
+            }
+        }
+        pr.write(lw);
+        pr.write(' ');
     }
-
-    solve_aplusb();
-    return 0;
+    pr.writeln();
 }
 
 ```
@@ -97,7 +104,7 @@ Traceback (most recent call last):
     self.update(self._resolve(pathlib.Path(included), included_from=path))
   File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 162, in _resolve
     raise BundleError(path, -1, "no such header")
-onlinejudge_verify.languages.cplusplus_bundle.BundleError: base.hpp: line -1: no such header
+onlinejudge_verify.languages.cplusplus_bundle.BundleError: util/random.hpp: line -1: no such header
 
 ```
 {% endraw %}

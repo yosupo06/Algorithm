@@ -61,6 +61,7 @@ layout: default
 * :heavy_check_mark: <a href="../../../verify/src/scanner.test.cpp.html">src/scanner.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/staticrangesum_rectangle_sum.test.cpp.html">src/staticrangesum_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/zalgo.test.cpp.html">src/zalgo.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
 
 
 ## Code

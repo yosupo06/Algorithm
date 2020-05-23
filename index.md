@@ -166,7 +166,7 @@ layout: default
 * :warning: <a href="library/src/string/manacher.hpp.html">src/string/manacher.hpp</a>
 * :warning: <a href="library/src/string/mp.hpp.html">src/string/mp.hpp</a>
 * :heavy_check_mark: <a href="library/src/string/onlinez.hpp.html">src/string/onlinez.hpp</a>
-* :warning: <a href="library/src/string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
+* :heavy_check_mark: <a href="library/src/string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
 * :warning: <a href="library/src/string/run.hpp.html">src/string/run.hpp</a>
 * :heavy_check_mark: <a href="library/src/string/suffixarray.hpp.html">src/string/suffixarray.hpp</a>
 * :heavy_check_mark: <a href="library/src/string/zalgo.hpp.html">src/string/zalgo.hpp</a>
@@ -217,5 +217,6 @@ layout: default
 * :heavy_check_mark: <a href="verify/src/scanner.test.cpp.html">src/scanner.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/staticrangesum_rectangle_sum.test.cpp.html">src/staticrangesum_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/zalgo.test.cpp.html">src/zalgo.test.cpp</a>
+* :heavy_check_mark: <a href="verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
 
 

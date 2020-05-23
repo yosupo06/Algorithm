@@ -44,9 +44,11 @@ layout: default
 * :heavy_check_mark: <a href="datastructure/segtree.hpp.html">src/datastructure/segtree.hpp</a>
 * :heavy_check_mark: <a href="datastructure/staticrangesum.hpp.html">src/datastructure/staticrangesum.hpp</a>
 * :heavy_check_mark: <a href="graph/maxclique.hpp.html">src/graph/maxclique.hpp</a>
+* :heavy_check_mark: <a href="math/comb.hpp.html">src/math/comb.hpp</a>
 * :heavy_check_mark: <a href="math/modint61.hpp.html">src/math/modint61.hpp</a>
 * :warning: <a href="math/nimber.hpp.html">src/math/nimber.hpp</a>
 * :warning: <a href="nft_convolution.cpp.html">src/nft_convolution.cpp</a>
+* :heavy_check_mark: <a href="string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
 * :heavy_check_mark: <a href="tree/hl.hpp.html">src/tree/hl.hpp</a>
 
 
@@ -73,6 +75,7 @@ layout: default
 * :heavy_check_mark: <a href="../../verify/src/scanner.test.cpp.html">src/scanner.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/staticrangesum_rectangle_sum.test.cpp.html">src/staticrangesum_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/zalgo.test.cpp.html">src/zalgo.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
 
 
 ## Code

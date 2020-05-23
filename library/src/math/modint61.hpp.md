@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../../index.html#fb2ef479237c7a939531a404fd0e5cb7">src/math</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/math/modint61.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-23 17:50:28+09:00
+    - Last commit date: 2020-05-23 18:23:53+09:00
 
 
 
@@ -41,9 +41,15 @@ layout: default
 * :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
 
 
+## Required by
+
+* :heavy_check_mark: <a href="../string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
+
+
 ## Verified with
 
 * :heavy_check_mark: <a href="../../../verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
 
 
 ## Code
@@ -72,8 +78,7 @@ struct ModInt61 {
     M operator+(const M& r) const { return M().set_v(v + r.v); }
     M operator-(const M& r) const { return M().set_v(v + MD - r.v); }
     M operator*(const M& r) const {
-        __uint128_t z = __uint128_t(v) * r.v;
-        
+        __uint128_t z = __uint128_t(v) * r.v;        
         return M().set_v(ull((z & ((1ULL << 61) - 1)) + (z >> 61)));
     }
     M operator/(const M& r) const { return *this * r.inv(); }

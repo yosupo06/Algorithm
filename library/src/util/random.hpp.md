@@ -39,12 +39,14 @@ layout: default
 ## Required by
 
 * :heavy_check_mark: <a href="../math/poly.hpp.html">src/math/poly.hpp</a>
+* :heavy_check_mark: <a href="../string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
 
 
 ## Verified with
 
 * :heavy_check_mark: <a href="../../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
 
 
 ## Code

@@ -25,15 +25,28 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :warning: src/string/rollinghash.hpp
+# :heavy_check_mark: src/string/rollinghash.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
 * category: <a href="../../../index.html#ec86b6e05e7d09e98d071ea841edf05f">src/string</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/string/rollinghash.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-08 21:35:33+09:00
+    - Last commit date: 2020-05-23 18:23:53+09:00
 
 
+
+
+## Depends on
+
+* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../math/comb.hpp.html">src/math/comb.hpp</a>
+* :heavy_check_mark: <a href="../math/modint61.hpp.html">src/math/modint61.hpp</a>
+* :heavy_check_mark: <a href="../util/random.hpp.html">src/util/random.hpp</a>
+
+
+## Verified with
+
+* :heavy_check_mark: <a href="../../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
 
 
 ## Code
@@ -41,102 +54,68 @@ layout: default
 <a id="unbundled"></a>
 {% raw %}
 ```cpp
-using Mint0 = ModInt<TEN(9) + 7>;
-using Mint1 = ModInt<TEN(9) + 9>;
+#pragma once
 
-V<Mint0> powB0{1}, powiB0{1};
-V<Mint1> powB1{1}, powiB1{1};
-Mint0 B0 = rand_int(1, TEN(9)), iB0 = B0.inv();
-Mint1 B1 = rand_int(1, TEN(9)), iB1 = B1.inv();
-void first() {
-    for (int i = 0; i < 2 * TEN(6) + 10000; i++) {
-        powB0.push_back(powB0.back() * B0);
-        powiB0.push_back(powiB0.back() * iB0);
-        powB1.push_back(powB1.back() * B1);
-        powiB1.push_back(powiB1.back() * iB1);
-    }
-}
+#include "util/random.hpp"
+#include "math/comb.hpp"
+#include "math/modint61.hpp"
 
 struct H {
+private:
+    static ModInt61 B;
+    static ModInt61 iB;
+    static V<ModInt61> powB, powiB;
+public:
+    static void init(int n) {
+        powB = powTable(n, B);
+        powiB = powTable(n, iB);
+    }
     int le = 0;
-    Mint0 h0;
-    Mint1 h1;
-    H() : le(0), h0(0), h1(0) {}
-    H(int _le, Mint0 _h0, Mint1 _h1) : le(_le), h0(_h0), h1(_h1) {}
-    H(int c) : le(1), h0(c), h1(c) {}
+    ModInt61 h;
+    H() : le(0), h(0) {}
+    H(int _le, ModInt61 _h) : le(_le), h(_h) {}
+    H(int c) : le(1), h(c) {}
     // H(l) + H(r) = H(lr)
     H operator+(const H& r) const {
-        return H{le + r.le, h0 + r.h0 * powB0[le], h1 + r.h1 * powB1[le]};
+        return H{le + r.le, h + r.h * powB[le]};
     }
     H& operator+=(const H& r) { return *this = *this + r; }
 
     bool operator==(const H& r) const {
-        return le == r.le && h0 == r.h0 && h1 == r.h1;
+        return le == r.le && h == r.h;
     }
     bool operator!=(const H& r) const {
         return !(*this == r);
     }
     // H(lr).strip_left(H(l)) = H(r)
     H strip_left(const H& l) const {
-        return H{le - l.le, (h0 - l.h0) * powiB0[l.le], (h1 - l.h1) * powiB1[l.le]};
+        return H{le - l.le, (h - l.h) * powiB[l.le]};
     }
     // H(lr).strip_right(H(r)) = H(l)
     H strip_right(const H& r) const {
-        return H{le - r.le, h0 - r.h0 * powB0[le - r.le], h1 - r.h1 * powB1[le - r.le]};
+        return H{le - r.le, h - r.h * powB[le - r.le]};
     }
 };
-
+ModInt61 H::B =
+    ModInt61(global_random_gen.uniform(0ULL, ModInt61::get_mod() - 1));
+ModInt61 H::iB = H::B.inv();
+V<ModInt61> H::powB, H::powiB;
 ```
 {% endraw %}
 
 <a id="bundled"></a>
 {% raw %}
 ```cpp
-#line 1 "src/string/rollinghash.hpp"
-using Mint0 = ModInt<TEN(9) + 7>;
-using Mint1 = ModInt<TEN(9) + 9>;
-
-V<Mint0> powB0{1}, powiB0{1};
-V<Mint1> powB1{1}, powiB1{1};
-Mint0 B0 = rand_int(1, TEN(9)), iB0 = B0.inv();
-Mint1 B1 = rand_int(1, TEN(9)), iB1 = B1.inv();
-void first() {
-    for (int i = 0; i < 2 * TEN(6) + 10000; i++) {
-        powB0.push_back(powB0.back() * B0);
-        powiB0.push_back(powiB0.back() * iB0);
-        powB1.push_back(powB1.back() * B1);
-        powiB1.push_back(powiB1.back() * iB1);
-    }
-}
-
-struct H {
-    int le = 0;
-    Mint0 h0;
-    Mint1 h1;
-    H() : le(0), h0(0), h1(0) {}
-    H(int _le, Mint0 _h0, Mint1 _h1) : le(_le), h0(_h0), h1(_h1) {}
-    H(int c) : le(1), h0(c), h1(c) {}
-    // H(l) + H(r) = H(lr)
-    H operator+(const H& r) const {
-        return H{le + r.le, h0 + r.h0 * powB0[le], h1 + r.h1 * powB1[le]};
-    }
-    H& operator+=(const H& r) { return *this = *this + r; }
-
-    bool operator==(const H& r) const {
-        return le == r.le && h0 == r.h0 && h1 == r.h1;
-    }
-    bool operator!=(const H& r) const {
-        return !(*this == r);
-    }
-    // H(lr).strip_left(H(l)) = H(r)
-    H strip_left(const H& l) const {
-        return H{le - l.le, (h0 - l.h0) * powiB0[l.le], (h1 - l.h1) * powiB1[l.le]};
-    }
-    // H(lr).strip_right(H(r)) = H(l)
-    H strip_right(const H& r) const {
-        return H{le - r.le, h0 - r.h0 * powB0[le - r.le], h1 - r.h1 * powB1[le - r.le]};
-    }
-};
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/docs.py", line 349, in write_contents
+    bundled_code = language.bundle(self.file_class.file_path, basedir=pathlib.Path.cwd())
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus.py", line 172, in bundle
+    bundler.update(path)
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 282, in update
+    self.update(self._resolve(pathlib.Path(included), included_from=path))
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 162, in _resolve
+    raise BundleError(path, -1, "no such header")
+onlinejudge_verify.languages.cplusplus_bundle.BundleError: util/random.hpp: line -1: no such header
 
 ```
 {% endraw %}
