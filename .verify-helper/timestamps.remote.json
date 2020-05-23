@@ -1,6 +1,6 @@
 {
 "src/bimaching.test.cpp": "2020-05-23 17:50:28 +0900",
-"src/comb.test.cpp": "2020-05-23 17:50:28 +0900",
+"src/comb.test.cpp": "2020-05-23 18:23:53 +0900",
 "src/dbg.test.cpp": "2020-05-23 17:50:28 +0900",
 "src/doublingsa.test.cpp": "2020-05-23 17:50:28 +0900",
 "src/fenwick_2d_rectangle_sum.test.cpp": "2020-05-23 17:50:28 +0900",
@@ -12,12 +12,13 @@
 "src/lctree_vertex_add_path_sum.test.cpp": "2020-05-23 17:50:28 +0900",
 "src/max_clique.test.cpp": "2020-05-23 17:50:28 +0900",
 "src/modint.test.cpp": "2020-05-23 17:50:28 +0900",
-"src/modint61.test.cpp": "2020-05-23 17:50:28 +0900",
+"src/modint61.test.cpp": "2020-05-23 18:23:53 +0900",
 "src/number_of_substrings.test.cpp": "2020-05-23 17:50:28 +0900",
 "src/online-zalgo.test.cpp": "2020-05-23 17:50:28 +0900",
 "src/printer.test.cpp": "2020-05-23 17:50:28 +0900",
 "src/sais.test.cpp": "2020-05-23 17:50:28 +0900",
 "src/scanner.test.cpp": "2020-05-23 17:50:28 +0900",
 "src/staticrangesum_rectangle_sum.test.cpp": "2020-05-23 17:50:28 +0900",
-"src/zalgo.test.cpp": "2020-05-23 17:50:28 +0900"
+"src/zalgo.test.cpp": "2020-05-23 17:50:28 +0900",
+"src/zalgo_rollinghash.test.cpp": "2020-05-23 18:23:53 +0900"
 }
