@@ -26,5 +26,10 @@ int main() {
     dbg(h);
 
     solve_aplusb();
+
+    __int128_t x = 1234;
+    dbg(x);
+    __uint128_t y = 5678;
+    dbg(y);
     return 0;
 }

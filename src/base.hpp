@@ -27,6 +27,35 @@ template <class T> using VV = V<V<T>>;
 
 #ifdef LOCAL
 
+ostream& operator<<(ostream& os, const __int128_t x) {
+    if (x < 0) {
+        os << "-";
+        x *= -1;
+    }
+    if (x == 0) {
+        return os << "0";
+    }
+    string s;
+    while (x) {
+        s += char(x % 10 + '0');
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+ostream& operator<<(ostream& os, const __uint128_t x) {
+    if (x == 0) {
+        return os << "0";
+    }
+    string s;
+    while (x) {
+        s += char(x % 10 + '0');
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+
 template <class T, class U>
 ostream& operator<<(ostream& os, const pair<T, U>& p);
 template <class T> ostream& operator<<(ostream& os, const V<T>& v);
