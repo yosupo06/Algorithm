@@ -42,12 +42,12 @@ struct Nimber64 {
         for (ull p : factor) {
             ull STEP = 1;
             while (4 * STEP * STEP < p) STEP *= 2;
-            auto inside = [&](Nimber64 x, Nimber64 y) {
+            auto inside = [&](Nimber64 x, Nimber64 z) {
                 unordered_map<ull, int> mp;
                 Nimber64 big = 1;  // x^m
                 for (int i = 0; i < int(STEP); i++) {
-                    mp[y.v] = i;
-                    y *= x;
+                    mp[z.v] = i;
+                    z *= x;
                     big *= x;
                 }
                 Nimber64 now = 1;
