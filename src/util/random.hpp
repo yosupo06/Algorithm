@@ -3,12 +3,12 @@
 #include <algorithm>
 #include <array>
 #include <cassert>
+#include <chrono>
 #include <cstdint>
 #include <numeric>
 #include <random>
 #include <set>
 #include <vector>
-#include <chrono>
 
 struct Random {
   private:
@@ -47,8 +47,7 @@ struct Random {
         uint64_t mask = (lg == 63) ? ~0ULL : (1ULL << (lg + 1)) - 1;
         while (true) {
             uint64_t r = next() & mask;
-            if (r <= upper)
-                return r;
+            if (r <= upper) return r;
         }
     }
 
@@ -65,8 +64,7 @@ struct Random {
     }
 
     // random choice from [lower, upper]
-    template <class T>
-    T uniform(T lower, T upper) {
+    template <class T> T uniform(T lower, T upper) {
         assert(lower <= upper);
         return T(lower + next(uint64_t(upper - lower)));
     }
@@ -76,6 +74,17 @@ struct Random {
     double uniform01() {
         uint64_t v = next(1ULL << 63);
         return double(v) / (1ULL << 63);
+    }
+
+    template <class T> std::pair<T, T> uniform_pair(T lower, T upper) {
+        assert(upper - lower >= 1);
+        T a, b;
+        do {
+            a = uniform(lower, upper);
+            b = uniform(lower, upper);
+        } while (a == b);
+        if (a > b) std::swap(a, b);
+        return {a, b};
     }
 
     // generate random lower string that length = n
@@ -88,8 +97,7 @@ struct Random {
     }
 
     // random shuffle
-    template <class Iter>
-    void shuffle(Iter first, Iter last) {
+    template <class Iter> void shuffle(Iter first, Iter last) {
         if (first == last) return;
         // Reference and edit:
         // cpprefjp - C++日本語リファレンス
@@ -98,22 +106,19 @@ struct Random {
         for (auto it = first + 1; it != last; it++) {
             len++;
             int j = uniform(0, len - 1);
-            if (j != len - 1)
-                iter_swap(it, first + j);
+            if (j != len - 1) iter_swap(it, first + j);
         }
     }
 
     // generate random permutation that length = n
-    template <class T>
-    std::vector<T> perm(size_t n) {
+    template <class T> std::vector<T> perm(size_t n) {
         std::vector<T> idx(n);
         std::iota(idx.begin(), idx.end(), T(0));
         shuffle(idx.begin(), idx.end());
         return idx;
     }
 
-    template <class T>
-    std::vector<T> choice(size_t n, T lower, T upper) {
+    template <class T> std::vector<T> choice(size_t n, T lower, T upper) {
         assert(n <= upper - lower + 1);
         std::set<T> res;
         while (res.size() < n) res.insert(uniform(lower, upper));
@@ -124,3 +129,4 @@ struct Random {
 Random get_random_gen() {
     return Random(chrono::steady_clock::now().time_since_epoch().count());
 }
+Random global_random_gen = get_random_gen();
