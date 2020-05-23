@@ -19,8 +19,7 @@ struct ModInt61 {
     M operator+(const M& r) const { return M().set_v(v + r.v); }
     M operator-(const M& r) const { return M().set_v(v + MD - r.v); }
     M operator*(const M& r) const {
-        __uint128_t z = __uint128_t(v) * r.v;
-        
+        __uint128_t z = __uint128_t(v) * r.v;        
         return M().set_v(ull((z & ((1ULL << 61) - 1)) + (z >> 61)));
     }
     M operator/(const M& r) const { return *this * r.inv(); }
