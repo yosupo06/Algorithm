@@ -25,25 +25,25 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :x: src/math/nimber.hpp
+# :heavy_check_mark: src/math/nimber.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
 * category: <a href="../../../index.html#fb2ef479237c7a939531a404fd0e5cb7">src/math</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/math/nimber.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-23 17:50:28+09:00
+    - Last commit date: 2020-05-23 18:37:50+09:00
 
 
 
 
 ## Depends on
 
-* :question: <a href="../base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
 
 
 ## Verified with
 
-* :x: <a href="../../../verify/src/nimber.test.cpp.html">src/nimber.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/nimber.test.cpp.html">src/nimber.test.cpp</a>
 
 
 ## Code
@@ -95,12 +95,12 @@ struct Nimber64 {
         for (ull p : factor) {
             ull STEP = 1;
             while (4 * STEP * STEP < p) STEP *= 2;
-            auto inside = [&](Nimber64 x, Nimber64 y) {
+            auto inside = [&](Nimber64 x, Nimber64 z) {
                 unordered_map<ull, int> mp;
                 Nimber64 big = 1;  // x^m
                 for (int i = 0; i < int(STEP); i++) {
-                    mp[y.v] = i;
-                    y *= x;
+                    mp[z.v] = i;
+                    z *= x;
                     big *= x;
                 }
                 Nimber64 now = 1;

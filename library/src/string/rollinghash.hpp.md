@@ -38,7 +38,7 @@ layout: default
 
 ## Depends on
 
-* :question: <a href="../base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="../math/comb.hpp.html">src/math/comb.hpp</a>
 * :heavy_check_mark: <a href="../math/modint61.hpp.html">src/math/modint61.hpp</a>
 * :heavy_check_mark: <a href="../util/random.hpp.html">src/util/random.hpp</a>

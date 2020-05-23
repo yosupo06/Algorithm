@@ -39,12 +39,12 @@ layout: default
 
 ## Depends on
 
-* :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/bitop.hpp.html">src/bitop.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/math/modint.hpp.html">src/math/modint.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/math/nft.hpp.html">src/math/nft.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/math/poly.hpp.html">src/math/poly.hpp</a>
-* :question: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
 
 

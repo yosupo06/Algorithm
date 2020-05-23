@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :question: src/util/fast_io.hpp
+# :heavy_check_mark: src/util/fast_io.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
@@ -54,7 +54,7 @@ layout: default
 * :heavy_check_mark: <a href="../../../verify/src/lctree_vertex_add_path_sum.test.cpp.html">src/lctree_vertex_add_path_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/max_clique.test.cpp.html">src/max_clique.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/nft_convolution.test.cpp.html">src/nft_convolution.test.cpp</a>
-* :x: <a href="../../../verify/src/nimber.test.cpp.html">src/nimber.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/nimber.test.cpp.html">src/nimber.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/number_of_substrings.test.cpp.html">src/number_of_substrings.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/online-zalgo.test.cpp.html">src/online-zalgo.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/printer.test.cpp.html">src/printer.test.cpp</a>
