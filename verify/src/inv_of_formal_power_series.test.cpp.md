@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/inv_of_formal_power_series.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-23 17:08:12+09:00
+    - Last commit date: 2020-05-23 17:50:28+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/inv_of_formal_power_series">https://judge.yosupo.jp/problem/inv_of_formal_power_series</a>
@@ -39,7 +39,7 @@ layout: default
 
 ## Depends on
 
-* :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/bitop.hpp.html">src/bitop.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/math/modint.hpp.html">src/math/modint.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/math/nft.hpp.html">src/math/nft.hpp</a>
@@ -126,7 +126,7 @@ template <class T> using VV = V<V<T>>;
 
 #ifdef LOCAL
 
-ostream& operator<<(ostream& os, const __int128_t x) {
+ostream& operator<<(ostream& os, __int128_t x) {
     if (x < 0) {
         os << "-";
         x *= -1;
@@ -142,7 +142,7 @@ ostream& operator<<(ostream& os, const __int128_t x) {
     reverse(s.begin(), s.end());
     return os << s;
 }
-ostream& operator<<(ostream& os, const __uint128_t x) {
+ostream& operator<<(ostream& os, __uint128_t x) {
     if (x == 0) {
         return os << "0";
     }
@@ -411,11 +411,11 @@ template <uint MD> struct ModInt {
 #line 2 "src/util/random.hpp"
 
 #line 6 "src/util/random.hpp"
-#include <cstdint>
-#line 8 "src/util/random.hpp"
-#include <random>
-#line 11 "src/util/random.hpp"
 #include <chrono>
+#include <cstdint>
+#line 9 "src/util/random.hpp"
+#include <random>
+#line 12 "src/util/random.hpp"
 
 struct Random {
   private:
@@ -454,8 +454,7 @@ struct Random {
         uint64_t mask = (lg == 63) ? ~0ULL : (1ULL << (lg + 1)) - 1;
         while (true) {
             uint64_t r = next() & mask;
-            if (r <= upper)
-                return r;
+            if (r <= upper) return r;
         }
     }
 
@@ -472,8 +471,7 @@ struct Random {
     }
 
     // random choice from [lower, upper]
-    template <class T>
-    T uniform(T lower, T upper) {
+    template <class T> T uniform(T lower, T upper) {
         assert(lower <= upper);
         return T(lower + next(uint64_t(upper - lower)));
     }
@@ -483,6 +481,17 @@ struct Random {
     double uniform01() {
         uint64_t v = next(1ULL << 63);
         return double(v) / (1ULL << 63);
+    }
+
+    template <class T> std::pair<T, T> uniform_pair(T lower, T upper) {
+        assert(upper - lower >= 1);
+        T a, b;
+        do {
+            a = uniform(lower, upper);
+            b = uniform(lower, upper);
+        } while (a == b);
+        if (a > b) std::swap(a, b);
+        return {a, b};
     }
 
     // generate random lower string that length = n
@@ -495,8 +504,7 @@ struct Random {
     }
 
     // random shuffle
-    template <class Iter>
-    void shuffle(Iter first, Iter last) {
+    template <class Iter> void shuffle(Iter first, Iter last) {
         if (first == last) return;
         // Reference and edit:
         // cpprefjp - C++日本語リファレンス
@@ -505,22 +513,19 @@ struct Random {
         for (auto it = first + 1; it != last; it++) {
             len++;
             int j = uniform(0, len - 1);
-            if (j != len - 1)
-                iter_swap(it, first + j);
+            if (j != len - 1) iter_swap(it, first + j);
         }
     }
 
     // generate random permutation that length = n
-    template <class T>
-    std::vector<T> perm(size_t n) {
+    template <class T> std::vector<T> perm(size_t n) {
         std::vector<T> idx(n);
         std::iota(idx.begin(), idx.end(), T(0));
         shuffle(idx.begin(), idx.end());
         return idx;
     }
 
-    template <class T>
-    std::vector<T> choice(size_t n, T lower, T upper) {
+    template <class T> std::vector<T> choice(size_t n, T lower, T upper) {
         assert(n <= upper - lower + 1);
         std::set<T> res;
         while (res.size() < n) res.insert(uniform(lower, upper));
@@ -531,6 +536,7 @@ struct Random {
 Random get_random_gen() {
     return Random(chrono::steady_clock::now().time_since_epoch().count());
 }
+Random global_random_gen = get_random_gen();
 #line 2 "src/math/nft.hpp"
 
 #line 2 "src/bitop.hpp"

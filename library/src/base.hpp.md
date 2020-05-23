@@ -25,13 +25,13 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :question: src/base.hpp
+# :heavy_check_mark: src/base.hpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/base.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-23 17:08:12+09:00
+    - Last commit date: 2020-05-23 17:50:28+09:00
 
 
 
@@ -44,6 +44,7 @@ layout: default
 * :heavy_check_mark: <a href="datastructure/segtree.hpp.html">src/datastructure/segtree.hpp</a>
 * :heavy_check_mark: <a href="datastructure/staticrangesum.hpp.html">src/datastructure/staticrangesum.hpp</a>
 * :heavy_check_mark: <a href="graph/maxclique.hpp.html">src/graph/maxclique.hpp</a>
+* :heavy_check_mark: <a href="math/modint61.hpp.html">src/math/modint61.hpp</a>
 * :warning: <a href="math/nimber.hpp.html">src/math/nimber.hpp</a>
 * :warning: <a href="nft_convolution.cpp.html">src/nft_convolution.cpp</a>
 * :heavy_check_mark: <a href="tree/hl.hpp.html">src/tree/hl.hpp</a>
@@ -53,7 +54,7 @@ layout: default
 
 * :heavy_check_mark: <a href="../../verify/src/bimaching.test.cpp.html">src/bimaching.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/comb.test.cpp.html">src/comb.test.cpp</a>
-* :x: <a href="../../verify/src/dbg.test.cpp.html">src/dbg.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/src/dbg.test.cpp.html">src/dbg.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/doublingsa.test.cpp.html">src/doublingsa.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/fenwick_2d_rectangle_sum.test.cpp.html">src/fenwick_2d_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/hl_lca.test.cpp.html">src/hl_lca.test.cpp</a>
@@ -64,6 +65,7 @@ layout: default
 * :heavy_check_mark: <a href="../../verify/src/lctree_vertex_add_path_sum.test.cpp.html">src/lctree_vertex_add_path_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/max_clique.test.cpp.html">src/max_clique.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/modint.test.cpp.html">src/modint.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/number_of_substrings.test.cpp.html">src/number_of_substrings.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/online-zalgo.test.cpp.html">src/online-zalgo.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/printer.test.cpp.html">src/printer.test.cpp</a>
@@ -107,7 +109,7 @@ template <class T> using VV = V<V<T>>;
 
 #ifdef LOCAL
 
-ostream& operator<<(ostream& os, const __int128_t x) {
+ostream& operator<<(ostream& os, __int128_t x) {
     if (x < 0) {
         os << "-";
         x *= -1;
@@ -123,7 +125,7 @@ ostream& operator<<(ostream& os, const __int128_t x) {
     reverse(s.begin(), s.end());
     return os << s;
 }
-ostream& operator<<(ostream& os, const __uint128_t x) {
+ostream& operator<<(ostream& os, __uint128_t x) {
     if (x == 0) {
         return os << "0";
     }
@@ -255,7 +257,7 @@ template <class T> using VV = V<V<T>>;
 
 #ifdef LOCAL
 
-ostream& operator<<(ostream& os, const __int128_t x) {
+ostream& operator<<(ostream& os, __int128_t x) {
     if (x < 0) {
         os << "-";
         x *= -1;
@@ -271,7 +273,7 @@ ostream& operator<<(ostream& os, const __int128_t x) {
     reverse(s.begin(), s.end());
     return os << s;
 }
-ostream& operator<<(ostream& os, const __uint128_t x) {
+ostream& operator<<(ostream& os, __uint128_t x) {
     if (x == 0) {
         return os << "0";
     }

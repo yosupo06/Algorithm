@@ -25,25 +25,24 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/bimaching.test.cpp
+# :heavy_check_mark: src/modint61.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
-* <a href="{{ site.github.repository_url }}/blob/master/src/bimaching.test.cpp">View this file on GitHub</a>
+* <a href="{{ site.github.repository_url }}/blob/master/src/modint61.test.cpp">View this file on GitHub</a>
     - Last commit date: 2020-05-23 17:50:28+09:00
 
 
-* see: <a href="https://judge.yosupo.jp/problem/bipartitematching">https://judge.yosupo.jp/problem/bipartitematching</a>
+* see: <a href="https://judge.yosupo.jp/problem/aplusb">https://judge.yosupo.jp/problem/aplusb</a>
 
 
 ## Depends on
 
+* :heavy_check_mark: <a href="../../library/src/aplusb.hpp.html">src/aplusb.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/datastructure/simplequeue.hpp.html">src/datastructure/simplequeue.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/graph/bimaching.hpp.html">src/graph/bimaching.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/graph/csr.hpp.html">src/graph/csr.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/math/modint61.hpp.html">src/math/modint61.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Code
@@ -51,32 +50,44 @@ layout: default
 <a id="unbundled"></a>
 {% raw %}
 ```cpp
-#define PROBLEM "https://judge.yosupo.jp/problem/bipartitematching"
+#define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
+
+#include "aplusb.hpp"
 
 #include "base.hpp"
-#include "util/fast_io.hpp"
-#include "graph/bimaching.hpp"
+#include "math/modint61.hpp"
+#include "util/random.hpp"
+
+using Mint = ModInt61;
 
 int main() {
-    Scanner sc(stdin);
-    Printer pr(stdout);
-    int l, r, m;
-    sc.read(l, r, m);
-    V<pair<int, int>> edges(m);
-    for (int i = 0; i < m; i++) {
-        sc.read(edges[i].first, edges[i].second);
+    for (int ph = 0; ph < 100; ph++) {
+        ull a = global_gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull b = global_gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull expect = (__uint128_t(a) + b) % Mint::get_mod();
+        ull actual = (Mint(a) + Mint(b)).v;
+        assert(expect == actual);
     }
-    BipartiteMaching bm(l, r, edges);
-    V<pair<int, int>> ans;
-    for (int i = 0; i < l; i++) {
-        if (bm.lmt[i] != -1) {
-            ans.push_back({i, bm.lmt[i]});
-        }
+    for (int ph = 0; ph < 100; ph++) {
+        ull a = global_gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull b = global_gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull expect = (__uint128_t(a) - b + Mint::get_mod()) % Mint::get_mod();
+        ull actual = (Mint(a) - Mint(b)).v;
+        assert(expect == actual);
     }
-    pr.writeln(ans.size());
-    for (auto p : ans) {
-        pr.writeln(p.first, p.second);
+    for (int ph = 0; ph < 100; ph++) {
+        ull a = global_gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull b = global_gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull expect = __uint128_t(a) * b % Mint::get_mod();
+        ull actual = (Mint(a) * Mint(b)).v;
+        assert(expect == actual);
     }
+    for (int ph = 0; ph < 100; ph++) {
+        Mint a = Mint(global_gen.uniform(0ULL, Mint::get_mod() - 1));
+        Mint ia = a.inv();
+        assert((a * ia).v == 1);
+    }
+    solve_aplusb();
     return 0;
 }
 
@@ -97,7 +108,7 @@ Traceback (most recent call last):
     self.update(self._resolve(pathlib.Path(included), included_from=path))
   File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 162, in _resolve
     raise BundleError(path, -1, "no such header")
-onlinejudge_verify.languages.cplusplus_bundle.BundleError: datastructure/simplequeue.hpp: line -1: no such header
+onlinejudge_verify.languages.cplusplus_bundle.BundleError: base.hpp: line -1: no such header
 
 ```
 {% endraw %}

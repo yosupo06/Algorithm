@@ -45,9 +45,9 @@ layout: default
 
 ### src
 
-* :question: <a href="library/src/aplusb.hpp.html">src/aplusb.hpp</a>
+* :heavy_check_mark: <a href="library/src/aplusb.hpp.html">src/aplusb.hpp</a>
 * :warning: <a href="library/src/base.cpp.html">src/base.cpp</a>
-* :question: <a href="library/src/base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="library/src/base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="library/src/bitop.hpp.html">src/bitop.hpp</a>
 * :warning: <a href="library/src/nft_convolution.cpp.html">src/nft_convolution.cpp</a>
 
@@ -149,6 +149,7 @@ layout: default
 * :warning: <a href="library/src/math/frac.hpp.html">src/math/frac.hpp</a>
 * :warning: <a href="library/src/math/matrix.hpp.html">src/math/matrix.hpp</a>
 * :heavy_check_mark: <a href="library/src/math/modint.hpp.html">src/math/modint.hpp</a>
+* :heavy_check_mark: <a href="library/src/math/modint61.hpp.html">src/math/modint61.hpp</a>
 * :heavy_check_mark: <a href="library/src/math/nft.hpp.html">src/math/nft.hpp</a>
 * :warning: <a href="library/src/math/nimber.hpp.html">src/math/nimber.hpp</a>
 * :heavy_check_mark: <a href="library/src/math/poly.hpp.html">src/math/poly.hpp</a>
@@ -197,7 +198,7 @@ layout: default
 
 * :heavy_check_mark: <a href="verify/src/bimaching.test.cpp.html">src/bimaching.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/comb.test.cpp.html">src/comb.test.cpp</a>
-* :x: <a href="verify/src/dbg.test.cpp.html">src/dbg.test.cpp</a>
+* :heavy_check_mark: <a href="verify/src/dbg.test.cpp.html">src/dbg.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/doublingsa.test.cpp.html">src/doublingsa.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/fenwick_2d_rectangle_sum.test.cpp.html">src/fenwick_2d_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/hl_lca.test.cpp.html">src/hl_lca.test.cpp</a>
@@ -208,6 +209,7 @@ layout: default
 * :heavy_check_mark: <a href="verify/src/lctree_vertex_add_path_sum.test.cpp.html">src/lctree_vertex_add_path_sum.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/max_clique.test.cpp.html">src/max_clique.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/modint.test.cpp.html">src/modint.test.cpp</a>
+* :heavy_check_mark: <a href="verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/number_of_substrings.test.cpp.html">src/number_of_substrings.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/online-zalgo.test.cpp.html">src/online-zalgo.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/printer.test.cpp.html">src/printer.test.cpp</a>

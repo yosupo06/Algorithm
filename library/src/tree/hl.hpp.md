@@ -31,14 +31,14 @@ layout: default
 
 * category: <a href="../../../index.html#3698aa34afa89577c63cbcf539eb96f7">src/tree</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/tree/hl.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-23 17:08:12+09:00
+    - Last commit date: 2020-05-23 17:50:28+09:00
 
 
 
 
 ## Depends on
 
-* :question: <a href="../base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
 
 
 ## Verified with
@@ -229,7 +229,7 @@ template <class T> using VV = V<V<T>>;
 
 #ifdef LOCAL
 
-ostream& operator<<(ostream& os, const __int128_t x) {
+ostream& operator<<(ostream& os, __int128_t x) {
     if (x < 0) {
         os << "-";
         x *= -1;
@@ -245,7 +245,7 @@ ostream& operator<<(ostream& os, const __int128_t x) {
     reverse(s.begin(), s.end());
     return os << s;
 }
-ostream& operator<<(ostream& os, const __uint128_t x) {
+ostream& operator<<(ostream& os, __uint128_t x) {
     if (x == 0) {
         return os << "0";
     }
