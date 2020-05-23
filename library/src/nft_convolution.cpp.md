@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/nft_convolution.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-08 21:35:33+09:00
+    - Last commit date: 2020-05-23 17:08:12+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/convolution_mod">https://judge.yosupo.jp/problem/convolution_mod</a>
@@ -39,7 +39,7 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="base.hpp.html">src/base.hpp</a>
+* :question: <a href="base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="bitop.hpp.html">src/bitop.hpp</a>
 * :heavy_check_mark: <a href="math/modint.hpp.html">src/math/modint.hpp</a>
 * :heavy_check_mark: <a href="math/nft.hpp.html">src/math/nft.hpp</a>
@@ -123,6 +123,35 @@ template <class T> using V = vector<T>;
 template <class T> using VV = V<V<T>>;
 
 #ifdef LOCAL
+
+ostream& operator<<(ostream& os, const __int128_t x) {
+    if (x < 0) {
+        os << "-";
+        x *= -1;
+    }
+    if (x == 0) {
+        return os << "0";
+    }
+    string s;
+    while (x) {
+        s += char(x % 10 + '0');
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+ostream& operator<<(ostream& os, const __uint128_t x) {
+    if (x == 0) {
+        return os << "0";
+    }
+    string s;
+    while (x) {
+        s += char(x % 10 + '0');
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
 
 template <class T, class U>
 ostream& operator<<(ostream& os, const pair<T, U>& p);

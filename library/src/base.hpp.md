@@ -25,13 +25,13 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/base.hpp
+# :question: src/base.hpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/base.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-08 21:35:33+09:00
+    - Last commit date: 2020-05-23 17:08:12+09:00
 
 
 
@@ -53,7 +53,7 @@ layout: default
 
 * :heavy_check_mark: <a href="../../verify/src/bimaching.test.cpp.html">src/bimaching.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/comb.test.cpp.html">src/comb.test.cpp</a>
-* :heavy_check_mark: <a href="../../verify/src/dbg.test.cpp.html">src/dbg.test.cpp</a>
+* :x: <a href="../../verify/src/dbg.test.cpp.html">src/dbg.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/doublingsa.test.cpp.html">src/doublingsa.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/fenwick_2d_rectangle_sum.test.cpp.html">src/fenwick_2d_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/hl_lca.test.cpp.html">src/hl_lca.test.cpp</a>
@@ -106,6 +106,35 @@ template <class T> using V = vector<T>;
 template <class T> using VV = V<V<T>>;
 
 #ifdef LOCAL
+
+ostream& operator<<(ostream& os, const __int128_t x) {
+    if (x < 0) {
+        os << "-";
+        x *= -1;
+    }
+    if (x == 0) {
+        return os << "0";
+    }
+    string s;
+    while (x) {
+        s += char(x % 10 + '0');
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+ostream& operator<<(ostream& os, const __uint128_t x) {
+    if (x == 0) {
+        return os << "0";
+    }
+    string s;
+    while (x) {
+        s += char(x % 10 + '0');
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
 
 template <class T, class U>
 ostream& operator<<(ostream& os, const pair<T, U>& p);
@@ -225,6 +254,35 @@ template <class T> using V = vector<T>;
 template <class T> using VV = V<V<T>>;
 
 #ifdef LOCAL
+
+ostream& operator<<(ostream& os, const __int128_t x) {
+    if (x < 0) {
+        os << "-";
+        x *= -1;
+    }
+    if (x == 0) {
+        return os << "0";
+    }
+    string s;
+    while (x) {
+        s += char(x % 10 + '0');
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+ostream& operator<<(ostream& os, const __uint128_t x) {
+    if (x == 0) {
+        return os << "0";
+    }
+    string s;
+    while (x) {
+        s += char(x % 10 + '0');
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
 
 template <class T, class U>
 ostream& operator<<(ostream& os, const pair<T, U>& p);

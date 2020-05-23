@@ -25,13 +25,13 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/dbg.test.cpp
+# :x: src/dbg.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/dbg.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-08 21:35:33+09:00
+    - Last commit date: 2020-05-23 17:08:12+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/aplusb">https://judge.yosupo.jp/problem/aplusb</a>
@@ -39,8 +39,8 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../../library/src/aplusb.hpp.html">src/aplusb.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :question: <a href="../../library/src/aplusb.hpp.html">src/aplusb.hpp</a>
+* :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
 
 
 ## Code
@@ -76,6 +76,11 @@ int main() {
     dbg(h);
 
     solve_aplusb();
+
+    __int128_t x = 1234;
+    dbg(x);
+    __uint128_t y = 5678;
+    dbg(y);
     return 0;
 }
 
@@ -128,6 +133,35 @@ template <class T> using V = vector<T>;
 template <class T> using VV = V<V<T>>;
 
 #ifdef LOCAL
+
+ostream& operator<<(ostream& os, const __int128_t x) {
+    if (x < 0) {
+        os << "-";
+        x *= -1;
+    }
+    if (x == 0) {
+        return os << "0";
+    }
+    string s;
+    while (x) {
+        s += char(x % 10 + '0');
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+ostream& operator<<(ostream& os, const __uint128_t x) {
+    if (x == 0) {
+        return os << "0";
+    }
+    string s;
+    while (x) {
+        s += char(x % 10 + '0');
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
 
 template <class T, class U>
 ostream& operator<<(ostream& os, const pair<T, U>& p);
@@ -236,6 +270,11 @@ int main() {
     dbg(h);
 
     solve_aplusb();
+
+    __int128_t x = 1234;
+    dbg(x);
+    __uint128_t y = 5678;
+    dbg(y);
     return 0;
 }
 

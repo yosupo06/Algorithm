@@ -31,14 +31,14 @@ layout: default
 
 * category: <a href="../../../index.html#fb2ef479237c7a939531a404fd0e5cb7">src/math</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/math/nimber.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-08 21:35:33+09:00
+    - Last commit date: 2020-05-23 17:08:12+09:00
 
 
 
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
+* :question: <a href="../base.hpp.html">src/base.hpp</a>
 
 
 ## Code

@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/aplusb.hpp
+# :question: src/aplusb.hpp
 
 <a href="../../index.html">Back to top page</a>
 
@@ -39,7 +39,7 @@ layout: default
 ## Verified with
 
 * :heavy_check_mark: <a href="../../verify/src/comb.test.cpp.html">src/comb.test.cpp</a>
-* :heavy_check_mark: <a href="../../verify/src/dbg.test.cpp.html">src/dbg.test.cpp</a>
+* :x: <a href="../../verify/src/dbg.test.cpp.html">src/dbg.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/modint.test.cpp.html">src/modint.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/printer.test.cpp.html">src/printer.test.cpp</a>
 

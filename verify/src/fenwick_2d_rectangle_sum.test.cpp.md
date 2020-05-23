@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/fenwick_2d_rectangle_sum.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-08 21:35:33+09:00
+    - Last commit date: 2020-05-23 17:08:12+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/rectangle_sum">https://judge.yosupo.jp/problem/rectangle_sum</a>
@@ -39,7 +39,7 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/datastructure/fenwick.hpp.html">src/datastructure/fenwick.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/datastructure/fenwick2d.hpp.html">src/datastructure/fenwick2d.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>

@@ -31,14 +31,14 @@ layout: default
 
 * category: <a href="../../../index.html#057cdb199a48f765d2786c323ec11d3a">src/datastructure</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/datastructure/fenwick2d.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-08 21:35:33+09:00
+    - Last commit date: 2020-05-23 17:08:12+09:00
 
 
 
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
+* :question: <a href="../base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="fenwick.hpp.html">src/datastructure/fenwick.hpp</a>
 
 

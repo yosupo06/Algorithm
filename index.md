@@ -45,9 +45,9 @@ layout: default
 
 ### src
 
-* :heavy_check_mark: <a href="library/src/aplusb.hpp.html">src/aplusb.hpp</a>
+* :question: <a href="library/src/aplusb.hpp.html">src/aplusb.hpp</a>
 * :warning: <a href="library/src/base.cpp.html">src/base.cpp</a>
-* :heavy_check_mark: <a href="library/src/base.hpp.html">src/base.hpp</a>
+* :question: <a href="library/src/base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="library/src/bitop.hpp.html">src/bitop.hpp</a>
 * :warning: <a href="library/src/nft_convolution.cpp.html">src/nft_convolution.cpp</a>
 
@@ -197,7 +197,7 @@ layout: default
 
 * :heavy_check_mark: <a href="verify/src/bimaching.test.cpp.html">src/bimaching.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/comb.test.cpp.html">src/comb.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/dbg.test.cpp.html">src/dbg.test.cpp</a>
+* :x: <a href="verify/src/dbg.test.cpp.html">src/dbg.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/doublingsa.test.cpp.html">src/doublingsa.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/fenwick_2d_rectangle_sum.test.cpp.html">src/fenwick_2d_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/hl_lca.test.cpp.html">src/hl_lca.test.cpp</a>

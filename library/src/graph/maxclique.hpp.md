@@ -31,14 +31,14 @@ layout: default
 
 * category: <a href="../../../index.html#5442c8f317d712204bf06ed26672e17c">src/graph</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/graph/maxclique.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-08 21:35:33+09:00
+    - Last commit date: 2020-05-23 17:08:12+09:00
 
 
 
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
+* :question: <a href="../base.hpp.html">src/base.hpp</a>
 
 
 ## Verified with
