@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/base.hpp
+# :question: src/base.hpp
 
 <a href="../../index.html">Back to top page</a>
 
@@ -45,10 +45,10 @@ layout: default
 * :heavy_check_mark: <a href="datastructure/segtree.hpp.html">src/datastructure/segtree.hpp</a>
 * :heavy_check_mark: <a href="datastructure/staticrangesum.hpp.html">src/datastructure/staticrangesum.hpp</a>
 * :heavy_check_mark: <a href="graph/maxclique.hpp.html">src/graph/maxclique.hpp</a>
-* :heavy_check_mark: <a href="math/comb.hpp.html">src/math/comb.hpp</a>
-* :heavy_check_mark: <a href="math/modint61.hpp.html">src/math/modint61.hpp</a>
+* :question: <a href="math/comb.hpp.html">src/math/comb.hpp</a>
+* :x: <a href="math/modint61.hpp.html">src/math/modint61.hpp</a>
 * :heavy_check_mark: <a href="math/nimber.hpp.html">src/math/nimber.hpp</a>
-* :heavy_check_mark: <a href="string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
+* :x: <a href="string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
 * :heavy_check_mark: <a href="string/run.hpp.html">src/string/run.hpp</a>
 * :heavy_check_mark: <a href="tree/hl.hpp.html">src/tree/hl.hpp</a>
 * :heavy_check_mark: <a href="util/hash.hpp.html">src/util/hash.hpp</a>
@@ -62,15 +62,16 @@ layout: default
 * :heavy_check_mark: <a href="../../verify/src/doublingsa.test.cpp.html">src/doublingsa.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/fenwick_2d_rectangle_sum.test.cpp.html">src/fenwick_2d_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/src/hashmap_remove.test.cpp.html">src/hashmap_remove.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/hl_lca.test.cpp.html">src/hl_lca.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/hl_vertex_add_path_sum.test.cpp.html">src/hl_vertex_add_path_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/hl_vertex_add_subtree_sum.test.cpp.html">src/hl_vertex_add_subtree_sum.test.cpp</a>
-* :heavy_check_mark: <a href="../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
+* :x: <a href="../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/lctree_lca.test.cpp.html">src/lctree_lca.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/lctree_vertex_add_path_sum.test.cpp.html">src/lctree_vertex_add_path_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/max_clique.test.cpp.html">src/max_clique.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/modint.test.cpp.html">src/modint.test.cpp</a>
-* :heavy_check_mark: <a href="../../verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
+* :x: <a href="../../verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/nft_convolution.test.cpp.html">src/nft_convolution.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/nimber.test.cpp.html">src/nimber.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/number_of_substrings.test.cpp.html">src/number_of_substrings.test.cpp</a>
@@ -81,7 +82,7 @@ layout: default
 * :heavy_check_mark: <a href="../../verify/src/scanner.test.cpp.html">src/scanner.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/staticrangesum_rectangle_sum.test.cpp.html">src/staticrangesum_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/zalgo.test.cpp.html">src/zalgo.test.cpp</a>
-* :heavy_check_mark: <a href="../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
+* :x: <a href="../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
 
 
 ## Code

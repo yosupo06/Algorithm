@@ -25,13 +25,13 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/inv_of_formal_power_series.test.cpp
+# :x: src/inv_of_formal_power_series.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/inv_of_formal_power_series.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-23 17:50:28+09:00
+    - Last commit date: 2020-05-24 18:50:28+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/inv_of_formal_power_series">https://judge.yosupo.jp/problem/inv_of_formal_power_series</a>
@@ -39,13 +39,13 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/bitop.hpp.html">src/bitop.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/math/modint.hpp.html">src/math/modint.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/math/nft.hpp.html">src/math/nft.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/math/poly.hpp.html">src/math/poly.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
+* :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :question: <a href="../../library/src/bitop.hpp.html">src/bitop.hpp</a>
+* :question: <a href="../../library/src/math/modint.hpp.html">src/math/modint.hpp</a>
+* :question: <a href="../../library/src/math/nft.hpp.html">src/math/nft.hpp</a>
+* :x: <a href="../../library/src/math/poly.hpp.html">src/math/poly.hpp</a>
+* :question: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
+* :question: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Code
@@ -531,12 +531,19 @@ struct Random {
         while (res.size() < n) res.insert(uniform(lower, upper));
         return {res.begin(), res.end()};
     }
-} global_gen;
-
+};
+Random& global_gen() {
+    static Random gen;
+    return gen;
+}
 Random get_random_gen() {
+    cerr << "GET RANDOM GEN" << endl;
     return Random(chrono::steady_clock::now().time_since_epoch().count());
 }
-Random global_random_gen = get_random_gen();
+Random& global_runtime_gen() {
+    static Random gen = get_random_gen();
+    return gen;
+}
 #line 2 "src/math/nft.hpp"
 
 #line 2 "src/bitop.hpp"

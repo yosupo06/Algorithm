@@ -25,25 +25,25 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/math/poly.hpp
+# :x: src/math/poly.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
 * category: <a href="../../../index.html#fb2ef479237c7a939531a404fd0e5cb7">src/math</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/math/poly.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-23 17:50:28+09:00
+    - Last commit date: 2020-05-24 18:50:28+09:00
 
 
 
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../util/random.hpp.html">src/util/random.hpp</a>
+* :question: <a href="../util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Verified with
 
-* :heavy_check_mark: <a href="../../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
+* :x: <a href="../../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
 
 
 ## Code
@@ -436,12 +436,19 @@ struct Random {
         while (res.size() < n) res.insert(uniform(lower, upper));
         return {res.begin(), res.end()};
     }
-} global_gen;
-
+};
+Random& global_gen() {
+    static Random gen;
+    return gen;
+}
 Random get_random_gen() {
+    cerr << "GET RANDOM GEN" << endl;
     return Random(chrono::steady_clock::now().time_since_epoch().count());
 }
-Random global_random_gen = get_random_gen();
+Random& global_runtime_gen() {
+    static Random gen = get_random_gen();
+    return gen;
+}
 #line 4 "src/math/poly.hpp"
 template <class D> struct Poly {
     V<D> v;

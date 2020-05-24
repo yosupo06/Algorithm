@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/util/fast_io.hpp
+# :question: src/util/fast_io.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
@@ -47,10 +47,11 @@ layout: default
 * :heavy_check_mark: <a href="../../../verify/src/doublingsa.test.cpp.html">src/doublingsa.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/fenwick_2d_rectangle_sum.test.cpp.html">src/fenwick_2d_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/hashmap_remove.test.cpp.html">src/hashmap_remove.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/hl_lca.test.cpp.html">src/hl_lca.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/hl_vertex_add_path_sum.test.cpp.html">src/hl_vertex_add_path_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/hl_vertex_add_subtree_sum.test.cpp.html">src/hl_vertex_add_subtree_sum.test.cpp</a>
-* :heavy_check_mark: <a href="../../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
+* :x: <a href="../../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/lctree_lca.test.cpp.html">src/lctree_lca.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/lctree_vertex_add_path_sum.test.cpp.html">src/lctree_vertex_add_path_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/max_clique.test.cpp.html">src/max_clique.test.cpp</a>
@@ -64,7 +65,7 @@ layout: default
 * :heavy_check_mark: <a href="../../../verify/src/scanner.test.cpp.html">src/scanner.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/staticrangesum_rectangle_sum.test.cpp.html">src/staticrangesum_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/zalgo.test.cpp.html">src/zalgo.test.cpp</a>
-* :heavy_check_mark: <a href="../../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
+* :x: <a href="../../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
 
 
 ## Code

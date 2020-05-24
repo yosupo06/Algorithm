@@ -31,15 +31,15 @@ layout: default
 
 * category: <a href="../../../index.html#6433a1a19c7364347102f741d8b9cffd">src/util</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/util/hash.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 17:19:33+09:00
+    - Last commit date: 2020-05-24 18:50:28+09:00
 
 
 
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
-* :heavy_check_mark: <a href="random.hpp.html">src/util/random.hpp</a>
+* :question: <a href="../base.hpp.html">src/base.hpp</a>
+* :question: <a href="random.hpp.html">src/util/random.hpp</a>
 
 
 ## Required by
@@ -50,6 +50,7 @@ layout: default
 ## Verified with
 
 * :heavy_check_mark: <a href="../../../verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/hashmap_remove.test.cpp.html">src/hashmap_remove.test.cpp</a>
 
 
 ## Code
@@ -76,13 +77,13 @@ template <uint N = 4> struct Hasher {
 };
 
 template <uint N>
-ull Hasher<N>::offset = global_random_gen.uniform(0ULL, ull(-1));
+ull Hasher<N>::offset = global_runtime_gen().uniform(0ULL, ull(-1));
 
 template <uint N>
 array<ull, N> Hasher<N>::seed = []() {
     array<ull, N> seed;
     for (uint i = 0; i < N; i++) {
-        seed[i] = global_random_gen.uniform(0ULL, ull(-1));
+        seed[i] = global_runtime_gen().uniform(0ULL, ull(-1));
     }
     return seed;
 }();

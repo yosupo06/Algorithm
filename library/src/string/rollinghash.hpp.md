@@ -25,28 +25,28 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/string/rollinghash.hpp
+# :x: src/string/rollinghash.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
 * category: <a href="../../../index.html#ec86b6e05e7d09e98d071ea841edf05f">src/string</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/string/rollinghash.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-23 18:32:04+09:00
+    - Last commit date: 2020-05-24 18:50:28+09:00
 
 
 
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
-* :heavy_check_mark: <a href="../math/comb.hpp.html">src/math/comb.hpp</a>
-* :heavy_check_mark: <a href="../math/modint61.hpp.html">src/math/modint61.hpp</a>
-* :heavy_check_mark: <a href="../util/random.hpp.html">src/util/random.hpp</a>
+* :question: <a href="../base.hpp.html">src/base.hpp</a>
+* :question: <a href="../math/comb.hpp.html">src/math/comb.hpp</a>
+* :x: <a href="../math/modint61.hpp.html">src/math/modint61.hpp</a>
+* :question: <a href="../util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Verified with
 
-* :heavy_check_mark: <a href="../../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
+* :x: <a href="../../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
 
 
 ## Code

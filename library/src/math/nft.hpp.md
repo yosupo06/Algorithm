@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/math/nft.hpp
+# :question: src/math/nft.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
@@ -38,12 +38,12 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../bitop.hpp.html">src/bitop.hpp</a>
+* :question: <a href="../bitop.hpp.html">src/bitop.hpp</a>
 
 
 ## Verified with
 
-* :heavy_check_mark: <a href="../../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
+* :x: <a href="../../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/nft_convolution.test.cpp.html">src/nft_convolution.test.cpp</a>
 
 

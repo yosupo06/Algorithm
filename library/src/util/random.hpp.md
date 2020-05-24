@@ -25,13 +25,13 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/util/random.hpp
+# :question: src/util/random.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
 * category: <a href="../../../index.html#6433a1a19c7364347102f741d8b9cffd">src/util</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/util/random.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-23 17:50:28+09:00
+    - Last commit date: 2020-05-24 18:50:28+09:00
 
 
 
@@ -39,17 +39,18 @@ layout: default
 ## Required by
 
 * :heavy_check_mark: <a href="../datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
-* :heavy_check_mark: <a href="../math/poly.hpp.html">src/math/poly.hpp</a>
-* :heavy_check_mark: <a href="../string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
+* :x: <a href="../math/poly.hpp.html">src/math/poly.hpp</a>
+* :x: <a href="../string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
 * :heavy_check_mark: <a href="hash.hpp.html">src/util/hash.hpp</a>
 
 
 ## Verified with
 
 * :heavy_check_mark: <a href="../../../verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
-* :heavy_check_mark: <a href="../../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
-* :heavy_check_mark: <a href="../../../verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
-* :heavy_check_mark: <a href="../../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/hashmap_remove.test.cpp.html">src/hashmap_remove.test.cpp</a>
+* :x: <a href="../../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
+* :x: <a href="../../../verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
+* :x: <a href="../../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
 
 
 ## Code
@@ -183,12 +184,19 @@ struct Random {
         while (res.size() < n) res.insert(uniform(lower, upper));
         return {res.begin(), res.end()};
     }
-} global_gen;
-
+};
+Random& global_gen() {
+    static Random gen;
+    return gen;
+}
 Random get_random_gen() {
+    cerr << "GET RANDOM GEN" << endl;
     return Random(chrono::steady_clock::now().time_since_epoch().count());
 }
-Random global_random_gen = get_random_gen();
+Random& global_runtime_gen() {
+    static Random gen = get_random_gen();
+    return gen;
+}
 
 ```
 {% endraw %}
@@ -322,12 +330,19 @@ struct Random {
         while (res.size() < n) res.insert(uniform(lower, upper));
         return {res.begin(), res.end()};
     }
-} global_gen;
-
+};
+Random& global_gen() {
+    static Random gen;
+    return gen;
+}
 Random get_random_gen() {
+    cerr << "GET RANDOM GEN" << endl;
     return Random(chrono::steady_clock::now().time_since_epoch().count());
 }
-Random global_random_gen = get_random_gen();
+Random& global_runtime_gen() {
+    static Random gen = get_random_gen();
+    return gen;
+}
 
 ```
 {% endraw %}

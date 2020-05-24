@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/math/modint61.hpp
+# :x: src/math/modint61.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
@@ -38,18 +38,18 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
+* :question: <a href="../base.hpp.html">src/base.hpp</a>
 
 
 ## Required by
 
-* :heavy_check_mark: <a href="../string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
+* :x: <a href="../string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
 
 
 ## Verified with
 
-* :heavy_check_mark: <a href="../../../verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
-* :heavy_check_mark: <a href="../../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
+* :x: <a href="../../../verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
+* :x: <a href="../../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
 
 
 ## Code

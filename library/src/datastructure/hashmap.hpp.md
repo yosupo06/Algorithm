@@ -31,21 +31,22 @@ layout: default
 
 * category: <a href="../../../index.html#057cdb199a48f765d2786c323ec11d3a">src/datastructure</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/datastructure/hashmap.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 18:03:15+09:00
+    - Last commit date: 2020-05-24 18:50:28+09:00
 
 
 
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
+* :question: <a href="../base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="../util/hash.hpp.html">src/util/hash.hpp</a>
-* :heavy_check_mark: <a href="../util/random.hpp.html">src/util/random.hpp</a>
+* :question: <a href="../util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Verified with
 
 * :heavy_check_mark: <a href="../../../verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/hashmap_remove.test.cpp.html">src/hashmap_remove.test.cpp</a>
 
 
 ## Code
@@ -88,7 +89,11 @@ template <class K, class D, class H = Hasher<>> struct HashMap {
 
     D get(K k) {
         uint id = H::hash(k) & mask;
-        while (key[id].first && key[id].second != k) id = (id + 1) & mask;
+        int gc = 0;
+        while (key[id].first && key[id].second != k) {
+            gc++;
+            id = (id + 1) & mask;
+        }
         if (key[id].first != 1 || key[id].second != k) return D();
         return val[id];
     }
@@ -106,6 +111,14 @@ template <class K, class D, class H = Hasher<>> struct HashMap {
         }
         key[id] = {1, k};
         val[id] = x;
+    }
+
+    bool remove(K k) {
+        uint id = H::hash(k) & mask;
+        while (key[id].first && key[id].second != k) id = (id + 1) & mask;
+        if (key[id].first != 1) return false;
+        key[id].first = 2;
+        return true;
     }
 };
 

@@ -39,12 +39,12 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../../library/src/aplusb.hpp.html">src/aplusb.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/bitop.hpp.html">src/bitop.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/math/comb.hpp.html">src/math/comb.hpp</a>
+* :question: <a href="../../library/src/aplusb.hpp.html">src/aplusb.hpp</a>
+* :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :question: <a href="../../library/src/bitop.hpp.html">src/bitop.hpp</a>
+* :question: <a href="../../library/src/math/comb.hpp.html">src/math/comb.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/math/dynamicmodint.hpp.html">src/math/dynamicmodint.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/math/modint.hpp.html">src/math/modint.hpp</a>
+* :question: <a href="../../library/src/math/modint.hpp.html">src/math/modint.hpp</a>
 
 
 ## Code

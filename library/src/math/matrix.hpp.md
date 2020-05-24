@@ -38,7 +38,7 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../bitop.hpp.html">src/bitop.hpp</a>
+* :question: <a href="../bitop.hpp.html">src/bitop.hpp</a>
 * :warning: <a href="../datastructure/bitvector.hpp.html">src/datastructure/bitvector.hpp</a>
 
 

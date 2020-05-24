@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/bitop.hpp
+# :question: src/bitop.hpp
 
 <a href="../../index.html">Back to top page</a>
 
@@ -43,14 +43,14 @@ layout: default
 * :heavy_check_mark: <a href="math/dynamicmodint.hpp.html">src/math/dynamicmodint.hpp</a>
 * :warning: <a href="math/frac.hpp.html">src/math/frac.hpp</a>
 * :warning: <a href="math/matrix.hpp.html">src/math/matrix.hpp</a>
-* :heavy_check_mark: <a href="math/nft.hpp.html">src/math/nft.hpp</a>
+* :question: <a href="math/nft.hpp.html">src/math/nft.hpp</a>
 * :warning: <a href="math/primitive.hpp.html">src/math/primitive.hpp</a>
 
 
 ## Verified with
 
 * :heavy_check_mark: <a href="../../verify/src/comb.test.cpp.html">src/comb.test.cpp</a>
-* :heavy_check_mark: <a href="../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
+* :x: <a href="../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/modint.test.cpp.html">src/modint.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/nft_convolution.test.cpp.html">src/nft_convolution.test.cpp</a>
 
