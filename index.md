@@ -188,7 +188,6 @@ layout: default
 
 * :heavy_check_mark: <a href="library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
 * :heavy_check_mark: <a href="library/src/util/hash.hpp.html">src/util/hash.hpp</a>
-* :warning: <a href="library/src/util/ostream.hpp.html">src/util/ostream.hpp</a>
 * :heavy_check_mark: <a href="library/src/util/random.hpp.html">src/util/random.hpp</a>
 * :warning: <a href="library/src/util/stack_extend.hpp.html">src/util/stack_extend.hpp</a>
 * :warning: <a href="library/src/util/stopwatch.hpp.html">src/util/stopwatch.hpp</a>
