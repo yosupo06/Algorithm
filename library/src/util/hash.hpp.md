@@ -25,15 +25,31 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :warning: src/util/hash.hpp
+# :x: src/util/hash.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
 * category: <a href="../../../index.html#6433a1a19c7364347102f741d8b9cffd">src/util</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/util/hash.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-08 21:35:33+09:00
+    - Last commit date: 2020-05-24 17:19:33+09:00
 
 
+
+
+## Depends on
+
+* :question: <a href="../base.hpp.html">src/base.hpp</a>
+* :question: <a href="random.hpp.html">src/util/random.hpp</a>
+
+
+## Required by
+
+* :x: <a href="../datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
+
+
+## Verified with
+
+* :x: <a href="../../../verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
 
 
 ## Code
@@ -41,42 +57,35 @@ layout: default
 <a id="unbundled"></a>
 {% raw %}
 ```cpp
-#include <ext/pb_ds/assoc_container.hpp>
-using namespace __gnu_pbds;
+#pragma once
 
-uint64_t mix(uint64_t h) {
-    h ^= h >> 23;
-    h *= 0x2127599bf4325c37ULL;
-    h ^= h >> 47;
-    return h;
-}
+#include "base.hpp"
+#include "util/random.hpp"
 
-uint64_t hash_f(ull x, ull seed = 0) {
-    const uint64_t m = 0x880355f21e6d1965ULL;
-    return mix((seed ^ m ^ mix(x)) * m);
-}
+// Reference: Lemire, Daniel., and Owen, Kaser. "Strongly Universal String Hashing Is Fast."
+template <uint N = 4> struct Hasher {
+    static ull offset;
+    static array<ull, N> seed;
 
-template <class T> struct fasthash {};
-
-template <> struct fasthash<int> {
-    size_t operator()(int x) const { return hash_f(x); }
-};
-template <> struct fasthash<uint> {
-    size_t operator()(uint x) const { return hash_f(x); }
-};
-template <> struct fasthash<ll> {
-    size_t operator()(ll x) const { return hash_f(x); }
-};
-template <> struct fasthash<ull> {
-    size_t operator()(ull x) const { return hash_f(x); }
-};
-template<class S, class T> struct fasthash<pair<S, T>> {
-    size_t operator()(pair<S, T> p) const {
-        return hash_f(p.second, hash_f(p.first));
+    static uint hash(uint x) { return (offset + x * seed[0]) >> 32; }
+    static uint hash(ull x) {
+        return (offset + uint(x) * seed[0] + (x >> 32) * seed[1]) >> 32;
     }
+    static uint hash(int x) { return hash(uint(x)); }
+    static uint hash(ll x) { return hash(ull(x)); }
 };
 
-template <class K, class D> using hashmap = gp_hash_table<K, D, fasthash<K>>;
+template <uint N>
+ull Hasher<N>::offset = global_random_gen.uniform(0ULL, ull(-1));
+
+template <uint N>
+array<ull, N> Hasher<N>::seed = []() {
+    array<ull, N> seed;
+    for (uint i = 0; i < N; i++) {
+        seed[i] = global_random_gen.uniform(0ULL, ull(-1));
+    }
+    return seed;
+}();
 
 ```
 {% endraw %}
@@ -84,43 +93,16 @@ template <class K, class D> using hashmap = gp_hash_table<K, D, fasthash<K>>;
 <a id="bundled"></a>
 {% raw %}
 ```cpp
-#line 1 "src/util/hash.hpp"
-#include <ext/pb_ds/assoc_container.hpp>
-using namespace __gnu_pbds;
-
-uint64_t mix(uint64_t h) {
-    h ^= h >> 23;
-    h *= 0x2127599bf4325c37ULL;
-    h ^= h >> 47;
-    return h;
-}
-
-uint64_t hash_f(ull x, ull seed = 0) {
-    const uint64_t m = 0x880355f21e6d1965ULL;
-    return mix((seed ^ m ^ mix(x)) * m);
-}
-
-template <class T> struct fasthash {};
-
-template <> struct fasthash<int> {
-    size_t operator()(int x) const { return hash_f(x); }
-};
-template <> struct fasthash<uint> {
-    size_t operator()(uint x) const { return hash_f(x); }
-};
-template <> struct fasthash<ll> {
-    size_t operator()(ll x) const { return hash_f(x); }
-};
-template <> struct fasthash<ull> {
-    size_t operator()(ull x) const { return hash_f(x); }
-};
-template<class S, class T> struct fasthash<pair<S, T>> {
-    size_t operator()(pair<S, T> p) const {
-        return hash_f(p.second, hash_f(p.first));
-    }
-};
-
-template <class K, class D> using hashmap = gp_hash_table<K, D, fasthash<K>>;
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/docs.py", line 349, in write_contents
+    bundled_code = language.bundle(self.file_class.file_path, basedir=pathlib.Path.cwd())
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus.py", line 172, in bundle
+    bundler.update(path)
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 282, in update
+    self.update(self._resolve(pathlib.Path(included), included_from=path))
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 162, in _resolve
+    raise BundleError(path, -1, "no such header")
+onlinejudge_verify.languages.cplusplus_bundle.BundleError: base.hpp: line -1: no such header
 
 ```
 {% endraw %}

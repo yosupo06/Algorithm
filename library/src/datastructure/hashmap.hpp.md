@@ -25,13 +25,13 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/math/modint61.hpp
+# :x: src/datastructure/hashmap.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
-* category: <a href="../../../index.html#fb2ef479237c7a939531a404fd0e5cb7">src/math</a>
-* <a href="{{ site.github.repository_url }}/blob/master/src/math/modint61.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-23 18:23:53+09:00
+* category: <a href="../../../index.html#057cdb199a48f765d2786c323ec11d3a">src/datastructure</a>
+* <a href="{{ site.github.repository_url }}/blob/master/src/datastructure/hashmap.hpp">View this file on GitHub</a>
+    - Last commit date: 2020-05-24 17:19:33+09:00
 
 
 
@@ -39,17 +39,13 @@ layout: default
 ## Depends on
 
 * :question: <a href="../base.hpp.html">src/base.hpp</a>
-
-
-## Required by
-
-* :heavy_check_mark: <a href="../string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
+* :x: <a href="../util/hash.hpp.html">src/util/hash.hpp</a>
+* :question: <a href="../util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Verified with
 
-* :heavy_check_mark: <a href="../../../verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
-* :heavy_check_mark: <a href="../../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
+* :x: <a href="../../../verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
 
 
 ## Code
@@ -59,45 +55,58 @@ layout: default
 ```cpp
 #pragma once
 
-#include "base.hpp"
+#include "util/hash.hpp"
 
-// ModInt of 2^61 - 1
-struct ModInt61 {
-    static constexpr ull MD = (1ULL << 61) - 1;
-    using M = ModInt61;
-    static constexpr ull get_mod() { return MD; }
-    const static M G;
-    ull v;
-    ModInt61(ll _v = 0) { set_v(_v % MD + MD); }
-    M& set_v(ull _v) {
-        v = (_v < MD) ? _v : _v - MD;
-        return *this;
+template <class K, class D, class H = Hasher<>> struct HashMap {
+    using P = pair<unsigned char, K>;
+    uint s, mask, filled;  // data.size() == 1 << s
+    P* key;
+    D* val;
+
+    HashMap(uint _s = 4) : s(_s), mask((1U << s) - 1), filled(0) {
+        key = new P[1 << s];
+        val = new D[1 << s];
     }
-    explicit operator bool() const { return v != 0; }
-    M operator-() const { return M() - *this; }
-    M operator+(const M& r) const { return M().set_v(v + r.v); }
-    M operator-(const M& r) const { return M().set_v(v + MD - r.v); }
-    M operator*(const M& r) const {
-        __uint128_t z = __uint128_t(v) * r.v;        
-        return M().set_v(ull((z & ((1ULL << 61) - 1)) + (z >> 61)));
-    }
-    M operator/(const M& r) const { return *this * r.inv(); }
-    M& operator+=(const M& r) { return *this = *this + r; }
-    M& operator-=(const M& r) { return *this = *this - r; }
-    M& operator*=(const M& r) { return *this = *this * r; }
-    M& operator/=(const M& r) { return *this = *this / r; }
-    bool operator==(const M& r) const { return v == r.v; }
-    M pow(ll n) const {
-        M x = *this, r = 1;
-        while (n) {
-            if (n & 1) r *= x;
-            x *= x;
-            n >>= 1;
+
+    void rehash() {
+        uint pmask = mask;
+        P* pkey = key;
+        D* pval = val;
+        s++;
+        mask = (1U << s) - 1;
+        filled = 0;
+        key = new P[1 << s];
+        val = new D[1 << s];
+        for (uint i = 0; i <= pmask; i++) {
+            if (pkey[i].first == 1) {
+                set(pkey[i].second, pval[i]);
+            }
         }
-        return r;
+        delete[] key;
+        delete[] val;
     }
-    M inv() const { return pow(MD - 2); }
-    friend ostream& operator<<(ostream& os, const M& r) { return os << r.v; }
+
+    D get(K k) {
+        uint id = H::hash(k) & mask;
+        while (key[id].first && key[id].second != k) id = (id + 1) & mask;
+        if (key[id].first != 1 || key[id].second != k) return D();
+        return val[id];
+    }
+
+    void set(K k, D x) {
+        uint id = H::hash(k) & mask;
+        while (key[id].first && key[id].second != k) id = (id + 1) & mask;
+        if (key[id].first == 0) {
+            filled++;
+            if (filled * 2 > mask) {
+                rehash();
+                set(k, x);
+                return;
+            }
+        }
+        key[id] = {1, k};
+        val[id] = x;
+    }
 };
 
 ```
@@ -115,7 +124,7 @@ Traceback (most recent call last):
     self.update(self._resolve(pathlib.Path(included), included_from=path))
   File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 162, in _resolve
     raise BundleError(path, -1, "no such header")
-onlinejudge_verify.languages.cplusplus_bundle.BundleError: base.hpp: line -1: no such header
+onlinejudge_verify.languages.cplusplus_bundle.BundleError: util/hash.hpp: line -1: no such header
 
 ```
 {% endraw %}

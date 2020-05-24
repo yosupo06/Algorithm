@@ -39,11 +39,11 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/datastructure/simplequeue.hpp.html">src/datastructure/simplequeue.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/graph/bimaching.hpp.html">src/graph/bimaching.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/graph/csr.hpp.html">src/graph/csr.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
+* :question: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
 
 
 ## Code
