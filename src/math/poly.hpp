@@ -217,7 +217,7 @@ Mint sparse_det(const VV<E>& g) {
     auto rand_v = [&]() {
         V<Mint> res(n);
         for (int i = 0; i < n; i++) {
-            res[i] = Mint(global_gen.uniform<int>(1, Mint(-1).v));
+            res[i] = Mint(global_gen().uniform<int>(1, Mint::get_mod() - 1));
         }
         return res;
     };

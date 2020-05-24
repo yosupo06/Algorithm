@@ -9,29 +9,30 @@
 using Mint = ModInt61;
 
 int main() {
+    Random gen = Random();
     for (int ph = 0; ph < 100; ph++) {
-        ull a = global_gen.uniform(0ULL, Mint::get_mod() - 1);
-        ull b = global_gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull a = gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull b = gen.uniform(0ULL, Mint::get_mod() - 1);
         ull expect = (__uint128_t(a) + b) % Mint::get_mod();
         ull actual = (Mint(a) + Mint(b)).v;
         assert(expect == actual);
     }
     for (int ph = 0; ph < 100; ph++) {
-        ull a = global_gen.uniform(0ULL, Mint::get_mod() - 1);
-        ull b = global_gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull a = gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull b = gen.uniform(0ULL, Mint::get_mod() - 1);
         ull expect = (__uint128_t(a) - b + Mint::get_mod()) % Mint::get_mod();
         ull actual = (Mint(a) - Mint(b)).v;
         assert(expect == actual);
     }
     for (int ph = 0; ph < 100; ph++) {
-        ull a = global_gen.uniform(0ULL, Mint::get_mod() - 1);
-        ull b = global_gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull a = gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull b = gen.uniform(0ULL, Mint::get_mod() - 1);
         ull expect = __uint128_t(a) * b % Mint::get_mod();
         ull actual = (Mint(a) * Mint(b)).v;
         assert(expect == actual);
     }
     for (int ph = 0; ph < 100; ph++) {
-        Mint a = Mint(global_gen.uniform(0ULL, Mint::get_mod() - 1));
+        Mint a = Mint(gen.uniform(0ULL, Mint::get_mod() - 1));
         Mint ia = a.inv();
         assert((a * ia).v == 1);
     }
