@@ -39,9 +39,9 @@ layout: default
 
 ## Depends on
 
-* :question: <a href="../../library/src/aplusb.hpp.html">src/aplusb.hpp</a>
-* :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
-* :question: <a href="../../library/src/bitop.hpp.html">src/bitop.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/aplusb.hpp.html">src/aplusb.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/bitop.hpp.html">src/bitop.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/math/dynamicmodint.hpp.html">src/math/dynamicmodint.hpp</a>
 
 

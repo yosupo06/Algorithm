@@ -25,25 +25,25 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :x: src/math/poly.hpp
+# :heavy_check_mark: src/math/poly.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
 * category: <a href="../../../index.html#fb2ef479237c7a939531a404fd0e5cb7">src/math</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/math/poly.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 18:50:28+09:00
+    - Last commit date: 2020-05-24 19:01:57+09:00
 
 
 
 
 ## Depends on
 
-* :question: <a href="../util/random.hpp.html">src/util/random.hpp</a>
+* :heavy_check_mark: <a href="../util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Verified with
 
-* :x: <a href="../../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
 
 
 ## Code
@@ -270,7 +270,7 @@ Mint sparse_det(const VV<E>& g) {
     auto rand_v = [&]() {
         V<Mint> res(n);
         for (int i = 0; i < n; i++) {
-            res[i] = Mint(global_gen.uniform<int>(1, Mint(-1).v));
+            res[i] = Mint(global_gen().uniform<int>(1, Mint::get_mod() - 1));
         }
         return res;
     };
@@ -442,7 +442,6 @@ Random& global_gen() {
     return gen;
 }
 Random get_random_gen() {
-    cerr << "GET RANDOM GEN" << endl;
     return Random(chrono::steady_clock::now().time_since_epoch().count());
 }
 Random& global_runtime_gen() {
@@ -666,7 +665,7 @@ Mint sparse_det(const VV<E>& g) {
     auto rand_v = [&]() {
         V<Mint> res(n);
         for (int i = 0; i < n; i++) {
-            res[i] = Mint(global_gen.uniform<int>(1, Mint(-1).v));
+            res[i] = Mint(global_gen().uniform<int>(1, Mint::get_mod() - 1));
         }
         return res;
     };

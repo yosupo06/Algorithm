@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :question: src/util/fast_io.hpp
+# :heavy_check_mark: src/util/fast_io.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
@@ -51,7 +51,7 @@ layout: default
 * :heavy_check_mark: <a href="../../../verify/src/hl_lca.test.cpp.html">src/hl_lca.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/hl_vertex_add_path_sum.test.cpp.html">src/hl_vertex_add_path_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/hl_vertex_add_subtree_sum.test.cpp.html">src/hl_vertex_add_subtree_sum.test.cpp</a>
-* :x: <a href="../../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/lctree_lca.test.cpp.html">src/lctree_lca.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/lctree_vertex_add_path_sum.test.cpp.html">src/lctree_vertex_add_path_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/max_clique.test.cpp.html">src/max_clique.test.cpp</a>

@@ -25,13 +25,13 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :x: src/modint61.test.cpp
+# :heavy_check_mark: src/modint61.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/modint61.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 18:50:28+09:00
+    - Last commit date: 2020-05-24 19:01:57+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/aplusb">https://judge.yosupo.jp/problem/aplusb</a>
@@ -39,10 +39,10 @@ layout: default
 
 ## Depends on
 
-* :question: <a href="../../library/src/aplusb.hpp.html">src/aplusb.hpp</a>
-* :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
-* :question: <a href="../../library/src/math/modint61.hpp.html">src/math/modint61.hpp</a>
-* :question: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/aplusb.hpp.html">src/aplusb.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/math/modint61.hpp.html">src/math/modint61.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Code
@@ -61,29 +61,30 @@ layout: default
 using Mint = ModInt61;
 
 int main() {
+    Random gen = Random();
     for (int ph = 0; ph < 100; ph++) {
-        ull a = global_gen.uniform(0ULL, Mint::get_mod() - 1);
-        ull b = global_gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull a = gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull b = gen.uniform(0ULL, Mint::get_mod() - 1);
         ull expect = (__uint128_t(a) + b) % Mint::get_mod();
         ull actual = (Mint(a) + Mint(b)).v;
         assert(expect == actual);
     }
     for (int ph = 0; ph < 100; ph++) {
-        ull a = global_gen.uniform(0ULL, Mint::get_mod() - 1);
-        ull b = global_gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull a = gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull b = gen.uniform(0ULL, Mint::get_mod() - 1);
         ull expect = (__uint128_t(a) - b + Mint::get_mod()) % Mint::get_mod();
         ull actual = (Mint(a) - Mint(b)).v;
         assert(expect == actual);
     }
     for (int ph = 0; ph < 100; ph++) {
-        ull a = global_gen.uniform(0ULL, Mint::get_mod() - 1);
-        ull b = global_gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull a = gen.uniform(0ULL, Mint::get_mod() - 1);
+        ull b = gen.uniform(0ULL, Mint::get_mod() - 1);
         ull expect = __uint128_t(a) * b % Mint::get_mod();
         ull actual = (Mint(a) * Mint(b)).v;
         assert(expect == actual);
     }
     for (int ph = 0; ph < 100; ph++) {
-        Mint a = Mint(global_gen.uniform(0ULL, Mint::get_mod() - 1));
+        Mint a = Mint(gen.uniform(0ULL, Mint::get_mod() - 1));
         Mint ia = a.inv();
         assert((a * ia).v == 1);
     }

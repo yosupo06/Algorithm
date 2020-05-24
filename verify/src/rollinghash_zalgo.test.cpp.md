@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/rollinghash_zalgo.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 18:57:45+09:00
+    - Last commit date: 2020-05-24 19:01:57+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/zalgorithm">https://judge.yosupo.jp/problem/zalgorithm</a>
@@ -39,12 +39,12 @@ layout: default
 
 ## Depends on
 
-* :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/math/comb.hpp.html">src/math/comb.hpp</a>
-* :question: <a href="../../library/src/math/modint61.hpp.html">src/math/modint61.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/math/modint61.hpp.html">src/math/modint61.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
-* :question: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
-* :question: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Code

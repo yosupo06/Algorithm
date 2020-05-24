@@ -31,17 +31,17 @@ layout: default
 
 * category: <a href="../../../index.html#ec86b6e05e7d09e98d071ea841edf05f">src/string</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/string/rollinghash.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 18:57:45+09:00
+    - Last commit date: 2020-05-24 19:01:57+09:00
 
 
 
 
 ## Depends on
 
-* :question: <a href="../base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="../math/comb.hpp.html">src/math/comb.hpp</a>
-* :question: <a href="../math/modint61.hpp.html">src/math/modint61.hpp</a>
-* :question: <a href="../util/random.hpp.html">src/util/random.hpp</a>
+* :heavy_check_mark: <a href="../math/modint61.hpp.html">src/math/modint61.hpp</a>
+* :heavy_check_mark: <a href="../util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Verified with

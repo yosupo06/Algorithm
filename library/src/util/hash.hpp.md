@@ -31,15 +31,15 @@ layout: default
 
 * category: <a href="../../../index.html#6433a1a19c7364347102f741d8b9cffd">src/util</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/util/hash.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 18:50:28+09:00
+    - Last commit date: 2020-05-24 19:01:57+09:00
 
 
 
 
 ## Depends on
 
-* :question: <a href="../base.hpp.html">src/base.hpp</a>
-* :question: <a href="random.hpp.html">src/util/random.hpp</a>
+* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="random.hpp.html">src/util/random.hpp</a>
 
 
 ## Required by
