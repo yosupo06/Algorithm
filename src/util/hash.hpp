@@ -17,13 +17,13 @@ template <uint N = 4> struct Hasher {
 };
 
 template <uint N>
-ull Hasher<N>::offset = global_random_gen.uniform(0ULL, ull(-1));
+ull Hasher<N>::offset = global_runtime_gen().uniform(0ULL, ull(-1));
 
 template <uint N>
 array<ull, N> Hasher<N>::seed = []() {
     array<ull, N> seed;
     for (uint i = 0; i < N; i++) {
-        seed[i] = global_random_gen.uniform(0ULL, ull(-1));
+        seed[i] = global_runtime_gen().uniform(0ULL, ull(-1));
     }
     return seed;
 }();

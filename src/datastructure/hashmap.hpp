@@ -33,7 +33,11 @@ template <class K, class D, class H = Hasher<>> struct HashMap {
 
     D get(K k) {
         uint id = H::hash(k) & mask;
-        while (key[id].first && key[id].second != k) id = (id + 1) & mask;
+        int gc = 0;
+        while (key[id].first && key[id].second != k) {
+            gc++;
+            id = (id + 1) & mask;
+        }
         if (key[id].first != 1 || key[id].second != k) return D();
         return val[id];
     }
@@ -51,5 +55,13 @@ template <class K, class D, class H = Hasher<>> struct HashMap {
         }
         key[id] = {1, k};
         val[id] = x;
+    }
+
+    bool remove(K k) {
+        uint id = H::hash(k) & mask;
+        while (key[id].first && key[id].second != k) id = (id + 1) & mask;
+        if (key[id].first != 1) return false;
+        key[id].first = 2;
+        return true;
     }
 };

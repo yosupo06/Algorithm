@@ -124,9 +124,16 @@ struct Random {
         while (res.size() < n) res.insert(uniform(lower, upper));
         return {res.begin(), res.end()};
     }
-} global_gen;
-
+};
+Random& global_gen() {
+    static Random gen;
+    return gen;
+}
 Random get_random_gen() {
+    cerr << "GET RANDOM GEN" << endl;
     return Random(chrono::steady_clock::now().time_since_epoch().count());
 }
-Random global_random_gen = get_random_gen();
+Random& global_runtime_gen() {
+    static Random gen = get_random_gen();
+    return gen;
+}
