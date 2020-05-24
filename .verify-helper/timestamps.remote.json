@@ -20,10 +20,10 @@
 "src/number_of_substrings.test.cpp": "2020-05-23 17:50:28 +0900",
 "src/online-zalgo.test.cpp": "2020-05-23 17:50:28 +0900",
 "src/printer.test.cpp": "2020-05-23 17:50:28 +0900",
+"src/rollinghash_zalgo.test.cpp": "2020-05-24 18:57:45 +0900",
 "src/run.test.cpp": "2020-05-23 19:01:40 +0900",
 "src/sais.test.cpp": "2020-05-23 17:50:28 +0900",
 "src/scanner.test.cpp": "2020-05-23 17:50:28 +0900",
 "src/staticrangesum_rectangle_sum.test.cpp": "2020-05-23 17:50:28 +0900",
-"src/zalgo.test.cpp": "2020-05-23 17:50:28 +0900",
-"src/zalgo_rollinghash.test.cpp": "2020-05-23 18:32:04 +0900"
+"src/zalgo.test.cpp": "2020-05-23 17:50:28 +0900"
 }
