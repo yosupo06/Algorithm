@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/fenwick_2d_rectangle_sum.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 20:34:49+09:00
+    - Last commit date: 2020-05-24 20:46:05+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/rectangle_sum">https://judge.yosupo.jp/problem/rectangle_sum</a>

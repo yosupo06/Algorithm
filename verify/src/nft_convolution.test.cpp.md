@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/nft_convolution.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 20:34:49+09:00
+    - Last commit date: 2020-05-24 20:46:05+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/convolution_mod">https://judge.yosupo.jp/problem/convolution_mod</a>
@@ -295,7 +295,7 @@ struct Scanner {
         }
         ref = T(0);
         while (isdigit(line[st])) {
-            ref = 10 * ref + (line[st++] - '0');
+            ref = 10 * ref + (line[st++] & 0xf);
         }
         if (neg) ref = -ref;
         return true;
@@ -358,7 +358,7 @@ struct Printer {
         }
         size_t len = 0;
         while (val) {
-            small[len++] = char('0' + (val % 10));
+            small[len++] = char(0x30 | (val % 10));
             val /= 10;
         }
         for (size_t i = 0; i < len; i++) {
