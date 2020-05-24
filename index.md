@@ -143,13 +143,13 @@ layout: default
 
 ### src/math
 
-* :question: <a href="library/src/math/comb.hpp.html">src/math/comb.hpp</a>
+* :heavy_check_mark: <a href="library/src/math/comb.hpp.html">src/math/comb.hpp</a>
 * :heavy_check_mark: <a href="library/src/math/dynamicmodint.hpp.html">src/math/dynamicmodint.hpp</a>
 * :warning: <a href="library/src/math/fft.hpp.html">src/math/fft.hpp</a>
 * :warning: <a href="library/src/math/frac.hpp.html">src/math/frac.hpp</a>
 * :warning: <a href="library/src/math/matrix.hpp.html">src/math/matrix.hpp</a>
 * :question: <a href="library/src/math/modint.hpp.html">src/math/modint.hpp</a>
-* :x: <a href="library/src/math/modint61.hpp.html">src/math/modint61.hpp</a>
+* :question: <a href="library/src/math/modint61.hpp.html">src/math/modint61.hpp</a>
 * :question: <a href="library/src/math/nft.hpp.html">src/math/nft.hpp</a>
 * :heavy_check_mark: <a href="library/src/math/nimber.hpp.html">src/math/nimber.hpp</a>
 * :x: <a href="library/src/math/poly.hpp.html">src/math/poly.hpp</a>
@@ -166,7 +166,7 @@ layout: default
 * :warning: <a href="library/src/string/manacher.hpp.html">src/string/manacher.hpp</a>
 * :warning: <a href="library/src/string/mp.hpp.html">src/string/mp.hpp</a>
 * :heavy_check_mark: <a href="library/src/string/onlinez.hpp.html">src/string/onlinez.hpp</a>
-* :x: <a href="library/src/string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
+* :heavy_check_mark: <a href="library/src/string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
 * :heavy_check_mark: <a href="library/src/string/run.hpp.html">src/string/run.hpp</a>
 * :heavy_check_mark: <a href="library/src/string/suffixarray.hpp.html">src/string/suffixarray.hpp</a>
 * :heavy_check_mark: <a href="library/src/string/zalgo.hpp.html">src/string/zalgo.hpp</a>
@@ -217,11 +217,11 @@ layout: default
 * :heavy_check_mark: <a href="verify/src/number_of_substrings.test.cpp.html">src/number_of_substrings.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/online-zalgo.test.cpp.html">src/online-zalgo.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/printer.test.cpp.html">src/printer.test.cpp</a>
+* :heavy_check_mark: <a href="verify/src/rollinghash_zalgo.test.cpp.html">src/rollinghash_zalgo.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/run.test.cpp.html">src/run.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/sais.test.cpp.html">src/sais.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/scanner.test.cpp.html">src/scanner.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/staticrangesum_rectangle_sum.test.cpp.html">src/staticrangesum_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/zalgo.test.cpp.html">src/zalgo.test.cpp</a>
-* :x: <a href="verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
 
 

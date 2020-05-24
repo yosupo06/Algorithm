@@ -45,10 +45,10 @@ layout: default
 * :heavy_check_mark: <a href="datastructure/segtree.hpp.html">src/datastructure/segtree.hpp</a>
 * :heavy_check_mark: <a href="datastructure/staticrangesum.hpp.html">src/datastructure/staticrangesum.hpp</a>
 * :heavy_check_mark: <a href="graph/maxclique.hpp.html">src/graph/maxclique.hpp</a>
-* :question: <a href="math/comb.hpp.html">src/math/comb.hpp</a>
-* :x: <a href="math/modint61.hpp.html">src/math/modint61.hpp</a>
+* :heavy_check_mark: <a href="math/comb.hpp.html">src/math/comb.hpp</a>
+* :question: <a href="math/modint61.hpp.html">src/math/modint61.hpp</a>
 * :heavy_check_mark: <a href="math/nimber.hpp.html">src/math/nimber.hpp</a>
-* :x: <a href="string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
+* :heavy_check_mark: <a href="string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
 * :heavy_check_mark: <a href="string/run.hpp.html">src/string/run.hpp</a>
 * :heavy_check_mark: <a href="tree/hl.hpp.html">src/tree/hl.hpp</a>
 * :heavy_check_mark: <a href="util/hash.hpp.html">src/util/hash.hpp</a>
@@ -77,12 +77,12 @@ layout: default
 * :heavy_check_mark: <a href="../../verify/src/number_of_substrings.test.cpp.html">src/number_of_substrings.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/online-zalgo.test.cpp.html">src/online-zalgo.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/printer.test.cpp.html">src/printer.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/src/rollinghash_zalgo.test.cpp.html">src/rollinghash_zalgo.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/run.test.cpp.html">src/run.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/sais.test.cpp.html">src/sais.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/scanner.test.cpp.html">src/scanner.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/staticrangesum_rectangle_sum.test.cpp.html">src/staticrangesum_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/zalgo.test.cpp.html">src/zalgo.test.cpp</a>
-* :x: <a href="../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
 
 
 ## Code

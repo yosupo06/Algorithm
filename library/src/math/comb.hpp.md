@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :question: src/math/comb.hpp
+# :heavy_check_mark: src/math/comb.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
@@ -43,13 +43,13 @@ layout: default
 
 ## Required by
 
-* :x: <a href="../string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
+* :heavy_check_mark: <a href="../string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
 
 
 ## Verified with
 
 * :heavy_check_mark: <a href="../../../verify/src/comb.test.cpp.html">src/comb.test.cpp</a>
-* :x: <a href="../../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/rollinghash_zalgo.test.cpp.html">src/rollinghash_zalgo.test.cpp</a>
 
 
 ## Code

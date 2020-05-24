@@ -25,13 +25,13 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :x: src/string/rollinghash.hpp
+# :heavy_check_mark: src/string/rollinghash.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
 * category: <a href="../../../index.html#ec86b6e05e7d09e98d071ea841edf05f">src/string</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/string/rollinghash.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 18:50:28+09:00
+    - Last commit date: 2020-05-24 18:57:45+09:00
 
 
 
@@ -39,14 +39,14 @@ layout: default
 ## Depends on
 
 * :question: <a href="../base.hpp.html">src/base.hpp</a>
-* :question: <a href="../math/comb.hpp.html">src/math/comb.hpp</a>
-* :x: <a href="../math/modint61.hpp.html">src/math/modint61.hpp</a>
+* :heavy_check_mark: <a href="../math/comb.hpp.html">src/math/comb.hpp</a>
+* :question: <a href="../math/modint61.hpp.html">src/math/modint61.hpp</a>
 * :question: <a href="../util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Verified with
 
-* :x: <a href="../../../verify/src/zalgo_rollinghash.test.cpp.html">src/zalgo_rollinghash.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/rollinghash_zalgo.test.cpp.html">src/rollinghash_zalgo.test.cpp</a>
 
 
 ## Code
@@ -92,7 +92,7 @@ struct H {
     }
 };
 ModInt61 H::B =
-    ModInt61(global_random_gen.uniform(0ULL, ModInt61::get_mod() - 1));
+    ModInt61(global_runtime_gen().uniform(0ULL, ModInt61::get_mod() - 1));
 ModInt61 H::iB = H::B.inv();
 V<ModInt61> H::powB, H::powiB;
 

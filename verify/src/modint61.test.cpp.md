@@ -41,7 +41,7 @@ layout: default
 
 * :question: <a href="../../library/src/aplusb.hpp.html">src/aplusb.hpp</a>
 * :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
-* :x: <a href="../../library/src/math/modint61.hpp.html">src/math/modint61.hpp</a>
+* :question: <a href="../../library/src/math/modint61.hpp.html">src/math/modint61.hpp</a>
 * :question: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
 
 
