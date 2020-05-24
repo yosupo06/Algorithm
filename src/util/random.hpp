@@ -130,7 +130,6 @@ Random& global_gen() {
     return gen;
 }
 Random get_random_gen() {
-    cerr << "GET RANDOM GEN" << endl;
     return Random(chrono::steady_clock::now().time_since_epoch().count());
 }
 Random& global_runtime_gen() {
