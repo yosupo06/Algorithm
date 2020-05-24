@@ -120,7 +120,7 @@ struct Printer {
         }
         size_t len = 0;
         while (val) {
-            small[len++] = char('0' + (val % 10));
+            small[len++] = char(0x30 | (val % 10));
             val /= 10;
         }
         for (size_t i = 0; i < len; i++) {
