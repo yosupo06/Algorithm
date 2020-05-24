@@ -27,8 +27,8 @@ template <class K, class D, class H = Hasher<>> struct HashMap {
                 set(pkey[i].second, pval[i]);
             }
         }
-        delete[] key;
-        delete[] val;
+        delete[] pkey;
+        delete[] pval;
     }
 
     D get(K k) {
