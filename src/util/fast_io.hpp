@@ -57,7 +57,7 @@ struct Scanner {
         }
         ref = T(0);
         while (isdigit(line[st])) {
-            ref = 10 * ref + (line[st++] - '0');
+            ref = 10 * ref + (line[st++] & 0xf);
         }
         if (neg) ref = -ref;
         return true;
