@@ -66,7 +66,6 @@ int main() {
     HashMap<ll, ll> mp;
 
     for (int ph = 0; ph < q; ph++) {
-        if (ph % 1000 == 0) cerr << ph << endl;
         int ty;
         sc.read(ty);
         if (ty == 0) {
