@@ -1,13 +1,16 @@
 #pragma once
+
+#include <unistd.h>
+
 struct Scanner {
-    FILE* fp = nullptr;
+    int fd = -1;
     char line[(1 << 15) + 1];
     size_t st = 0, ed = 0;
     void reread() {
         memmove(line, line + st, ed - st);
         ed -= st;
         st = 0;
-        ed += fread(line + ed, 1, (1 << 15) - ed, fp);
+        ed += ::read(fd, line + ed, (1 << 15) - ed);
         line[ed] = '\0';
     }
     bool succ() {
@@ -19,7 +22,16 @@ struct Scanner {
             while (st != ed && isspace(line[st])) st++;
             if (st != ed) break;
         }
-        if (ed - st <= 50) reread();
+        if (ed - st <= 50) {
+            bool sep = false;
+            for (size_t i = st; i < ed; i++) {
+                if (isspace(line[i])) {
+                    sep = true;
+                    break;
+                }
+            }
+            if (!sep) reread();
+        }
         return true;
     }
     template <class T, enable_if_t<is_same<T, string>::value, int> = 0>
@@ -62,7 +74,7 @@ struct Scanner {
         assert(f);
         read(t...);
     }
-    Scanner(FILE* _fp) : fp(_fp) {}
+    Scanner(FILE* fp) : fd(fileno(fp)) {}
 };
 
 struct Printer {
