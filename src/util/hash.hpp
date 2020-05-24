@@ -1,36 +1,29 @@
-#include <ext/pb_ds/assoc_container.hpp>
-using namespace __gnu_pbds;
+#pragma once
 
-uint64_t mix(uint64_t h) {
-    h ^= h >> 23;
-    h *= 0x2127599bf4325c37ULL;
-    h ^= h >> 47;
-    return h;
-}
+#include "base.hpp"
+#include "util/random.hpp"
 
-uint64_t hash_f(ull x, ull seed = 0) {
-    const uint64_t m = 0x880355f21e6d1965ULL;
-    return mix((seed ^ m ^ mix(x)) * m);
-}
+// Reference: Lemire, Daniel., and Owen, Kaser. "Strongly Universal String Hashing Is Fast."
+template <uint N = 4> struct Hasher {
+    static ull offset;
+    static array<ull, N> seed;
 
-template <class T> struct fasthash {};
-
-template <> struct fasthash<int> {
-    size_t operator()(int x) const { return hash_f(x); }
-};
-template <> struct fasthash<uint> {
-    size_t operator()(uint x) const { return hash_f(x); }
-};
-template <> struct fasthash<ll> {
-    size_t operator()(ll x) const { return hash_f(x); }
-};
-template <> struct fasthash<ull> {
-    size_t operator()(ull x) const { return hash_f(x); }
-};
-template<class S, class T> struct fasthash<pair<S, T>> {
-    size_t operator()(pair<S, T> p) const {
-        return hash_f(p.second, hash_f(p.first));
+    static uint hash(uint x) { return (offset + x * seed[0]) >> 32; }
+    static uint hash(ull x) {
+        return (offset + uint(x) * seed[0] + (x >> 32) * seed[1]) >> 32;
     }
+    static uint hash(int x) { return hash(uint(x)); }
+    static uint hash(ll x) { return hash(ull(x)); }
 };
 
-template <class K, class D> using hashmap = gp_hash_table<K, D, fasthash<K>>;
+template <uint N>
+ull Hasher<N>::offset = global_random_gen.uniform(0ULL, ull(-1));
+
+template <uint N>
+array<ull, N> Hasher<N>::seed = []() {
+    array<ull, N> seed;
+    for (uint i = 0; i < N; i++) {
+        seed[i] = global_random_gen.uniform(0ULL, ull(-1));
+    }
+    return seed;
+}();
