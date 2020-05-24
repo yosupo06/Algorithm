@@ -25,22 +25,21 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/lctree_vertex_add_path_sum.test.cpp
+# :heavy_check_mark: src/scanner_many_aplusb.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
-* <a href="{{ site.github.repository_url }}/blob/master/src/lctree_vertex_add_path_sum.test.cpp">View this file on GitHub</a>
+* <a href="{{ site.github.repository_url }}/blob/master/src/scanner_many_aplusb.test.cpp">View this file on GitHub</a>
     - Last commit date: 2020-05-24 20:34:49+09:00
 
 
-* see: <a href="https://judge.yosupo.jp/problem/vertex_add_path_sum">https://judge.yosupo.jp/problem/vertex_add_path_sum</a>
+* see: <a href="https://judge.yosupo.jp/problem/many_aplusb">https://judge.yosupo.jp/problem/many_aplusb</a>
 
 
 ## Depends on
 
 * :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/datastructure/linkcuttree.hpp.html">src/datastructure/linkcuttree.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
 
 
@@ -49,58 +48,23 @@ layout: default
 <a id="unbundled"></a>
 {% raw %}
 ```cpp
-#define PROBLEM "https://judge.yosupo.jp/problem/vertex_add_path_sum"
+#define PROBLEM "https://judge.yosupo.jp/problem/many_aplusb"
 
 #include "base.hpp"
 #include "util/fast_io.hpp"
-#include "datastructure/linkcuttree.hpp"
-
-struct Node {
-    using D = ll;
-    static D e_d() {
-        return 0;
-    }
-    static D op_dd(const D& l, const D& r) {
-        return l + r;
-    }
-    static D rev(const D& x) {
-        return x;
-    }
-};
 
 int main() {
     Scanner sc(stdin);
     Printer pr(stdout);
-    int n, q;
-    sc.read(n, q);
-    V<LCNode<Node>> lct(n);
-    for (int i = 0; i < n; i++) {
-        ll a;
-        sc.read(a);
-        lct[i].init_node(a);
-    }
-    for (int i = 0; i < n - 1; i++) {
-        int u, v;
-        sc.read(u, v);
-        lct[u].link(&(lct[v]));
-    }
+
+    int q;
+    sc.read(q);
+
     for (int i = 0; i < q; i++) {
-        int t;
-        sc.read(t);
-        if (t == 0) {
-            int p; ll x;
-            sc.read(p, x);
-            lct[p].expose();
-            lct[p].single_add(x);
-        } else {
-            int u, v;
-            sc.read(u, v);
-            lct[u].evert();
-            lct[v].expose();
-            pr.writeln(lct[v].sm);
-        }
+        ll a, b;
+        sc.read(a, b);
+        pr.writeln(a + b);
     }
-    return 0;
 }
 
 ```
@@ -109,8 +73,8 @@ int main() {
 <a id="bundled"></a>
 {% raw %}
 ```cpp
-#line 1 "src/lctree_vertex_add_path_sum.test.cpp"
-#define PROBLEM "https://judge.yosupo.jp/problem/vertex_add_path_sum"
+#line 1 "src/scanner_many_aplusb.test.cpp"
+#define PROBLEM "https://judge.yosupo.jp/problem/many_aplusb"
 
 #line 2 "src/base.hpp"
 #include <algorithm>
@@ -398,183 +362,20 @@ struct Printer {
         }
     }
 };
-#line 1 "src/datastructure/linkcuttree.hpp"
-template <class N> struct LCNode {
-    using NP = LCNode*;
-    using D = typename N::D;
-    NP p = nullptr, l = nullptr, r = nullptr;
-    int sz = 1;
-    bool rev = false;
-    D v = N::e_d(), sm = N::e_d();
-
-    void single_set(D x) {
-        v = x;
-        update();
-    }
-    void single_add(D x) {
-        v = N::op_dd(v, x);
-        update();
-    }
-
-    void init_node(D _v) {
-        v = _v;
-        sm = _v;
-    }
-    void update() {
-        sz = 1;
-        if (l) sz += l->sz;
-        if (r) sz += r->sz;
-        sm = l ? N::op_dd(l->sm, v) : v;
-        if (r) sm = N::op_dd(sm, r->sm);
-    }
-    void push() {
-        if (rev) {
-            if (l) l->revdata();
-            if (r) r->revdata();
-            rev = false;
-        }
-    }
-    void revdata() {
-        rev ^= true;
-        swap(l, r);
-        sm = N::rev(sm);
-    }
-
-    inline int pos() {
-        if (p) {
-            if (p->l == this) return -1;
-            if (p->r == this) return 1;
-        }
-        return 0;
-    }
-    void rot() {
-        NP q = p->p;
-        int pps = p->pos();
-        if (pps == -1) q->l = this;
-        if (pps == 1) q->r = this;
-        if (p->l == this) {
-            p->l = r;
-            if (r) r->p = p;
-            r = p;
-        } else {
-            p->r = l;
-            if (l) l->p = p;
-            l = p;
-        }
-        p->p = this;
-        p->update();
-        update();
-        p = q;
-        if (q) q->update();
-    }
-    void all_push() {
-        if (pos()) p->all_push();
-        push();
-    }
-    void splay() {
-        all_push();
-        int ps;
-        while ((ps = pos())) {
-            int pps = p->pos();
-            if (!pps) {
-                rot();
-            } else if (ps == pps) {
-                p->rot();
-                rot();
-            } else {
-                rot();
-                rot();
-            }
-        }
-    }
-    void expose() {
-        NP u = this, ur = nullptr;
-        do {
-            u->splay();
-            u->r = ur;
-            u->update();
-            ur = u;
-        } while ((u = u->p));
-        splay();
-    }
-    // 親としてnpを接続する
-    void link(NP np) {
-        evert();
-        np->expose();
-        p = np;
-    }
-    // 親から自分を切り離す
-    void cut() {
-        expose();
-        assert(l);
-        l->p = nullptr;
-        l = nullptr;
-        update();
-    }
-    void evert() {
-        expose();
-        revdata();
-    }
-
-    NP lca(NP n) {
-        n->expose();
-        expose();
-        NP t = n;
-        while (n->p != nullptr) {
-            if (!n->pos()) t = n->p;
-            n = n->p;
-        }
-        return (this == n) ? t : nullptr;
-    }
-};
-#line 6 "src/lctree_vertex_add_path_sum.test.cpp"
-
-struct Node {
-    using D = ll;
-    static D e_d() {
-        return 0;
-    }
-    static D op_dd(const D& l, const D& r) {
-        return l + r;
-    }
-    static D rev(const D& x) {
-        return x;
-    }
-};
+#line 5 "src/scanner_many_aplusb.test.cpp"
 
 int main() {
     Scanner sc(stdin);
     Printer pr(stdout);
-    int n, q;
-    sc.read(n, q);
-    V<LCNode<Node>> lct(n);
-    for (int i = 0; i < n; i++) {
-        ll a;
-        sc.read(a);
-        lct[i].init_node(a);
-    }
-    for (int i = 0; i < n - 1; i++) {
-        int u, v;
-        sc.read(u, v);
-        lct[u].link(&(lct[v]));
-    }
+
+    int q;
+    sc.read(q);
+
     for (int i = 0; i < q; i++) {
-        int t;
-        sc.read(t);
-        if (t == 0) {
-            int p; ll x;
-            sc.read(p, x);
-            lct[p].expose();
-            lct[p].single_add(x);
-        } else {
-            int u, v;
-            sc.read(u, v);
-            lct[u].evert();
-            lct[v].expose();
-            pr.writeln(lct[v].sm);
-        }
+        ll a, b;
+        sc.read(a, b);
+        pr.writeln(a + b);
     }
-    return 0;
 }
 
 ```

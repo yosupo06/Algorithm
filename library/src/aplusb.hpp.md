@@ -43,6 +43,7 @@ layout: default
 * :heavy_check_mark: <a href="../../verify/src/modint.test.cpp.html">src/modint.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/printer.test.cpp.html">src/printer.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/src/scanner.test.cpp.html">src/scanner.test.cpp</a>
 
 
 ## Code

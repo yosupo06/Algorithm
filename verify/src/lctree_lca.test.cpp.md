@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/lctree_lca.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-23 17:50:28+09:00
+    - Last commit date: 2020-05-24 20:34:49+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/lca">https://judge.yosupo.jp/problem/lca</a>
@@ -233,15 +233,18 @@ template <class... T> void dbg0(T&&... t) {
 #define dbg(...)
 #endif
 #line 2 "src/util/fast_io.hpp"
+
+#include <unistd.h>
+
 struct Scanner {
-    FILE* fp = nullptr;
+    int fd = -1;
     char line[(1 << 15) + 1];
     size_t st = 0, ed = 0;
     void reread() {
         memmove(line, line + st, ed - st);
         ed -= st;
         st = 0;
-        ed += fread(line + ed, 1, (1 << 15) - ed, fp);
+        ed += ::read(fd, line + ed, (1 << 15) - ed);
         line[ed] = '\0';
     }
     bool succ() {
@@ -253,7 +256,16 @@ struct Scanner {
             while (st != ed && isspace(line[st])) st++;
             if (st != ed) break;
         }
-        if (ed - st <= 50) reread();
+        if (ed - st <= 50) {
+            bool sep = false;
+            for (size_t i = st; i < ed; i++) {
+                if (isspace(line[i])) {
+                    sep = true;
+                    break;
+                }
+            }
+            if (!sep) reread();
+        }
         return true;
     }
     template <class T, enable_if_t<is_same<T, string>::value, int> = 0>
@@ -296,7 +308,7 @@ struct Scanner {
         assert(f);
         read(t...);
     }
-    Scanner(FILE* _fp) : fp(_fp) {}
+    Scanner(FILE* fp) : fd(fileno(fp)) {}
 };
 
 struct Printer {

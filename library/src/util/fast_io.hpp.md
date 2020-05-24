@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../../index.html#6433a1a19c7364347102f741d8b9cffd">src/util</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/util/fast_io.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-08 21:35:33+09:00
+    - Last commit date: 2020-05-24 20:34:49+09:00
 
 
 
@@ -64,6 +64,7 @@ layout: default
 * :heavy_check_mark: <a href="../../../verify/src/run.test.cpp.html">src/run.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/sais.test.cpp.html">src/sais.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/scanner.test.cpp.html">src/scanner.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/scanner_many_aplusb.test.cpp.html">src/scanner_many_aplusb.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/staticrangesum_rectangle_sum.test.cpp.html">src/staticrangesum_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/zalgo.test.cpp.html">src/zalgo.test.cpp</a>
 
@@ -74,15 +75,18 @@ layout: default
 {% raw %}
 ```cpp
 #pragma once
+
+#include <unistd.h>
+
 struct Scanner {
-    FILE* fp = nullptr;
+    int fd = -1;
     char line[(1 << 15) + 1];
     size_t st = 0, ed = 0;
     void reread() {
         memmove(line, line + st, ed - st);
         ed -= st;
         st = 0;
-        ed += fread(line + ed, 1, (1 << 15) - ed, fp);
+        ed += ::read(fd, line + ed, (1 << 15) - ed);
         line[ed] = '\0';
     }
     bool succ() {
@@ -94,7 +98,16 @@ struct Scanner {
             while (st != ed && isspace(line[st])) st++;
             if (st != ed) break;
         }
-        if (ed - st <= 50) reread();
+        if (ed - st <= 50) {
+            bool sep = false;
+            for (size_t i = st; i < ed; i++) {
+                if (isspace(line[i])) {
+                    sep = true;
+                    break;
+                }
+            }
+            if (!sep) reread();
+        }
         return true;
     }
     template <class T, enable_if_t<is_same<T, string>::value, int> = 0>
@@ -137,7 +150,7 @@ struct Scanner {
         assert(f);
         read(t...);
     }
-    Scanner(FILE* _fp) : fp(_fp) {}
+    Scanner(FILE* fp) : fd(fileno(fp)) {}
 };
 
 struct Printer {
@@ -214,15 +227,18 @@ struct Printer {
 {% raw %}
 ```cpp
 #line 2 "src/util/fast_io.hpp"
+
+#include <unistd.h>
+
 struct Scanner {
-    FILE* fp = nullptr;
+    int fd = -1;
     char line[(1 << 15) + 1];
     size_t st = 0, ed = 0;
     void reread() {
         memmove(line, line + st, ed - st);
         ed -= st;
         st = 0;
-        ed += fread(line + ed, 1, (1 << 15) - ed, fp);
+        ed += ::read(fd, line + ed, (1 << 15) - ed);
         line[ed] = '\0';
     }
     bool succ() {
@@ -234,7 +250,16 @@ struct Scanner {
             while (st != ed && isspace(line[st])) st++;
             if (st != ed) break;
         }
-        if (ed - st <= 50) reread();
+        if (ed - st <= 50) {
+            bool sep = false;
+            for (size_t i = st; i < ed; i++) {
+                if (isspace(line[i])) {
+                    sep = true;
+                    break;
+                }
+            }
+            if (!sep) reread();
+        }
         return true;
     }
     template <class T, enable_if_t<is_same<T, string>::value, int> = 0>
@@ -277,7 +302,7 @@ struct Scanner {
         assert(f);
         read(t...);
     }
-    Scanner(FILE* _fp) : fp(_fp) {}
+    Scanner(FILE* fp) : fd(fileno(fp)) {}
 };
 
 struct Printer {

@@ -81,6 +81,7 @@ layout: default
 * :heavy_check_mark: <a href="../../verify/src/run.test.cpp.html">src/run.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/sais.test.cpp.html">src/sais.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/scanner.test.cpp.html">src/scanner.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/src/scanner_many_aplusb.test.cpp.html">src/scanner_many_aplusb.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/staticrangesum_rectangle_sum.test.cpp.html">src/staticrangesum_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/zalgo.test.cpp.html">src/zalgo.test.cpp</a>
 
