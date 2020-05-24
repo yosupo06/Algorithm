@@ -36,6 +36,6 @@ struct H {
     }
 };
 ModInt61 H::B =
-    ModInt61(global_random_gen.uniform(0ULL, ModInt61::get_mod() - 1));
+    ModInt61(global_runtime_gen().uniform(0ULL, ModInt61::get_mod() - 1));
 ModInt61 H::iB = H::B.inv();
 V<ModInt61> H::powB, H::powiB;
