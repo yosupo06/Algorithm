@@ -25,27 +25,27 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :x: src/datastructure/hashmap.hpp
+# :heavy_check_mark: src/datastructure/hashmap.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
 * category: <a href="../../../index.html#057cdb199a48f765d2786c323ec11d3a">src/datastructure</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/datastructure/hashmap.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 17:19:33+09:00
+    - Last commit date: 2020-05-24 18:03:15+09:00
 
 
 
 
 ## Depends on
 
-* :question: <a href="../base.hpp.html">src/base.hpp</a>
-* :x: <a href="../util/hash.hpp.html">src/util/hash.hpp</a>
-* :question: <a href="../util/random.hpp.html">src/util/random.hpp</a>
+* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../util/hash.hpp.html">src/util/hash.hpp</a>
+* :heavy_check_mark: <a href="../util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Verified with
 
-* :x: <a href="../../../verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
 
 
 ## Code
@@ -82,8 +82,8 @@ template <class K, class D, class H = Hasher<>> struct HashMap {
                 set(pkey[i].second, pval[i]);
             }
         }
-        delete[] key;
-        delete[] val;
+        delete[] pkey;
+        delete[] pval;
     }
 
     D get(K k) {

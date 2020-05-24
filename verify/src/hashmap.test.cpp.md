@@ -25,13 +25,13 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :x: src/hashmap.test.cpp
+# :heavy_check_mark: src/hashmap.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/hashmap.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 17:19:33+09:00
+    - Last commit date: 2020-05-24 18:03:15+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/associative_array">https://judge.yosupo.jp/problem/associative_array</a>
@@ -39,11 +39,11 @@ layout: default
 
 ## Depends on
 
-* :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
-* :x: <a href="../../library/src/datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
-* :question: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
-* :x: <a href="../../library/src/util/hash.hpp.html">src/util/hash.hpp</a>
-* :question: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/hash.hpp.html">src/util/hash.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Code

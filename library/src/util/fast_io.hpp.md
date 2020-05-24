@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :question: src/util/fast_io.hpp
+# :heavy_check_mark: src/util/fast_io.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
@@ -46,7 +46,7 @@ layout: default
 * :heavy_check_mark: <a href="../../../verify/src/bimaching.test.cpp.html">src/bimaching.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/doublingsa.test.cpp.html">src/doublingsa.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/fenwick_2d_rectangle_sum.test.cpp.html">src/fenwick_2d_rectangle_sum.test.cpp</a>
-* :x: <a href="../../../verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/hl_lca.test.cpp.html">src/hl_lca.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/hl_vertex_add_path_sum.test.cpp.html">src/hl_vertex_add_path_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/hl_vertex_add_subtree_sum.test.cpp.html">src/hl_vertex_add_subtree_sum.test.cpp</a>
