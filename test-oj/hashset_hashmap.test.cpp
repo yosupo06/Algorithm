@@ -21,17 +21,17 @@ int main() {
             ll k, v;
             sc.read(k, v);
             if (v == 0) {
-                st.reset(k);
+                st.erase(k);
                 mp.remove(k);
             } else {
-                st.set(k);
+                st.insert(k);
                 mp.set(k, v);
             }
         } else {
             ll k;
             sc.read(k);
             ll u = mp.get(k);
-            assert(st.get(k) == (u != 0));
+            assert(st.count(k) == (u != 0));
             pr.writeln(u);
         }
     }
