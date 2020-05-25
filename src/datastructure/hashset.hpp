@@ -44,7 +44,7 @@ template <class K, class H = Hasher<>> struct HashSet {
             filled++;
             if (filled * 2 > mask) {
                 rehash();
-                set(k);
+                insert(k);
                 return;
             }
         }
