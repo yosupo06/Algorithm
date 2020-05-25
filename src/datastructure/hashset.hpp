@@ -20,7 +20,7 @@ template <class K, class H = Hasher<>> struct HashSet {
         key = new P[1 << s];
         for (uint i = 0; i <= pmask; i++) {
             if (pkey[i].first == 1) {
-                set(pkey[i].second);
+                insert(pkey[i].second);
             }
         }
         delete[] pkey;
