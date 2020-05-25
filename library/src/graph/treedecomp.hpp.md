@@ -25,13 +25,13 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :x: src/graph/treedecomp.hpp
+# :heavy_check_mark: src/graph/treedecomp.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
 * category: <a href="../../../index.html#5442c8f317d712204bf06ed26672e17c">src/graph</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/graph/treedecomp.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-26 02:54:27+09:00
+    - Last commit date: 2020-05-26 03:02:59+09:00
 
 
 
@@ -39,17 +39,17 @@ layout: default
 ## Depends on
 
 * :question: <a href="../base.hpp.html">src/base.hpp</a>
-* :question: <a href="../datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
+* :heavy_check_mark: <a href="../datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
 * :question: <a href="../datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
-* :question: <a href="../datastructure/simplequeue.hpp.html">src/datastructure/simplequeue.hpp</a>
-* :x: <a href="primitive.hpp.html">src/graph/primitive.hpp</a>
+* :heavy_check_mark: <a href="../datastructure/simplequeue.hpp.html">src/datastructure/simplequeue.hpp</a>
+* :heavy_check_mark: <a href="primitive.hpp.html">src/graph/primitive.hpp</a>
 * :question: <a href="../util/hash.hpp.html">src/util/hash.hpp</a>
 * :question: <a href="../util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Verified with
 
-* :x: <a href="../../../verify/src/treedecomp_width2.test.cpp.html">src/treedecomp_width2.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/treedecomp_width2.test.cpp.html">src/treedecomp_width2.test.cpp</a>
 
 
 ## Code
@@ -114,12 +114,7 @@ TreeDecomp decomp_width2(VV<E> _g) {
         que.pop();
         int d = deg[p];
         if (!alive[p] || d >= 3) continue;
-        nears.clear();
-        for (auto e: _g[p]) {
-            int i = e.to;
-            if (!alive[i]) continue;
-            nears.push_back(i);
-        }
+        nears = g[p].to_vec();
         assert(int(nears.size()) == d);
         if (d == 0) {
             events.push_back({0, p, -1, -1});

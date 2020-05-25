@@ -44,9 +44,9 @@ layout: default
 
 ## Required by
 
-* :question: <a href="../datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
+* :heavy_check_mark: <a href="../datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
 * :question: <a href="../datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
-* :x: <a href="../graph/treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
+* :heavy_check_mark: <a href="../graph/treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
 
 
 ## Verified with
@@ -55,7 +55,7 @@ layout: default
 * :heavy_check_mark: <a href="../../../verify/src/hashmap_remove.test.cpp.html">src/hashmap_remove.test.cpp</a>
 * :x: <a href="../../../verify/src/hashset.test.cpp.html">src/hashset.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/hashset_hashmap.test.cpp.html">src/hashset_hashmap.test.cpp</a>
-* :x: <a href="../../../verify/src/treedecomp_width2.test.cpp.html">src/treedecomp_width2.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/treedecomp_width2.test.cpp.html">src/treedecomp_width2.test.cpp</a>
 
 
 ## Code

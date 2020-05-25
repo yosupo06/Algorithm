@@ -38,7 +38,7 @@ layout: default
 
 ## Depends on
 
-* :question: <a href="../datastructure/simplequeue.hpp.html">src/datastructure/simplequeue.hpp</a>
+* :heavy_check_mark: <a href="../datastructure/simplequeue.hpp.html">src/datastructure/simplequeue.hpp</a>
 * :heavy_check_mark: <a href="csr.hpp.html">src/graph/csr.hpp</a>
 
 

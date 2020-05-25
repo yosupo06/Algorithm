@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :question: src/datastructure/simplequeue.hpp
+# :heavy_check_mark: src/datastructure/simplequeue.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
@@ -39,13 +39,13 @@ layout: default
 ## Required by
 
 * :heavy_check_mark: <a href="../graph/bimaching.hpp.html">src/graph/bimaching.hpp</a>
-* :x: <a href="../graph/treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
+* :heavy_check_mark: <a href="../graph/treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
 
 
 ## Verified with
 
 * :heavy_check_mark: <a href="../../../verify/src/bimaching.test.cpp.html">src/bimaching.test.cpp</a>
-* :x: <a href="../../../verify/src/treedecomp_width2.test.cpp.html">src/treedecomp_width2.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/treedecomp_width2.test.cpp.html">src/treedecomp_width2.test.cpp</a>
 
 
 ## Code

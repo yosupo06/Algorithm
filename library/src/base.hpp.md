@@ -41,12 +41,12 @@ layout: default
 * :warning: <a href="base.cpp.html">src/base.cpp</a>
 * :heavy_check_mark: <a href="datastructure/fenwick.hpp.html">src/datastructure/fenwick.hpp</a>
 * :heavy_check_mark: <a href="datastructure/fenwick2d.hpp.html">src/datastructure/fenwick2d.hpp</a>
-* :question: <a href="datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
+* :heavy_check_mark: <a href="datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
 * :question: <a href="datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
 * :heavy_check_mark: <a href="datastructure/segtree.hpp.html">src/datastructure/segtree.hpp</a>
 * :heavy_check_mark: <a href="datastructure/staticrangesum.hpp.html">src/datastructure/staticrangesum.hpp</a>
 * :heavy_check_mark: <a href="graph/maxclique.hpp.html">src/graph/maxclique.hpp</a>
-* :x: <a href="graph/treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
+* :heavy_check_mark: <a href="graph/treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
 * :heavy_check_mark: <a href="math/comb.hpp.html">src/math/comb.hpp</a>
 * :heavy_check_mark: <a href="math/modint61.hpp.html">src/math/modint61.hpp</a>
 * :heavy_check_mark: <a href="math/nimber.hpp.html">src/math/nimber.hpp</a>
@@ -87,7 +87,7 @@ layout: default
 * :heavy_check_mark: <a href="../../verify/src/scanner.test.cpp.html">src/scanner.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/scanner_many_aplusb.test.cpp.html">src/scanner_many_aplusb.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/staticrangesum_rectangle_sum.test.cpp.html">src/staticrangesum_rectangle_sum.test.cpp</a>
-* :x: <a href="../../verify/src/treedecomp_width2.test.cpp.html">src/treedecomp_width2.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/src/treedecomp_width2.test.cpp.html">src/treedecomp_width2.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/zalgo.test.cpp.html">src/zalgo.test.cpp</a>
 
 

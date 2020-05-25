@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :question: src/datastructure/hashmap.hpp
+# :heavy_check_mark: src/datastructure/hashmap.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
@@ -45,7 +45,7 @@ layout: default
 
 ## Required by
 
-* :x: <a href="../graph/treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
+* :heavy_check_mark: <a href="../graph/treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
 
 
 ## Verified with
@@ -53,7 +53,7 @@ layout: default
 * :heavy_check_mark: <a href="../../../verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/hashmap_remove.test.cpp.html">src/hashmap_remove.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/hashset_hashmap.test.cpp.html">src/hashset_hashmap.test.cpp</a>
-* :x: <a href="../../../verify/src/treedecomp_width2.test.cpp.html">src/treedecomp_width2.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/treedecomp_width2.test.cpp.html">src/treedecomp_width2.test.cpp</a>
 
 
 ## Code

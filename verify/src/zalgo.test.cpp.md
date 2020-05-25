@@ -41,7 +41,7 @@ layout: default
 
 * :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/string/zalgo.hpp.html">src/string/zalgo.hpp</a>
-* :question: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
 
 
 ## Code
