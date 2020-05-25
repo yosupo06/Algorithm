@@ -11,7 +11,10 @@ int main() {
         st.insert(i);
         assert(st.size() == i);
     }
-    
+    auto actual = st.to_vec();
+    V<int> expect(100);
+    iota(expect.begin(), expect.end(), 0);
+    assert(expect == actual);
     solve_aplusb();
     return 0;
 }

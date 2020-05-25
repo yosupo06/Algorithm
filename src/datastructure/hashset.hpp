@@ -65,4 +65,14 @@ template <class K, class H = Hasher<>> struct HashSet {
     size_t size() const {
         return sz;
     }
+
+    V<int> to_vec() const {
+        V<int> result;
+        for (uint i = 0; i <= mask; i++) {
+            if (key[i].first == 1) {
+                result.push_back(key[i].second);
+            }
+        }
+        return result;
+    }
 };

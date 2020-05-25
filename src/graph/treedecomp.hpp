@@ -55,12 +55,7 @@ TreeDecomp decomp_width2(VV<E> _g) {
         que.pop();
         int d = deg[p];
         if (!alive[p] || d >= 3) continue;
-        nears.clear();
-        for (auto e: _g[p]) {
-            int i = e.to;
-            if (!alive[i]) continue;
-            nears.push_back(i);
-        }
+        nears = g[p].to_vec();
         assert(int(nears.size()) == d);
         if (d == 0) {
             events.push_back({0, p, -1, -1});
