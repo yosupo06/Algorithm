@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../../index.html#6433a1a19c7364347102f741d8b9cffd">src/util</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/util/hash.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 19:01:57+09:00
+    - Last commit date: 2020-05-26 02:17:09+09:00
 
 
 
@@ -67,13 +67,34 @@ layout: default
 
 // Reference: Lemire, Daniel., and Owen, Kaser. "Strongly Universal String Hashing Is Fast."
 template <uint N = 4> struct Hasher {
+  private:
     static ull offset;
     static array<ull, N> seed;
 
-    static uint hash(uint x) { return (offset + x * seed[0]) >> 32; }
-    static uint hash(ull x) {
-        return (offset + uint(x) * seed[0] + (x >> 32) * seed[1]) >> 32;
-    }
+    template <uint I = 0>
+    struct Encoder {
+        ull now = offset;
+        Encoder<I + 1> update(uint x) {
+            return Encoder<I + 1>{now + x * seed[I]};
+        }
+        Encoder<I + 1> update(int x) {
+            return update(uint(x));
+        }
+        Encoder<I + 2> update(ull x) {
+            return Encoder<I + 2>{now + uint(x) * seed[I] + (x >> 32) * seed[I + 1]};
+        }
+        Encoder<I + 2> update(ll x) {
+            return update(ll(x));
+        }
+        uint digest() const {
+            static_assert(I <= N);
+            return uint(now >> 32);
+        }
+    };
+
+  public:
+    static uint hash(uint x) { return Encoder<>{}.update(x).digest(); }
+    static uint hash(ull x) { return Encoder<>{}.update(x).digest(); }
     static uint hash(int x) { return hash(uint(x)); }
     static uint hash(ll x) { return hash(ull(x)); }
 };
