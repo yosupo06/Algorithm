@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../../index.html#057cdb199a48f765d2786c323ec11d3a">src/datastructure</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/datastructure/hashset.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-26 01:37:45+09:00
+    - Last commit date: 2020-05-26 01:53:11+09:00
 
 
 
@@ -99,7 +99,7 @@ template <class K, class H = Hasher<>> struct HashSet {
             filled++;
             if (filled * 2 > mask) {
                 rehash();
-                set(k);
+                insert(k);
                 return;
             }
         }
