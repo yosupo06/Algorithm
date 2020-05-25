@@ -35,6 +35,9 @@ template <uint N = 4> struct Hasher {
     static uint hash(ull x) { return Encoder<>{}.update(x).digest(); }
     static uint hash(int x) { return hash(uint(x)); }
     static uint hash(ll x) { return hash(ull(x)); }
+    template <class T, class U> static uint hash(const pair<T, U>& p) {
+        return Encoder<>{}.update(p.first).update(p.second).digest();
+    }
 };
 
 template <uint N>

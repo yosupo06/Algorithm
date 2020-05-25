@@ -18,4 +18,7 @@ template <class T> struct SimpleQueue {
         assert(!empty());
         pos++;
     }
+    size_t size() const {
+        return payload.size() - pos;
+    }
 };
