@@ -45,9 +45,9 @@ layout: default
 
 ### src
 
-* :heavy_check_mark: <a href="library/src/aplusb.hpp.html">src/aplusb.hpp</a>
+* :question: <a href="library/src/aplusb.hpp.html">src/aplusb.hpp</a>
 * :warning: <a href="library/src/base.cpp.html">src/base.cpp</a>
-* :heavy_check_mark: <a href="library/src/base.hpp.html">src/base.hpp</a>
+* :question: <a href="library/src/base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="library/src/bitop.hpp.html">src/bitop.hpp</a>
 
 
@@ -63,7 +63,7 @@ layout: default
 * :heavy_check_mark: <a href="library/src/datastructure/fenwick.hpp.html">src/datastructure/fenwick.hpp</a>
 * :heavy_check_mark: <a href="library/src/datastructure/fenwick2d.hpp.html">src/datastructure/fenwick2d.hpp</a>
 * :heavy_check_mark: <a href="library/src/datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
-* :heavy_check_mark: <a href="library/src/datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
+* :question: <a href="library/src/datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
 * :heavy_check_mark: <a href="library/src/datastructure/linkcuttree.hpp.html">src/datastructure/linkcuttree.hpp</a>
 * :warning: <a href="library/src/datastructure/linkcuttree_old.hpp.html">src/datastructure/linkcuttree_old.hpp</a>
 * :warning: <a href="library/src/datastructure/quickfind.hpp.html">src/datastructure/quickfind.hpp</a>
@@ -188,8 +188,8 @@ layout: default
 ### src/util
 
 * :heavy_check_mark: <a href="library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
-* :heavy_check_mark: <a href="library/src/util/hash.hpp.html">src/util/hash.hpp</a>
-* :heavy_check_mark: <a href="library/src/util/random.hpp.html">src/util/random.hpp</a>
+* :question: <a href="library/src/util/hash.hpp.html">src/util/hash.hpp</a>
+* :question: <a href="library/src/util/random.hpp.html">src/util/random.hpp</a>
 * :warning: <a href="library/src/util/stack_extend.hpp.html">src/util/stack_extend.hpp</a>
 * :warning: <a href="library/src/util/stopwatch.hpp.html">src/util/stopwatch.hpp</a>
 
@@ -203,6 +203,7 @@ layout: default
 * :heavy_check_mark: <a href="verify/src/fenwick_2d_rectangle_sum.test.cpp.html">src/fenwick_2d_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/hashmap_remove.test.cpp.html">src/hashmap_remove.test.cpp</a>
+* :x: <a href="verify/src/hashset.test.cpp.html">src/hashset.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/hashset_hashmap.test.cpp.html">src/hashset_hashmap.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/hl_lca.test.cpp.html">src/hl_lca.test.cpp</a>
 * :heavy_check_mark: <a href="verify/src/hl_vertex_add_path_sum.test.cpp.html">src/hl_vertex_add_path_sum.test.cpp</a>
