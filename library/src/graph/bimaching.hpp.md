@@ -31,14 +31,14 @@ layout: default
 
 * category: <a href="../../../index.html#5442c8f317d712204bf06ed26672e17c">src/graph</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/graph/bimaching.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-08 21:35:33+09:00
+    - Last commit date: 2020-05-26 02:54:27+09:00
 
 
 
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../datastructure/simplequeue.hpp.html">src/datastructure/simplequeue.hpp</a>
+* :question: <a href="../datastructure/simplequeue.hpp.html">src/datastructure/simplequeue.hpp</a>
 * :heavy_check_mark: <a href="csr.hpp.html">src/graph/csr.hpp</a>
 
 

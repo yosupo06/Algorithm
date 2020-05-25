@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/bimaching.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 20:46:05+09:00
+    - Last commit date: 2020-05-26 02:54:27+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/bipartitematching">https://judge.yosupo.jp/problem/bipartitematching</a>
@@ -40,10 +40,10 @@ layout: default
 ## Depends on
 
 * :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/datastructure/simplequeue.hpp.html">src/datastructure/simplequeue.hpp</a>
+* :question: <a href="../../library/src/datastructure/simplequeue.hpp.html">src/datastructure/simplequeue.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/graph/bimaching.hpp.html">src/graph/bimaching.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/graph/csr.hpp.html">src/graph/csr.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
+* :question: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
 
 
 ## Code

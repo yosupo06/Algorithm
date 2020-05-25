@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../../index.html#6433a1a19c7364347102f741d8b9cffd">src/util</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/util/hash.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-26 02:17:09+09:00
+    - Last commit date: 2020-05-26 02:54:27+09:00
 
 
 
@@ -44,8 +44,9 @@ layout: default
 
 ## Required by
 
-* :heavy_check_mark: <a href="../datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
+* :question: <a href="../datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
 * :question: <a href="../datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
+* :x: <a href="../graph/treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
 
 
 ## Verified with
@@ -54,6 +55,7 @@ layout: default
 * :heavy_check_mark: <a href="../../../verify/src/hashmap_remove.test.cpp.html">src/hashmap_remove.test.cpp</a>
 * :x: <a href="../../../verify/src/hashset.test.cpp.html">src/hashset.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/hashset_hashmap.test.cpp.html">src/hashset_hashmap.test.cpp</a>
+* :x: <a href="../../../verify/src/treedecomp_width2.test.cpp.html">src/treedecomp_width2.test.cpp</a>
 
 
 ## Code
@@ -98,6 +100,9 @@ template <uint N = 4> struct Hasher {
     static uint hash(ull x) { return Encoder<>{}.update(x).digest(); }
     static uint hash(int x) { return hash(uint(x)); }
     static uint hash(ll x) { return hash(ull(x)); }
+    template <class T, class U> static uint hash(const pair<T, U>& p) {
+        return Encoder<>{}.update(p.first).update(p.second).digest();
+    }
 };
 
 template <uint N>

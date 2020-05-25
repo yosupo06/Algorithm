@@ -25,23 +25,29 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/scanner.test.cpp
+# :x: src/treedecomp_width2.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
-* <a href="{{ site.github.repository_url }}/blob/master/src/scanner.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 20:46:05+09:00
+* <a href="{{ site.github.repository_url }}/blob/master/src/treedecomp_width2.test.cpp">View this file on GitHub</a>
+    - Last commit date: 2020-05-26 02:54:27+09:00
 
 
-* see: <a href="https://judge.yosupo.jp/problem/aplusb">https://judge.yosupo.jp/problem/aplusb</a>
+* see: <a href="https://judge.yosupo.jp/problem/tree_decomposition_width_2">https://judge.yosupo.jp/problem/tree_decomposition_width_2</a>
 
 
 ## Depends on
 
-* :question: <a href="../../library/src/aplusb.hpp.html">src/aplusb.hpp</a>
 * :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :question: <a href="../../library/src/datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
+* :question: <a href="../../library/src/datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
+* :question: <a href="../../library/src/datastructure/simplequeue.hpp.html">src/datastructure/simplequeue.hpp</a>
+* :x: <a href="../../library/src/graph/primitive.hpp.html">src/graph/primitive.hpp</a>
+* :x: <a href="../../library/src/graph/treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
 * :question: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
+* :question: <a href="../../library/src/util/hash.hpp.html">src/util/hash.hpp</a>
+* :question: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Code
@@ -49,44 +55,53 @@ layout: default
 <a id="unbundled"></a>
 {% raw %}
 ```cpp
-#define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
+#define PROBLEM "https://judge.yosupo.jp/problem/tree_decomposition_width_2"
 
 #include "base.hpp"
 #include "util/fast_io.hpp"
-
-#include "aplusb.hpp"
-#include "unistd.h"
-
-void check_separator() {
-    auto tmpf = tmpfile();
-    fputs(string(1 << 15, 'a').c_str(), tmpf);
-    fputs(" ", tmpf);
-    fputs(string(1 << 15, 'b').c_str(), tmpf);
-    rewind(tmpf);
-    Scanner sc(tmpf);
-    string s, t;
-    sc.read(s, t);
-    assert(s == string(1 << 15, 'a'));
-    assert(t == string(1 << 15, 'b'));
-}
-
-void check_interactive() {
-    int pipefd[2];
-    assert(pipe(pipefd) == 0);
-
-    Scanner sc(fdopen(pipefd[0], "r"));
-    FILE* fw = fdopen(pipefd[1], "w");
-    fprintf(fw, "1234\n");
-    fflush(fw);
-    int x;
-    sc.read(x);
-    assert(x == 1234);
-}
+#include "graph/treedecomp.hpp"
 
 int main() {
-    check_separator();
-    check_interactive();
-    solve_aplusb();
+    Scanner sc(stdin);
+    Printer pr(stdout);
+
+    string s;
+    sc.read(s, s);
+    int n, m;
+    sc.read(n, m);
+    VV<SimpleEdge> g(n);
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        sc.read(a, b); a--; b--;
+        g[a].push_back({b});
+        g[b].push_back({a});
+    }
+
+    auto td = decomp_width2(g);
+    int K = int(td.bags.size());
+    if (K == 0) {
+        pr.writeln(-1);
+        return 0;
+    }
+    pr.writeln("s", "td", K, 2, n);
+
+    for (int i = 0; i < K; i++) {
+        pr.write("b", i + 1);
+        for (int j: td.bags[i]) {
+            pr.write(' ');
+            pr.write(j + 1);
+        }
+        pr.writeln();
+    }
+    for (int i = 0; i < K; i++) {
+        for (auto e: td.tr[i]) {
+            int j = e.to;
+            if (i < j) {
+                pr.writeln(i + 1, j + 1);
+            }
+        }
+    }
+    return 0;
 }
 
 ```
@@ -102,9 +117,11 @@ Traceback (most recent call last):
     bundler.update(path)
   File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 307, in update
     self.update(self._resolve(pathlib.Path(included), included_from=path))
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 307, in update
+    self.update(self._resolve(pathlib.Path(included), included_from=path))
   File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 187, in _resolve
     raise BundleErrorAt(path, -1, "no such header")
-onlinejudge_verify.languages.cplusplus_bundle.BundleErrorAt: unistd.h: line -1: no such header
+onlinejudge_verify.languages.cplusplus_bundle.BundleErrorAt: base.hpp: line -1: no such header
 
 ```
 {% endraw %}

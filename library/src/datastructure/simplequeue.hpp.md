@@ -25,13 +25,13 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/datastructure/simplequeue.hpp
+# :question: src/datastructure/simplequeue.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
 * category: <a href="../../../index.html#057cdb199a48f765d2786c323ec11d3a">src/datastructure</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/datastructure/simplequeue.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-08 21:35:33+09:00
+    - Last commit date: 2020-05-26 02:54:27+09:00
 
 
 
@@ -39,11 +39,13 @@ layout: default
 ## Required by
 
 * :heavy_check_mark: <a href="../graph/bimaching.hpp.html">src/graph/bimaching.hpp</a>
+* :x: <a href="../graph/treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
 
 
 ## Verified with
 
 * :heavy_check_mark: <a href="../../../verify/src/bimaching.test.cpp.html">src/bimaching.test.cpp</a>
+* :x: <a href="../../../verify/src/treedecomp_width2.test.cpp.html">src/treedecomp_width2.test.cpp</a>
 
 
 ## Code
@@ -70,6 +72,9 @@ template <class T> struct SimpleQueue {
     void pop() {
         assert(!empty());
         pos++;
+    }
+    size_t size() const {
+        return payload.size() - pos;
     }
 };
 
@@ -98,6 +103,9 @@ template <class T> struct SimpleQueue {
     void pop() {
         assert(!empty());
         pos++;
+    }
+    size_t size() const {
+        return payload.size() - pos;
     }
 };
 
