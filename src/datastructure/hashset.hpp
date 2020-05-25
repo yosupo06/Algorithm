@@ -17,6 +17,7 @@ template <class K, class H = Hasher<>> struct HashSet {
         s++;
         mask = (1U << s) - 1;
         filled = 0;
+        sz = 0;
         key = new P[1 << s];
         for (uint i = 0; i <= pmask; i++) {
             if (pkey[i].first == 1) {
