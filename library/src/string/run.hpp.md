@@ -38,7 +38,7 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
+* :question: <a href="../base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="zalgo.hpp.html">src/string/zalgo.hpp</a>
 
 

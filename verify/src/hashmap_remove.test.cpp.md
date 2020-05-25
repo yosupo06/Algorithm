@@ -39,11 +39,11 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/util/hash.hpp.html">src/util/hash.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
+* :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :question: <a href="../../library/src/datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
+* :question: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
+* :question: <a href="../../library/src/util/hash.hpp.html">src/util/hash.hpp</a>
+* :question: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Code

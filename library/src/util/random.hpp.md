@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/util/random.hpp
+# :question: src/util/random.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
@@ -38,18 +38,18 @@ layout: default
 
 ## Required by
 
-* :heavy_check_mark: <a href="../datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
-* :heavy_check_mark: <a href="../datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
+* :question: <a href="../datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
+* :x: <a href="../datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
 * :heavy_check_mark: <a href="../math/poly.hpp.html">src/math/poly.hpp</a>
 * :heavy_check_mark: <a href="../string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
-* :heavy_check_mark: <a href="hash.hpp.html">src/util/hash.hpp</a>
+* :question: <a href="hash.hpp.html">src/util/hash.hpp</a>
 
 
 ## Verified with
 
 * :heavy_check_mark: <a href="../../../verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/hashmap_remove.test.cpp.html">src/hashmap_remove.test.cpp</a>
-* :heavy_check_mark: <a href="../../../verify/src/hashset_hashmap.test.cpp.html">src/hashset_hashmap.test.cpp</a>
+* :x: <a href="../../../verify/src/hashset_hashmap.test.cpp.html">src/hashset_hashmap.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/rollinghash_zalgo.test.cpp.html">src/rollinghash_zalgo.test.cpp</a>

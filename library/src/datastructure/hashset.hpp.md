@@ -25,27 +25,27 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/datastructure/hashset.hpp
+# :x: src/datastructure/hashset.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
 * category: <a href="../../../index.html#057cdb199a48f765d2786c323ec11d3a">src/datastructure</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/datastructure/hashset.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-26 01:26:04+09:00
+    - Last commit date: 2020-05-26 01:37:45+09:00
 
 
 
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
-* :heavy_check_mark: <a href="../util/hash.hpp.html">src/util/hash.hpp</a>
-* :heavy_check_mark: <a href="../util/random.hpp.html">src/util/random.hpp</a>
+* :question: <a href="../base.hpp.html">src/base.hpp</a>
+* :question: <a href="../util/hash.hpp.html">src/util/hash.hpp</a>
+* :question: <a href="../util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Verified with
 
-* :heavy_check_mark: <a href="../../../verify/src/hashset_hashmap.test.cpp.html">src/hashset_hashmap.test.cpp</a>
+* :x: <a href="../../../verify/src/hashset_hashmap.test.cpp.html">src/hashset_hashmap.test.cpp</a>
 
 
 ## Code
@@ -59,10 +59,10 @@ layout: default
 
 template <class K, class H = Hasher<>> struct HashSet {
     using P = pair<unsigned char, K>;
-    uint s, mask, filled;  // data.size() == 1 << s
+    uint s, mask, filled, sz;  // data.size() == 1 << s
     P* key;
 
-    HashSet(uint _s = 2) : s(_s), mask((1U << s) - 1), filled(0) {
+    HashSet(uint _s = 2) : s(_s), mask((1U << s) - 1), filled(0), sz(0) {
         key = new P[1 << s];
     }
 
@@ -81,7 +81,7 @@ template <class K, class H = Hasher<>> struct HashSet {
         delete[] pkey;
     }
 
-    bool get(K k) {
+    bool count(K k) {
         uint id = H::hash(k) & mask;
         int gc = 0;
         while (key[id].first && key[id].second != k) {
@@ -92,7 +92,7 @@ template <class K, class H = Hasher<>> struct HashSet {
         return true;
     }
 
-    void set(K k) {
+    void insert(K k) {
         uint id = H::hash(k) & mask;
         while (key[id].first && key[id].second != k) id = (id + 1) & mask;
         if (key[id].first == 0) {
@@ -103,15 +103,21 @@ template <class K, class H = Hasher<>> struct HashSet {
                 return;
             }
         }
+        if (key[id].first != 1) sz++;
         key[id] = {1, k};
     }
 
-    bool reset(K k) {
+    bool erase(K k) {
         uint id = H::hash(k) & mask;
         while (key[id].first && key[id].second != k) id = (id + 1) & mask;
         if (key[id].first != 1) return false;
+        sz--;
         key[id].first = 2;
         return true;
+    }
+
+    size_t size() const {
+        return sz;
     }
 };
 

@@ -38,8 +38,8 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="base.hpp.html">src/base.hpp</a>
-* :heavy_check_mark: <a href="util/fast_io.hpp.html">src/util/fast_io.hpp</a>
+* :question: <a href="base.hpp.html">src/base.hpp</a>
+* :question: <a href="util/fast_io.hpp.html">src/util/fast_io.hpp</a>
 
 
 ## Code
