@@ -42,6 +42,7 @@ layout: default
 * :heavy_check_mark: <a href="datastructure/fenwick.hpp.html">src/datastructure/fenwick.hpp</a>
 * :heavy_check_mark: <a href="datastructure/fenwick2d.hpp.html">src/datastructure/fenwick2d.hpp</a>
 * :heavy_check_mark: <a href="datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
+* :heavy_check_mark: <a href="datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
 * :heavy_check_mark: <a href="datastructure/segtree.hpp.html">src/datastructure/segtree.hpp</a>
 * :heavy_check_mark: <a href="datastructure/staticrangesum.hpp.html">src/datastructure/staticrangesum.hpp</a>
 * :heavy_check_mark: <a href="graph/maxclique.hpp.html">src/graph/maxclique.hpp</a>
@@ -63,6 +64,7 @@ layout: default
 * :heavy_check_mark: <a href="../../verify/src/fenwick_2d_rectangle_sum.test.cpp.html">src/fenwick_2d_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/hashmap_remove.test.cpp.html">src/hashmap_remove.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/src/hashset_hashmap.test.cpp.html">src/hashset_hashmap.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/hl_lca.test.cpp.html">src/hl_lca.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/hl_vertex_add_path_sum.test.cpp.html">src/hl_vertex_add_path_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/hl_vertex_add_subtree_sum.test.cpp.html">src/hl_vertex_add_subtree_sum.test.cpp</a>

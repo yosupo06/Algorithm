@@ -25,20 +25,27 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :warning: src/datastructure/fastset.hpp
+# :heavy_check_mark: src/datastructure/hashset.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
 * category: <a href="../../../index.html#057cdb199a48f765d2786c323ec11d3a">src/datastructure</a>
-* <a href="{{ site.github.repository_url }}/blob/master/src/datastructure/fastset.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-08 21:35:33+09:00
+* <a href="{{ site.github.repository_url }}/blob/master/src/datastructure/hashset.hpp">View this file on GitHub</a>
+    - Last commit date: 2020-05-26 01:26:04+09:00
 
 
 
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../bitop.hpp.html">src/bitop.hpp</a>
+* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../util/hash.hpp.html">src/util/hash.hpp</a>
+* :heavy_check_mark: <a href="../util/random.hpp.html">src/util/random.hpp</a>
+
+
+## Verified with
+
+* :heavy_check_mark: <a href="../../../verify/src/hashset_hashmap.test.cpp.html">src/hashset_hashmap.test.cpp</a>
 
 
 ## Code
@@ -48,72 +55,63 @@ layout: default
 ```cpp
 #pragma once
 
-#include "bitop.hpp"
-struct FastSet {
-    static constexpr uint B = 64;
-    int n, lg;
-    VV<ull> seg;
-    FastSet(int _n) : n(_n) {
-        do {
-            seg.push_back(V<ull>((_n + B - 1) / B));
-            _n = (_n + B - 1) / B;
-        } while (_n > 1);
-        lg = int(seg.size());
+#include "util/hash.hpp"
+
+template <class K, class H = Hasher<>> struct HashSet {
+    using P = pair<unsigned char, K>;
+    uint s, mask, filled;  // data.size() == 1 << s
+    P* key;
+
+    HashSet(uint _s = 2) : s(_s), mask((1U << s) - 1), filled(0) {
+        key = new P[1 << s];
     }
-    bool operator[](int i) const {
-        return (seg[0][i / B] >> (i % B) & 1) != 0;
-    }
-    void set(int i) {
-        for (int h = 0; h < lg; h++) {
-            seg[h][i / B] |= 1ULL << (i % B);
-            i /= B;
-        }
-    }
-    void reset(int i) {
-        for (int h = 0; h < lg; h++) {
-            seg[h][i / B] &= ~(1ULL << (i % B));
-            if (seg[h][i / B]) break;
-            i /= B;
-        }
-    }
-    // x以上最小の要素
-    int next(int i) {
-        for (int h = 0; h < lg; h++) {
-            if (i / B == seg[h].size()) break;
-            ull d = seg[h][i / B] >> (i % B);
-            if (!d) {
-                i = i / B + 1;
-                continue;
+
+    void rehash() {
+        uint pmask = mask;
+        P* pkey = key;
+        s++;
+        mask = (1U << s) - 1;
+        filled = 0;
+        key = new P[1 << s];
+        for (uint i = 0; i <= pmask; i++) {
+            if (pkey[i].first == 1) {
+                set(pkey[i].second);
             }
-            // find
-            i += bsf(d);
-            for (int g = h - 1; g >= 0; g--) {
-                i *= B;
-                i += bsf(seg[g][i / B]);
-            }
-            return i;
         }
-        return n;
+        delete[] pkey;
     }
-    // x未満最大の要素
-    int prev(int i) {
-        i--;
-        for (int h = 0; h < lg; h++) {
-            if (i == -1) break;
-            ull d = seg[h][i / B] << (63 - i % 64);
-            if (!d) {
-                i = i / B - 1;
-                continue;
-            }
-            // find
-            i += bsr(d) - (B - 1);
-            for (int g = h - 1; g >= 0; g--) {
-                i *= B;
-                i += bsr(seg[g][i / B]);
-            }
-            return i;
+
+    bool get(K k) {
+        uint id = H::hash(k) & mask;
+        int gc = 0;
+        while (key[id].first && key[id].second != k) {
+            gc++;
+            id = (id + 1) & mask;
         }
-        return -1;
+        if (key[id].first != 1 || key[id].second != k) return false;
+        return true;
+    }
+
+    void set(K k) {
+        uint id = H::hash(k) & mask;
+        while (key[id].first && key[id].second != k) id = (id + 1) & mask;
+        if (key[id].first == 0) {
+            filled++;
+            if (filled * 2 > mask) {
+                rehash();
+                set(k);
+                return;
+            }
+        }
+        key[id] = {1, k};
+    }
+
+    bool reset(K k) {
+        uint id = H::hash(k) & mask;
+        while (key[id].first && key[id].second != k) id = (id + 1) & mask;
+        if (key[id].first != 1) return false;
+        key[id].first = 2;
+        return true;
     }
 };
 
@@ -132,7 +130,7 @@ Traceback (most recent call last):
     self.update(self._resolve(pathlib.Path(included), included_from=path))
   File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 187, in _resolve
     raise BundleErrorAt(path, -1, "no such header")
-onlinejudge_verify.languages.cplusplus_bundle.BundleErrorAt: bitop.hpp: line -1: no such header
+onlinejudge_verify.languages.cplusplus_bundle.BundleErrorAt: util/hash.hpp: line -1: no such header
 
 ```
 {% endraw %}

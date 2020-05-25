@@ -25,24 +25,26 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: src/hl_vertex_add_subtree_sum.test.cpp
+# :heavy_check_mark: src/hashset_hashmap.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
-* <a href="{{ site.github.repository_url }}/blob/master/src/hl_vertex_add_subtree_sum.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 20:46:05+09:00
+* <a href="{{ site.github.repository_url }}/blob/master/src/hashset_hashmap.test.cpp">View this file on GitHub</a>
+    - Last commit date: 2020-05-26 01:26:04+09:00
 
 
-* see: <a href="https://judge.yosupo.jp/problem/vertex_add_subtree_sum">https://judge.yosupo.jp/problem/vertex_add_subtree_sum</a>
+* see: <a href="https://judge.yosupo.jp/problem/associative_array">https://judge.yosupo.jp/problem/associative_array</a>
 
 
 ## Depends on
 
 * :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/datastructure/segtree.hpp.html">src/datastructure/segtree.hpp</a>
-* :heavy_check_mark: <a href="../../library/src/tree/hl.hpp.html">src/tree/hl.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/hash.hpp.html">src/util/hash.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Code
@@ -50,51 +52,41 @@ layout: default
 <a id="unbundled"></a>
 {% raw %}
 ```cpp
-#define PROBLEM "https://judge.yosupo.jp/problem/vertex_add_subtree_sum"
+#define PROBLEM "https://judge.yosupo.jp/problem/associative_array"
 
 #include "base.hpp"
-#include "datastructure/segtree.hpp"
-#include "tree/hl.hpp"
 #include "util/fast_io.hpp"
+#include "datastructure/hashset.hpp"
+#include "datastructure/hashmap.hpp"
 
 int main() {
     Scanner sc(stdin);
     Printer pr(stdout);
-    int n, q;
-    sc.read(n, q);
-    V<ll> a(n);
-    for (int i = 0; i < n; i++) {
-        sc.read(a[i]);
-    }
-    struct E {
-        int to;
-    };
-    VV<E> g(n);
-    for (int i = 1; i < n; i++) {
-        int p;
-        sc.read(p);
-        g[i].push_back({p});
-        g[p].push_back({i});
-    }
-    auto hl = get_hl(g, 0);
-    auto seg =
-        get_simple_seg(V<ll>(n, 0), 0LL, [&](ll x, ll y) { return x + y; });
-    for (int i = 0; i < n; i++) {
-        seg.set(hl.ord(i).i, a[i]);
-    }
-    for (int i = 0; i < q; i++) {
-        int t;
-        sc.read(t);
-        if (t == 0) {
-            int p;
-            ll x;
-            sc.read(p, x);
-            seg.set(hl.ord(p).i, seg.single(hl.ord(p).i) + x);
+
+    int q;
+    sc.read(q);
+    HashSet<ll> st;
+    HashMap<ll, ll> mp;
+
+    for (int ph = 0; ph < q; ph++) {
+        int ty;
+        sc.read(ty);
+        if (ty == 0) {
+            ll k, v;
+            sc.read(k, v);
+            if (v == 0) {
+                st.reset(k);
+                mp.remove(k);
+            } else {
+                st.set(k);
+                mp.set(k, v);
+            }
         } else {
-            int u;
-            sc.read(u);
-            ll sm = seg.sum(hl.ord(u).i, hl.subtree_out(u).i);
-            pr.writeln(sm);
+            ll k;
+            sc.read(k);
+            ll u = mp.get(k);
+            assert(st.get(k) == (u != 0));
+            pr.writeln(u);
         }
     }
     return 0;
@@ -117,7 +109,7 @@ Traceback (most recent call last):
     self.update(self._resolve(pathlib.Path(included), included_from=path))
   File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 187, in _resolve
     raise BundleErrorAt(path, -1, "no such header")
-onlinejudge_verify.languages.cplusplus_bundle.BundleErrorAt: base.hpp: line -1: no such header
+onlinejudge_verify.languages.cplusplus_bundle.BundleErrorAt: util/hash.hpp: line -1: no such header
 
 ```
 {% endraw %}

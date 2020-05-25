@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/hashmap_remove.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 20:46:05+09:00
+    - Last commit date: 2020-05-26 01:26:04+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/associative_array">https://judge.yosupo.jp/problem/associative_array</a>
@@ -91,15 +91,15 @@ int main() {
 Traceback (most recent call last):
   File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/docs.py", line 349, in write_contents
     bundled_code = language.bundle(self.file_class.file_path, basedir=pathlib.Path.cwd())
-  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus.py", line 172, in bundle
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus.py", line 185, in bundle
     bundler.update(path)
-  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 282, in update
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 307, in update
     self.update(self._resolve(pathlib.Path(included), included_from=path))
-  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 282, in update
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 307, in update
     self.update(self._resolve(pathlib.Path(included), included_from=path))
-  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 162, in _resolve
-    raise BundleError(path, -1, "no such header")
-onlinejudge_verify.languages.cplusplus_bundle.BundleError: util/hash.hpp: line -1: no such header
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 187, in _resolve
+    raise BundleErrorAt(path, -1, "no such header")
+onlinejudge_verify.languages.cplusplus_bundle.BundleErrorAt: util/hash.hpp: line -1: no such header
 
 ```
 {% endraw %}
