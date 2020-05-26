@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :warning: src/datastructure/unionfind.hpp
+# :heavy_check_mark: src/datastructure/unionfind.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
@@ -34,6 +34,11 @@ layout: default
     - Last commit date: 2020-05-08 21:35:33+09:00
 
 
+
+
+## Verified with
+
+* :heavy_check_mark: <a href="../../../verify/src/unionfind.test.cpp.html">src/unionfind.test.cpp</a>
 
 
 ## Code

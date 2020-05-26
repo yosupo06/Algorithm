@@ -88,6 +88,7 @@ layout: default
 * :heavy_check_mark: <a href="../../verify/src/scanner_many_aplusb.test.cpp.html">src/scanner_many_aplusb.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/staticrangesum_rectangle_sum.test.cpp.html">src/staticrangesum_rectangle_sum.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/treedecomp_width2.test.cpp.html">src/treedecomp_width2.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/src/unionfind.test.cpp.html">src/unionfind.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/src/zalgo.test.cpp.html">src/zalgo.test.cpp</a>
 
 
