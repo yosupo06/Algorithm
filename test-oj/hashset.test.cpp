@@ -9,7 +9,7 @@ int main() {
 
     for (int i = 0; i < 100; i++) {
         st.insert(i);
-        assert(st.size() == i);
+        assert(int(st.size()) == i);
     }
     auto actual = st.to_vec();
     V<int> expect(100);
