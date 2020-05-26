@@ -10,7 +10,7 @@ struct UnionFind {
         if (x == y) return;  // same
         gn--;
         if (r[x] < r[y]) swap(x, y);
-        p[x] = y;
+        p[y] = x;
         r[x] += r[y];
     }
     int group(int a) {
