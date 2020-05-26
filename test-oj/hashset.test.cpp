@@ -12,6 +12,7 @@ int main() {
         assert(int(st.size()) == i + 1);
     }
     auto actual = st.to_vec();
+    sort(actual.begin(), actual.end());
     V<int> expect(100);
     iota(expect.begin(), expect.end(), 0);
     assert(expect == actual);
