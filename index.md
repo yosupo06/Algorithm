@@ -121,6 +121,7 @@ layout: default
 ### src/graph
 
 * :warning: <a href="library/src/graph/articulation.hpp.html">src/graph/articulation.hpp</a>
+* :warning: <a href="library/src/graph/balancedseparator.hpp.html">src/graph/balancedseparator.hpp</a>
 * :warning: <a href="library/src/graph/bidirectedcut.hpp.html">src/graph/bidirectedcut.hpp</a>
 * :heavy_check_mark: <a href="library/src/graph/bimaching.hpp.html">src/graph/bimaching.hpp</a>
 * :warning: <a href="library/src/graph/bridge.hpp.html">src/graph/bridge.hpp</a>

@@ -38,6 +38,7 @@ layout: default
 
 ## Required by
 
+* :warning: <a href="balancedseparator.hpp.html">src/graph/balancedseparator.hpp</a>
 * :heavy_check_mark: <a href="treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
 
 

@@ -45,6 +45,7 @@ layout: default
 * :heavy_check_mark: <a href="datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
 * :heavy_check_mark: <a href="datastructure/segtree.hpp.html">src/datastructure/segtree.hpp</a>
 * :heavy_check_mark: <a href="datastructure/staticrangesum.hpp.html">src/datastructure/staticrangesum.hpp</a>
+* :warning: <a href="graph/balancedseparator.hpp.html">src/graph/balancedseparator.hpp</a>
 * :heavy_check_mark: <a href="graph/maxclique.hpp.html">src/graph/maxclique.hpp</a>
 * :heavy_check_mark: <a href="graph/treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
 * :heavy_check_mark: <a href="math/comb.hpp.html">src/math/comb.hpp</a>

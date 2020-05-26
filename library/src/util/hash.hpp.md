@@ -46,6 +46,7 @@ layout: default
 
 * :heavy_check_mark: <a href="../datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
 * :heavy_check_mark: <a href="../datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
+* :warning: <a href="../graph/balancedseparator.hpp.html">src/graph/balancedseparator.hpp</a>
 * :heavy_check_mark: <a href="../graph/treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
 
 
