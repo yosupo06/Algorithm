@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../../index.html#057cdb199a48f765d2786c323ec11d3a">src/datastructure</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/datastructure/unionfind.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-08 21:35:33+09:00
+    - Last commit date: 2020-05-26 21:19:26+09:00
 
 
 
@@ -57,12 +57,9 @@ struct UnionFind {
         int x = group(a), y = group(b);
         if (x == y) return;  // same
         gn--;
-        if (r[x] < r[y]) {
-            p[x] = y;
-        } else {
-            p[y] = x;
-            if (r[x] == r[y]) r[x]++;
-        }
+        if (r[x] < r[y]) swap(x, y);
+        p[y] = x;
+        r[x] += r[y];
     }
     int group(int a) {
         assert(0 <= a && a < n);
@@ -94,12 +91,9 @@ struct UnionFind {
         int x = group(a), y = group(b);
         if (x == y) return;  // same
         gn--;
-        if (r[x] < r[y]) {
-            p[x] = y;
-        } else {
-            p[y] = x;
-            if (r[x] == r[y]) r[x]++;
-        }
+        if (r[x] < r[y]) swap(x, y);
+        p[y] = x;
+        r[x] += r[y];
     }
     int group(int a) {
         assert(0 <= a && a < n);

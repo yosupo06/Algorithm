@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#25d902c24283ab8cfbac54dfa101ad31">src</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/unionfind.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-24 20:46:05+09:00
+    - Last commit date: 2020-05-26 21:19:26+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/unionfind">https://judge.yosupo.jp/problem/unionfind</a>
@@ -380,12 +380,9 @@ struct UnionFind {
         int x = group(a), y = group(b);
         if (x == y) return;  // same
         gn--;
-        if (r[x] < r[y]) {
-            p[x] = y;
-        } else {
-            p[y] = x;
-            if (r[x] == r[y]) r[x]++;
-        }
+        if (r[x] < r[y]) swap(x, y);
+        p[y] = x;
+        r[x] += r[y];
     }
     int group(int a) {
         assert(0 <= a && a < n);
