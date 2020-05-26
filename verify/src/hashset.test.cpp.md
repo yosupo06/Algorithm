@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :x: src/hashset.test.cpp
+# :heavy_check_mark: src/hashset.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
@@ -39,11 +39,11 @@ layout: default
 
 ## Depends on
 
-* :question: <a href="../../library/src/aplusb.hpp.html">src/aplusb.hpp</a>
-* :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
-* :question: <a href="../../library/src/datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
-* :question: <a href="../../library/src/util/hash.hpp.html">src/util/hash.hpp</a>
-* :question: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/aplusb.hpp.html">src/aplusb.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/hash.hpp.html">src/util/hash.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Code
@@ -65,6 +65,7 @@ int main() {
         assert(int(st.size()) == i + 1);
     }
     auto actual = st.to_vec();
+    sort(actual.begin(), actual.end());
     V<int> expect(100);
     iota(expect.begin(), expect.end(), 0);
     assert(expect == actual);

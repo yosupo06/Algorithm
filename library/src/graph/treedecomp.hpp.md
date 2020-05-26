@@ -38,13 +38,13 @@ layout: default
 
 ## Depends on
 
-* :question: <a href="../base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="../datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
-* :question: <a href="../datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
+* :heavy_check_mark: <a href="../datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
 * :heavy_check_mark: <a href="../datastructure/simplequeue.hpp.html">src/datastructure/simplequeue.hpp</a>
 * :heavy_check_mark: <a href="primitive.hpp.html">src/graph/primitive.hpp</a>
-* :question: <a href="../util/hash.hpp.html">src/util/hash.hpp</a>
-* :question: <a href="../util/random.hpp.html">src/util/random.hpp</a>
+* :heavy_check_mark: <a href="../util/hash.hpp.html">src/util/hash.hpp</a>
+* :heavy_check_mark: <a href="../util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Verified with

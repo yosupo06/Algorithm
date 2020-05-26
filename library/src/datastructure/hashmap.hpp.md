@@ -38,9 +38,9 @@ layout: default
 
 ## Depends on
 
-* :question: <a href="../base.hpp.html">src/base.hpp</a>
-* :question: <a href="../util/hash.hpp.html">src/util/hash.hpp</a>
-* :question: <a href="../util/random.hpp.html">src/util/random.hpp</a>
+* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../util/hash.hpp.html">src/util/hash.hpp</a>
+* :heavy_check_mark: <a href="../util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Required by

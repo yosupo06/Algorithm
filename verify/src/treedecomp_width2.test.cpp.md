@@ -39,15 +39,15 @@ layout: default
 
 ## Depends on
 
-* :question: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/base.hpp.html">src/base.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
-* :question: <a href="../../library/src/datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/datastructure/simplequeue.hpp.html">src/datastructure/simplequeue.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/graph/primitive.hpp.html">src/graph/primitive.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/graph/treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
 * :heavy_check_mark: <a href="../../library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
-* :question: <a href="../../library/src/util/hash.hpp.html">src/util/hash.hpp</a>
-* :question: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/hash.hpp.html">src/util/hash.hpp</a>
+* :heavy_check_mark: <a href="../../library/src/util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Code

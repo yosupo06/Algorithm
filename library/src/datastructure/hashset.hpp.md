@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :question: src/datastructure/hashset.hpp
+# :heavy_check_mark: src/datastructure/hashset.hpp
 
 <a href="../../../index.html">Back to top page</a>
 
@@ -38,9 +38,9 @@ layout: default
 
 ## Depends on
 
-* :question: <a href="../base.hpp.html">src/base.hpp</a>
-* :question: <a href="../util/hash.hpp.html">src/util/hash.hpp</a>
-* :question: <a href="../util/random.hpp.html">src/util/random.hpp</a>
+* :heavy_check_mark: <a href="../base.hpp.html">src/base.hpp</a>
+* :heavy_check_mark: <a href="../util/hash.hpp.html">src/util/hash.hpp</a>
+* :heavy_check_mark: <a href="../util/random.hpp.html">src/util/random.hpp</a>
 
 
 ## Required by
@@ -50,7 +50,7 @@ layout: default
 
 ## Verified with
 
-* :x: <a href="../../../verify/src/hashset.test.cpp.html">src/hashset.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/src/hashset.test.cpp.html">src/hashset.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/hashset_hashmap.test.cpp.html">src/hashset_hashmap.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/src/treedecomp_width2.test.cpp.html">src/treedecomp_width2.test.cpp</a>
 
