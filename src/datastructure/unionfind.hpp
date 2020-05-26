@@ -9,12 +9,9 @@ struct UnionFind {
         int x = group(a), y = group(b);
         if (x == y) return;  // same
         gn--;
-        if (r[x] < r[y]) {
-            p[x] = y;
-        } else {
-            p[y] = x;
-            if (r[x] == r[y]) r[x]++;
-        }
+        if (r[x] < r[y]) swap(x, y);
+        p[x] = y;
+        r[x] += r[y];
     }
     int group(int a) {
         assert(0 <= a && a < n);
