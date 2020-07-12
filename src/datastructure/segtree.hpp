@@ -117,7 +117,7 @@ template <class D, class L, class OpDD, class OpDL, class OpLL> struct SegTree {
 
     void all_add(int k, L x) {
         d[k] = op_dl(d[k], x);
-        lz[k] = op_ll(lz[k], x);
+        if (k < sz) lz[k] = op_ll(lz[k], x);
     }
     void push(int k) {
         all_add(2 * k, lz[k]);
@@ -145,7 +145,32 @@ template <class D, class L, class OpDD, class OpDL, class OpLL> struct SegTree {
         add(a, b, x, mid, r, 2 * k + 1);
         update(k);
     }
-    void add(int a, int b, L x) { add(a, b, x, 0, sz, 1); }
+    void add(int a, int b, L x) {
+        a += sz;
+        b += sz;
+
+        for (int i = lg; i >= 1; i--) {
+            if (((a >> i) << i) != a) push(a >> i);
+            if (((b >> i) << i) != b) push((b - 1) >> i);
+        }
+
+        {
+            int a2 = a, b2 = b;
+            while (a < b) {
+                if (a & 1) all_add(a++, x);
+                if (b & 1) all_add(--b, x);
+                a >>= 1;
+                b >>= 1;
+            }
+            a = a2;
+            b = b2;
+        }
+
+        for (int i = 1; i <= lg; i++) {
+            if (((a >> i) << i) != a) update(a >> i);
+            if (((b >> i) << i) != b) update((b - 1) >> i);
+        }
+    }
 
     D single(int p) {
         p += sz;
@@ -160,7 +185,26 @@ template <class D, class L, class OpDD, class OpDL, class OpLL> struct SegTree {
         int mid = (l + r) / 2;
         return op_dd(sum(a, b, l, mid, 2 * k), sum(a, b, mid, r, 2 * k + 1));
     }
-    D sum(int a, int b) { return sum(a, b, 0, sz, 1); }
+    D sum(int a, int b) {
+        if (a == b) return e_d;
+        a += sz;
+        b += sz;
+
+        for (int i = lg; i >= 1; i--) {
+            if (((a >> i) << i) != a) push(a >> i);
+            if (((b >> i) << i) != b) push((b - 1) >> i);
+        }
+
+        D sml = e_d, smr = e_d;
+        while (a < b) {
+            if (a & 1) sml = op_dd(sml, d[a++]);
+            if (b & 1) smr = op_dd(d[--b], smr);
+            a >>= 1;
+            b >>= 1;
+        }
+
+        return op_dd(sml, smr);
+    }
 
     D all_sum() const { return d[1]; }
 };

@@ -4,6 +4,7 @@ template <class T> struct SimpleQueue {
     V<T> payload;
     size_t pos = 0;
     void reserve(size_t size) { payload.reserve(size); }
+    size_t size() const { return payload.size() - pos; }
     bool empty() const { return pos == payload.size(); }
     void push(const T& t) { payload.push_back(t); }
     T& front() {
@@ -17,8 +18,5 @@ template <class T> struct SimpleQueue {
     void pop() {
         assert(!empty());
         pos++;
-    }
-    size_t size() const {
-        return payload.size() - pos;
     }
 };
