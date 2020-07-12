@@ -4,7 +4,7 @@
 #include "util/random.hpp"
 
 // Reference: Lemire, Daniel., and Owen, Kaser. "Strongly Universal String Hashing Is Fast."
-template <uint N = 4> struct Hasher {
+template <uint N = 100> struct Hasher {
   private:
     static ull offset;
     static array<ull, N> seed;
