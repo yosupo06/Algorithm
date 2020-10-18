@@ -2,8 +2,10 @@
 //#pragma GCC target("avx")
 //#undef LOCAL
 
+#include <yosupo/fastio.hpp>
+using namespace yosupo;
+
 #include "base.hpp"
-#include "util/fast_io.hpp"
 
 Scanner sc = Scanner(stdin);
 Printer pr = Printer(stdout);
