@@ -1,235 +1,451 @@
 ---
-layout: default
+data:
+  libraryCategories:
+  - name: expander/dummy_include/bits
+    pages:
+    - icon: ':warning:'
+      path: expander/dummy_include/bits/stdc++.h
+      title: expander/dummy_include/bits/stdc++.h
+  - name: expander/dummy_include/ext/pb_ds
+    pages:
+    - icon: ':warning:'
+      path: expander/dummy_include/ext/pb_ds/assoc_container.hpp
+      title: expander/dummy_include/ext/pb_ds/assoc_container.hpp
+  - name: expander/dummy_include
+    pages:
+    - icon: ':warning:'
+      path: expander/dummy_include/unistd.h
+      title: expander/dummy_include/unistd.h
+    - icon: ':warning:'
+      path: expander/dummy_include/x86intrin.h
+      title: expander/dummy_include/x86intrin.h
+  - name: expander
+    pages:
+    - icon: ':warning:'
+      path: expander/expander.py
+      title: expander/expander.py
+  - name: src
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: src/aplusb.hpp
+      title: src/aplusb.hpp
+    - icon: ':warning:'
+      path: src/base.cpp
+      title: src/base.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/base.hpp
+      title: src/base.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/bitop.hpp
+      title: src/bitop.hpp
+  - name: src/datastructure/Develop
+    pages:
+    - icon: ':warning:'
+      path: src/datastructure/Develop/AA.hpp
+      title: src/datastructure/Develop/AA.hpp
+    - icon: ':warning:'
+      path: src/datastructure/Develop/AADynamic.hpp
+      title: src/datastructure/Develop/AADynamic.hpp
+    - icon: ':warning:'
+      path: src/datastructure/Develop/AAMSet.hpp
+      title: src/datastructure/Develop/AAMSet.hpp
+    - icon: ':warning:'
+      path: src/datastructure/Develop/AASST.hpp
+      title: src/datastructure/Develop/AASST.hpp
+    - icon: ':warning:'
+      path: src/datastructure/Develop/DynamicConnectivity.hpp
+      title: src/datastructure/Develop/DynamicConnectivity.hpp
+    - icon: ':warning:'
+      path: src/datastructure/Develop/EulerTourDirectedTree.hpp
+      title: src/datastructure/Develop/EulerTourDirectedTree.hpp
+    - icon: ':warning:'
+      path: src/datastructure/Develop/EulerTourTree.hpp
+      title: src/datastructure/Develop/EulerTourTree.hpp
+    - icon: ':warning:'
+      path: src/datastructure/Develop/FenwickTree2D.hpp
+      title: src/datastructure/Develop/FenwickTree2D.hpp
+    - icon: ':warning:'
+      path: src/datastructure/Develop/IMRangeAddTree.hpp
+      title: src/datastructure/Develop/IMRangeAddTree.hpp
+    - icon: ':warning:'
+      path: src/datastructure/Develop/PersistentSST.hpp
+      title: src/datastructure/Develop/PersistentSST.hpp
+    - icon: ':warning:'
+      path: src/datastructure/Develop/RBSStarrySkyTree.hpp
+      title: src/datastructure/Develop/RBSStarrySkyTree.hpp
+    - icon: ':warning:'
+      path: src/datastructure/Develop/RBSTMSet.hpp
+      title: src/datastructure/Develop/RBSTMSet.hpp
+    - icon: ':warning:'
+      path: src/datastructure/Develop/RBSTree.hpp
+      title: src/datastructure/Develop/RBSTree.hpp
+    - icon: ':warning:'
+      path: src/datastructure/Develop/SplayStarrySkyTree.hpp
+      title: src/datastructure/Develop/SplayStarrySkyTree.hpp
+    - icon: ':warning:'
+      path: src/datastructure/Develop/SplayTMSet.hpp
+      title: src/datastructure/Develop/SplayTMSet.hpp
+    - icon: ':warning:'
+      path: src/datastructure/Develop/SplayTree.hpp
+      title: src/datastructure/Develop/SplayTree.hpp
+  - name: src/datastructure
+    pages:
+    - icon: ':warning:'
+      path: src/datastructure/bitvector.hpp
+      title: src/datastructure/bitvector.hpp
+    - icon: ':warning:'
+      path: src/datastructure/convexhull.hpp
+      title: src/datastructure/convexhull.hpp
+    - icon: ':warning:'
+      path: src/datastructure/dice.hpp
+      title: src/datastructure/dice.hpp
+    - icon: ':warning:'
+      path: src/datastructure/disjointtable.hpp
+      title: src/datastructure/disjointtable.hpp
+    - icon: ':warning:'
+      path: src/datastructure/fastset.hpp
+      title: src/datastructure/fastset.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/datastructure/fenwick.hpp
+      title: src/datastructure/fenwick.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/datastructure/fenwick2d.hpp
+      title: src/datastructure/fenwick2d.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/datastructure/hashmap.hpp
+      title: src/datastructure/hashmap.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/datastructure/hashset.hpp
+      title: src/datastructure/hashset.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/datastructure/linkcuttree.hpp
+      title: src/datastructure/linkcuttree.hpp
+    - icon: ':warning:'
+      path: src/datastructure/linkcuttree_old.hpp
+      title: src/datastructure/linkcuttree_old.hpp
+    - icon: ':warning:'
+      path: src/datastructure/quickfind.hpp
+      title: src/datastructure/quickfind.hpp
+    - icon: ':warning:'
+      path: src/datastructure/radixheap.hpp
+      title: src/datastructure/radixheap.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/datastructure/segtree.hpp
+      title: src/datastructure/segtree.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/datastructure/simplequeue.hpp
+      title: src/datastructure/simplequeue.hpp
+    - icon: ':warning:'
+      path: src/datastructure/smallfind.hpp
+      title: src/datastructure/smallfind.hpp
+    - icon: ':warning:'
+      path: src/datastructure/sort_mo.hpp
+      title: src/datastructure/sort_mo.hpp
+    - icon: ':warning:'
+      path: src/datastructure/sparsetable.hpp
+      title: src/datastructure/sparsetable.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/datastructure/staticrangesum.hpp
+      title: src/datastructure/staticrangesum.hpp
+    - icon: ':warning:'
+      path: src/datastructure/staticrangeunion.hpp
+      title: src/datastructure/staticrangeunion.hpp
+    - icon: ':warning:'
+      path: src/datastructure/toptree.hpp
+      title: src/datastructure/toptree.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/datastructure/unionfind.hpp
+      title: src/datastructure/unionfind.hpp
+    - icon: ':warning:'
+      path: src/datastructure/wavelet.hpp
+      title: src/datastructure/wavelet.hpp
+  - name: src/geo
+    pages:
+    - icon: ':warning:'
+      path: src/geo/3d.hpp
+      title: src/geo/3d.hpp
+    - icon: ':warning:'
+      path: src/geo/circle.hpp
+      title: src/geo/circle.hpp
+    - icon: ':warning:'
+      path: src/geo/delaunay.hpp
+      title: src/geo/delaunay.hpp
+    - icon: ':warning:'
+      path: src/geo/graphiccompute.hpp
+      title: src/geo/graphiccompute.hpp
+    - icon: ':warning:'
+      path: src/geo/intersect.hpp
+      title: src/geo/intersect.hpp
+    - icon: ':warning:'
+      path: src/geo/polygon.hpp
+      title: src/geo/polygon.hpp
+    - icon: ':warning:'
+      path: src/geo/primitive.hpp
+      title: src/geo/primitive.hpp
+    - icon: ':warning:'
+      path: src/geo/visualizer.hpp
+      title: src/geo/visualizer.hpp
+  - name: src/graph
+    pages:
+    - icon: ':warning:'
+      path: src/graph/articulation.hpp
+      title: src/graph/articulation.hpp
+    - icon: ':warning:'
+      path: src/graph/balancedseparator.hpp
+      title: src/graph/balancedseparator.hpp
+    - icon: ':warning:'
+      path: src/graph/bidirectedcut.hpp
+      title: src/graph/bidirectedcut.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/graph/bimaching.hpp
+      title: src/graph/bimaching.hpp
+    - icon: ':warning:'
+      path: src/graph/bridge.hpp
+      title: src/graph/bridge.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/graph/csr.hpp
+      title: src/graph/csr.hpp
+    - icon: ':warning:'
+      path: src/graph/dijkstra.hpp
+      title: src/graph/dijkstra.hpp
+    - icon: ':warning:'
+      path: src/graph/directedmst.hpp
+      title: src/graph/directedmst.hpp
+    - icon: ':warning:'
+      path: src/graph/dominator.hpp
+      title: src/graph/dominator.hpp
+    - icon: ':warning:'
+      path: src/graph/hungarian.hpp
+      title: src/graph/hungarian.hpp
+    - icon: ':warning:'
+      path: src/graph/manhattanmst.hpp
+      title: src/graph/manhattanmst.hpp
+    - icon: ':warning:'
+      path: src/graph/matroidintersection.hpp
+      title: src/graph/matroidintersection.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/graph/maxclique.hpp
+      title: src/graph/maxclique.hpp
+    - icon: ':warning:'
+      path: src/graph/maxflow.hpp
+      title: src/graph/maxflow.hpp
+    - icon: ':warning:'
+      path: src/graph/maxmatching.hpp
+      title: src/graph/maxmatching.hpp
+    - icon: ':warning:'
+      path: src/graph/mincostflow.hpp
+      title: src/graph/mincostflow.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/graph/primitive.hpp
+      title: src/graph/primitive.hpp
+    - icon: ':warning:'
+      path: src/graph/retrograde.hpp
+      title: src/graph/retrograde.hpp
+    - icon: ':warning:'
+      path: src/graph/scc.hpp
+      title: src/graph/scc.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/graph/treedecomp.hpp
+      title: src/graph/treedecomp.hpp
+    - icon: ':warning:'
+      path: src/graph/twosat.hpp
+      title: src/graph/twosat.hpp
+  - name: src/math
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: src/math/comb.hpp
+      title: src/math/comb.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/math/dynamicmodint.hpp
+      title: src/math/dynamicmodint.hpp
+    - icon: ':warning:'
+      path: src/math/fft.hpp
+      title: src/math/fft.hpp
+    - icon: ':warning:'
+      path: src/math/frac.hpp
+      title: src/math/frac.hpp
+    - icon: ':warning:'
+      path: src/math/matrix.hpp
+      title: src/math/matrix.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/math/modint.hpp
+      title: src/math/modint.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/math/modint61.hpp
+      title: src/math/modint61.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/math/nft.hpp
+      title: src/math/nft.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/math/nimber.hpp
+      title: src/math/nimber.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/math/poly.hpp
+      title: src/math/poly.hpp
+    - icon: ':warning:'
+      path: src/math/prime.hpp
+      title: src/math/prime.hpp
+    - icon: ':warning:'
+      path: src/math/primitive.hpp
+      title: src/math/primitive.hpp
+    - icon: ':warning:'
+      path: src/math/qr.hpp
+      title: src/math/qr.hpp
+  - name: src/string
+    pages:
+    - icon: ':warning:'
+      path: src/string/ahocorasick.hpp
+      title: src/string/ahocorasick.hpp
+    - icon: ':warning:'
+      path: src/string/manacher.hpp
+      title: src/string/manacher.hpp
+    - icon: ':warning:'
+      path: src/string/mp.hpp
+      title: src/string/mp.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/string/onlinez.hpp
+      title: src/string/onlinez.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/string/rollinghash.hpp
+      title: src/string/rollinghash.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/string/run.hpp
+      title: src/string/run.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/string/suffixarray.hpp
+      title: src/string/suffixarray.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/string/zalgo.hpp
+      title: src/string/zalgo.hpp
+  - name: src/tree
+    pages:
+    - icon: ':warning:'
+      path: src/tree/alltree.hpp
+      title: src/tree/alltree.hpp
+    - icon: ':warning:'
+      path: src/tree/centroid.hpp
+      title: src/tree/centroid.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/tree/hl.hpp
+      title: src/tree/hl.hpp
+    - icon: ':warning:'
+      path: src/tree/lca.hpp
+      title: src/tree/lca.hpp
+  - name: src/util
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: src/util/fast_io.hpp
+      title: src/util/fast_io.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/util/hash.hpp
+      title: src/util/hash.hpp
+    - icon: ':heavy_check_mark:'
+      path: src/util/random.hpp
+      title: src/util/random.hpp
+    - icon: ':warning:'
+      path: src/util/stack_extend.hpp
+      title: src/util/stack_extend.hpp
+    - icon: ':warning:'
+      path: src/util/stopwatch.hpp
+      title: src/util/stopwatch.hpp
+  verificationCategories:
+  - name: src
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: src/bimaching.test.cpp
+      title: src/bimaching.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/comb.test.cpp
+      title: src/comb.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/dbg.test.cpp
+      title: src/dbg.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/doublingsa.test.cpp
+      title: src/doublingsa.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/fenwick_2d_rectangle_sum.test.cpp
+      title: src/fenwick_2d_rectangle_sum.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/hashmap.test.cpp
+      title: src/hashmap.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/hashmap_remove.test.cpp
+      title: src/hashmap_remove.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/hashset.test.cpp
+      title: src/hashset.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/hashset_hashmap.test.cpp
+      title: src/hashset_hashmap.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/hl_lca.test.cpp
+      title: src/hl_lca.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/hl_vertex_add_path_sum.test.cpp
+      title: src/hl_vertex_add_path_sum.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/hl_vertex_add_subtree_sum.test.cpp
+      title: src/hl_vertex_add_subtree_sum.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/inv_of_formal_power_series.test.cpp
+      title: src/inv_of_formal_power_series.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/lctree_lca.test.cpp
+      title: src/lctree_lca.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/lctree_vertex_add_path_sum.test.cpp
+      title: src/lctree_vertex_add_path_sum.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/max_clique.test.cpp
+      title: src/max_clique.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/modint.test.cpp
+      title: src/modint.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/modint61.test.cpp
+      title: src/modint61.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/nft_convolution.test.cpp
+      title: src/nft_convolution.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/nimber.test.cpp
+      title: src/nimber.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/number_of_substrings.test.cpp
+      title: src/number_of_substrings.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/online-zalgo.test.cpp
+      title: src/online-zalgo.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/printer.test.cpp
+      title: src/printer.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/rollinghash_zalgo.test.cpp
+      title: src/rollinghash_zalgo.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/run.test.cpp
+      title: src/run.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/sais.test.cpp
+      title: src/sais.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/scanner.test.cpp
+      title: src/scanner.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/scanner_many_aplusb.test.cpp
+      title: src/scanner_many_aplusb.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/staticrangesum_rectangle_sum.test.cpp
+      title: src/staticrangesum_rectangle_sum.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/treedecomp_width2.test.cpp
+      title: src/treedecomp_width2.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/unionfind.test.cpp
+      title: src/unionfind.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: src/zalgo.test.cpp
+      title: src/zalgo.test.cpp
+layout: toppage
 ---
-
-<!-- mathjax config similar to math.stackexchange -->
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    TeX: { equationNumbers: { autoNumber: "AMS" }},
-    tex2jax: {
-      inlineMath: [ ['$','$'] ],
-      processEscapes: true
-    },
-    "HTML-CSS": { matchFontHeight: false },
-    displayAlign: "left",
-    displayIndent: "2em"
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-balloon-js@1.1.2/jquery.balloon.min.js" integrity="sha256-ZEYs9VrgAeNuPvs15E39OsyOJaIkXEEt10fzxJ20+2I=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="assets/js/copy-button.js"></script>
-<link rel="stylesheet" href="assets/css/copy-button.css" />
-
-
-# {{ site.title }}
-
-[![Actions Status]({{ site.github.repository_url }}/workflows/verify/badge.svg)]({{ site.github.repository_url }}/actions)
-<a href="{{ site.github.repository_url }}"><img src="https://img.shields.io/github/last-commit/{{ site.github.owner_name }}/{{ site.github.repository_name }}" /></a>
-
-{% if site.github.project_tagline %}{{ site.github.project_tagline }}{% else %}This documentation is automatically generated by <a href="https://github.com/online-judge-tools/verification-helper">online-judge-tools/verification-helper</a>.{% endif %}
-
-## Library Files
-
-<div id="0262a46c7fb0e8fba2ec479b4ac5bc95"></div>
-
-### expander/dummy_include/ext/pb_ds
-
-* :warning: <a href="library/expander/dummy_include/ext/pb_ds/assoc_container.hpp.html">expander/dummy_include/ext/pb_ds/assoc_container.hpp</a>
-
-
-<div id="25d902c24283ab8cfbac54dfa101ad31"></div>
-
-### src
-
-* :heavy_check_mark: <a href="library/src/aplusb.hpp.html">src/aplusb.hpp</a>
-* :warning: <a href="library/src/base.cpp.html">src/base.cpp</a>
-* :heavy_check_mark: <a href="library/src/base.hpp.html">src/base.hpp</a>
-* :heavy_check_mark: <a href="library/src/bitop.hpp.html">src/bitop.hpp</a>
-
-
-<div id="057cdb199a48f765d2786c323ec11d3a"></div>
-
-### src/datastructure
-
-* :warning: <a href="library/src/datastructure/bitvector.hpp.html">src/datastructure/bitvector.hpp</a>
-* :warning: <a href="library/src/datastructure/convexhull.hpp.html">src/datastructure/convexhull.hpp</a>
-* :warning: <a href="library/src/datastructure/dice.hpp.html">src/datastructure/dice.hpp</a>
-* :warning: <a href="library/src/datastructure/disjointtable.hpp.html">src/datastructure/disjointtable.hpp</a>
-* :warning: <a href="library/src/datastructure/fastset.hpp.html">src/datastructure/fastset.hpp</a>
-* :heavy_check_mark: <a href="library/src/datastructure/fenwick.hpp.html">src/datastructure/fenwick.hpp</a>
-* :heavy_check_mark: <a href="library/src/datastructure/fenwick2d.hpp.html">src/datastructure/fenwick2d.hpp</a>
-* :heavy_check_mark: <a href="library/src/datastructure/hashmap.hpp.html">src/datastructure/hashmap.hpp</a>
-* :heavy_check_mark: <a href="library/src/datastructure/hashset.hpp.html">src/datastructure/hashset.hpp</a>
-* :heavy_check_mark: <a href="library/src/datastructure/linkcuttree.hpp.html">src/datastructure/linkcuttree.hpp</a>
-* :warning: <a href="library/src/datastructure/linkcuttree_old.hpp.html">src/datastructure/linkcuttree_old.hpp</a>
-* :warning: <a href="library/src/datastructure/quickfind.hpp.html">src/datastructure/quickfind.hpp</a>
-* :warning: <a href="library/src/datastructure/radixheap.hpp.html">src/datastructure/radixheap.hpp</a>
-* :heavy_check_mark: <a href="library/src/datastructure/segtree.hpp.html">src/datastructure/segtree.hpp</a>
-* :heavy_check_mark: <a href="library/src/datastructure/simplequeue.hpp.html">src/datastructure/simplequeue.hpp</a>
-* :warning: <a href="library/src/datastructure/smallfind.hpp.html">src/datastructure/smallfind.hpp</a>
-* :warning: <a href="library/src/datastructure/sort_mo.hpp.html">src/datastructure/sort_mo.hpp</a>
-* :warning: <a href="library/src/datastructure/sparsetable.hpp.html">src/datastructure/sparsetable.hpp</a>
-* :heavy_check_mark: <a href="library/src/datastructure/staticrangesum.hpp.html">src/datastructure/staticrangesum.hpp</a>
-* :warning: <a href="library/src/datastructure/staticrangeunion.hpp.html">src/datastructure/staticrangeunion.hpp</a>
-* :warning: <a href="library/src/datastructure/toptree.hpp.html">src/datastructure/toptree.hpp</a>
-* :heavy_check_mark: <a href="library/src/datastructure/unionfind.hpp.html">src/datastructure/unionfind.hpp</a>
-* :warning: <a href="library/src/datastructure/wavelet.hpp.html">src/datastructure/wavelet.hpp</a>
-
-
-<div id="6ded3f220a7ec9530d5ce67338fd1fda"></div>
-
-### src/datastructure/Develop
-
-* :warning: <a href="library/src/datastructure/Develop/AA.hpp.html">src/datastructure/Develop/AA.hpp</a>
-* :warning: <a href="library/src/datastructure/Develop/AADynamic.hpp.html">src/datastructure/Develop/AADynamic.hpp</a>
-* :warning: <a href="library/src/datastructure/Develop/AAMSet.hpp.html">src/datastructure/Develop/AAMSet.hpp</a>
-* :warning: <a href="library/src/datastructure/Develop/AASST.hpp.html">src/datastructure/Develop/AASST.hpp</a>
-* :warning: <a href="library/src/datastructure/Develop/DynamicConnectivity.hpp.html">src/datastructure/Develop/DynamicConnectivity.hpp</a>
-* :warning: <a href="library/src/datastructure/Develop/EulerTourDirectedTree.hpp.html">src/datastructure/Develop/EulerTourDirectedTree.hpp</a>
-* :warning: <a href="library/src/datastructure/Develop/EulerTourTree.hpp.html">src/datastructure/Develop/EulerTourTree.hpp</a>
-* :warning: <a href="library/src/datastructure/Develop/FenwickTree2D.hpp.html">src/datastructure/Develop/FenwickTree2D.hpp</a>
-* :warning: <a href="library/src/datastructure/Develop/IMRangeAddTree.hpp.html">src/datastructure/Develop/IMRangeAddTree.hpp</a>
-* :warning: <a href="library/src/datastructure/Develop/PersistentSST.hpp.html">src/datastructure/Develop/PersistentSST.hpp</a>
-* :warning: <a href="library/src/datastructure/Develop/RBSStarrySkyTree.hpp.html">src/datastructure/Develop/RBSStarrySkyTree.hpp</a>
-* :warning: <a href="library/src/datastructure/Develop/RBSTMSet.hpp.html">src/datastructure/Develop/RBSTMSet.hpp</a>
-* :warning: <a href="library/src/datastructure/Develop/RBSTree.hpp.html">src/datastructure/Develop/RBSTree.hpp</a>
-* :warning: <a href="library/src/datastructure/Develop/SplayStarrySkyTree.hpp.html">src/datastructure/Develop/SplayStarrySkyTree.hpp</a>
-* :warning: <a href="library/src/datastructure/Develop/SplayTMSet.hpp.html">src/datastructure/Develop/SplayTMSet.hpp</a>
-* :warning: <a href="library/src/datastructure/Develop/SplayTree.hpp.html">src/datastructure/Develop/SplayTree.hpp</a>
-
-
-<div id="0a5d4e383899a81c6f7ba383cf1d6fea"></div>
-
-### src/geo
-
-* :warning: <a href="library/src/geo/3d.hpp.html">src/geo/3d.hpp</a>
-* :warning: <a href="library/src/geo/circle.hpp.html">src/geo/circle.hpp</a>
-* :warning: <a href="library/src/geo/delaunay.hpp.html">src/geo/delaunay.hpp</a>
-* :warning: <a href="library/src/geo/graphiccompute.hpp.html">src/geo/graphiccompute.hpp</a>
-* :warning: <a href="library/src/geo/intersect.hpp.html">src/geo/intersect.hpp</a>
-* :warning: <a href="library/src/geo/polygon.hpp.html">src/geo/polygon.hpp</a>
-* :warning: <a href="library/src/geo/primitive.hpp.html">src/geo/primitive.hpp</a>
-* :warning: <a href="library/src/geo/visualizer.hpp.html">src/geo/visualizer.hpp</a>
-
-
-<div id="5442c8f317d712204bf06ed26672e17c"></div>
-
-### src/graph
-
-* :warning: <a href="library/src/graph/articulation.hpp.html">src/graph/articulation.hpp</a>
-* :warning: <a href="library/src/graph/balancedseparator.hpp.html">src/graph/balancedseparator.hpp</a>
-* :warning: <a href="library/src/graph/bidirectedcut.hpp.html">src/graph/bidirectedcut.hpp</a>
-* :heavy_check_mark: <a href="library/src/graph/bimaching.hpp.html">src/graph/bimaching.hpp</a>
-* :warning: <a href="library/src/graph/bridge.hpp.html">src/graph/bridge.hpp</a>
-* :heavy_check_mark: <a href="library/src/graph/csr.hpp.html">src/graph/csr.hpp</a>
-* :warning: <a href="library/src/graph/dijkstra.hpp.html">src/graph/dijkstra.hpp</a>
-* :warning: <a href="library/src/graph/directedmst.hpp.html">src/graph/directedmst.hpp</a>
-* :warning: <a href="library/src/graph/dominator.hpp.html">src/graph/dominator.hpp</a>
-* :warning: <a href="library/src/graph/hungarian.hpp.html">src/graph/hungarian.hpp</a>
-* :warning: <a href="library/src/graph/manhattanmst.hpp.html">src/graph/manhattanmst.hpp</a>
-* :warning: <a href="library/src/graph/matroidintersection.hpp.html">src/graph/matroidintersection.hpp</a>
-* :heavy_check_mark: <a href="library/src/graph/maxclique.hpp.html">src/graph/maxclique.hpp</a>
-* :warning: <a href="library/src/graph/maxflow.hpp.html">src/graph/maxflow.hpp</a>
-* :warning: <a href="library/src/graph/maxmatching.hpp.html">src/graph/maxmatching.hpp</a>
-* :warning: <a href="library/src/graph/mincostflow.hpp.html">src/graph/mincostflow.hpp</a>
-* :heavy_check_mark: <a href="library/src/graph/primitive.hpp.html">src/graph/primitive.hpp</a>
-* :warning: <a href="library/src/graph/retrograde.hpp.html">src/graph/retrograde.hpp</a>
-* :warning: <a href="library/src/graph/scc.hpp.html">src/graph/scc.hpp</a>
-* :heavy_check_mark: <a href="library/src/graph/treedecomp.hpp.html">src/graph/treedecomp.hpp</a>
-* :warning: <a href="library/src/graph/twosat.hpp.html">src/graph/twosat.hpp</a>
-
-
-<div id="fb2ef479237c7a939531a404fd0e5cb7"></div>
-
-### src/math
-
-* :heavy_check_mark: <a href="library/src/math/comb.hpp.html">src/math/comb.hpp</a>
-* :heavy_check_mark: <a href="library/src/math/dynamicmodint.hpp.html">src/math/dynamicmodint.hpp</a>
-* :warning: <a href="library/src/math/fft.hpp.html">src/math/fft.hpp</a>
-* :warning: <a href="library/src/math/frac.hpp.html">src/math/frac.hpp</a>
-* :warning: <a href="library/src/math/matrix.hpp.html">src/math/matrix.hpp</a>
-* :heavy_check_mark: <a href="library/src/math/modint.hpp.html">src/math/modint.hpp</a>
-* :heavy_check_mark: <a href="library/src/math/modint61.hpp.html">src/math/modint61.hpp</a>
-* :heavy_check_mark: <a href="library/src/math/nft.hpp.html">src/math/nft.hpp</a>
-* :heavy_check_mark: <a href="library/src/math/nimber.hpp.html">src/math/nimber.hpp</a>
-* :heavy_check_mark: <a href="library/src/math/poly.hpp.html">src/math/poly.hpp</a>
-* :warning: <a href="library/src/math/prime.hpp.html">src/math/prime.hpp</a>
-* :warning: <a href="library/src/math/primitive.hpp.html">src/math/primitive.hpp</a>
-* :warning: <a href="library/src/math/qr.hpp.html">src/math/qr.hpp</a>
-
-
-<div id="ec86b6e05e7d09e98d071ea841edf05f"></div>
-
-### src/string
-
-* :warning: <a href="library/src/string/ahocorasick.hpp.html">src/string/ahocorasick.hpp</a>
-* :warning: <a href="library/src/string/manacher.hpp.html">src/string/manacher.hpp</a>
-* :warning: <a href="library/src/string/mp.hpp.html">src/string/mp.hpp</a>
-* :heavy_check_mark: <a href="library/src/string/onlinez.hpp.html">src/string/onlinez.hpp</a>
-* :heavy_check_mark: <a href="library/src/string/rollinghash.hpp.html">src/string/rollinghash.hpp</a>
-* :heavy_check_mark: <a href="library/src/string/run.hpp.html">src/string/run.hpp</a>
-* :heavy_check_mark: <a href="library/src/string/suffixarray.hpp.html">src/string/suffixarray.hpp</a>
-* :heavy_check_mark: <a href="library/src/string/zalgo.hpp.html">src/string/zalgo.hpp</a>
-
-
-<div id="3698aa34afa89577c63cbcf539eb96f7"></div>
-
-### src/tree
-
-* :warning: <a href="library/src/tree/alltree.hpp.html">src/tree/alltree.hpp</a>
-* :warning: <a href="library/src/tree/centroid.hpp.html">src/tree/centroid.hpp</a>
-* :heavy_check_mark: <a href="library/src/tree/hl.hpp.html">src/tree/hl.hpp</a>
-* :warning: <a href="library/src/tree/lca.hpp.html">src/tree/lca.hpp</a>
-
-
-<div id="6433a1a19c7364347102f741d8b9cffd"></div>
-
-### src/util
-
-* :heavy_check_mark: <a href="library/src/util/fast_io.hpp.html">src/util/fast_io.hpp</a>
-* :heavy_check_mark: <a href="library/src/util/hash.hpp.html">src/util/hash.hpp</a>
-* :heavy_check_mark: <a href="library/src/util/random.hpp.html">src/util/random.hpp</a>
-* :warning: <a href="library/src/util/stack_extend.hpp.html">src/util/stack_extend.hpp</a>
-* :warning: <a href="library/src/util/stopwatch.hpp.html">src/util/stopwatch.hpp</a>
-
-
-## Verify Files
-
-* :heavy_check_mark: <a href="verify/src/bimaching.test.cpp.html">src/bimaching.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/comb.test.cpp.html">src/comb.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/dbg.test.cpp.html">src/dbg.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/doublingsa.test.cpp.html">src/doublingsa.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/fenwick_2d_rectangle_sum.test.cpp.html">src/fenwick_2d_rectangle_sum.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/hashmap.test.cpp.html">src/hashmap.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/hashmap_remove.test.cpp.html">src/hashmap_remove.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/hashset.test.cpp.html">src/hashset.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/hashset_hashmap.test.cpp.html">src/hashset_hashmap.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/hl_lca.test.cpp.html">src/hl_lca.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/hl_vertex_add_path_sum.test.cpp.html">src/hl_vertex_add_path_sum.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/hl_vertex_add_subtree_sum.test.cpp.html">src/hl_vertex_add_subtree_sum.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/inv_of_formal_power_series.test.cpp.html">src/inv_of_formal_power_series.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/lctree_lca.test.cpp.html">src/lctree_lca.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/lctree_vertex_add_path_sum.test.cpp.html">src/lctree_vertex_add_path_sum.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/max_clique.test.cpp.html">src/max_clique.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/modint.test.cpp.html">src/modint.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/modint61.test.cpp.html">src/modint61.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/nft_convolution.test.cpp.html">src/nft_convolution.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/nimber.test.cpp.html">src/nimber.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/number_of_substrings.test.cpp.html">src/number_of_substrings.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/online-zalgo.test.cpp.html">src/online-zalgo.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/printer.test.cpp.html">src/printer.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/rollinghash_zalgo.test.cpp.html">src/rollinghash_zalgo.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/run.test.cpp.html">src/run.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/sais.test.cpp.html">src/sais.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/scanner.test.cpp.html">src/scanner.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/scanner_many_aplusb.test.cpp.html">src/scanner_many_aplusb.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/staticrangesum_rectangle_sum.test.cpp.html">src/staticrangesum_rectangle_sum.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/treedecomp_width2.test.cpp.html">src/treedecomp_width2.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/unionfind.test.cpp.html">src/unionfind.test.cpp</a>
-* :heavy_check_mark: <a href="verify/src/zalgo.test.cpp.html">src/zalgo.test.cpp</a>
-
-
