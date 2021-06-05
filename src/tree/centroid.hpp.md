@@ -6,6 +6,7 @@ data:
     path: src/graph/balancedseparator.hpp
     title: src/graph/balancedseparator.hpp
   _extendedVerifiedWith: []
+  _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':warning:'
   attributes:

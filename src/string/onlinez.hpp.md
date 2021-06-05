@@ -6,6 +6,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: src/online-zalgo.test.cpp
     title: src/online-zalgo.test.cpp
+  _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:

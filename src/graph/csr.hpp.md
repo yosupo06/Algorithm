@@ -9,6 +9,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: src/bimaching.test.cpp
     title: src/bimaching.test.cpp
+  _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:

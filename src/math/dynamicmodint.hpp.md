@@ -12,6 +12,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: src/modint.test.cpp
     title: src/modint.test.cpp
+  _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
@@ -89,8 +90,8 @@ data:
   timestamp: '2020-05-08 21:35:33+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - src/comb.test.cpp
   - src/modint.test.cpp
+  - src/comb.test.cpp
 documentation_of: src/math/dynamicmodint.hpp
 layout: document
 redirect_from:

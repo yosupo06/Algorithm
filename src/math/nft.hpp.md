@@ -12,6 +12,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: src/nft_convolution.test.cpp
     title: src/nft_convolution.test.cpp
+  _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
@@ -145,8 +146,8 @@ data:
   timestamp: '2020-05-08 21:35:33+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - src/inv_of_formal_power_series.test.cpp
   - src/nft_convolution.test.cpp
+  - src/inv_of_formal_power_series.test.cpp
 documentation_of: src/math/nft.hpp
 layout: document
 redirect_from:

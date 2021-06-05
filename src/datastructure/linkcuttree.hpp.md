@@ -9,6 +9,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: src/lctree_vertex_add_path_sum.test.cpp
     title: src/lctree_vertex_add_path_sum.test.cpp
+  _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:

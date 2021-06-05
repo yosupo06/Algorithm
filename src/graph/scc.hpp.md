@@ -6,6 +6,7 @@ data:
     path: src/graph/twosat.hpp
     title: src/graph/twosat.hpp
   _extendedVerifiedWith: []
+  _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':warning:'
   attributes:

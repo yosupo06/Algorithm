@@ -12,6 +12,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: src/treedecomp_width2.test.cpp
     title: src/treedecomp_width2.test.cpp
+  _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
@@ -25,8 +26,8 @@ data:
   isVerificationFile: false
   path: src/graph/primitive.hpp
   requiredBy:
-  - src/graph/balancedseparator.hpp
   - src/graph/treedecomp.hpp
+  - src/graph/balancedseparator.hpp
   timestamp: '2020-05-26 02:54:27+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
