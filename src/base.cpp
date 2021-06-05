@@ -2,7 +2,7 @@
 //#pragma GCC target("avx")
 //#undef LOCAL
 
-#include <yosupo/fastio.hpp>
+#include "yosupo/fastio.hpp"
 using namespace yosupo;
 
 #include "base.hpp"
@@ -13,4 +13,3 @@ Printer pr = Printer(stdout);
 int main() {
     return 0;
 }
-
