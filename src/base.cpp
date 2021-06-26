@@ -1,5 +1,5 @@
+#pragma GCC target("avx,avx2")
 //#pragma GCC optimize("Ofast")
-//#pragma GCC target("avx")
 //#undef LOCAL
 
 #include "yosupo/fastio.hpp"
