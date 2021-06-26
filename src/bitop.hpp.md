@@ -80,19 +80,19 @@ data:
   path: src/bitop.hpp
   requiredBy:
   - src/math/nft.hpp
-  - src/math/frac.hpp
-  - src/math/dynamicmodint.hpp
-  - src/math/matrix.hpp
   - src/math/primitive.hpp
+  - src/math/dynamicmodint.hpp
+  - src/math/frac.hpp
+  - src/math/matrix.hpp
   - src/datastructure/fastset.hpp
   - src/datastructure/bitvector.hpp
   timestamp: '2020-05-08 21:35:33+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - src/modint.test.cpp
-  - src/comb.test.cpp
-  - src/nft_convolution.test.cpp
   - src/inv_of_formal_power_series.test.cpp
+  - src/nft_convolution.test.cpp
+  - src/comb.test.cpp
 documentation_of: src/bitop.hpp
 layout: document
 redirect_from:

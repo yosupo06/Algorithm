@@ -110,8 +110,8 @@ data:
   timestamp: '2020-10-18 20:05:46+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - src/hl_vertex_add_subtree_sum.test.cpp
   - src/hl_vertex_add_path_sum.test.cpp
+  - src/hl_vertex_add_subtree_sum.test.cpp
 documentation_of: src/datastructure/segtree.hpp
 layout: document
 redirect_from:

@@ -42,14 +42,14 @@ data:
   isVerificationFile: false
   path: src/datastructure/simplequeue.hpp
   requiredBy:
-  - src/graph/bimaching.hpp
   - src/graph/treedecomp.hpp
   - src/graph/balancedseparator.hpp
+  - src/graph/bimaching.hpp
   timestamp: '2020-07-12 20:41:58+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - src/bimaching.test.cpp
   - src/treedecomp_width2.test.cpp
+  - src/bimaching.test.cpp
 documentation_of: src/datastructure/simplequeue.hpp
 layout: document
 redirect_from:

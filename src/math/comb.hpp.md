@@ -52,8 +52,8 @@ data:
   timestamp: '2020-10-18 20:05:46+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - src/comb.test.cpp
   - src/rollinghash_zalgo.test.cpp
+  - src/comb.test.cpp
 documentation_of: src/math/comb.hpp
 layout: document
 redirect_from:

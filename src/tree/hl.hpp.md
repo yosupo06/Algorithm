@@ -187,8 +187,8 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - src/hl_lca.test.cpp
-  - src/hl_vertex_add_subtree_sum.test.cpp
   - src/hl_vertex_add_path_sum.test.cpp
+  - src/hl_vertex_add_subtree_sum.test.cpp
 documentation_of: src/tree/hl.hpp
 layout: document
 redirect_from:

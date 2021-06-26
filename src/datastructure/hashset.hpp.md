@@ -78,9 +78,9 @@ data:
   timestamp: '2020-10-18 20:05:46+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - src/hashset.test.cpp
   - src/treedecomp_width2.test.cpp
   - src/hashset_hashmap.test.cpp
-  - src/hashset.test.cpp
 documentation_of: src/datastructure/hashset.hpp
 layout: document
 redirect_from:

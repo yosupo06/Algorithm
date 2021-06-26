@@ -37,8 +37,8 @@ data:
   timestamp: '2020-05-08 21:35:33+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - src/run.test.cpp
   - src/zalgo.test.cpp
+  - src/run.test.cpp
 documentation_of: src/string/zalgo.hpp
 layout: document
 redirect_from:

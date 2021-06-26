@@ -60,9 +60,9 @@ data:
   timestamp: '2020-05-08 21:35:33+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - src/comb.test.cpp
-  - src/nft_convolution.test.cpp
   - src/inv_of_formal_power_series.test.cpp
+  - src/nft_convolution.test.cpp
+  - src/comb.test.cpp
 documentation_of: src/math/modint.hpp
 layout: document
 redirect_from:

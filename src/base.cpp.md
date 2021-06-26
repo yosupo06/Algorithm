@@ -17,7 +17,7 @@ data:
     , line 260, in _resolve\n    raise BundleErrorAt(path, -1, \"no such header\"\
     )\nonlinejudge_verify.languages.cplusplus_bundle.BundleErrorAt: yosupo/fastio.hpp:\
     \ line -1: no such header\n"
-  code: "//#pragma GCC optimize(\"Ofast\")\n//#pragma GCC target(\"avx\")\n//#undef\
+  code: "#pragma GCC target(\"avx,avx2\")\n//#pragma GCC optimize(\"Ofast\")\n//#undef\
     \ LOCAL\n\n#include \"yosupo/fastio.hpp\"\nusing namespace yosupo;\n\n#include\
     \ \"base.hpp\"\n\nScanner sc = Scanner(stdin);\nPrinter pr = Printer(stdout);\n\
     \nint main() {\n    return 0;\n}\n"
