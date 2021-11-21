@@ -41,12 +41,12 @@ data:
   timestamp: '1970-01-01 00:00:00+00:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - src/printer.test.cpp
-  - src/modint61.test.cpp
-  - src/hashset.test.cpp
   - src/modint.test.cpp
-  - src/dbg.test.cpp
   - src/scanner.test.cpp
+  - src/hashset.test.cpp
+  - src/modint61.test.cpp
+  - src/printer.test.cpp
+  - src/dbg.test.cpp
   - src/comb.test.cpp
 documentation_of: src/aplusb.hpp
 layout: document

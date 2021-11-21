@@ -42,9 +42,9 @@ data:
   isVerificationFile: false
   path: src/datastructure/simplequeue.hpp
   requiredBy:
-  - src/graph/treedecomp.hpp
   - src/graph/balancedseparator.hpp
   - src/graph/bimaching.hpp
+  - src/graph/treedecomp.hpp
   timestamp: '2020-07-12 20:41:58+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:

@@ -230,9 +230,6 @@ data:
       path: src/graph/maxflow.hpp
       title: src/graph/maxflow.hpp
     - icon: ':warning:'
-      path: src/graph/maxmatching.hpp
-      title: src/graph/maxmatching.hpp
-    - icon: ':warning:'
       path: src/graph/mincostflow.hpp
       title: src/graph/mincostflow.hpp
     - icon: ':heavy_check_mark:'

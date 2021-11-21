@@ -95,8 +95,8 @@ data:
   timestamp: '2020-05-08 21:35:33+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - src/lctree_lca.test.cpp
   - src/lctree_vertex_add_path_sum.test.cpp
+  - src/lctree_lca.test.cpp
 documentation_of: src/datastructure/linkcuttree.hpp
 layout: document
 redirect_from:

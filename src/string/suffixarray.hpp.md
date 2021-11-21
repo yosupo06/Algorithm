@@ -147,9 +147,9 @@ data:
   timestamp: '2020-05-08 21:35:33+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - src/number_of_substrings.test.cpp
   - src/sais.test.cpp
   - src/doublingsa.test.cpp
+  - src/number_of_substrings.test.cpp
 documentation_of: src/string/suffixarray.hpp
 layout: document
 redirect_from:

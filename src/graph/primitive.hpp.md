@@ -26,8 +26,8 @@ data:
   isVerificationFile: false
   path: src/graph/primitive.hpp
   requiredBy:
-  - src/graph/treedecomp.hpp
   - src/graph/balancedseparator.hpp
+  - src/graph/treedecomp.hpp
   timestamp: '2020-05-26 02:54:27+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
