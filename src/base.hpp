@@ -114,6 +114,16 @@ template <class T> ostream& operator<<(ostream& os, const set<T>& s) {
     }
     return os << "}";
 }
+template <class T> ostream& operator<<(ostream& os, const multiset<T>& s) {
+    os << "{";
+    bool f = false;
+    for (auto d : s) {
+        if (f) os << ", ";
+        f = true;
+        os << d;
+    }
+    return os << "}";
+}
 
 template <class T, class U>
 ostream& operator<<(ostream& os, const map<T, U>& s) {
