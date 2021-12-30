@@ -56,8 +56,11 @@ data:
     \        f = true;\n        os << d;\n    }\n    return os << \"]\";\n}\n\ntemplate\
     \ <class T> ostream& operator<<(ostream& os, const set<T>& s) {\n    os << \"\
     {\";\n    bool f = false;\n    for (auto d : s) {\n        if (f) os << \", \"\
-    ;\n        f = true;\n        os << d;\n    }\n    return os << \"}\";\n}\n\n\
-    template <class T, class U>\nostream& operator<<(ostream& os, const map<T, U>&\
+    ;\n        f = true;\n        os << d;\n    }\n    return os << \"}\";\n}\ntemplate\
+    \ <class T> ostream& operator<<(ostream& os, const multiset<T>& s) {\n    os <<\
+    \ \"{\";\n    bool f = false;\n    for (auto d : s) {\n        if (f) os << \"\
+    , \";\n        f = true;\n        os << d;\n    }\n    return os << \"}\";\n}\n\
+    \ntemplate <class T, class U>\nostream& operator<<(ostream& os, const map<T, U>&\
     \ s) {\n    os << \"{\";\n    bool f = false;\n    for (auto p : s) {\n      \
     \  if (f) os << \", \";\n        f = true;\n        os << p.first << \": \" <<\
     \ p.second;\n    }\n    return os << \"}\";\n}\n\nstruct PrettyOS {\n    ostream&\
@@ -199,7 +202,7 @@ data:
   isVerificationFile: true
   path: src/number_of_substrings.test.cpp
   requiredBy: []
-  timestamp: '2020-10-18 20:05:46+09:00'
+  timestamp: '2021-12-30 20:52:19+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: src/number_of_substrings.test.cpp

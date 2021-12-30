@@ -45,9 +45,6 @@ data:
     path: src/string/run.hpp
     title: src/string/run.hpp
   - icon: ':heavy_check_mark:'
-    path: src/tree/hl.hpp
-    title: src/tree/hl.hpp
-  - icon: ':heavy_check_mark:'
     path: src/util/hash.hpp
     title: src/util/hash.hpp
   _extendedVerifiedWith:
@@ -187,19 +184,22 @@ data:
     \ << d;\n    }\n    return os << \"]\";\n}\n\ntemplate <class T> ostream& operator<<(ostream&\
     \ os, const set<T>& s) {\n    os << \"{\";\n    bool f = false;\n    for (auto\
     \ d : s) {\n        if (f) os << \", \";\n        f = true;\n        os << d;\n\
-    \    }\n    return os << \"}\";\n}\n\ntemplate <class T, class U>\nostream& operator<<(ostream&\
-    \ os, const map<T, U>& s) {\n    os << \"{\";\n    bool f = false;\n    for (auto\
-    \ p : s) {\n        if (f) os << \", \";\n        f = true;\n        os << p.first\
-    \ << \": \" << p.second;\n    }\n    return os << \"}\";\n}\n\nstruct PrettyOS\
-    \ {\n    ostream& os;\n    bool first;\n\n    template <class T> auto operator<<(T&&\
-    \ x) {\n        if (!first) os << \", \";\n        first = false;\n        os\
-    \ << x;\n        return *this;\n    }\n};\ntemplate <class... T> void dbg0(T&&...\
-    \ t) {\n    (PrettyOS{cerr, true} << ... << t);\n}\n#define dbg(...)         \
-    \                                   \\\n    do {                             \
-    \                       \\\n        cerr << __LINE__ << \" : \" << #__VA_ARGS__\
-    \ << \" = \"; \\\n        dbg0(__VA_ARGS__);                                 \
-    \ \\\n        cerr << endl;                                       \\\n    } while\
-    \ (false);\n#else\n#define dbg(...)\n#endif\n"
+    \    }\n    return os << \"}\";\n}\ntemplate <class T> ostream& operator<<(ostream&\
+    \ os, const multiset<T>& s) {\n    os << \"{\";\n    bool f = false;\n    for\
+    \ (auto d : s) {\n        if (f) os << \", \";\n        f = true;\n        os\
+    \ << d;\n    }\n    return os << \"}\";\n}\n\ntemplate <class T, class U>\nostream&\
+    \ operator<<(ostream& os, const map<T, U>& s) {\n    os << \"{\";\n    bool f\
+    \ = false;\n    for (auto p : s) {\n        if (f) os << \", \";\n        f =\
+    \ true;\n        os << p.first << \": \" << p.second;\n    }\n    return os <<\
+    \ \"}\";\n}\n\nstruct PrettyOS {\n    ostream& os;\n    bool first;\n\n    template\
+    \ <class T> auto operator<<(T&& x) {\n        if (!first) os << \", \";\n    \
+    \    first = false;\n        os << x;\n        return *this;\n    }\n};\ntemplate\
+    \ <class... T> void dbg0(T&&... t) {\n    (PrettyOS{cerr, true} << ... << t);\n\
+    }\n#define dbg(...)                                            \\\n    do {  \
+    \                                                  \\\n        cerr << __LINE__\
+    \ << \" : \" << #__VA_ARGS__ << \" = \"; \\\n        dbg0(__VA_ARGS__);      \
+    \                            \\\n        cerr << endl;                       \
+    \                \\\n    } while (false);\n#else\n#define dbg(...)\n#endif\n"
   code: "#pragma once\n#include <algorithm>\n#include <array>\n#include <bitset>\n\
     #include <cassert>\n#include <complex>\n#include <cstdio>\n#include <cstring>\n\
     #include <iostream>\n#include <map>\n#include <numeric>\n#include <queue>\n#include\
@@ -235,6 +235,9 @@ data:
     \ << \"]\";\n}\n\ntemplate <class T> ostream& operator<<(ostream& os, const set<T>&\
     \ s) {\n    os << \"{\";\n    bool f = false;\n    for (auto d : s) {\n      \
     \  if (f) os << \", \";\n        f = true;\n        os << d;\n    }\n    return\
+    \ os << \"}\";\n}\ntemplate <class T> ostream& operator<<(ostream& os, const multiset<T>&\
+    \ s) {\n    os << \"{\";\n    bool f = false;\n    for (auto d : s) {\n      \
+    \  if (f) os << \", \";\n        f = true;\n        os << d;\n    }\n    return\
     \ os << \"}\";\n}\n\ntemplate <class T, class U>\nostream& operator<<(ostream&\
     \ os, const map<T, U>& s) {\n    os << \"{\";\n    bool f = false;\n    for (auto\
     \ p : s) {\n        if (f) os << \", \";\n        f = true;\n        os << p.first\
@@ -252,57 +255,56 @@ data:
   isVerificationFile: false
   path: src/base.hpp
   requiredBy:
-  - src/math/modint61.hpp
+  - src/graph/maxclique.hpp
+  - src/graph/balancedseparator.hpp
+  - src/graph/treedecomp.hpp
+  - src/string/run.hpp
+  - src/string/rollinghash.hpp
   - src/math/nimber.hpp
   - src/math/comb.hpp
-  - src/util/hash.hpp
-  - src/string/rollinghash.hpp
-  - src/string/run.hpp
-  - src/graph/balancedseparator.hpp
-  - src/graph/maxclique.hpp
-  - src/graph/treedecomp.hpp
-  - src/tree/hl.hpp
-  - src/datastructure/segtree.hpp
+  - src/math/modint61.hpp
   - src/datastructure/hashset.hpp
-  - src/datastructure/staticrangesum.hpp
-  - src/datastructure/fenwick.hpp
   - src/datastructure/hashmap.hpp
+  - src/datastructure/fenwick.hpp
   - src/datastructure/fenwick2d.hpp
-  timestamp: '2020-10-18 20:05:46+09:00'
+  - src/datastructure/segtree.hpp
+  - src/datastructure/staticrangesum.hpp
+  - src/util/hash.hpp
+  timestamp: '2021-12-30 20:52:19+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - src/treedecomp_width2.test.cpp
-  - src/max_clique.test.cpp
-  - src/zalgo.test.cpp
-  - src/nimber.test.cpp
-  - src/rollinghash_zalgo.test.cpp
-  - src/modint.test.cpp
-  - src/online-zalgo.test.cpp
-  - src/scanner.test.cpp
-  - src/run.test.cpp
-  - src/hashset.test.cpp
+  - src/hashset_hashmap.test.cpp
   - src/modint61.test.cpp
-  - src/hl_vertex_add_path_sum.test.cpp
-  - src/nft_convolution.test.cpp
-  - src/sais.test.cpp
-  - src/hl_vertex_add_subtree_sum.test.cpp
+  - src/inv_of_formal_power_series.test.cpp
+  - src/modint.test.cpp
+  - src/hashset.test.cpp
   - src/bimaching.test.cpp
-  - src/fenwick_2d_rectangle_sum.test.cpp
-  - src/doublingsa.test.cpp
+  - src/max_clique.test.cpp
   - src/unionfind.test.cpp
-  - src/hl_lca.test.cpp
-  - src/hashmap.test.cpp
-  - src/printer.test.cpp
-  - src/number_of_substrings.test.cpp
-  - src/lctree_vertex_add_path_sum.test.cpp
+  - src/nimber.test.cpp
   - src/dbg.test.cpp
+  - src/number_of_substrings.test.cpp
   - src/lctree_lca.test.cpp
   - src/scanner_many_aplusb.test.cpp
-  - src/inv_of_formal_power_series.test.cpp
-  - src/comb.test.cpp
-  - src/hashset_hashmap.test.cpp
-  - src/staticrangesum_rectangle_sum.test.cpp
   - src/hashmap_remove.test.cpp
+  - src/staticrangesum_rectangle_sum.test.cpp
+  - src/hl_vertex_add_path_sum.test.cpp
+  - src/lctree_vertex_add_path_sum.test.cpp
+  - src/treedecomp_width2.test.cpp
+  - src/nft_convolution.test.cpp
+  - src/hl_vertex_add_subtree_sum.test.cpp
+  - src/online-zalgo.test.cpp
+  - src/zalgo.test.cpp
+  - src/doublingsa.test.cpp
+  - src/scanner.test.cpp
+  - src/hashmap.test.cpp
+  - src/rollinghash_zalgo.test.cpp
+  - src/printer.test.cpp
+  - src/run.test.cpp
+  - src/hl_lca.test.cpp
+  - src/fenwick_2d_rectangle_sum.test.cpp
+  - src/sais.test.cpp
+  - src/comb.test.cpp
 documentation_of: src/base.hpp
 layout: document
 redirect_from:

@@ -56,49 +56,52 @@ data:
     \ << d;\n    }\n    return os << \"]\";\n}\n\ntemplate <class T> ostream& operator<<(ostream&\
     \ os, const set<T>& s) {\n    os << \"{\";\n    bool f = false;\n    for (auto\
     \ d : s) {\n        if (f) os << \", \";\n        f = true;\n        os << d;\n\
-    \    }\n    return os << \"}\";\n}\n\ntemplate <class T, class U>\nostream& operator<<(ostream&\
-    \ os, const map<T, U>& s) {\n    os << \"{\";\n    bool f = false;\n    for (auto\
-    \ p : s) {\n        if (f) os << \", \";\n        f = true;\n        os << p.first\
-    \ << \": \" << p.second;\n    }\n    return os << \"}\";\n}\n\nstruct PrettyOS\
-    \ {\n    ostream& os;\n    bool first;\n\n    template <class T> auto operator<<(T&&\
-    \ x) {\n        if (!first) os << \", \";\n        first = false;\n        os\
-    \ << x;\n        return *this;\n    }\n};\ntemplate <class... T> void dbg0(T&&...\
-    \ t) {\n    (PrettyOS{cerr, true} << ... << t);\n}\n#define dbg(...)         \
-    \                                   \\\n    do {                             \
-    \                       \\\n        cerr << __LINE__ << \" : \" << #__VA_ARGS__\
-    \ << \" = \"; \\\n        dbg0(__VA_ARGS__);                                 \
-    \ \\\n        cerr << endl;                                       \\\n    } while\
-    \ (false);\n#else\n#define dbg(...)\n#endif\n#line 2 \"src/util/fast_io.hpp\"\n\
-    \n#include <unistd.h>\n\nstruct Scanner {\n    int fd = -1;\n    char line[(1\
-    \ << 15) + 1];\n    size_t st = 0, ed = 0;\n    void reread() {\n        memmove(line,\
-    \ line + st, ed - st);\n        ed -= st;\n        st = 0;\n        ed += ::read(fd,\
-    \ line + ed, (1 << 15) - ed);\n        line[ed] = '\\0';\n    }\n    bool succ()\
-    \ {\n        while (true) {\n            if (st == ed) {\n                reread();\n\
-    \                if (st == ed) return false;\n            }\n            while\
-    \ (st != ed && isspace(line[st])) st++;\n            if (st != ed) break;\n  \
-    \      }\n        if (ed - st <= 50) {\n            bool sep = false;\n      \
-    \      for (size_t i = st; i < ed; i++) {\n                if (isspace(line[i]))\
-    \ {\n                    sep = true;\n                    break;\n           \
-    \     }\n            }\n            if (!sep) reread();\n        }\n        return\
-    \ true;\n    }\n    template <class T, enable_if_t<is_same<T, string>::value,\
+    \    }\n    return os << \"}\";\n}\ntemplate <class T> ostream& operator<<(ostream&\
+    \ os, const multiset<T>& s) {\n    os << \"{\";\n    bool f = false;\n    for\
+    \ (auto d : s) {\n        if (f) os << \", \";\n        f = true;\n        os\
+    \ << d;\n    }\n    return os << \"}\";\n}\n\ntemplate <class T, class U>\nostream&\
+    \ operator<<(ostream& os, const map<T, U>& s) {\n    os << \"{\";\n    bool f\
+    \ = false;\n    for (auto p : s) {\n        if (f) os << \", \";\n        f =\
+    \ true;\n        os << p.first << \": \" << p.second;\n    }\n    return os <<\
+    \ \"}\";\n}\n\nstruct PrettyOS {\n    ostream& os;\n    bool first;\n\n    template\
+    \ <class T> auto operator<<(T&& x) {\n        if (!first) os << \", \";\n    \
+    \    first = false;\n        os << x;\n        return *this;\n    }\n};\ntemplate\
+    \ <class... T> void dbg0(T&&... t) {\n    (PrettyOS{cerr, true} << ... << t);\n\
+    }\n#define dbg(...)                                            \\\n    do {  \
+    \                                                  \\\n        cerr << __LINE__\
+    \ << \" : \" << #__VA_ARGS__ << \" = \"; \\\n        dbg0(__VA_ARGS__);      \
+    \                            \\\n        cerr << endl;                       \
+    \                \\\n    } while (false);\n#else\n#define dbg(...)\n#endif\n#line\
+    \ 2 \"src/util/fast_io.hpp\"\n\n#include <unistd.h>\n\nstruct Scanner {\n    int\
+    \ fd = -1;\n    char line[(1 << 15) + 1];\n    size_t st = 0, ed = 0;\n    void\
+    \ reread() {\n        memmove(line, line + st, ed - st);\n        ed -= st;\n\
+    \        st = 0;\n        ed += ::read(fd, line + ed, (1 << 15) - ed);\n     \
+    \   line[ed] = '\\0';\n    }\n    bool succ() {\n        while (true) {\n    \
+    \        if (st == ed) {\n                reread();\n                if (st ==\
+    \ ed) return false;\n            }\n            while (st != ed && isspace(line[st]))\
+    \ st++;\n            if (st != ed) break;\n        }\n        if (ed - st <= 50)\
+    \ {\n            bool sep = false;\n            for (size_t i = st; i < ed; i++)\
+    \ {\n                if (isspace(line[i])) {\n                    sep = true;\n\
+    \                    break;\n                }\n            }\n            if\
+    \ (!sep) reread();\n        }\n        return true;\n    }\n    template <class\
+    \ T, enable_if_t<is_same<T, string>::value, int> = 0>\n    bool read_single(T&\
+    \ ref) {\n        if (!succ()) return false;\n        while (true) {\n       \
+    \     size_t sz = 0;\n            while (st + sz < ed && !isspace(line[st + sz]))\
+    \ sz++;\n            ref.append(line + st, sz);\n            st += sz;\n     \
+    \       if (!sz || st != ed) break;\n            reread();            \n     \
+    \   }\n        return true;\n    }\n    template <class T, enable_if_t<is_integral<T>::value,\
     \ int> = 0>\n    bool read_single(T& ref) {\n        if (!succ()) return false;\n\
-    \        while (true) {\n            size_t sz = 0;\n            while (st + sz\
-    \ < ed && !isspace(line[st + sz])) sz++;\n            ref.append(line + st, sz);\n\
-    \            st += sz;\n            if (!sz || st != ed) break;\n            reread();\
-    \            \n        }\n        return true;\n    }\n    template <class T,\
-    \ enable_if_t<is_integral<T>::value, int> = 0>\n    bool read_single(T& ref) {\n\
-    \        if (!succ()) return false;\n        bool neg = false;\n        if (line[st]\
-    \ == '-') {\n            neg = true;\n            st++;\n        }\n        ref\
-    \ = T(0);\n        while (isdigit(line[st])) {\n            ref = 10 * ref + (line[st++]\
-    \ & 0xf);\n        }\n        if (neg) ref = -ref;\n        return true;\n   \
-    \ }\n    template <class T> bool read_single(V<T>& ref) {\n        for (auto&\
-    \ d : ref) {\n            if (!read_single(d)) return false;\n        }\n    \
-    \    return true;\n    }\n    void read() {}\n    template <class H, class...\
-    \ T> void read(H& h, T&... t) {\n        bool f = read_single(h);\n        assert(f);\n\
-    \        read(t...);\n    }\n    Scanner(FILE* fp) : fd(fileno(fp)) {}\n};\n\n\
-    struct Printer {\n  public:\n    template <bool F = false> void write() {}\n \
-    \   template <bool F = false, class H, class... T>\n    void write(const H& h,\
-    \ const T&... t) {\n        if (F) write_single(' ');\n        write_single(h);\n\
+    \        bool neg = false;\n        if (line[st] == '-') {\n            neg =\
+    \ true;\n            st++;\n        }\n        ref = T(0);\n        while (isdigit(line[st]))\
+    \ {\n            ref = 10 * ref + (line[st++] & 0xf);\n        }\n        if (neg)\
+    \ ref = -ref;\n        return true;\n    }\n    template <class T> bool read_single(V<T>&\
+    \ ref) {\n        for (auto& d : ref) {\n            if (!read_single(d)) return\
+    \ false;\n        }\n        return true;\n    }\n    void read() {}\n    template\
+    \ <class H, class... T> void read(H& h, T&... t) {\n        bool f = read_single(h);\n\
+    \        assert(f);\n        read(t...);\n    }\n    Scanner(FILE* fp) : fd(fileno(fp))\
+    \ {}\n};\n\nstruct Printer {\n  public:\n    template <bool F = false> void write()\
+    \ {}\n    template <bool F = false, class H, class... T>\n    void write(const\
+    \ H& h, const T&... t) {\n        if (F) write_single(' ');\n        write_single(h);\n\
     \        write<true>(t...);\n    }\n    template <class... T> void writeln(const\
     \ T&... t) {\n        write(t...);\n        write_single('\\n');\n    }\n\n  \
     \  Printer(FILE* _fp) : fp(_fp) {}\n    ~Printer() { flush(); }\n\n  private:\n\
@@ -181,7 +184,7 @@ data:
   isVerificationFile: true
   path: src/lctree_lca.test.cpp
   requiredBy: []
-  timestamp: '2020-10-18 20:05:46+09:00'
+  timestamp: '2021-12-30 20:52:19+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: src/lctree_lca.test.cpp

@@ -55,27 +55,30 @@ data:
     \ << d;\n    }\n    return os << \"]\";\n}\n\ntemplate <class T> ostream& operator<<(ostream&\
     \ os, const set<T>& s) {\n    os << \"{\";\n    bool f = false;\n    for (auto\
     \ d : s) {\n        if (f) os << \", \";\n        f = true;\n        os << d;\n\
-    \    }\n    return os << \"}\";\n}\n\ntemplate <class T, class U>\nostream& operator<<(ostream&\
-    \ os, const map<T, U>& s) {\n    os << \"{\";\n    bool f = false;\n    for (auto\
-    \ p : s) {\n        if (f) os << \", \";\n        f = true;\n        os << p.first\
-    \ << \": \" << p.second;\n    }\n    return os << \"}\";\n}\n\nstruct PrettyOS\
-    \ {\n    ostream& os;\n    bool first;\n\n    template <class T> auto operator<<(T&&\
-    \ x) {\n        if (!first) os << \", \";\n        first = false;\n        os\
-    \ << x;\n        return *this;\n    }\n};\ntemplate <class... T> void dbg0(T&&...\
-    \ t) {\n    (PrettyOS{cerr, true} << ... << t);\n}\n#define dbg(...)         \
-    \                                   \\\n    do {                             \
-    \                       \\\n        cerr << __LINE__ << \" : \" << #__VA_ARGS__\
-    \ << \" = \"; \\\n        dbg0(__VA_ARGS__);                                 \
-    \ \\\n        cerr << endl;                                       \\\n    } while\
-    \ (false);\n#else\n#define dbg(...)\n#endif\n#line 6 \"src/dbg.test.cpp\"\n\n\
-    int main() {\n    pair<int, int> a = {1, 2};\n    dbg(a);\n    V<int> b = {1,\
-    \ 2, 3};\n    dbg(b);\n    V<pair<int, int>> c = {{1, 2}, {3, 4}};\n    dbg(c);\n\
-    \    pair<V<int>, V<int>> d = {{1, 2}, {3, 4, 5}};\n    dbg(d);\n\n    array<int,\
-    \ 3> e = {1, 2, 3};\n    dbg(e);\n    array<V<int>, 2> f = {{{1, 2, 3}, {4, 5}}};\n\
-    \    dbg(f);\n\n    set<int> g = {1, 2, 3, 4};\n    dbg(g);\n\n    map<int, int>\
-    \ h; h[1] = 2; h[3] = 4;\n    dbg(h);\n\n    solve_aplusb();\n\n    __int128_t\
-    \ x = 1234;\n    dbg(x);\n    __uint128_t y = 5678;\n    dbg(y);\n    return 0;\n\
-    }\n"
+    \    }\n    return os << \"}\";\n}\ntemplate <class T> ostream& operator<<(ostream&\
+    \ os, const multiset<T>& s) {\n    os << \"{\";\n    bool f = false;\n    for\
+    \ (auto d : s) {\n        if (f) os << \", \";\n        f = true;\n        os\
+    \ << d;\n    }\n    return os << \"}\";\n}\n\ntemplate <class T, class U>\nostream&\
+    \ operator<<(ostream& os, const map<T, U>& s) {\n    os << \"{\";\n    bool f\
+    \ = false;\n    for (auto p : s) {\n        if (f) os << \", \";\n        f =\
+    \ true;\n        os << p.first << \": \" << p.second;\n    }\n    return os <<\
+    \ \"}\";\n}\n\nstruct PrettyOS {\n    ostream& os;\n    bool first;\n\n    template\
+    \ <class T> auto operator<<(T&& x) {\n        if (!first) os << \", \";\n    \
+    \    first = false;\n        os << x;\n        return *this;\n    }\n};\ntemplate\
+    \ <class... T> void dbg0(T&&... t) {\n    (PrettyOS{cerr, true} << ... << t);\n\
+    }\n#define dbg(...)                                            \\\n    do {  \
+    \                                                  \\\n        cerr << __LINE__\
+    \ << \" : \" << #__VA_ARGS__ << \" = \"; \\\n        dbg0(__VA_ARGS__);      \
+    \                            \\\n        cerr << endl;                       \
+    \                \\\n    } while (false);\n#else\n#define dbg(...)\n#endif\n#line\
+    \ 6 \"src/dbg.test.cpp\"\n\nint main() {\n    pair<int, int> a = {1, 2};\n   \
+    \ dbg(a);\n    V<int> b = {1, 2, 3};\n    dbg(b);\n    V<pair<int, int>> c = {{1,\
+    \ 2}, {3, 4}};\n    dbg(c);\n    pair<V<int>, V<int>> d = {{1, 2}, {3, 4, 5}};\n\
+    \    dbg(d);\n\n    array<int, 3> e = {1, 2, 3};\n    dbg(e);\n    array<V<int>,\
+    \ 2> f = {{{1, 2, 3}, {4, 5}}};\n    dbg(f);\n\n    set<int> g = {1, 2, 3, 4};\n\
+    \    dbg(g);\n\n    map<int, int> h; h[1] = 2; h[3] = 4;\n    dbg(h);\n\n    solve_aplusb();\n\
+    \n    __int128_t x = 1234;\n    dbg(x);\n    __uint128_t y = 5678;\n    dbg(y);\n\
+    \    return 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n\n#define LOCAL\n\
     #include \"aplusb.hpp\"\n#include \"base.hpp\"\n\nint main() {\n    pair<int,\
     \ int> a = {1, 2};\n    dbg(a);\n    V<int> b = {1, 2, 3};\n    dbg(b);\n    V<pair<int,\
@@ -91,7 +94,7 @@ data:
   isVerificationFile: true
   path: src/dbg.test.cpp
   requiredBy: []
-  timestamp: '2020-10-18 20:05:46+09:00'
+  timestamp: '2021-12-30 20:52:19+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: src/dbg.test.cpp
