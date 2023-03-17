@@ -7,6 +7,6 @@ struct StopWatch {
     }
     int msecs() {
         assert(f);
-        return (clock()-st)*1000 / CLOCKS_PER_SEC;
+        return int(1LL * (clock()-st)*1000 / CLOCKS_PER_SEC);
     }
 };

@@ -1,4 +1,4 @@
-#pragma GCC target("avx,avx2")
+#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
 //#pragma GCC optimize("Ofast")
 //#undef LOCAL
 
